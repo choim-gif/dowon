@@ -22,7 +22,7 @@
   html.dx7-direct-worker [data-stage="entry-q"] { display: block !important; }
 
   /* =====================================================================
-     설문 전용 모드 (v4) — 필터·사례·헤더·푸터 숨김 + 디자인 폴리시
+     설문 전용 모드 (v5) — 사례 숨김 + [hidden] 버그 수정 + 글자 키운 디자인
      ===================================================================== */
   .filter-bar,
   .instances-section,
@@ -30,82 +30,125 @@
   .page-footer { display: none !important; }
   .diagnose-rc-link { display: none !important; }
 
-  /* === [핵심 버그 수정] hidden 속성이 .diagnose-entry의 display:grid에
-     덮여서 무시되는 문제 — 모든 단계 컨테이너가 hidden을 실제로 존중하게 === */
+  /* === [핵심] hidden 속성이 무시되는 버그 수정 === */
   .diagnose-entry[hidden],
   .diagnose-questions[hidden],
   .diagnose-result[hidden] { display: none !important; }
 
-  /* === 진단 섹션 전체 padding 조정 (위쪽 여백 줄여서 카드가 화면에 더 빨리) === */
+  /* === 진단 섹션 전체 === */
   .diagnose-section {
-    padding: 36px 24px 40px !important;
+    padding: 44px 24px 48px !important;
     background: #fafaf7 !important;
     border-bottom: none !important;
   }
-  .diagnose-header { margin-bottom: 24px !important; }
-  .diagnose-title { font-size: 22px !important; letter-spacing: -0.4px; }
-  .diagnose-desc { font-size: 13.5px !important; color: #64748b !important; }
+  .diagnose-header { margin-bottom: 30px !important; }
+  .diagnose-title {
+    font-size: 30px !important;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+    line-height: 1.35;
+    margin-bottom: 10px !important;
+  }
+  .diagnose-desc {
+    font-size: 16px !important;
+    color: #475569 !important;
+    line-height: 1.6;
+  }
   .diagnose-eyebrow {
     background: white !important;
     color: #475569 !important;
     border: 1px solid #e2e8f0;
-    padding: 4px 12px !important;
-    font-size: 11px !important;
-    letter-spacing: 0.5px;
+    padding: 5px 14px !important;
+    font-size: 12.5px !important;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    margin-bottom: 14px !important;
   }
 
-  /* === 진입 카드 (기업/근로자) — 컴팩트하게 === */
-  .diagnose-entry { gap: 14px !important; max-width: 720px; margin: 0 auto 24px !important; }
+  /* === 진입 카드 (기업/근로자) === */
+  .diagnose-entry {
+    gap: 16px !important;
+    max-width: 780px;
+    margin: 0 auto 28px !important;
+  }
   .diagnose-card-btn {
-    padding: 26px 22px !important;
-    border-radius: 14px !important;
+    padding: 32px 26px !important;
+    border-radius: 16px !important;
     border-width: 1.5px !important;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
-  .diagnose-card-icon { font-size: 36px !important; margin-bottom: 10px !important; }
-  .diagnose-card-title { font-size: 18px !important; font-weight: 800; margin-bottom: 8px; }
-  .diagnose-card-desc { font-size: 12.5px !important; line-height: 1.65 !important; color: #64748b; }
+  .diagnose-card-icon {
+    font-size: 44px !important;
+    margin-bottom: 12px !important;
+  }
+  .diagnose-card-title {
+    font-size: 22px !important;
+    font-weight: 800;
+    margin-bottom: 10px !important;
+    letter-spacing: -0.3px;
+  }
+  .diagnose-card-desc {
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+    color: #64748b;
+  }
   .diagnose-card-cta {
-    font-size: 13px !important;
-    margin-top: 12px !important;
-    padding-top: 12px !important;
+    font-size: 15px !important;
+    font-weight: 700;
+    margin-top: 14px !important;
+    padding-top: 14px !important;
     border-top: 1px solid #f1f5f9;
     color: #c8102e;
-    font-weight: 700;
   }
 
-  /* === 질문 카드 — 더 깔끔하게, 위쪽 여백 살림 === */
+  /* === 질문 카드 (entry-q / questions 공통) === */
   .diagnose-questions {
     background: white !important;
     border: 1px solid #e2e8f0 !important;
     border-radius: 16px !important;
-    padding: 32px 32px 26px !important;
+    padding: 36px 36px 30px !important;
     margin-top: 0 !important;
-    box-shadow: 0 2px 8px rgba(15,23,42,0.04) !important;
+    box-shadow: 0 2px 10px rgba(15,23,42,0.05) !important;
   }
-  .dx7-q-title, .diagnose-q-title { font-size: 19px !important; letter-spacing: -0.3px; margin-top: 10px; }
-  .dx7-q-desc { font-size: 13px !important; color: #64748b !important; }
+  .dx7-q-title, .diagnose-q-title {
+    font-size: 24px !important;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.4;
+    margin: 14px 0 8px !important;
+  }
+  .dx7-q-desc {
+    font-size: 14.5px !important;
+    color: #64748b !important;
+    line-height: 1.6;
+  }
   .dx7-eyebrow {
     background: #c8102e !important;
-    padding: 5px 14px !important;
-    font-size: 11.5px !important;
-    letter-spacing: 0.5px;
+    padding: 6px 16px !important;
+    font-size: 13px !important;
+    font-weight: 700;
+    letter-spacing: 0.4px;
   }
 
-  /* === 진입 질문 옵션을 2열 그리드로 (가독성·세로 길이 개선) === */
+  /* === 진입 질문 옵션 — 2열 그리드 + 키운 글자 === */
   .dx7-entry-options {
     grid-template-columns: 1fr 1fr !important;
-    gap: 10px !important;
-    margin-top: 22px !important;
+    gap: 12px !important;
+    margin-top: 26px !important;
   }
   .dx7-entry-opt {
-    padding: 14px 16px !important;
-    min-height: 66px;
+    padding: 18px 18px !important;
+    min-height: 72px;
     border-width: 1.5px !important;
-    border-radius: 10px !important;
+    border-radius: 12px !important;
   }
-  .dx7-entry-opt .icon { font-size: 20px !important; }
-  .dx7-entry-opt .label { font-size: 13.5px !important; line-height: 1.4 !important; }
+  .dx7-entry-opt .icon { font-size: 24px !important; }
+  .dx7-entry-opt .label {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+  }
+  .dx7-entry-opt .arrow { font-size: 16px !important; }
   .dx7-entry-opt.cat-explore {
     grid-column: 1 / -1;
     background: #f8fafc !important;
@@ -113,7 +156,30 @@
     border-style: dashed !important;
   }
 
-  /* === 단계 전환 시 부드러운 페이드 인 === */
+  /* === 진단 진행 질문 (Q1, Q2, Q3) — 일반 옵션도 크게 === */
+  .diagnose-q-num { font-size: 13px !important; }
+  .diagnose-q-options { gap: 10px !important; }
+  .diagnose-opt {
+    padding: 16px 18px !important;
+    font-size: 15px !important;
+    line-height: 1.45;
+  }
+  .diagnose-progress-text { font-size: 13.5px !important; }
+
+  /* === 결과 화면 === */
+  .diagnose-result { padding: 36px 36px 30px !important; }
+  .diagnose-result-eyebrow { font-size: 13px !important; }
+  .diagnose-result-title { font-size: 24px !important; letter-spacing: -0.5px; }
+  .diagnose-result-desc { font-size: 14.5px !important; line-height: 1.6; }
+  .diagnose-rc-title { font-size: 16px !important; }
+  .diagnose-rc-reason { font-size: 14px !important; line-height: 1.55; }
+  .diagnose-lead-title { font-size: 18px !important; }
+  .diagnose-lead-desc { font-size: 13.5px !important; line-height: 1.6; }
+  .diagnose-lead-form input { font-size: 14px !important; padding: 12px 14px !important; }
+  .diagnose-lead-submit { font-size: 14px !important; padding: 12px 20px !important; }
+  .diagnose-restart, .diagnose-dynamic-cta { font-size: 15px !important; padding: 13px 22px !important; }
+
+  /* === 페이드 인 애니메이션 === */
   .diagnose-entry:not([hidden]),
   .diagnose-questions:not([hidden]),
   .diagnose-result:not([hidden]) {
@@ -124,16 +190,35 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* === 모바일 (≤600px) === */
-  @media (max-width: 600px) {
-    .diagnose-section { padding: 28px 16px 32px !important; }
-    .dx7-entry-options { grid-template-columns: 1fr !important; }
+  /* === 모바일 (≤640px) === */
+  @media (max-width: 640px) {
+    .diagnose-section { padding: 32px 16px 36px !important; }
+    .diagnose-title { font-size: 24px !important; line-height: 1.35; }
+    .diagnose-desc { font-size: 14.5px !important; }
+    .diagnose-header { margin-bottom: 22px !important; }
+
+    .diagnose-entry { gap: 12px !important; }
+    .diagnose-card-btn { padding: 24px 20px !important; }
+    .diagnose-card-icon { font-size: 40px !important; }
+    .diagnose-card-title { font-size: 20px !important; }
+    .diagnose-card-desc { font-size: 13.5px !important; }
+    .diagnose-card-cta { font-size: 14.5px !important; }
+
+    .diagnose-questions { padding: 26px 20px 22px !important; }
+    .dx7-q-title, .diagnose-q-title { font-size: 20px !important; }
+    .dx7-q-desc { font-size: 13.5px !important; }
+
+    .dx7-entry-options { grid-template-columns: 1fr !important; gap: 10px !important; }
     .dx7-entry-opt.cat-explore { grid-column: auto; }
-    .dx7-entry-opt { min-height: 56px; padding: 12px 14px !important; }
-    .diagnose-questions { padding: 24px 20px !important; }
-    .diagnose-card-btn { padding: 22px 18px !important; }
-    .diagnose-card-icon { font-size: 32px !important; }
-    .diagnose-card-title { font-size: 16px !important; }
+    .dx7-entry-opt { min-height: 60px; padding: 15px 16px !important; }
+    .dx7-entry-opt .icon { font-size: 22px !important; }
+    .dx7-entry-opt .label { font-size: 14.5px !important; }
+
+    .diagnose-opt { padding: 14px 16px !important; font-size: 14.5px !important; }
+
+    .diagnose-result { padding: 26px 20px 22px !important; }
+    .diagnose-result-title { font-size: 21px !important; }
+    .diagnose-lead-title { font-size: 16px !important; }
   }
 </style>
 <title>도원 비즈니스 플로우 v7 — 5단 프로세스</title>
