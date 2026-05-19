@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도원 노무법인 — 어떤 분이세요?</title>
+<meta name="description" content="도원 노무법인 — 기업·근로자 맞춤 진단으로 상황에 맞는 서비스를 무료로 추천해드립니다.">
+<style>
+  :root {
+    --ink: #0a1628;
+    --text-1: #1e293b;
+    --text-2: #475569;
+    --text-3: #94a3b8;
+    --border: #e2e8f0;
+    --accent: #2563eb;
+    --accent-dark: #1d4ed8;
+    --bg: #fafbfc;
+    --paper: #ffffff;
+    --soft-blue: #eff6ff;
+    --warm-amber: #fef3c7;
+    --warm-bg: #fffbeb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard', 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text-1);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+
+  /* === Header === */
+  .top-bar {
+    padding: 28px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .brand-mark {
+    width: 30px; height: 30px;
+    background: var(--ink);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 900; font-size: 14px;
+    letter-spacing: -0.5px;
+  }
+  .brand-name {
+    font-size: 16px; font-weight: 800;
+    color: var(--ink); letter-spacing: -0.3px;
+  }
+  .brand-meta {
+    font-size: 11px; color: var(--text-3);
+    margin-left: 4px;
+  }
+  .top-right {
+    font-size: 12px; color: var(--text-2);
+    display: flex; gap: 14px;
+  }
+  .top-right a {
+    color: var(--text-2); text-decoration: none;
+  }
+  .top-right a:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .top-bar { padding: 18px 20px; }
+    .top-right { display: none; }
+  }
+
+  /* === Main === */
+  main {
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 24px 60px;
+    text-align: center;
+  }
+
+  .hero {
+    max-width: 760px;
+    margin-bottom: 48px;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    padding: 5px 12px;
+    background: var(--soft-blue);
+    color: var(--accent);
+    border-radius: 999px;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 18px;
+  }
+  .hero-title {
+    font-size: 40px; font-weight: 900;
+    color: var(--ink);
+    line-height: 1.25;
+    letter-spacing: -1px;
+    margin-bottom: 14px;
+  }
+  .hero-subtitle {
+    font-size: 17px;
+    color: var(--text-2);
+    line-height: 1.6;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+  .hero-subtitle strong {
+    color: var(--ink); font-weight: 700;
+  }
+
+  @media (max-width: 600px) {
+    .hero { margin-bottom: 32px; }
+    .hero-title { font-size: 28px; letter-spacing: -0.5px; }
+    .hero-subtitle { font-size: 14px; }
+  }
+
+  /* === Cards === */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 880px; width: 100%;
+  }
+  @media (max-width: 720px) {
+    .cards { grid-template-columns: 1fr; gap: 14px; max-width: 480px; }
+  }
+  .card {
+    background: var(--paper);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 30px;
+    text-decoration: none;
+    color: var(--text-1);
+    transition: all 0.2s ease;
+    position: relative;
+    display: flex; flex-direction: column;
+    text-align: left;
+    cursor: pointer;
+    min-height: 320px;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(15,23,42,0.10);
+  }
+  .card:hover::before { transform: scaleX(1); }
+
+  .card.worker::before { background: #b45309; }
+  .card.worker:hover { border-color: #b45309; box-shadow: 0 12px 30px rgba(180,83,9,0.12); }
+
+  .card-icon {
+    font-size: 48px;
+    margin-bottom: 18px;
+    line-height: 1;
+  }
+  .card-title {
+    font-size: 26px; font-weight: 900;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+  }
+  .card-desc {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+  .card-features {
+    list-style: none;
+    margin: 0 0 22px;
+    flex: 1;
+  }
+  .card-features li {
+    font-size: 13.5px;
+    color: var(--text-1);
+    padding: 5px 0 5px 22px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .card-features li::before {
+    content: '·';
+    position: absolute;
+    left: 8px; top: 4px;
+    color: var(--accent);
+    font-weight: 900;
+    font-size: 18px;
+  }
+  .card.worker .card-features li::before { color: #b45309; }
+  .card-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; font-weight: 800;
+    color: var(--accent);
+    margin-top: auto;
+  }
+  .card.worker .card-cta { color: #b45309; }
+  .card-cta .arrow {
+    transition: transform 0.2s ease;
+  }
+  .card:hover .card-cta .arrow {
+    transform: translateX(4px);
+  }
+
+  /* === Trust signals === */
+  .trust-bar {
+    margin-top: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  .trust-bar .item {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .trust-bar .item .dot {
+    color: var(--accent); font-weight: 900;
+  }
+
+  /* === Footer === */
+  footer {
+    padding: 24px 40px;
+    border-top: 1px solid var(--border);
+    background: var(--paper);
+    text-align: center;
+  }
+  .footer-row {
+    display: flex; justify-content: center; gap: 14px;
+    font-size: 12px; color: var(--text-3);
+    flex-wrap: wrap;
+  }
+  .footer-row strong { color: var(--text-1); }
+
+  @media (max-width: 600px) {
+    .trust-bar { margin-top: 32px; gap: 14px; font-size: 12px; }
+    footer { padding: 18px 20px; }
+  }
+
+  /* fade-in on load */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero { animation: fadeUp 0.5s ease 0.05s both; }
+  .cards > .card:nth-child(1) { animation: fadeUp 0.5s ease 0.15s both; }
+  .cards > .card:nth-child(2) { animation: fadeUp 0.5s ease 0.25s both; }
+  .trust-bar { animation: fadeUp 0.5s ease 0.35s both; }
+</style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="brand">
+      <div class="brand-mark">도원</div>
+      <div>
+        <div class="brand-name">도원 노무법인</div>
+        <div class="brand-meta">노동법·인사·세무 종합 컨설팅</div>
+      </div>
+    </div>
+    <div class="top-right">
+      <a href="tel:02-0000-0000">📞 02-0000-0000</a>
+      <a href="#">전체 서비스 →</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="hero-eyebrow">맞춤 무료 진단</div>
+      <h1 class="hero-title">어떤 분이세요?</h1>
+      <p class="hero-subtitle">
+        도원이 <strong>3분 안에</strong> 상황에 맞는 서비스를 찾아드립니다.<br>
+        무료·비공개로 진행되며, 결과는 즉시 화면에 표시됩니다.
+      </p>
+    </div>
+
+    <div class="cards">
+
+      <a class="card company" href="dowon_flow_v7_full.html?flow=company">
+        <div class="card-icon">🏢</div>
+        <div class="card-title">기업입니다</div>
+        <div class="card-desc">사업주·CHRO·인사담당자<br>회사 규모·업종·운영 상황 기준 진단</div>
+        <ul class="card-features">
+          <li>환급·지원금 가능액 무료 점검</li>
+          <li>사근복 — 인건비 절감 시뮬레이션</li>
+          <li>노동법 자문 / 인원 단계 의무 진단</li>
+          <li>노동청 진정·괴롭힘·징계 즉시 대응</li>
+        </ul>
+        <div class="card-cta">
+          기업 진단 시작 <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card worker" href="dowon_flow_v7_full.html?flow=worker">
+        <div class="card-icon">👤</div>
+        <div class="card-title">근로자입니다</div>
+        <div class="card-desc">혼자 결정하지 마세요<br>가능한 권리구제 옵션을 도원이 찾아드립니다</div>
+        <ul class="card-features">
+          <li>임금체불 — 정확액 + 회사 변명 적법성</li>
+          <li>해고·징계 — 부당해고 구제신청 진단</li>
+          <li>산재·직업병 — 보상 + 민형사 원스톱</li>
+          <li>대지급금·도산 — 정부 지급 신청</li>
+        </ul>
+        <div class="card-cta">
+          근로자 진단 시작 <span class="arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="trust-bar">
+      <div class="item"><span class="dot">●</span> 무료</div>
+      <div class="item"><span class="dot">●</span> 비공개</div>
+      <div class="item"><span class="dot">●</span> 3분 안에 결과</div>
+      <div class="item"><span class="dot">●</span> 도원 변호사·노무사 1:1</div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-row">
+      <span><strong>도원 노무법인</strong></span>
+      <span>·</span>
+      <span>보이지 않던 것을 보여드립니다</span>
+      <span>·</span>
+      <span>대표 노무사 · 사업자등록번호 · 주소</span>
+    </div>
+  </footer>
+
+</body>
+</html>
