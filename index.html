@@ -21,14 +21,120 @@
   html.dx7-direct-company [data-stage="entry-q"],
   html.dx7-direct-worker [data-stage="entry-q"] { display: block !important; }
 
-  /* === 설문 전용 모드 — 필터 바·16개 사례·페이지 헤더/푸터 모두 숨김 === */
+  /* =====================================================================
+     설문 전용 모드 (v4) — 필터·사례·헤더·푸터 숨김 + 디자인 폴리시
+     ===================================================================== */
   .filter-bar,
   .instances-section,
   .page-header,
   .page-footer { display: none !important; }
-  /* 진단 결과의 "사례·5단 플로우 자세히 보기" 링크도 숨김
-     (사례 카드가 숨겨져 있어 클릭해도 의미가 없으므로) */
   .diagnose-rc-link { display: none !important; }
+
+  /* === [핵심 버그 수정] hidden 속성이 .diagnose-entry의 display:grid에
+     덮여서 무시되는 문제 — 모든 단계 컨테이너가 hidden을 실제로 존중하게 === */
+  .diagnose-entry[hidden],
+  .diagnose-questions[hidden],
+  .diagnose-result[hidden] { display: none !important; }
+
+  /* === 진단 섹션 전체 padding 조정 (위쪽 여백 줄여서 카드가 화면에 더 빨리) === */
+  .diagnose-section {
+    padding: 36px 24px 40px !important;
+    background: #fafaf7 !important;
+    border-bottom: none !important;
+  }
+  .diagnose-header { margin-bottom: 24px !important; }
+  .diagnose-title { font-size: 22px !important; letter-spacing: -0.4px; }
+  .diagnose-desc { font-size: 13.5px !important; color: #64748b !important; }
+  .diagnose-eyebrow {
+    background: white !important;
+    color: #475569 !important;
+    border: 1px solid #e2e8f0;
+    padding: 4px 12px !important;
+    font-size: 11px !important;
+    letter-spacing: 0.5px;
+  }
+
+  /* === 진입 카드 (기업/근로자) — 컴팩트하게 === */
+  .diagnose-entry { gap: 14px !important; max-width: 720px; margin: 0 auto 24px !important; }
+  .diagnose-card-btn {
+    padding: 26px 22px !important;
+    border-radius: 14px !important;
+    border-width: 1.5px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .diagnose-card-icon { font-size: 36px !important; margin-bottom: 10px !important; }
+  .diagnose-card-title { font-size: 18px !important; font-weight: 800; margin-bottom: 8px; }
+  .diagnose-card-desc { font-size: 12.5px !important; line-height: 1.65 !important; color: #64748b; }
+  .diagnose-card-cta {
+    font-size: 13px !important;
+    margin-top: 12px !important;
+    padding-top: 12px !important;
+    border-top: 1px solid #f1f5f9;
+    color: #c8102e;
+    font-weight: 700;
+  }
+
+  /* === 질문 카드 — 더 깔끔하게, 위쪽 여백 살림 === */
+  .diagnose-questions {
+    background: white !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    padding: 32px 32px 26px !important;
+    margin-top: 0 !important;
+    box-shadow: 0 2px 8px rgba(15,23,42,0.04) !important;
+  }
+  .dx7-q-title, .diagnose-q-title { font-size: 19px !important; letter-spacing: -0.3px; margin-top: 10px; }
+  .dx7-q-desc { font-size: 13px !important; color: #64748b !important; }
+  .dx7-eyebrow {
+    background: #c8102e !important;
+    padding: 5px 14px !important;
+    font-size: 11.5px !important;
+    letter-spacing: 0.5px;
+  }
+
+  /* === 진입 질문 옵션을 2열 그리드로 (가독성·세로 길이 개선) === */
+  .dx7-entry-options {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    margin-top: 22px !important;
+  }
+  .dx7-entry-opt {
+    padding: 14px 16px !important;
+    min-height: 66px;
+    border-width: 1.5px !important;
+    border-radius: 10px !important;
+  }
+  .dx7-entry-opt .icon { font-size: 20px !important; }
+  .dx7-entry-opt .label { font-size: 13.5px !important; line-height: 1.4 !important; }
+  .dx7-entry-opt.cat-explore {
+    grid-column: 1 / -1;
+    background: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+    border-style: dashed !important;
+  }
+
+  /* === 단계 전환 시 부드러운 페이드 인 === */
+  .diagnose-entry:not([hidden]),
+  .diagnose-questions:not([hidden]),
+  .diagnose-result:not([hidden]) {
+    animation: dx7Fade 0.28s ease-out;
+  }
+  @keyframes dx7Fade {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === 모바일 (≤600px) === */
+  @media (max-width: 600px) {
+    .diagnose-section { padding: 28px 16px 32px !important; }
+    .dx7-entry-options { grid-template-columns: 1fr !important; }
+    .dx7-entry-opt.cat-explore { grid-column: auto; }
+    .dx7-entry-opt { min-height: 56px; padding: 12px 14px !important; }
+    .diagnose-questions { padding: 24px 20px !important; }
+    .diagnose-card-btn { padding: 22px 18px !important; }
+    .diagnose-card-icon { font-size: 32px !important; }
+    .diagnose-card-title { font-size: 16px !important; }
+  }
 </style>
 <title>도원 비즈니스 플로우 v7 — 5단 프로세스</title>
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
