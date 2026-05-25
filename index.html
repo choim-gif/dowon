@@ -4148,8 +4148,8 @@ function dowonUrl(no) {
   const sep = base.indexOf('?') >= 0 ? '&' : '?';
   return DOWON + base + sep + utm + hash;
 }
-// 설문 진단 결과 CTA → 새로 만든 케이스 랜딩페이지(case-N.html)로 연결
-function casePage(no) { return 'case-' + no + '.html'; }
+// 설문 진단 결과 CTA → 배포된 케이스 랜딩페이지(GitHub Pages)로 연결
+function casePage(no) { return 'https://choim-gif.github.io/dowon/case-' + no + '.html'; }
 const caseUrls = {
   1:  '/150',                                            // 찾아드림
   2:  '/110',                                            // 4대보험 환급 컨설팅
