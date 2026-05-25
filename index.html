@@ -13,230 +13,6 @@
   }
 })();
 </script>
-<style>
-  /* 직접 진입 시 — 2카드 진입 화면을 처음부터 보이지 않게 */
-  html.dx7-direct-company .diagnose-entry,
-  html.dx7-direct-worker .diagnose-entry { display: none !important; }
-  /* 진입 Q1 카드는 처음부터 보이게 */
-  html.dx7-direct-company [data-stage="entry-q"],
-  html.dx7-direct-worker [data-stage="entry-q"] { display: block !important; }
-
-  /* =====================================================================
-     설문 전용 모드 (v7) — 결과 미리보기 + 강화 CTA + 모든 패치 통합
-     ===================================================================== */
-  .filter-bar, .instances-section, .page-header, .page-footer { display: none !important; }
-  .diagnose-rc-link { display: none !important; }
-
-  /* [hidden] 버그 수정 */
-  .diagnose-entry[hidden],
-  .diagnose-questions[hidden],
-  .diagnose-result[hidden] { display: none !important; }
-
-  /* === 화면 가운데 정렬 === */
-  html, body { min-height: 100vh; }
-  body { background: #fafaf7; }
-  .diagnose-section {
-    min-height: 100vh !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    box-sizing: border-box !important;
-    padding: 56px 24px !important;
-    background: #fafaf7 !important;
-    border-bottom: none !important;
-  }
-  .diagnose-inner { width: 100%; max-width: 1100px; margin: 0 auto !important; }
-
-  /* === 헤더 === */
-  .diagnose-header { margin-bottom: 30px !important; text-align: center; }
-  .diagnose-title { font-size: 30px !important; font-weight: 800; letter-spacing: -0.6px; line-height: 1.35; margin-bottom: 10px !important; }
-  .diagnose-desc { font-size: 16px !important; color: #475569 !important; line-height: 1.6; }
-  .diagnose-eyebrow {
-    background: white !important; color: #475569 !important;
-    border: 1px solid #e2e8f0; padding: 5px 14px !important;
-    font-size: 12.5px !important; font-weight: 700; letter-spacing: 0.4px;
-    margin-bottom: 14px !important;
-  }
-
-  /* === 진입 카드 — 결과 미리보기 포함 강화 디자인 === */
-  .diagnose-entry { gap: 18px !important; max-width: 880px; margin: 0 auto !important; }
-  .diagnose-card-btn {
-    padding: 30px 26px 26px !important;
-    border-radius: 18px !important;
-    border-width: 1.5px !important;
-    background: white !important;
-    box-shadow: 0 2px 8px rgba(15,23,42,0.05) !important;
-    transition: all 0.2s ease !important;
-    text-align: center !important;
-  }
-  .diagnose-card-btn:hover {
-    transform: translateY(-4px) !important;
-    box-shadow: 0 12px 28px rgba(200,16,46,0.18) !important;
-    border-color: #c8102e !important;
-  }
-  .diagnose-card-icon { font-size: 46px !important; margin-bottom: 12px !important; }
-  .diagnose-card-title { font-size: 24px !important; font-weight: 800; margin-bottom: 8px !important; letter-spacing: -0.3px; }
-  .diagnose-card-desc { font-size: 14px !important; line-height: 1.6 !important; color: #64748b; margin-bottom: 18px !important; }
-
-  /* === 결과 미리보기 박스 === */
-  .v7-preview {
-    background: #f8fafc;
-    border-radius: 12px;
-    padding: 16px 16px 14px;
-    margin-bottom: 18px;
-    text-align: left;
-  }
-  .v7-preview-label {
-    font-size: 11.5px;
-    font-weight: 800;
-    color: #94a3b8;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    text-align: center;
-  }
-  .v7-preview-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid #e2e8f0;
-  }
-  .v7-preview-item:last-child { border-bottom: none; }
-  .v7-preview-icon { font-size: 22px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
-  .v7-preview-body { flex: 1; }
-  .v7-preview-title { font-size: 14px; font-weight: 800; color: #0f172a; line-height: 1.35; margin-bottom: 2px; }
-  .v7-preview-desc { font-size: 12.5px; color: #64748b; line-height: 1.5; }
-
-  /* === 강화 CTA 버튼 === */
-  .diagnose-card-cta {
-    display: block !important;
-    background: #c8102e !important;
-    color: white !important;
-    font-size: 16px !important;
-    font-weight: 800 !important;
-    padding: 16px 24px !important;
-    border-radius: 12px !important;
-    border: none !important;
-    margin-top: 0 !important;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(200,16,46,0.25);
-  }
-  .diagnose-card-btn:hover .diagnose-card-cta {
-    background: #a30d24 !important;
-    box-shadow: 0 6px 16px rgba(200,16,46,0.35);
-  }
-  .v7-cta-meta {
-    display: block;
-    font-size: 12px;
-    color: #94a3b8;
-    margin-top: 10px;
-    font-weight: 600;
-  }
-
-  /* === 질문 카드 (기존 유지) === */
-  .diagnose-questions {
-    background: white !important; border: 1px solid #e2e8f0 !important;
-    border-radius: 16px !important; padding: 36px 36px 30px !important;
-    margin: 0 auto !important; max-width: 820px !important;
-    box-shadow: 0 2px 10px rgba(15,23,42,0.05) !important;
-  }
-  .dx7-q-title, .diagnose-q-title { font-size: 24px !important; font-weight: 800; letter-spacing: -0.5px; line-height: 1.4; margin: 14px 0 8px !important; }
-  .dx7-q-desc { font-size: 14.5px !important; color: #64748b !important; line-height: 1.6; }
-  .dx7-eyebrow { background: #c8102e !important; padding: 6px 16px !important; font-size: 13px !important; font-weight: 700; letter-spacing: 0.4px; }
-
-  /* === 2열 그리드 옵션 === */
-  .dx7-entry-options { grid-template-columns: 1fr 1fr !important; gap: 12px !important; margin-top: 26px !important; }
-  .dx7-entry-opt { padding: 18px 18px !important; min-height: 72px; border-width: 1.5px !important; border-radius: 12px !important; }
-  .dx7-entry-opt .icon { font-size: 24px !important; }
-  .dx7-entry-opt .label { font-size: 15px !important; font-weight: 700 !important; line-height: 1.4 !important; }
-  .dx7-entry-opt .arrow { font-size: 16px !important; }
-  .dx7-entry-opt.cat-explore { grid-column: 1 / -1; background: #f8fafc !important; border-color: #cbd5e1 !important; border-style: dashed !important; }
-
-  /* === 일반 옵션 === */
-  .diagnose-q-num { font-size: 13px !important; }
-  .diagnose-q-options { gap: 10px !important; }
-  .diagnose-opt { padding: 16px 18px !important; font-size: 15px !important; line-height: 1.45; }
-  .diagnose-progress-text { font-size: 13.5px !important; }
-
-  /* === 결과 화면 === */
-  .diagnose-result { max-width: 820px !important; margin: 0 auto !important; padding: 36px 36px 30px !important; }
-  .diagnose-result-eyebrow { font-size: 13px !important; }
-  .diagnose-result-title { font-size: 24px !important; letter-spacing: -0.5px; }
-  .diagnose-result-desc { font-size: 14.5px !important; line-height: 1.6; }
-  .diagnose-rc-title { font-size: 16px !important; }
-  .diagnose-rc-reason { font-size: 14px !important; line-height: 1.55; }
-  .diagnose-lead-title { font-size: 18px !important; }
-  .diagnose-lead-desc { font-size: 13.5px !important; line-height: 1.6; }
-  .diagnose-lead-form input { font-size: 14px !important; padding: 12px 14px !important; }
-  .diagnose-lead-submit { font-size: 14px !important; padding: 12px 20px !important; }
-  .diagnose-restart, .diagnose-dynamic-cta { font-size: 15px !important; padding: 13px 22px !important; }
-
-  /* === 페이드 인 === */
-  .diagnose-entry:not([hidden]),
-  .diagnose-questions:not([hidden]),
-  .diagnose-result:not([hidden]) { animation: dx7Fade 0.28s ease-out; }
-  @keyframes dx7Fade {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* === 모바일 === */
-  @media (max-width: 640px) {
-    .diagnose-section { padding: 32px 16px !important; min-height: auto !important; }
-    .diagnose-title { font-size: 24px !important; }
-    .diagnose-desc { font-size: 14.5px !important; }
-    .diagnose-header { margin-bottom: 22px !important; }
-
-    .diagnose-entry { gap: 14px !important; }
-    .diagnose-card-btn { padding: 24px 20px 22px !important; }
-    .diagnose-card-icon { font-size: 38px !important; }
-    .diagnose-card-title { font-size: 21px !important; }
-    .diagnose-card-desc { font-size: 13px !important; margin-bottom: 14px !important; }
-    .v7-preview { padding: 14px 14px 12px; margin-bottom: 14px; }
-    .v7-preview-title { font-size: 13.5px; }
-    .v7-preview-desc { font-size: 12px; }
-    .v7-preview-icon { font-size: 20px; }
-    .diagnose-card-cta { font-size: 15px !important; padding: 14px 20px !important; }
-
-    .diagnose-questions { padding: 26px 20px 22px !important; }
-    .dx7-q-title, .diagnose-q-title { font-size: 20px !important; }
-    .dx7-q-desc { font-size: 13.5px !important; }
-    .dx7-entry-options { grid-template-columns: 1fr !important; gap: 10px !important; }
-    .dx7-entry-opt.cat-explore { grid-column: auto; }
-    .dx7-entry-opt { min-height: 60px; padding: 15px 16px !important; }
-    .dx7-entry-opt .icon { font-size: 22px !important; }
-    .dx7-entry-opt .label { font-size: 14.5px !important; }
-    .diagnose-opt { padding: 14px 16px !important; font-size: 14.5px !important; }
-    .diagnose-result { padding: 26px 20px 22px !important; }
-    .diagnose-result-title { font-size: 21px !important; }
-    .diagnose-lead-title { font-size: 16px !important; }
-  }
-
-  /* === [v8] 결과 받기 버튼 박스 밖 넘침 수정 ===
-     기존: grid-template-columns: 1fr 1fr 1fr auto — input 자연 폭이 1fr를 밀어내며 button이 오버플로
-     수정: input 3개를 3열로, button은 자체 행에서 100% 폭 */
-  .diagnose-lead-form {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 10px !important;
-    align-items: stretch !important;
-  }
-  .diagnose-lead-submit {
-    grid-column: 1 / -1 !important;
-    width: 100% !important;
-    margin-top: 4px !important;
-    padding: 14px 22px !important;
-    font-size: 15px !important;
-    font-weight: 800 !important;
-    border-radius: 10px !important;
-    background: #b45309 !important;
-  }
-  .diagnose-lead-submit:hover { background: #92400e !important; }
-  .diagnose-lead-consent { grid-column: 1 / -1 !important; }
-  @media (max-width: 720px) {
-    .diagnose-lead-form { grid-template-columns: 1fr !important; }
-  }
-</style>
 <title>도원 비즈니스 플로우 v7 — 5단 프로세스</title>
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
 <style>
@@ -1365,7 +1141,8 @@
     cursor: pointer;
     text-align: center;
     transition: background 0.15s;
-    font-family: inherit;
+    font-family: inherit;    text-decoration: none;
+    box-sizing: border-box;
   }
   .cta-final-btn:hover {
     background: #a30d24;
@@ -1621,11 +1398,42 @@
   }
   .diagnose-lead-title { font-size: 17px; font-weight: 800; color: #92400e; margin-bottom: 4px; }
   .diagnose-lead-desc { font-size: 13px; color: #78350f; line-height: 1.55; margin-bottom: 14px; }
-  .diagnose-lead-form { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 8px; }
+  .diagnose-lead-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row;
+    gap: 10px;
+    align-items: stretch;
+  }
   @media (max-width: 720px) { .diagnose-lead-form { grid-template-columns: 1fr; } }
-  .diagnose-lead-form input { padding: 10px 12px; border: 1px solid #fcd34d; border-radius: 8px; font-size: 13px; background: white; font-family: inherit; }
+  .diagnose-lead-form input {
+    padding: 11px 14px;
+    border: 1px solid #fcd34d;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    font-family: inherit;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
   .diagnose-lead-form input:focus { outline: none; border-color: #d97706; }
-  .diagnose-lead-submit { background: #b45309; color: white; padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 800; border: none; cursor: pointer; font-family: inherit; white-space: nowrap; }
+  .diagnose-lead-submit {
+    background: #b45309;
+    color: white;
+    padding: 11px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    transition: background .15s;
+  }
   .diagnose-lead-submit:hover { background: #92400e; }
   .diagnose-lead-consent { grid-column: 1 / -1; font-size: 11px; color: #78350f; display: flex; align-items: center; gap: 6px; margin-top: 4px; }
   .diagnose-lead-success { padding: 18px 16px; background: #ecfdf5; border: 1px solid #6ee7b7; border-radius: 10px; color: #065f46; font-size: 14px; line-height: 1.55; text-align: center; font-weight: 600; }
@@ -1673,6 +1481,1773 @@
     .diagnose-q-title { font-size: 17px; }
     .diagnose-questions, .diagnose-result { padding: 22px 18px; }
   }
+
+  /* =========================================================
+     v7.3 광고 전환 최적화 패치
+     ========================================================= */
+
+  /* ① 신뢰 띠 */
+  .dx-trust-bar {
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 14px 20px;
+    text-align: center;
+  }
+  .dx-trust-bar-inner {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px 20px;
+    font-size: 14px;
+    color: #475569;
+    max-width: 1100px;
+    line-height: 1.4;
+  }
+  .dx-trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+  }
+  .dx-trust-item strong { color: #c8102e; font-weight: 800; }
+  .dx-trust-item.dx-divider::before {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 12px;
+    background: #cbd5e1;
+    margin-right: 14px;
+    vertical-align: middle;
+  }
+  @media (max-width: 640px) {
+    .dx-trust-bar { padding: 10px 12px; }
+    .dx-trust-bar-inner { gap: 4px 10px; font-size: 12.5px; }
+    .dx-trust-item.dx-divider::before { display: none; }
+  }
+
+  /* ② Sticky CTA */
+  .dx-sticky-cta {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 9990;
+    display: flex;
+    background: #fff;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.12);
+    border-top: 1px solid #e5e7eb;
+  }
+  .dx-sticky-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 12px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: -0.2px;
+    transition: opacity .15s, transform .15s;
+    min-height: 56px;
+  }
+  .dx-sticky-btn:hover { opacity: 0.92; }
+  .dx-sticky-btn:active { transform: scale(0.98); }
+  .dx-sticky-btn-tel {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #fff;
+  }
+  .dx-sticky-btn-chat {
+    background: linear-gradient(135deg, #FFEB00 0%, #FFD400 100%);
+    color: #1a1a1a;
+  }
+  .dx-sticky-btn .icon { font-size: 18px; }
+  .dx-sticky-btn-chat .icon { font-size: 20px; }
+  body { padding-bottom: 64px; }
+
+  @media (min-width: 769px) {
+    .dx-sticky-cta {
+      left: auto; right: 24px; bottom: 24px;
+      width: auto;
+      flex-direction: column;
+      gap: 10px;
+      background: transparent;
+      box-shadow: none;
+      border-top: none;
+    }
+    .dx-sticky-btn {
+      border-radius: 50px;
+      padding: 14px 22px;
+      min-height: auto;
+      min-width: 180px;
+      box-shadow: 0 8px 24px rgba(0, 60, 126, 0.3);
+    }
+    .dx-sticky-btn-chat { box-shadow: 0 8px 24px rgba(255, 211, 0, 0.45); }
+    body { padding-bottom: 0; }
+  }
+
+  /* ③ Exit-intent 팝업 */
+  .dx-exit-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.78);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: dxExitFade .25s ease-out;
+  }
+  .dx-exit-overlay.dx-show { display: flex; }
+  @keyframes dxExitFade { from { opacity: 0; } to { opacity: 1; } }
+  .dx-exit-modal {
+    background: #fff;
+    border-radius: 20px;
+    max-width: 460px;
+    width: 100%;
+    padding: 36px 32px 28px;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+    animation: dxExitPop .35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes dxExitPop {
+    from { opacity: 0; transform: scale(0.92) translateY(20px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .dx-exit-close {
+    position: absolute;
+    top: 14px; right: 14px;
+    width: 32px; height: 32px;
+    background: #f1f5f9;
+    border: none;
+    border-radius: 50%;
+    font-size: 16px;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dx-exit-close:hover { background: #e2e8f0; }
+  .dx-exit-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .dx-exit-title {
+    font-size: 23px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.35;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+  }
+  .dx-exit-desc {
+    font-size: 14.5px;
+    color: #475569;
+    line-height: 1.65;
+    margin-bottom: 22px;
+  }
+  .dx-exit-desc strong { color: #c8102e; font-weight: 700; }
+  .dx-exit-actions { display: flex; flex-direction: column; gap: 8px; }
+  .dx-exit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-size: 15.5px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .dx-exit-btn-primary {
+    background: linear-gradient(135deg, #FFEB00 0%, #FFD400 100%);
+    color: #1a1a1a;
+    box-shadow: 0 6px 18px rgba(255, 211, 0, 0.4);
+  }
+  .dx-exit-btn-primary:hover { transform: translateY(-1px); }
+  .dx-exit-btn-secondary {
+    background: transparent;
+    color: #94a3b8;
+    font-size: 13.5px;
+    text-decoration: underline;
+    padding: 6px;
+  }
+  .dx-exit-tip {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid #f1f5f9;
+    font-size: 12.5px;
+    color: #94a3b8;
+    text-align: center;
+    line-height: 1.55;
+  }
+
+
+  /* =========================================================
+     v7.5 도원 톤앤매너 통일 (dowonhr.com 기반)
+     - 네이비 #003c7e 중심 / 화이트 베이스
+     - 영문 대문자 eyebrow / 절제된 액센트
+     ========================================================= */
+
+  /* --- 컬러 토큰 --- */
+  :root {
+    --dw-navy: #003c7e;
+    --dw-navy-dark: #002a5e;
+    --dw-navy-mid: #1a5ba3;
+    --dw-navy-50: #e8eef7;
+    --dw-red: #c8102e;
+    --dw-amber: #d97706;
+    --dw-text: #0f172a;
+    --dw-text-sub: #475569;
+    --dw-text-mute: #94a3b8;
+    --dw-border: #e2e8f0;
+    --dw-border-soft: #f1f5f9;
+    --dw-bg: #ffffff;
+    --dw-bg-soft: #f8fafc;
+  }
+
+  /* --- 베이스 --- */
+  body { background: var(--dw-bg) !important; color: var(--dw-text); }
+  .diagnose-section { background: var(--dw-bg) !important; }
+
+  /* --- 페이지 헤더 (eyebrow + 헤드라인) --- */
+  .page-header {
+    background: var(--dw-bg) !important;
+    padding: 64px 24px 44px !important;
+    text-align: center !important;
+    border-bottom: none !important;
+  }
+  .header-eyebrow {
+    display: inline-block !important;
+    color: var(--dw-navy) !important;
+    background: transparent !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    letter-spacing: 2.5px !important;
+    margin-bottom: 18px !important;
+    border: none !important;
+    padding: 0 !important;
+    text-transform: uppercase;
+  }
+  .page-title {
+    color: var(--dw-text) !important;
+    font-size: 38px !important;
+    font-weight: 800 !important;
+    letter-spacing: -1px !important;
+    line-height: 1.32 !important;
+    margin-bottom: 14px !important;
+  }
+  .page-title em {
+    font-style: normal !important;
+    color: var(--dw-navy) !important;
+    font-weight: 800 !important;
+  }
+  .page-desc {
+    color: var(--dw-text-sub) !important;
+    font-size: 16.5px !important;
+    line-height: 1.7 !important;
+    max-width: 720px;
+    margin: 0 auto !important;
+  }
+  @media (max-width: 640px) {
+    .page-header { padding: 44px 20px 30px !important; }
+    .page-title  { font-size: 26px !important; }
+    .page-desc   { font-size: 14.5px !important; }
+  }
+
+  /* --- 신뢰 띠 --- */
+  .dx-trust-bar {
+    background: var(--dw-bg-soft) !important;
+    border-top: 1px solid var(--dw-border);
+    border-bottom: 1px solid var(--dw-border) !important;
+  }
+  .dx-trust-item strong { color: var(--dw-navy) !important; }
+
+  /* --- 진단 섹션 헤더 --- */
+  .diagnose-eyebrow {
+    background: transparent !important;
+    color: var(--dw-navy) !important;
+    border: none !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px !important;
+    font-size: 12.5px !important;
+    text-transform: uppercase;
+    padding: 0 !important;
+    display: inline-block !important;
+    margin-bottom: 14px !important;
+  }
+  .diagnose-title {
+    color: var(--dw-text) !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.8px !important;
+  }
+  .diagnose-desc { color: var(--dw-text-sub) !important; }
+
+  /* --- 진입 카드 (기업/근로자) --- */
+  .diagnose-card-btn {
+    border: 1.5px solid var(--dw-border) !important;
+    background: var(--dw-bg) !important;
+    transition: all .25s ease !important;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.03) !important;
+  }
+  .diagnose-card-btn:hover {
+    border-color: var(--dw-navy) !important;
+    box-shadow: 0 14px 36px rgba(0, 60, 126, 0.12) !important;
+    transform: translateY(-3px);
+  }
+  .diagnose-card-title { color: var(--dw-text) !important; }
+  .diagnose-card-desc  { color: var(--dw-text-sub) !important; }
+  .diagnose-card-cta {
+    color: var(--dw-navy) !important;
+    border-top: 1px solid var(--dw-border-soft) !important;
+    font-weight: 700 !important;
+  }
+
+  /* --- 진단 진입 옵션 (Q1) --- */
+  .dx7-entry-opt {
+    border-color: var(--dw-border) !important;
+    background: var(--dw-bg) !important;
+    transition: all .2s ease;
+  }
+  .dx7-entry-opt:hover {
+    border-color: var(--dw-navy) !important;
+    background: var(--dw-bg-soft) !important;
+  }
+  .dx7-entry-opt.cat-explore {
+    background: var(--dw-bg-soft) !important;
+    border-color: #cbd5e1 !important;
+    border-style: dashed !important;
+  }
+
+  /* --- 진단 질문 카드 --- */
+  .diagnose-questions {
+    background: var(--dw-bg) !important;
+    border: 1px solid var(--dw-border) !important;
+    box-shadow: 0 2px 12px rgba(15,23,42,0.04) !important;
+  }
+  .dx7-eyebrow {
+    background: var(--dw-navy) !important;
+    color: #fff !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .dx7-q-title, .diagnose-q-title { color: var(--dw-text) !important; }
+  .dx7-q-desc { color: var(--dw-text-sub) !important; }
+
+  /* 옵션 버튼 */
+  .diagnose-opt {
+    border-color: var(--dw-border) !important;
+    background: var(--dw-bg) !important;
+    color: var(--dw-text) !important;
+    transition: all .15s ease;
+  }
+  .diagnose-opt:hover {
+    border-color: var(--dw-navy) !important;
+    background: var(--dw-bg-soft) !important;
+  }
+  .diagnose-opt.selected {
+    border-color: var(--dw-navy) !important;
+    background: var(--dw-navy-50) !important;
+    color: var(--dw-navy) !important;
+    font-weight: 700;
+  }
+
+  /* 진행 바 */
+  .diagnose-progress-bar {
+    background: var(--dw-border-soft) !important;
+  }
+  .diagnose-progress-fill {
+    background: var(--dw-navy) !important;
+  }
+  .diagnose-progress-text {
+    color: var(--dw-text-sub) !important;
+  }
+
+  /* 컨트롤 (이전/스킵) */
+  .diagnose-back, .diagnose-skip {
+    color: var(--dw-text-sub) !important;
+    background: transparent !important;
+  }
+  .diagnose-back:hover, .diagnose-skip:hover {
+    color: var(--dw-navy) !important;
+  }
+
+  /* --- 결과 페이지 --- */
+  .diagnose-result {
+    background: var(--dw-bg) !important;
+    border: 1px solid var(--dw-border) !important;
+    box-shadow: 0 2px 12px rgba(15,23,42,0.04) !important;
+  }
+  .diagnose-result-eyebrow {
+    color: var(--dw-navy) !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .diagnose-result-title { color: var(--dw-text) !important; }
+  .diagnose-result-desc  { color: var(--dw-text-sub) !important; }
+
+  .diagnose-dynamic-cta {
+    background: var(--dw-navy) !important;
+    color: #ffffff !important;
+    border: none !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.2px;
+    box-shadow: 0 8px 24px rgba(0, 60, 126, 0.3) !important;
+    transition: all .15s;
+  }
+  .diagnose-dynamic-cta:hover {
+    background: var(--dw-navy-dark) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px rgba(0, 60, 126, 0.4) !important;
+  }
+  .diagnose-restart {
+    background: #ffffff !important;
+    border: 1.5px solid var(--dw-border) !important;
+    color: var(--dw-text-sub) !important;
+    transition: all .15s;
+  }
+  .diagnose-restart:hover {
+    border-color: var(--dw-navy) !important;
+    color: var(--dw-navy) !important;
+  }
+
+  /* --- Sticky CTA (채널톡: 노란색 → 네이비) --- */
+  .dx-sticky-btn-chat {
+    background: linear-gradient(135deg, var(--dw-navy) 0%, var(--dw-navy-mid) 100%) !important;
+    color: #ffffff !important;
+  }
+  @media (min-width: 769px) {
+    .dx-sticky-btn-chat {
+      box-shadow: 0 8px 24px rgba(0, 60, 126, 0.4) !important;
+    }
+  }
+
+  /* --- Exit-intent 팝업 (네이비 톤) --- */
+  .dx-exit-badge {
+    background: var(--dw-navy-50) !important;
+    color: var(--dw-navy) !important;
+  }
+  .dx-exit-title { color: var(--dw-text) !important; }
+  .dx-exit-desc  { color: var(--dw-text-sub) !important; }
+  .dx-exit-desc strong { color: var(--dw-navy) !important; }
+  .dx-exit-btn-primary {
+    background: linear-gradient(135deg, var(--dw-navy) 0%, var(--dw-navy-mid) 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 18px rgba(0, 60, 126, 0.35) !important;
+  }
+  .dx-exit-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0, 60, 126, 0.45) !important;
+  }
+  .dx-exit-tip { color: var(--dw-text-mute) !important; }
+
+  /* --- 결과 카드 (서비스 추천) --- */
+  .diagnose-rc-card {
+    border: 1px solid var(--dw-border) !important;
+    background: var(--dw-bg) !important;
+    transition: all .2s ease;
+  }
+  .diagnose-rc-card:hover {
+    border-color: var(--dw-navy) !important;
+    box-shadow: 0 8px 24px rgba(0, 60, 126, 0.08) !important;
+  }
+  .diagnose-rc-title { color: var(--dw-text) !important; }
+  .diagnose-rc-reason { color: var(--dw-text-sub) !important; }
+
+  /* --- 트랙 배지 (savings, management, risk) → 네이비 톤으로 --- */
+  .dx7-track-badge {
+    background: var(--dw-navy-50) !important;
+    color: var(--dw-navy) !important;
+    border: 1px solid var(--dw-navy) !important;
+  }
+
+  /* --- 긴급 표시는 빨강 유지 (도원 130도 긴급은 빨강) --- */
+  .dx7-urgent-block,
+  .diagnose-opt[data-value^="urgent"],
+  .dx7-entry-opt.cat-urgent {
+    border-color: var(--dw-red) !important;
+  }
+
+  /* --- 푸터 --- */
+  .page-footer {
+    color: var(--dw-text-mute) !important;
+    background: var(--dw-bg-soft) !important;
+    border-top: 1px solid var(--dw-border);
+  }
+
+
+
+
+  /* =========================================================
+     v7.7 — Consultant Card (도원 노무사 1:1 코멘트 카드)
+     ========================================================= */
+  .dx7-empathy-recap {
+    margin: 22px 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-left: none;
+    border-radius: 0;
+  }
+  .dx7-empathy-recap[hidden] { display: none !important; }
+  .dx7-consult-card {
+    background: var(--dw-bg-soft);
+    border: 1px solid var(--dw-border);
+    border-left: 4px solid var(--dw-navy);
+    border-radius: 14px;
+    padding: 24px 28px;
+  }
+  .dx7-consult-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--dw-border);
+  }
+  .dx7-consult-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--dw-navy-50);
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d6e0ee;
+    box-shadow: 0 2px 6px rgba(0, 60, 126, 0.08);
+  }
+  .dx7-consult-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .dx7-consult-avatar svg {
+    width: 60%;
+    height: 60%;
+    color: var(--dw-navy);
+  }
+  .dx7-consult-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .dx7-consult-label {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--dw-text);
+    letter-spacing: -0.3px;
+  }
+  .dx7-consult-byline {
+    font-size: 12.5px;
+    color: var(--dw-text-sub);
+    letter-spacing: -0.1px;
+  }
+  .dx7-consult-byline strong {
+    color: var(--dw-navy);
+    font-weight: 700;
+  }
+  .dx7-consult-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .dx7-consult-line {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--dw-text);
+    margin: 0;
+  }
+  .dx7-consult-quote {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--dw-text-mute);
+    padding: 4px 0 4px 14px;
+    border-left: 3px solid var(--dw-border);
+    margin: 6px 0;
+    font-style: normal;
+    quotes: none;
+  }
+  .dx7-consult-quote::before,
+  .dx7-consult-quote::after { content: none; }
+  .dx7-consult-solution {
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--dw-text);
+    margin: 6px 0 0;
+    font-weight: 600;
+  }
+  .dx7-consult-solution strong {
+    color: var(--dw-navy);
+    font-weight: 800;
+  }
+  @media (max-width: 640px) {
+    .dx7-consult-card { padding: 20px 18px; }
+    .dx7-consult-head { gap: 12px; }
+    .dx7-consult-avatar { width: 48px; height: 48px; }
+    .dx7-consult-label { font-size: 14px; }
+    .dx7-consult-byline { font-size: 12px; }
+    .dx7-consult-line, .dx7-consult-solution { font-size: 14.5px; }
+    .dx7-consult-quote { font-size: 13.5px; }
+  }
+
+
+  /* =========================================================
+     v7.8 — Cross-sell 블록 영구 숨김 (채널톡 상담 버튼과 중복)
+     ========================================================= */
+  #dx7CrossSell,
+  .dx7-crosssell,
+  .dx7-crosssell-btn { display: none !important; }
+
+
+  /* =========================================================
+     v7.9 — 가독성 개선 (폰트 크기·여백·줄간격·최대 너비)
+     기준: 한국어 본문 16px+, line-height 1.7~1.8, 행 길이 65ch 이내
+     ========================================================= */
+
+  /* 기본 텍스트 */
+  body {
+    font-size: 16px !important;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* === 페이지 헤더 === */
+  .page-title { font-size: 42px !important; line-height: 1.35 !important; letter-spacing: -1.2px !important; }
+  .page-desc  {
+    font-size: 17.5px !important;
+    line-height: 1.75 !important;
+    max-width: 720px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* === 신뢰 띠 === */
+  .dx-trust-bar-inner { font-size: 15.5px !important; line-height: 1.5 !important; }
+  .dx-trust-item strong { font-size: 1.05em; }
+
+  /* === 진단 섹션 헤더 === */
+  .diagnose-eyebrow { font-size: 13.5px !important; letter-spacing: 2.2px !important; }
+  .diagnose-title   { font-size: 32px !important; line-height: 1.4 !important; }
+  .diagnose-desc    {
+    font-size: 17px !important;
+    line-height: 1.75 !important;
+    max-width: 720px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* === 진입 카드 (기업/근로자) === */
+  .diagnose-card-btn { padding: 38px 30px !important; }
+  .diagnose-card-icon { font-size: 50px !important; margin-bottom: 16px !important; }
+  .diagnose-card-title { font-size: 24px !important; margin-bottom: 12px !important; }
+  .diagnose-card-desc  { font-size: 15.5px !important; line-height: 1.8 !important; }
+  .diagnose-card-cta   { font-size: 16.5px !important; padding-top: 16px !important; margin-top: 18px !important; }
+
+  /* === 진단 진입 옵션 (Q1) === */
+  .dx7-entry-opt { padding: 20px 20px !important; min-height: 78px; }
+  .dx7-entry-opt .icon  { font-size: 26px !important; }
+  .dx7-entry-opt .label { font-size: 16.5px !important; line-height: 1.5 !important; font-weight: 700 !important; }
+  .dx7-entry-opt .arrow { font-size: 18px !important; }
+
+  /* === 진단 질문 카드 === */
+  .diagnose-questions { padding: 40px 40px 34px !important; }
+  .dx7-q-title, .diagnose-q-title { font-size: 26px !important; line-height: 1.4 !important; }
+  .dx7-q-desc { font-size: 16px !important; line-height: 1.7 !important; }
+  .dx7-eyebrow { font-size: 14px !important; padding: 7px 18px !important; }
+  .diagnose-q-num { font-size: 15px !important; }
+  .diagnose-opt {
+    padding: 18px 20px !important;
+    font-size: 16.5px !important;
+    line-height: 1.5 !important;
+    min-height: 56px;
+  }
+  .diagnose-progress-text { font-size: 15px !important; }
+  .diagnose-progress-bar { height: 8px !important; }
+
+  /* === 결과 페이지 === */
+  .diagnose-result { padding: 40px 40px 34px !important; }
+  .diagnose-result-eyebrow { font-size: 14px !important; letter-spacing: 1.8px !important; }
+  .diagnose-result-title { font-size: 28px !important; line-height: 1.4 !important; letter-spacing: -0.7px !important; }
+  .diagnose-result-desc {
+    font-size: 16.5px !important;
+    line-height: 1.75 !important;
+    max-width: 720px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* === 노무사 코멘트 카드 === */
+  .dx7-consult-card { padding: 28px 32px !important; }
+  .dx7-consult-head { margin-bottom: 22px !important; padding-bottom: 20px !important; gap: 16px !important; }
+  .dx7-consult-avatar { width: 64px !important; height: 64px !important; }
+  .dx7-consult-label  { font-size: 17px !important; }
+  .dx7-consult-byline { font-size: 14px !important; line-height: 1.5 !important; }
+  .dx7-consult-body   { gap: 14px !important; }
+  .dx7-consult-line {
+    font-size: 17px !important;
+    line-height: 1.8 !important;
+    max-width: 65ch;
+  }
+  .dx7-consult-quote {
+    font-size: 16px !important;
+    line-height: 1.7 !important;
+    padding: 8px 0 8px 16px !important;
+    margin: 10px 0 !important;
+    max-width: 65ch;
+  }
+  .dx7-consult-solution {
+    font-size: 17.5px !important;
+    line-height: 1.75 !important;
+    margin-top: 10px !important;
+    max-width: 65ch;
+  }
+
+  /* === 결과 카드 (서비스 추천) === */
+  .diagnose-rc-card { padding: 22px 24px !important; }
+  .diagnose-rc-title  { font-size: 19px !important; line-height: 1.5 !important; margin-bottom: 10px !important; }
+  .diagnose-rc-reason { font-size: 15.5px !important; line-height: 1.7 !important; }
+
+  /* === CTA 버튼 === */
+  .diagnose-restart,
+  .diagnose-dynamic-cta { font-size: 16.5px !important; padding: 16px 28px !important; }
+
+  /* === Sticky 채널톡 버튼 === */
+  .dx-sticky-btn { font-size: 16.5px !important; min-height: 60px !important; letter-spacing: -0.3px; }
+  .dx-sticky-btn .icon { font-size: 21px !important; }
+
+  /* === Exit-intent 팝업 === */
+  .dx-exit-modal { padding: 40px 36px 32px !important; }
+  .dx-exit-badge { font-size: 13.5px !important; padding: 6px 16px !important; }
+  .dx-exit-title { font-size: 25px !important; line-height: 1.4 !important; }
+  .dx-exit-desc  { font-size: 15.5px !important; line-height: 1.75 !important; }
+  .dx-exit-btn   { font-size: 17px !important; padding: 18px 26px !important; }
+  .dx-exit-tip   { font-size: 13.5px !important; line-height: 1.65 !important; }
+
+  /* === 긴급 결과 블록 === */
+  .dx7-urgent-svc    { font-size: 19px !important; }
+  .dx7-urgent-closer { font-size: 15.5px !important; line-height: 1.65 !important; }
+  .dx7-urgent-tag    { font-size: 14px !important; padding: 6px 14px !important; }
+  .dx7-urgent-cta    { font-size: 16.5px !important; padding: 16px 26px !important; }
+
+  /* === 트랙 배지 === */
+  .dx7-track-info { font-size: 14px !important; padding: 6px 14px !important; }
+
+  /* === 컨트롤 버튼 === */
+  .diagnose-back, .diagnose-skip { font-size: 15px !important; padding: 8px 14px !important; }
+
+  /* === 단락 간 여백 (호흡감) === */
+  .diagnose-result-header { margin-bottom: 28px !important; }
+  .diagnose-result-cta { margin-top: 32px !important; gap: 12px !important; }
+
+  /* === 모바일 (≤640px) 별도 사이즈 === */
+  @media (max-width: 640px) {
+    .page-title { font-size: 28px !important; letter-spacing: -0.8px !important; }
+    .page-desc  { font-size: 16px !important; }
+    .diagnose-title { font-size: 22px !important; }
+    .diagnose-desc  { font-size: 15.5px !important; }
+    .diagnose-card-title { font-size: 21px !important; }
+    .diagnose-card-desc  { font-size: 14.5px !important; line-height: 1.75 !important; }
+    .diagnose-card-icon  { font-size: 44px !important; }
+    .dx7-entry-opt .label { font-size: 15.5px !important; }
+    .dx7-q-title { font-size: 21px !important; }
+    .dx7-q-desc  { font-size: 15px !important; }
+    .diagnose-opt { font-size: 15.5px !important; padding: 16px 18px !important; }
+    .diagnose-result-title { font-size: 22px !important; }
+    .diagnose-result-desc  { font-size: 15.5px !important; }
+    .diagnose-result { padding: 28px 22px 24px !important; }
+    .dx7-consult-card { padding: 22px 20px !important; }
+    .dx7-consult-head { gap: 12px !important; padding-bottom: 16px !important; margin-bottom: 18px !important; }
+    .dx7-consult-avatar { width: 52px !important; height: 52px !important; }
+    .dx7-consult-label  { font-size: 15.5px !important; }
+    .dx7-consult-byline { font-size: 13px !important; }
+    .dx7-consult-line, .dx7-consult-solution { font-size: 15.5px !important; line-height: 1.75 !important; }
+    .dx7-consult-quote { font-size: 14.5px !important; }
+    .diagnose-rc-title  { font-size: 17px !important; }
+    .diagnose-rc-reason { font-size: 14.5px !important; }
+    .dx-sticky-btn { font-size: 15.5px !important; min-height: 58px !important; }
+    .diagnose-restart, .diagnose-dynamic-cta { font-size: 15.5px !important; padding: 15px 22px !important; }
+    .dx-exit-title { font-size: 21px !important; }
+    .dx-exit-desc  { font-size: 14.5px !important; }
+    .dx-exit-btn   { font-size: 16px !important; padding: 16px 22px !important; }
+  }
+
+</style>
+<style id="dw-redesign-v712">
+/* ============================================================
+   v7.12 리디자인 레이어 — UI/UX 현대화 · 전환 최적화
+   A 모바일 스택·CTA 확대·히어로 CTA / B 점진적 공개·보더리스·타이포
+   C 마이크로인터랙션·카운터·스마트 스티키
+   ============================================================ */
+body { font-size: 16.5px; }
+
+/* ---- A3 히어로 ---- */
+.page-header { padding: 74px 32px 66px; }
+h1.page-title { font-size: 52px; letter-spacing: -1.8px; }
+p.page-desc { font-size: 19px; }
+.dw-hero-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 32px; padding: 19px 40px;
+  background: linear-gradient(135deg,#e0142f 0%,#c8102e 100%);
+  color: #fff; font-size: 18px; font-weight: 800; font-family: inherit;
+  border: none; border-radius: 999px; cursor: pointer;
+  box-shadow: 0 14px 34px rgba(200,16,46,0.42);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.dw-hero-cta:hover { transform: translateY(-3px); box-shadow: 0 20px 46px rgba(200,16,46,0.55); }
+.dw-hero-cta:active { transform: translateY(0); }
+.dw-hero-note { margin-top: 15px; font-size: 13.5px; color: rgba(255,255,255,0.68); }
+
+/* ---- B5 인스턴스 카드: 보더리스 + 여백 ---- */
+.instances-section { padding: 64px 32px; }
+.instance-strip {
+  position: relative;
+  border: 1px solid #eef1f5 !important;
+  border-radius: 18px !important;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.05);
+  transition: box-shadow .22s ease, transform .22s ease;
+}
+.instance-strip:hover {
+  box-shadow: 0 16px 40px rgba(15,23,42,0.1) !important;
+  transform: translateY(-2px);
+}
+.instance-strip::after {
+  content:''; position:absolute; left:0; right:0; top:0; height:3px;
+  border-radius: 18px 18px 0 0;
+}
+.instance-strip[data-status="existing"]::after { background: var(--status-existing); }
+.instance-strip[data-status="hybrid"]::after  { background: var(--status-hybrid); }
+.instance-strip[data-status="new"]::after      { background: var(--status-new); }
+
+/* ---- B4 점진적 공개 (JS 준비 완료 dw-ready 후에만 접힘) ---- */
+.dw-ready .instance-strip .strip-flow,
+.dw-ready .instance-strip .preview-bar { display: none; }
+.dw-ready .instance-strip.dw-open .strip-flow { display: flex; animation: dwExpand .3s ease; }
+.dw-ready .instance-strip.dw-open .preview-bar { display: flex; }
+@keyframes dwExpand { from { opacity:0; transform: translateY(-6px); } to { opacity:1; transform:none; } }
+.dw-ready .strip-header { cursor: pointer; }
+.strip-header { padding: 18px 24px; border-bottom: none !important; }
+.dw-ready .instance-strip.dw-open .strip-header { border-bottom: 1px solid var(--border) !important; }
+.strip-title { font-size: 18.5px; }
+.dw-teaser {
+  padding: 2px 24px 18px 70px;
+  font-size: 14.5px; color: var(--text-2); line-height: 1.55;
+}
+.instance-strip.dw-open .dw-teaser { display: none; }
+.dw-hint { color: var(--text-3); font-weight: 700; font-size: 12.5px; }
+.dw-chev {
+  margin-left: auto; flex-shrink: 0;
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: #f1f5f9; color: var(--text-2); font-size: 12px;
+  transition: transform .22s ease, background .22s ease, color .22s ease;
+}
+.instance-strip.dw-open .dw-chev { transform: rotate(180deg); background: var(--accent); color:#fff; }
+
+/* ---- B5 플로우 박스: 여백↑ 테두리↓ ---- */
+.strip-flow { padding: 22px; }
+.flow-box { border-width: 1px !important; border-radius: 14px !important; padding: 20px 18px !important; }
+.flow-box.box-problem { border-width: 1.5px !important; }
+
+/* ---- A2 CTA 확대·단일 강조색 ---- */
+.cta-final-btn {
+  font-size: 15.5px !important;
+  padding: 16px 14px !important;
+  border-radius: 11px !important;
+  min-height: 56px;
+  display: flex !important; align-items: center; justify-content: center;
+  box-shadow: 0 6px 18px rgba(200,16,46,0.32);
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.cta-final-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(200,16,46,0.45); }
+.closer-line { font-size: 13px !important; margin-top: 9px !important; }
+.diagnose-dynamic-cta {
+  font-size: 17px !important; padding: 17px 32px !important;
+  border-radius: 999px !important;
+  box-shadow: 0 10px 28px rgba(200,16,46,0.35);
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.diagnose-dynamic-cta:hover { background: #a30d24 !important; transform: translateY(-2px); }
+.filter-btn.active { background: var(--primary) !important; border-color: var(--primary) !important; color:#fff !important; }
+
+/* ---- C 스크롤 리빌 ---- */
+.dw-reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
+.dw-reveal.dw-in { opacity: 1; transform: none; }
+.diagnose-progress-fill { transition: width .45s cubic-bezier(.4,0,.2,1); }
+
+/* ---- C 스마트 스티키 ---- */
+.dw-sticky-btn { border: none; font-family: inherit; cursor: pointer; }
+.dw-sticky-btn-diagnose { background: linear-gradient(135deg,#e0142f 0%,#c8102e 100%); color: #fff; }
+
+/* ---- A1 모바일: 가로 스크롤 제거 → 세로 스택 ---- */
+@media (max-width: 860px) {
+  .page-header { padding: 52px 20px 46px; }
+  h1.page-title { font-size: 30px !important; letter-spacing: -1px; }
+  p.page-desc { font-size: 16px !important; }
+  .dw-hero-cta { width: 100%; justify-content: center; font-size: 16.5px; padding: 17px 22px; }
+  .instances-section { padding: 40px 15px; }
+  .strip-flow {
+    flex-direction: column !important;
+    overflow: visible !important;
+    gap: 0 !important;
+    padding: 16px !important;
+  }
+  .flow-box { min-width: 0 !important; width: 100% !important; flex: none !important; }
+  .flow-arrow-wrap {
+    width: 100% !important; height: 32px !important;
+    display: flex !important; align-items: center; justify-content: center;
+    padding: 0 !important; min-width: 0 !important;
+  }
+  .flow-arrow-wrap svg { transform: rotate(90deg); width: 20px !important; height: 20px !important; }
+  .dw-teaser { padding-left: 24px; }
+  .cta-final-btn { font-size: 16px !important; min-height: 58px; }
+}
+@media (min-width: 769px) {
+  .dw-sticky-btn-diagnose { box-shadow: 0 8px 24px rgba(200,16,46,0.45); }
+}
+</style>
+<style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@1.3.9/dist/web/static/pretendard.min.css');
+/* =====================================================================
+   도원 진단 — 토스(Toss) 스타일 리디자인  v7.12-toss
+   설문 전용 모드 · 한 화면 한 질문 · 큰 버튼 · 토스 블루 · 앱형 단일 컬럼
+   ===================================================================== */
+:root {
+  --toss-blue:      #1F2D52;
+  --toss-blue-dark: #16213D;
+  --toss-blue-tint: #E6E9F2;
+  --brand-gold:      #C0A04E;
+  --brand-gold-dark: #9A7E34;
+  --brand-gold-tint: #F7F2E4;
+  --toss-red:       #F04452;
+  --toss-red-tint:  #FFF0F1;
+  --toss-green:     #1FA873;
+  --ink:   #191F28;
+  --ink-2: #4E5968;
+  --ink-3: #8B95A1;
+  --line:  #E5E8EB;
+  --bg:    #F2F4F6;
+  --card:  #FFFFFF;
+  --toss-font: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+}
+html.dx7-direct-company .diagnose-entry,
+html.dx7-direct-worker  .diagnose-entry { display: none !important; }
+html.dx7-direct-company [data-stage="entry-q"],
+html.dx7-direct-worker  [data-stage="entry-q"] { display: block !important; }
+.filter-bar,
+.instances-section,
+.page-header,
+.page-footer { display: none !important; }
+.diagnose-rc-link { display: none !important; }
+.diagnose-entry[hidden],
+.diagnose-questions[hidden],
+.diagnose-result[hidden],
+[data-stage][hidden] { display: none !important; }
+html, body { min-height: 100vh; }
+body {
+  background: var(--bg) !important;
+  font-family: var(--toss-font) !important;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+.diagnose-section, .diagnose-section * { font-family: var(--toss-font) !important; }
+.diagnose-section *, .diagnose-section *::before, .diagnose-section *::after { box-sizing: border-box; }
+.dx-trust-bar {
+  background: var(--card) !important;
+  border: none !important;
+  border-bottom: 1px solid var(--line) !important;
+  padding: 11px 20px !important;
+}
+.dx-trust-bar-inner {
+  display: flex; flex-wrap: wrap; gap: 6px 16px;
+  justify-content: center; align-items: center;
+  max-width: 560px; margin: 0 auto !important;
+}
+.dx-trust-item { font-size: 12.5px !important; color: var(--ink-3) !important; font-weight: 600; letter-spacing: -0.2px; }
+.dx-trust-item strong { color: var(--ink-2) !important; font-weight: 800; }
+.dx-trust-bar .dx-divider { border: none !important; }
+.diagnose-section {
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  padding: 48px 20px !important;
+  background: var(--bg) !important;
+  border-bottom: none !important;
+}
+.diagnose-inner { width: 100%; max-width: 480px !important; margin: 0 auto !important; }
+.diagnose-header { margin-bottom: 28px !important; text-align: center; }
+.diagnose-eyebrow {
+  display: inline-block;
+  background: var(--toss-blue-tint) !important;
+  color: var(--toss-blue) !important;
+  border: none !important;
+  padding: 6px 12px !important;
+  border-radius: 999px !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.2px !important;
+  margin-bottom: 16px !important;
+}
+.diagnose-title {
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.8px !important;
+  line-height: 1.4 !important;
+  color: var(--ink) !important;
+  margin-bottom: 10px !important;
+}
+.diagnose-desc {
+  font-size: 15px !important;
+  color: var(--ink-2) !important;
+  line-height: 1.6 !important;
+  letter-spacing: -0.3px;
+}
+.diagnose-entry {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  max-width: 480px;
+  margin: 0 auto !important;
+}
+.diagnose-card-btn {
+  display: block;
+  width: 100%;
+  text-align: left !important;
+  background: var(--card) !important;
+  padding: 24px 22px !important;
+  border-radius: 20px !important;
+  border: 1.5px solid var(--line) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+  cursor: pointer;
+  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.diagnose-card-btn:hover {
+  border-color: var(--toss-blue) !important;
+  box-shadow: 0 6px 20px rgba(31,45,82,0.14) !important;
+}
+.diagnose-card-btn:active { transform: scale(0.985); }
+.diagnose-card-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px;
+  background: var(--toss-blue-tint) !important;
+  border-radius: 14px !important;
+  font-size: 28px !important;
+  margin-bottom: 14px !important;
+}
+.diagnose-card-title {
+  font-size: 19px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.5px !important;
+  color: var(--ink) !important;
+  margin-bottom: 7px !important;
+}
+.diagnose-card-desc {
+  font-size: 13.5px !important;
+  line-height: 1.65 !important;
+  color: var(--ink-3) !important;
+  letter-spacing: -0.2px;
+}
+.diagnose-card-cta {
+  margin-top: 16px !important;
+  padding-top: 14px !important;
+  border-top: 1px solid var(--line) !important;
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  color: var(--toss-blue) !important;
+  letter-spacing: -0.3px;
+}
+.diagnose-questions,
+.diagnose-result {
+  background: var(--card) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 24px !important;
+  padding: 32px 26px !important;
+  margin: 0 auto !important;
+  max-width: 480px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important;
+}
+.dx7-eyebrow {
+  display: inline-block;
+  background: var(--toss-blue-tint) !important;
+  color: var(--toss-blue) !important;
+  border-radius: 999px !important;
+  padding: 6px 13px !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.2px !important;
+  margin-bottom: 14px;
+}
+.dx7-q-title, .diagnose-q-title {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.6px !important;
+  line-height: 1.42 !important;
+  color: var(--ink) !important;
+  margin: 12px 0 8px !important;
+}
+.dx7-q-desc {
+  font-size: 14.5px !important;
+  color: var(--ink-2) !important;
+  line-height: 1.6 !important;
+  letter-spacing: -0.3px;
+}
+.dx7-entry-options {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  margin-top: 22px !important;
+}
+.dx7-entry-opt {
+  display: flex !important;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  background: var(--card) !important;
+  border: 1.5px solid var(--line) !important;
+  border-radius: 16px !important;
+  padding: 18px 18px !important;
+  min-height: 68px;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease, transform .1s ease;
+}
+.dx7-entry-opt:hover {
+  border-color: var(--toss-blue) !important;
+  background: var(--toss-blue-tint) !important;
+}
+.dx7-entry-opt:active { transform: scale(0.99); }
+.dx7-entry-opt .icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; flex-shrink: 0;
+  background: var(--bg);
+  border-radius: 11px;
+  font-size: 22px !important;
+}
+.dx7-entry-opt .label {
+  flex: 1;
+  font-size: 15.5px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  letter-spacing: -0.3px;
+  color: var(--ink) !important;
+}
+.dx7-entry-opt .arrow { font-size: 16px !important; color: var(--ink-3) !important; }
+.dx7-entry-opt:hover .arrow { color: var(--toss-blue) !important; }
+.dx7-entry-opt.cat-explore {
+  background: var(--bg) !important;
+  border-style: dashed !important;
+  border-color: #D1D6DB !important;
+}
+.dx7-entry-opt.cat-explore:hover {
+  background: var(--toss-blue-tint) !important;
+  border-color: var(--toss-blue) !important;
+}
+.dx7-entry-opt.cat-urgent,
+.dx7-entry-opt.cat-savings,
+.dx7-entry-opt.cat-mgmt {
+  background: var(--card) !important;
+  border-color: var(--line) !important;
+  border-style: solid !important;
+}
+.dx7-entry-opt.cat-urgent:hover,
+.dx7-entry-opt.cat-savings:hover,
+.dx7-entry-opt.cat-mgmt:hover {
+  background: var(--toss-blue-tint) !important;
+  border-color: var(--toss-blue) !important;
+}
+#dx7TrackBadge { text-align: center; margin-bottom: 14px !important; }
+.dx7-track-info {
+  display: inline-block; padding: 5px 12px !important;
+  border-radius: 999px !important;
+  font-size: 11.5px !important; font-weight: 800 !important;
+  letter-spacing: -0.1px !important;
+}
+.dx7-track-info.urgent  { background: var(--toss-red-tint) !important; color: var(--toss-red) !important; }
+.dx7-track-info.savings { background: #E5F6EF !important; color: var(--toss-green) !important; }
+.dx7-track-info.mgmt    { background: var(--toss-blue-tint) !important; color: var(--toss-blue) !important; }
+.dx7-track-info.explore { background: var(--bg) !important; color: var(--ink-2) !important; }
+.diagnose-progress { margin-bottom: 20px !important; }
+.diagnose-progress-bar {
+  height: 6px !important;
+  background: var(--bg) !important;
+  border-radius: 999px !important;
+  overflow: hidden;
+}
+.diagnose-progress-fill {
+  height: 100%;
+  background: var(--toss-blue) !important;
+  border-radius: 999px !important;
+  transition: width .35s cubic-bezier(.4,0,.2,1);
+}
+.diagnose-progress-text {
+  margin-top: 8px !important;
+  font-size: 13px !important;
+  font-weight: 600;
+  color: var(--ink-3) !important;
+  letter-spacing: -0.2px;
+}
+.dx7-empathy {
+  background: var(--toss-blue-tint) !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 14px 16px !important;
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+  color: var(--toss-blue-dark) !important;
+  margin-bottom: 18px !important;
+  letter-spacing: -0.2px;
+}
+.dx7-empathy strong { color: var(--toss-blue-dark) !important; font-weight: 800; }
+.diagnose-q-num {
+  display: inline-block;
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+  color: var(--toss-blue) !important;
+  letter-spacing: 0.2px;
+}
+.diagnose-q-options {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  margin-top: 18px !important;
+}
+.diagnose-opt {
+  width: 100%;
+  text-align: left !important;
+  background: var(--card) !important;
+  border: 1.5px solid var(--line) !important;
+  border-radius: 16px !important;
+  padding: 17px 18px !important;
+  font-size: 15.5px !important;
+  font-weight: 600 !important;
+  line-height: 1.5 !important;
+  letter-spacing: -0.3px;
+  color: var(--ink) !important;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease, color .15s ease, transform .1s ease;
+}
+.diagnose-opt:hover {
+  border-color: var(--toss-blue) !important;
+  background: var(--toss-blue-tint) !important;
+}
+.diagnose-opt:active { transform: scale(0.99); }
+.diagnose-opt.selected {
+  border-color: var(--toss-blue) !important;
+  border-width: 2px !important;
+  background: var(--toss-blue-tint) !important;
+  color: var(--toss-blue-dark) !important;
+  font-weight: 700 !important;
+}
+.diagnose-multi-hint {
+  margin-top: 12px !important;
+  font-size: 12.5px !important;
+  color: var(--ink-3) !important;
+  line-height: 1.5;
+  letter-spacing: -0.2px;
+}
+.diagnose-multi-next {
+  width: 100%;
+  margin-top: 14px !important;
+  background: var(--toss-blue) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.3px;
+  cursor: pointer;
+  transition: background .15s ease, transform .1s ease;
+}
+.diagnose-multi-next:hover:not(:disabled) { background: var(--toss-blue-dark) !important; }
+.diagnose-multi-next:active:not(:disabled) { transform: scale(0.99); }
+.diagnose-multi-next:disabled {
+  background: var(--line) !important;
+  color: var(--ink-3) !important;
+  cursor: not-allowed;
+}
+.diagnose-controls {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px !important;
+}
+.diagnose-back, .diagnose-skip {
+  background: transparent !important;
+  border: none !important;
+  padding: 10px 6px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: var(--ink-3) !important;
+  letter-spacing: -0.3px;
+  cursor: pointer;
+  transition: color .15s ease;
+}
+.diagnose-back:hover:not(:disabled),
+.diagnose-skip:hover { color: var(--ink) !important; }
+.diagnose-back:disabled { opacity: 0.35; cursor: not-allowed; }
+.diagnose-skip {
+  background: var(--bg) !important;
+  border-radius: 999px !important;
+  padding: 9px 16px !important;
+}
+.diagnose-result-header { text-align: center; margin-bottom: 22px !important; }
+.diagnose-result-eyebrow {
+  display: inline-block;
+  background: #E5F6EF !important;
+  color: var(--toss-green) !important;
+  border-radius: 999px !important;
+  padding: 6px 13px !important;
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.2px;
+  margin-bottom: 12px;
+}
+.diagnose-result-title {
+  font-size: 23px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.7px !important;
+  color: var(--ink) !important;
+  line-height: 1.4;
+}
+.diagnose-result-desc {
+  margin-top: 8px;
+  font-size: 14.5px !important;
+  line-height: 1.6 !important;
+  color: var(--ink-2) !important;
+  letter-spacing: -0.3px;
+}
+.diagnose-result-desc strong { color: var(--ink) !important; font-weight: 800; }
+.diagnose-result-cards { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+.diagnose-rc {
+  display: flex !important;
+  gap: 14px;
+  background: var(--card) !important;
+  border: 1.5px solid var(--line) !important;
+  border-radius: 18px !important;
+  padding: 20px 18px !important;
+}
+.diagnose-rc.strong { border-color: var(--toss-blue) !important; background: var(--toss-blue-tint) !important; }
+.diagnose-rc-rank {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; flex-shrink: 0;
+  background: var(--toss-blue) !important;
+  color: #fff !important;
+  border-radius: 50% !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+}
+.diagnose-rc-body { flex: 1; }
+.diagnose-rc-badge {
+  display: inline-block;
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.1px;
+  margin-bottom: 8px;
+}
+.diagnose-rc-badge-strong { background: var(--toss-blue) !important; color: #fff !important; }
+.diagnose-rc-badge-normal { background: var(--toss-blue-tint) !important; color: var(--toss-blue) !important; }
+.diagnose-rc-badge-light  { background: var(--bg) !important; color: var(--ink-2) !important; }
+.diagnose-rc-title {
+  font-size: 16.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.4px;
+  color: var(--ink) !important;
+  margin-bottom: 6px;
+}
+.diagnose-rc-reason {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: var(--ink-2) !important;
+  letter-spacing: -0.2px;
+}
+.diagnose-rc-closer {
+  margin-top: 10px;
+  background: var(--bg) !important;
+  border-radius: 12px !important;
+  padding: 11px 13px !important;
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  color: var(--ink-2) !important;
+}
+.dx7-urgent-result {
+  background: var(--toss-red-tint) !important;
+  border: 1.5px solid #FAD2D5 !important;
+  border-radius: 18px !important;
+  padding: 22px 20px !important;
+  text-align: center;
+}
+.dx7-urgent-tag {
+  display: inline-block;
+  background: var(--toss-red) !important;
+  color: #fff !important;
+  border-radius: 999px !important;
+  padding: 5px 13px !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  margin-bottom: 12px;
+}
+.dx7-urgent-svc { font-size: 19px !important; font-weight: 800 !important; letter-spacing: -0.5px; color: var(--ink) !important; }
+.dx7-urgent-closer { margin-top: 10px; font-size: 13.5px !important; line-height: 1.6 !important; color: var(--ink-2) !important; }
+.dx7-urgent-cta {
+  width: 100%;
+  margin-top: 16px !important;
+  background: var(--toss-red) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.3px;
+  cursor: pointer;
+  transition: filter .15s ease, transform .1s ease;
+}
+.dx7-urgent-cta:hover { filter: brightness(0.94); }
+.dx7-urgent-cta:active { transform: scale(0.99); }
+.dx7-crosssell {
+  margin-top: 16px;
+  background: var(--bg) !important;
+  border-radius: 18px !important;
+  padding: 20px 18px !important;
+  text-align: center;
+}
+.dx7-crosssell-title { font-size: 15px !important; font-weight: 800 !important; letter-spacing: -0.4px; color: var(--ink) !important; }
+.dx7-crosssell-desc { margin-top: 8px; font-size: 13.5px !important; line-height: 1.6 !important; color: var(--ink-2) !important; }
+.dx7-crosssell-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+.dx7-crosssell-btn {
+  width: 100%;
+  background: var(--toss-blue) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 13px !important;
+  padding: 14px !important;
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.3px;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.dx7-crosssell-btn:hover { background: var(--toss-blue-dark) !important; }
+.dx7-crosssell-btn.secondary {
+  background: var(--card) !important;
+  color: var(--ink-2) !important;
+  border: 1.5px solid var(--line) !important;
+}
+.dx7-crosssell-btn.secondary:hover { background: var(--bg) !important; }
+.dx7-empathy-recap {
+  background: var(--toss-blue-tint) !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+  margin-bottom: 16px !important;
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+  color: var(--toss-blue-dark) !important;
+}
+.dx7-consult-card {
+  background: var(--card) !important;
+  border: 1.5px solid var(--line) !important;
+  border-radius: 18px !important;
+  padding: 20px 18px !important;
+}
+.diagnose-result-cta {
+  display: flex !important;
+  flex-direction: column-reverse !important;
+  gap: 10px;
+  margin-top: 22px !important;
+}
+.diagnose-dynamic-cta {
+  width: 100%;
+  background: var(--toss-blue) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 17px !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.3px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(31,45,82,0.28) !important;
+  transition: background .15s ease, transform .1s ease;
+}
+.diagnose-dynamic-cta:hover { background: var(--toss-blue-dark) !important; }
+.diagnose-dynamic-cta:active { transform: scale(0.99); }
+.diagnose-restart {
+  width: 100%;
+  background: var(--bg) !important;
+  color: var(--ink-2) !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 14px !important;
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.3px;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.diagnose-restart:hover { background: var(--line) !important; }
+.dx-sticky-cta {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  z-index: 90;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom)) !important;
+  background: transparent !important;
+  display: none !important;
+}
+.dx-sticky-btn, .dw-sticky-btn {
+  width: 100%; max-width: 480px;
+  background: var(--toss-blue) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.3px;
+  text-align: center; text-decoration: none;
+  box-shadow: 0 8px 24px rgba(31,45,82,0.32) !important;
+  cursor: pointer;
+}
+.dx-sticky-btn-chat { background: var(--toss-green) !important; }
+.diagnose-entry:not([hidden]),
+.diagnose-questions:not([hidden]),
+.diagnose-result:not([hidden]),
+[data-stage="entry-q"]:not([hidden]) { animation: dx7Fade .32s cubic-bezier(.2,.7,.2,1); }
+.dx7-entry-group {
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  color: var(--ink-3) !important;
+  letter-spacing: -0.1px;
+  margin: 16px 4px 4px !important;
+}
+.dx7-entry-group:first-child { margin-top: 0 !important; }
+.dx-side-panel { display: none; }
+.dx-side-logo { font-size: 21px; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
+.dx-side-tag { margin-top: 7px; font-size: 11px; font-weight: 700; letter-spacing: 1.6px; color: #C0A04E; }
+.dx-side-headline { font-size: 32px; font-weight: 800; letter-spacing: -1px; line-height: 1.34; color: #fff; margin: 0 0 14px; }
+.dx-side-sub { font-size: 14.5px; line-height: 1.7; color: rgba(255,255,255,0.6); margin: 0 0 20px; letter-spacing: -0.3px; }
+.dx-side-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 18px; border-top: 1px solid rgba(255,255,255,0.13); padding-top: 28px; }
+.dx-side-stat { display: flex; flex-direction: column; gap: 5px; }
+.dx-side-stat-num { font-size: 26px; font-weight: 800; letter-spacing: -0.6px; color: #fff; }
+.dx-side-stat-accent { color: #C0A04E; }
+.dx-side-stat-label { font-size: 12.5px; color: rgba(255,255,255,0.52); letter-spacing: -0.2px; }
+.dx-side-foot { display: flex; flex-direction: column; gap: 13px; }
+.dx-side-company { display: flex; flex-direction: column; gap: 4px; }
+.dx-side-company strong { font-size: 13.5px; font-weight: 800; color: rgba(255,255,255,0.86); margin-bottom: 2px; }
+.dx-side-company span { font-size: 12px; line-height: 1.65; color: rgba(255,255,255,0.42); letter-spacing: -0.2px; }
+.dx-side-link { font-size: 12.5px; font-weight: 700; color: #C0A04E; text-decoration: none; }
+.dx-side-link:hover { text-decoration: underline; }
+.dx-side-copy { font-size: 11.5px; color: rgba(255,255,255,0.32); letter-spacing: -0.1px; }
+@media (min-width: 1240px) {
+  .dx-trust-bar { display: none !important; }
+  .diagnose-section {
+    display: grid !important;
+    grid-template-columns: 520px 1fr !important;
+    padding: 0 !important;
+    align-items: stretch !important;
+    min-height: 100vh !important;
+  }
+  .dx-side-panel {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    align-self: start;
+    background: #1F2D52 !important;
+    padding: 44px 44px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .diagnose-inner {
+    align-self: center;
+    margin: 0 auto !important;
+    padding: 56px 24px 64px !important;
+  }
+  .dx-sticky-cta { left: 460px !important; }
+}
+.dx-side-photo { margin: 6px -44px 28px; overflow: hidden; }
+.dx-side-photo img { display: block; width: 100%; height: auto; }
+.dx-side-panel { scrollbar-width: none; }
+.dx-side-panel::-webkit-scrollbar { display: none; }
+@keyframes dx7Fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 640px) {
+  .diagnose-section { padding: 36px 16px !important; }
+  .diagnose-title { font-size: 23px !important; }
+  .diagnose-desc { font-size: 14px !important; }
+  .diagnose-header { margin-bottom: 22px !important; }
+  .diagnose-card-btn { padding: 20px 18px !important; }
+  .diagnose-card-icon { width: 48px; height: 48px; font-size: 26px !important; }
+  .diagnose-card-title { font-size: 18px !important; }
+  .diagnose-questions, .diagnose-result { padding: 26px 20px !important; border-radius: 22px !important; }
+  .dx7-q-title, .diagnose-q-title { font-size: 20px !important; }
+  .dx7-q-desc { font-size: 13.5px !important; }
+  .dx7-entry-opt { min-height: 62px; padding: 16px !important; }
+  .dx7-entry-opt .label { font-size: 14.5px !important; }
+  .diagnose-opt { padding: 15px 16px !important; font-size: 14.5px !important; }
+  .diagnose-result-title { font-size: 21px !important; }
+  .dx7-urgent-svc { font-size: 17px !important; }
+}
+
+/* ── v7.12-toss 가독성 개선 v2: 줄바꿈 + 컬럼 확대 + 글자 확대(고연령 사용자 대응) ── */
+.diagnose-section, .diagnose-section * { word-break: keep-all !important; overflow-wrap: break-word !important; }
+.diagnose-inner, .diagnose-questions, .diagnose-result, .diagnose-entry { max-width: 640px !important; }
+.diagnose-title, .diagnose-desc, .dx7-q-title, .diagnose-q-title, .dx7-q-desc, .diagnose-result-title, .diagnose-result-desc, .diagnose-card-title, .dx-side-headline, .dx-side-sub { text-wrap: balance !important; }
+.dx7-empathy, .diagnose-rc-reason, .diagnose-card-desc, .dx7-urgent-closer, .dx7-crosssell-desc { text-wrap: pretty !important; }
+.diagnose-inner:has(.diagnose-result:not([hidden])) .diagnose-header { display: none !important; }
+.diagnose-eyebrow, .dx7-eyebrow, .diagnose-result-eyebrow { background: var(--brand-gold-tint) !important; color: var(--brand-gold-dark) !important; }
+.diagnose-q-num { color: var(--brand-gold) !important; }
+.dx-side-hl { color: var(--brand-gold) !important; }
+.diagnose-title { font-size: 34px !important; }
+.diagnose-desc { font-size: 19px !important; }
+.diagnose-eyebrow, .dx7-eyebrow, .diagnose-result-eyebrow { font-size: 15px !important; }
+.diagnose-card-title { font-size: 25px !important; }
+.diagnose-card-desc { font-size: 17.5px !important; }
+.diagnose-card-cta { font-size: 18px !important; }
+.dx7-q-title, .diagnose-q-title { font-size: 30px !important; }
+.dx7-q-desc { font-size: 18.5px !important; }
+.diagnose-q-num { font-size: 15px !important; }
+.dx7-empathy { font-size: 17.5px !important; }
+.diagnose-progress-text { font-size: 16px !important; }
+.diagnose-opt { font-size: 20px !important; }
+.dx7-entry-opt .label { font-size: 20px !important; }
+.diagnose-multi-hint { font-size: 15px !important; }
+.diagnose-multi-next { font-size: 20px !important; }
+.diagnose-back, .diagnose-skip { font-size: 17px !important; }
+.diagnose-result-title { font-size: 31px !important; }
+.diagnose-result-desc { font-size: 18.5px !important; }
+.diagnose-rc-title { font-size: 21px !important; }
+.diagnose-rc-reason { font-size: 18px !important; }
+.diagnose-rc-closer { font-size: 16.5px !important; }
+.dx7-urgent-svc { font-size: 25px !important; }
+.dx7-urgent-closer { font-size: 17.5px !important; }
+.dx7-urgent-cta { font-size: 20px !important; }
+.dx7-crosssell-title { font-size: 18.5px !important; }
+.dx7-crosssell-desc { font-size: 17px !important; }
+.dx7-crosssell-btn { font-size: 18px !important; }
+.diagnose-dynamic-cta { font-size: 21px !important; }
+.diagnose-restart { font-size: 18px !important; }
+.dx-side-logo { font-size: 24px !important; }
+.dx-side-tag { font-size: 12px !important; }
+.dx-side-headline { font-size: 36px !important; }
+.dx-side-sub { font-size: 17px !important; }
+.dx-side-stat-num { font-size: 30px !important; }
+.dx-side-stat-label { font-size: 14.5px !important; }
+.dx-side-company strong { font-size: 15.5px !important; }
+.dx-side-company span { font-size: 13.5px !important; }
+.dx-side-link { font-size: 14.5px !important; }
+.dx-side-copy { font-size: 12.5px !important; }
+@media (max-width: 640px) {
+  .diagnose-title { font-size: 27px !important; }
+  .dx7-q-title, .diagnose-q-title { font-size: 25px !important; }
+  .diagnose-result-title { font-size: 25px !important; }
+  .diagnose-card-title { font-size: 22px !important; }
+  .diagnose-desc { font-size: 16.5px !important; }
+  .dx7-q-desc { font-size: 17px !important; }
+  .diagnose-card-desc { font-size: 16px !important; }
+  .diagnose-opt { font-size: 18px !important; }
+  .dx7-entry-opt .label { font-size: 18px !important; }
+  .dx7-empathy { font-size: 16.5px !important; }
+  .diagnose-rc-reason { font-size: 16.5px !important; }
+}
+
+/* === 단일 추천 카드 (v7.13) === */
+.diagnose-rc-badge-pick {
+  background: var(--toss-blue) !important;
+  color: #fff !important;
+  font-size: 12.5px !important;
+  padding: 5px 12px !important;
+}
+.diagnose-rc-why {
+  margin-top: 14px;
+  background: var(--brand-gold-tint) !important;
+  border-left: 3px solid var(--brand-gold) !important;
+  border-radius: 10px !important;
+  padding: 13px 15px !important;
+}
+.diagnose-rc-why-label {
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: var(--brand-gold-dark) !important;
+  letter-spacing: -0.2px;
+  margin-bottom: 6px;
+}
+.diagnose-rc-why .diagnose-rc-reason {
+  color: var(--ink) !important;
+}
+
+/* === 채널톡 플로팅 버튼 (v7.13) === */
+.dw-float-chat {
+  position: fixed;
+  right: 24px; bottom: 24px;
+  z-index: 9995;
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 20px 13px 13px;
+  background: linear-gradient(135deg, #1F2D52 0%, #2B3C68 100%);
+  color: #fff;
+  border-radius: 50px;
+  font-family: var(--toss-font);
+  font-size: 15.5px; font-weight: 700; letter-spacing: -0.3px;
+  text-decoration: none;
+  border: 1.5px solid rgba(192,160,78,0.55);
+  box-shadow: 0 10px 30px rgba(31,45,82,0.42);
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+.dw-float-chat:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(31,45,82,0.52); }
+.dw-float-chat:active { transform: translateY(-1px); }
+.dw-float-chat-ico {
+  position: relative;
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: #C0A04E; color: #1F2D52;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px;
+}
+.dw-float-chat-ico::after {
+  content: ''; position: absolute; left: 0; top: 0;
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  border: 2px solid rgba(192,160,78,0.65);
+  animation: dwFloatPulse 2.4s ease-out infinite;
+}
+@keyframes dwFloatPulse {
+  0%   { transform: scale(1);   opacity: 0.75; }
+  70%  { transform: scale(1.75); opacity: 0; }
+  100% { opacity: 0; }
+}
+@media (max-width: 640px) {
+  .dw-float-chat { right: 14px; bottom: 14px; padding: 11px 16px 11px 11px; font-size: 14px; }
+  .dw-float-chat-ico { width: 32px; height: 32px; font-size: 17px; }
+}
 </style>
 </head>
 <body>
@@ -1685,11 +3260,51 @@
     <p class="page-desc">
       표면 문제 너머의 진짜 문제를 정의하고, 한 줄의 제안으로 결정까지 이끕니다.
     </p>
+    <button type="button" class="dw-hero-cta" onclick="var d=document.querySelector('.diagnose-section');if(d)d.scrollIntoView({behavior:'smooth',block:'start'});">🩺 30초 무료 진단 시작 →</button>
+    <div class="dw-hero-note">가입·결제 불필요 · 비공개 · 30초~3분이면 우리 회사 맞춤 서비스를 추천받습니다</div>
   </div>
 </header>
 
+<!-- ===== v7.3: Social Proof 신뢰 띠 ===== -->
+<div class="dx-trust-bar">
+  <div class="dx-trust-bar-inner">
+    <span class="dx-trust-item">✓ <strong>5,500+</strong> 고객사</span>
+    <span class="dx-trust-item dx-divider">✓ 재계약률 <strong>90%</strong></span>
+    <span class="dx-trust-item dx-divider">✓ 공인노무사 <strong>10+인</strong></span>
+    <span class="dx-trust-item dx-divider">✓ <strong>노무·법무·세무</strong> 3축 원스톱</span>
+  </div>
+</div>
+
+
 <!-- ===== Diagnose v7 (Adaptive Depth) ===== -->
 <section class="diagnose-section">
+  <aside class="dx-side-panel">
+    <div class="dx-side-top">
+      <div class="dx-side-logo">도원 노무법인</div>
+      <div class="dx-side-tag">DOWON LABOR LAW FIRM</div>
+    </div>
+    <div class="dx-side-mid">
+      <h2 class="dx-side-headline"><span class="dx-side-hl">고객과</span> 함께하는<br>인사·노무 파트너</h2>
+      <p class="dx-side-sub">걱정 많으셨죠? 전문가 상담으로 정확히 진단하고,<br>최적의 해결책까지 함께 찾아드립니다.</p>
+      <div class="dx-side-photo"><img src="https://cdn.imweb.me/thumbnail/20260416/421ad204b3b3a.png" alt="도원 노무법인 구성원" loading="lazy"></div>
+      <div class="dx-side-stats">
+        <div class="dx-side-stat"><span class="dx-side-stat-num">5,500<span class="dx-side-stat-accent">+</span></span><span class="dx-side-stat-label">누적 고객사</span></div>
+        <div class="dx-side-stat"><span class="dx-side-stat-num">90<span class="dx-side-stat-accent">%</span></span><span class="dx-side-stat-label">재계약률</span></div>
+        <div class="dx-side-stat"><span class="dx-side-stat-num">10<span class="dx-side-stat-accent">+</span></span><span class="dx-side-stat-label">공인노무사</span></div>
+        <div class="dx-side-stat"><span class="dx-side-stat-num">3축</span><span class="dx-side-stat-label">노무·법무·세무 원스톱</span></div>
+      </div>
+    </div>
+    <div class="dx-side-foot">
+      <div class="dx-side-company">
+        <strong>노무법인 도원</strong>
+        <span>대표 노무사 윤상필　|　공인노무사 10인 이상 재직</span>
+        <span>서울시 강남구 역삼로 212, 동아빌딩 6층</span>
+        <span>대표전화 02-2038-3355　|　help@dowonhr.com</span>
+      </div>
+      <a class="dx-side-link" href="https://dowon.channel.io" target="_blank" rel="noopener">채널톡 상담 →</a>
+      <div class="dx-side-copy">© 2026 도원 노무법인 · 비즈니스 플로우 v7</div>
+    </div>
+  </aside>
   <div class="diagnose-inner">
     <div class="diagnose-header">
       <div class="diagnose-eyebrow">맞춤 진단 · 무료</div>
@@ -1701,64 +3316,14 @@
       <button class="diagnose-card-btn" data-flow="company">
         <div class="diagnose-card-icon">🏢</div>
         <div class="diagnose-card-title">기업입니다</div>
-        <div class="diagnose-card-desc">회사 규모·업종·운영 상황 기준<br>가장 잘 맞는 도원 서비스 TOP 3 즉시 추천</div>
-        <div class="v7-preview">
-          <div class="v7-preview-label">▼ 진단 후 받는 결과</div>
-          <div class="v7-preview-item">
-            <div class="v7-preview-icon">💰</div>
-            <div class="v7-preview-body">
-              <div class="v7-preview-title">환급·지원금 가능액 즉시 산출</div>
-              <div class="v7-preview-desc">4대보험 환급 · 고용지원금 · 비과세 점검</div>
-            </div>
-          </div>
-          <div class="v7-preview-item">
-            <div class="v7-preview-icon">📉</div>
-            <div class="v7-preview-body">
-              <div class="v7-preview-title">인건비 절감 시나리오</div>
-              <div class="v7-preview-desc">사근복 · 비과세 항목 활용 시뮬레이션</div>
-            </div>
-          </div>
-          <div class="v7-preview-item">
-            <div class="v7-preview-icon">🛡️</div>
-            <div class="v7-preview-body">
-              <div class="v7-preview-title">노무 의무·리스크 체크</div>
-              <div class="v7-preview-desc">5·30·50·100인 단계별 자동 진단</div>
-            </div>
-          </div>
-        </div>
-        <div class="diagnose-card-cta">무료 진단 시작하기 →</div>
-        <span class="v7-cta-meta">무료 · 3분 · 즉시 결과 · 비공개</span>
+        <div class="diagnose-card-desc">회사 규모·업종·운영 상황 기준<br>가장 잘 맞는 도원 서비스 TOP 3 즉시 추천<br><em style="color:#94a3b8;font-style:normal;font-size:12px;">무료 · 3분 · 즉시 결과</em></div>
+        <div class="diagnose-card-cta">기업 진단 시작 →</div>
       </button>
       <button class="diagnose-card-btn" data-flow="worker">
         <div class="diagnose-card-icon">👤</div>
         <div class="diagnose-card-title">근로자입니다</div>
-        <div class="diagnose-card-desc">혼자 결정하지 마세요.<br>3분이면 가능한 권리구제 옵션이 보입니다</div>
-        <div class="v7-preview">
-          <div class="v7-preview-label">▼ 진단 후 받는 결과</div>
-          <div class="v7-preview-item">
-            <div class="v7-preview-icon">💼</div>
-            <div class="v7-preview-body">
-              <div class="v7-preview-title">받을 수 있는 정확한 금액</div>
-              <div class="v7-preview-desc">연장 · 통상 · 연차 · 퇴직금 포함 계산</div>
-            </div>
-          </div>
-          <div class="v7-preview-item">
-            <div class="v7-preview-icon">⚖️</div>
-            <div class="v7-preview-body">
-              <div class="v7-preview-title">권리구제 가능 옵션</div>
-              <div class="v7-preview-desc">부당해고 · 체불 · 산재 · 괴롭힘 골든타임 안내</div>
-            </div>
-          </div>
-          <div class="v7-preview-item">
-            <div class="v7-preview-icon">🤝</div>
-            <div class="v7-preview-body">
-              <div class="v7-preview-title">비공개 1:1 매칭</div>
-              <div class="v7-preview-desc">도원 변호사 · 노무사 즉시 연결</div>
-            </div>
-          </div>
-        </div>
-        <div class="diagnose-card-cta">무료 진단 시작하기 →</div>
-        <span class="v7-cta-meta">무료 · 3분 · 비공개 · 회사에 노출 없음</span>
+        <div class="diagnose-card-desc">혼자 결정하지 마세요.<br>3분이면 가능한 권리구제 옵션이 보입니다<br><em style="color:#94a3b8;font-style:normal;font-size:12px;">무료 · 비공개 · 도원 변호사·노무사 1:1</em></div>
+        <div class="diagnose-card-cta">근로자 진단 시작 →</div>
       </button>
     </div>
 
@@ -1792,6 +3357,7 @@
         <h3 class="diagnose-result-title" id="dxResultTitle">맞춤 서비스</h3>
         <p class="diagnose-result-desc" id="dxResultDesc"></p>
       </div>
+      <div id="dx7EmpathyRecap" class="dx7-empathy-recap" hidden></div>
       <div id="dx7UrgentBlock" hidden></div>
       <div class="diagnose-result-cards" id="dxResultCards"></div>
       <div id="dx7CrossSell" hidden></div>
@@ -1799,21 +3365,7 @@
         <button class="diagnose-restart" id="dxRestart">↻ 다시 진단하기</button>
         <button class="diagnose-dynamic-cta" id="dxDynamicCta">맞춤 무료 상담 신청 →</button>
       </div>
-      <div class="diagnose-lead-section" id="dxLeadSection">
-        <div class="diagnose-lead-title">📩 진단 결과 + 도원 추천 자료를 이메일로 받기</div>
-        <div class="diagnose-lead-desc">진단 요약과 추천 서비스 상세 자료를 영업일 1일 내 이메일로 보내드리고, 도원 담당 노무사가 1:1로 연락드립니다. (무료 · 비공개)</div>
-        <form class="diagnose-lead-form" id="dxLeadForm">
-          <input type="text" id="dxLeadName" placeholder="이름 / 회사명" required>
-          <input type="tel" id="dxLeadPhone" placeholder="연락처 (1:1 콜백용)" required>
-          <input type="email" id="dxLeadEmail" placeholder="이메일 (결과 발송)" required>
-          <button type="submit" class="diagnose-lead-submit">결과 받기 →</button>
-          <label class="diagnose-lead-consent">
-            <input type="checkbox" id="dxLeadConsent" required>
-            <span>개인정보 수집·이용 동의 (진단 결과 발송·1:1 상담 목적, 1년 보관)</span>
-          </label>
-        </form>
-        <div class="diagnose-lead-success" id="dxLeadSuccess" hidden></div>
-      </div>
+      <!-- 진단 결과 리드 폼 제거됨 (카톡 알림톡 미지원) -->
     </div>
   </div>
 </section>
@@ -1890,7 +3442,7 @@ const data = [
         { bold: "성공보수형 — 못 찾으면 0원", body: "실제 환급 진행은 회수액 기준 성공보수. 못 찾으면 비용 0원, 회사가 손해 볼 구조 자체가 없음." }
       ]
     },
-    cta: "10분 등록하고 환급 가능 영역 확인하기",
+    cta: "우리 회사 환급 가능 영역, 10분 만에 확인하기",
     closer: "환급 받을 수 있는지부터 무료로 확인하세요. 타 노무법인은 1시간+, 찾아드림은 10분입니다.",
     status: "existing", priority: "A"
   },
@@ -1938,7 +3490,7 @@ const data = [
         { bold: "비공개 + 노동위까지 같은 팀", body: "사내·거래처 노출 0건 원칙. 노동위·소송 단계까지 같은 노무사가 끝까지." }
       ]
     },
-    cta: "통지서 사진 보내고 무료 검토",
+    cta: "통지서 사진 한 장으로 대응 방법 확인하기",
     closer: "이번 1건만이 아닙니다. 줄지은 진정 파급까지 사전 차단하고, 대표는 경영에 집중하세요.",
     status: "existing", priority: "A"
   },
@@ -1986,7 +3538,7 @@ const data = [
         { bold: "단계 변화 자동 알림", body: "도입 후 인원 변동 시 새로 켜지는 의무를 도원이 자동 통지." }
       ]
     },
-    cta: "현재 인원 단계 의무 30초 진단",
+    cta: "우리 회사가 놓친 인원 단계 의무 30초로 확인하기",
     closer: "단계 의무 누락은 과태료에서 안 끝납니다. 채용 브랜드·리텐션·회사 권위까지 손상되기 전, 30초로 확인하세요.",
     status: "existing", priority: "A"
   },
@@ -2030,7 +3582,7 @@ const data = [
         { bold: "성공보수형 — 못 찾으면 0원", body: "1주 사전 점검 무료. 환급 발생 시에만 성공보수, 잃을 게 없습니다." }
       ]
     },
-    cta: "1주 무료 비교 점검 (실제 가능액 vs 기존 점검)",
+    cta: "실제 환급 가능액, 기존 점검과 1주 무료로 비교하기",
     closer: "'이미 챙기고 있어요'라고 안심하셨나요? 실제 가능액과 한 번만 비교해보세요. 못 찾으면 비용 0원.",
     status: "existing", priority: "A"
   },
@@ -2075,7 +3627,7 @@ const data = [
         { bold: "셋업 비용 0원 + 인수인계 0장 가능", body: "엑셀·종이·문자 어떤 자료여도 도원이 정리. 급여담당자 퇴사 케이스도 다음 달 1일 정상 지급." }
       ]
     },
-    cta: "급여 적법성 무료 점검 받기",
+    cta: "우리 급여에 숨은 노동법 위반 있는지 확인하기",
     closer: "페이롤 회사는 계산만 하지만, 도원은 매달 노동법 위반 누적을 사전 차단합니다.",
     status: "existing", priority: "A"
   },
@@ -2121,7 +3673,7 @@ const data = [
         { bold: "자동 결제 없음", body: "1개월 무료 종료 후 자동 청구 0원. 명시적 계약 진행해야 시작." }
       ]
     },
-    cta: "1개월 무료 트라이얼 신청",
+    cta: "우리 회사 노무 리스크, 1개월 무료로 점검받기",
     closer: "법률자문이 '질문 답변기'에 머물면 회사 리스크가 누적됩니다. 월 리포트·연 진단·횡적 비교까지 1개월 무료로 확인하세요.",
     status: "existing", priority: "A"
   },
@@ -2166,7 +3718,7 @@ const data = [
         { bold: "운영 자동화 — 회사 인력 투입 0", body: "매년 결산·복지비 집행·세무 점검 자동. 회사는 자료 전달만." }
       ]
     },
-    cta: "30분 무료 시뮬레이션 (회사 인건비·직원 실수령액 동시 산출)",
+    cta: "우리 회사 인건비 절감액, 30분 무료 시뮬레이션으로 확인하기",
     closer: "복지를 늘리는 게 아닙니다. 회사는 덜 쓰고 직원은 더 받는, 국가가 권장하는 유일한 적법 구조 — 30분이면 확인됩니다.",
     status: "existing", priority: "A"
   },
@@ -2211,7 +3763,7 @@ const data = [
         { bold: "확전 시 같은 팀", body: "노동청·노동위·소송 단계까지 같은 노무사가 끝까지 이어받음. 인계 사고 0건." }
       ]
     },
-    cta: "신고 접수서 보내고 무료 사전 진단",
+    cta: "신고 접수서 보내고 회사가 안전한 처리 방법 확인하기",
     closer: "내부 조사로는 양쪽 다 못 믿습니다. 외부 조사보고서 한 장이 회사를 지킵니다.",
     status: "existing", priority: "A"
   },
@@ -2257,7 +3809,7 @@ const data = [
         { bold: "비공개 마무리", body: "대상 본인·다른 직원·거래처 노출 0건 원칙." }
       ]
     },
-    cta: "비공개 1:1 상담 (자료 외부 전송 불필요)",
+    cta: "우리 케이스, 적법하게 가능한지부터 확인하기",
     closer: "'안 됩니다'로 끝나는 답변이 답답하셨죠? 도원은 적법한 길을 만들어드립니다.",
     status: "existing", priority: "A"
   },
@@ -2303,7 +3855,7 @@ const data = [
         { bold: "공단 응대까지 같은 팀", body: "적정 보험료 산정부터 소명자료 제출·공단 질의 응답까지 같은 노무사가 끝까지 책임." }
       ]
     },
-    cta: "결산자료/통지서 사진 보내고 적정 보험료 무료 산정",
+    cta: "우리 회사 적정 보험료, 자료 사진으로 무료 산정받기",
     closer: "지금 내는 보험료가 적정인지부터 무료로 확인. 못 절감하면 비용 0원 — 잃을 게 없습니다.",
     status: "existing", priority: "A"
   },
@@ -2349,7 +3901,7 @@ const data = [
         { bold: "월간 리포트 SLA", body: "매월 1장 리포트로 처리 내역·다음 달 변동 사전 통지. 누락 시 자문료 환불." }
       ]
     },
-    cta: "현장 자료 보내고 무료 진단",
+    cta: "우리 현장 4대보험·퇴직공제, 어디가 새는지 확인하기",
     closer: "최근 3개월 자료만 보내주세요. 셋업 무료, 다음 달 1일부터 자동 운영이 시작됩니다.",
     status: "existing", priority: "A"
   },
@@ -2393,7 +3945,7 @@ const data = [
         { bold: "심사청구까지 같은 팀", body: "공단 거부 시 심사청구·재심사까지 같은 노무사가 끝까지 책임." }
       ]
     },
-    cta: "장비기사 무료 진단 받기",
+    cta: "장비기사 산재, 우리 회사 책임 범위부터 확인하기",
     closer: "장비기사 한 명 사고가 회사 전체를 흔들기 전에. 신고 한 줄, 책임 한 줄로 정리합니다.",
     status: "existing", priority: "A"
   },
@@ -2442,7 +3994,7 @@ const data = [
         { bold: "보복·도산 대안까지", body: "회사 보복 시 형사 대응, 회사 도산 시 대지급금 최대 1,000만원 — 같은 팀이 끝까지." }
       ]
     },
-    cta: "내 정확한 받을 금액 + 회사 변명 적법성 무료 진단",
+    cta: "내가 받을 정확한 금액·회사 변명 적법성 무료로 확인하기",
     closer: "받을 돈이 얼마인지·회사 말이 맞는지 둘 다 무료로 알려드립니다. 알고 결정하셔도 늦지 않습니다.",
     status: "existing", priority: "A"
   },
@@ -2486,7 +4038,7 @@ const data = [
         { bold: "공단 거부 시 이의신청", body: "1차 거부돼도 같은 팀이 이의신청·재심사까지 진행." }
       ]
     },
-    cta: "대지급금 무료 상담",
+    cta: "내가 대지급금 받을 수 있는지·얼마인지 확인하기",
     closer: "신청 가능 여부와 금액을 비용 없이 먼저 확인하세요. 기간이 지나면 권리가 사라집니다.",
     status: "existing", priority: "A"
   },
@@ -2530,7 +4082,7 @@ const data = [
         { bold: "비용 명확화", body: "노동위 단계 정액제. 추가 비용·숨은 비용 없음. 합의금 회수형 옵션 선택 가능." }
       ]
     },
-    cta: "3개월 안에 무료 진단 받기",
+    cta: "내 승소 가능성·합의금 수준부터 확인하기",
     closer: "승소 가능성과 합의금 수준부터 무료로 알려드립니다. 진행은 그다음 결정하셔도 됩니다.",
     status: "existing", priority: "A"
   },
@@ -2578,11 +4130,44 @@ const data = [
         { bold: "성공보수형 — 미인정 시 0원", body: "진단 무료 + 진행은 보상액·배상액 기준 성공보수. 미인정 시 비용 0원." }
       ]
     },
-    cta: "특정 병 진단받으셨다면 — 산재 가능성 무료 진단",
+    cta: "내 케이스가 산재로 인정되는지부터 확인하기",
     closer: "사고·질병·유족·퇴사 후 발병까지 — 산재 가능성부터 무료로 확인. 산재 + 민사 + 형사 원스톱입니다.",
     status: "existing", priority: "A"
   }
 ];
+
+// ===== 케이스 CTA → 도원 홈페이지(dowonhr.com) 연결 =====
+const DOWON = 'https://dowonhr.com';
+function dowonUrl(no) {
+  const m = caseUrls[no];
+  if (!m) return DOWON + '/';
+  const utm = 'utm_source=flow&utm_medium=cta&utm_content=case_' + no;
+  const hashIdx = m.indexOf('#');
+  const base = hashIdx >= 0 ? m.slice(0, hashIdx) : m;
+  const hash = hashIdx >= 0 ? m.slice(hashIdx) : '';
+  const sep = base.indexOf('?') >= 0 ? '&' : '?';
+  return DOWON + base + sep + utm + hash;
+}
+// 설문 진단 결과 CTA → 새로 만든 케이스 랜딩페이지(case-N.html)로 연결
+function casePage(no) { return 'case-' + no + '.html'; }
+const caseUrls = {
+  1:  '/150',                                            // 찾아드림
+  2:  '/110',                                            // 4대보험 환급 컨설팅
+  3:  '/139',                                            // 사내근로복지기금 설립
+  4:  '/99',                                             // 기업노무자문 - 기초(인사노무 기초컨설팅)
+  5:  '/employment_labor_consulting', // 급여 아웃소싱
+  6:  '/employment_labor_consulting',                    // 기업노무자문(월 정기 법률자문)
+  7:  '/employment_labor_consulting',  // 노동사건 대응
+  8:  '/employment_labor_consulting',  // 직장내괴롭힘·성희롱 조사대응
+  9:  '/employment_labor_consulting',  // 징계·인사이동·해고 컨설팅
+  10: '/118',                                            // 건설업 확정정산·지도점검
+  11: '/114',                                            // 건설업 스탠다드 서비스
+  12: '/65',                                             // 건설업 특화
+  13: '/72',                                             // 임금체불 구제 및 대응
+  14: '/75',                                             // 체당금(대지급금)
+  15: '/76',                                             // 부당해고 등 구제신청
+  16: '/77'                                              // 산재보상
+};
 
 const arrowSvg = `<svg viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9h18M14 3l6 6-6 6"/></svg>`;
 const arrowSvgDashed = `<svg viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 2"><path d="M2 9h18M14 3l6 6-6 6"/></svg>`;
@@ -2710,7 +4295,7 @@ function renderStrips() {
             <span class="box-icon">🎯</span>
             <span class="box-header-tag">마무리 — 결정 유도</span>
           </div>
-          <button class="cta-final-btn">${escapeHtml(ctaText)} →</button>
+          <a class="cta-final-btn" href="${dowonUrl(d.no)}" target="_blank" rel="noopener">${escapeHtml(ctaText)} →</a>
           <div class="closer-line">${escapeHtml(closerText)}</div>
           <a class="preview-link-inline" onclick="togglePreview(${d.no})">📄 페이지 구조 보기</a>
         </div>
@@ -3117,13 +4702,23 @@ function dx7Start(flow) {
   document.getElementById('dx7EntryTitle').textContent = cfg.title;
   document.getElementById('dx7EntryDesc').textContent = cfg.desc;
   const optsBox = document.getElementById('dx7EntryOptions');
-  optsBox.innerHTML = cfg.options.map(opt => `
-    <button class="dx7-entry-opt cat-${opt.cat}" data-value="${escapeHtml(opt.value)}">
-      <span class="icon">${opt.icon}</span>
-      <span class="label">${escapeHtml(opt.label)}</span>
-      <span class="arrow">→</span>
-    </button>
-  `).join('');
+  const dx7GroupLabels = { urgent: '긴급한 일', savings: '비용 줄이기', mgmt: '운영 점검', explore: '' };
+  const dx7MultiCat = new Set(cfg.options.map(o => o.cat)).size > 1;
+  let dx7PrevCat = null;
+  optsBox.innerHTML = cfg.options.map(opt => {
+    let head = '';
+    if (dx7MultiCat && opt.cat !== dx7PrevCat) {
+      const gl = dx7GroupLabels[opt.cat];
+      if (gl) head = `<div class="dx7-entry-group">${gl}</div>`;
+    }
+    dx7PrevCat = opt.cat;
+    return head + `
+      <button class="dx7-entry-opt cat-${opt.cat}" data-value="${escapeHtml(opt.value)}">
+        <span class="icon">${opt.icon}</span>
+        <span class="label">${escapeHtml(opt.label)}</span>
+        <span class="arrow">→</span>
+      </button>`;
+  }).join('');
   optsBox.querySelectorAll('.dx7-entry-opt').forEach(btn => {
     btn.onclick = () => dx7SelectEntry(btn.dataset.value);
   });
@@ -3284,18 +4879,24 @@ function dx7Result() {
   else if (dx7.track === 'mgmt') recs = dx7ScoreMgmt();
   else if (dx7.track === 'explore') recs = dx7ScoreExplore();
 
-  const top = recs.slice(0, dx7.track === 'urgent' ? 1 : 3);
+  const top = recs.slice(0, 1);
   const trackName = {urgent:'긴급 케이스',savings:'절세·환급',mgmt:'관리·자문',explore:'종합 진단'}[dx7.track] || '맞춤';
 
+  const subjectWord = dx7.flow === 'company' ? '우리 회사' : '고객님';
   document.getElementById('dxResultTitle').textContent = top.length === 0
-    ? '진단 결과 — 1:1 정밀 상담을 권장합니다'
-    : `${trackName} — ${dx7.flow === 'company' ? '우리 회사' : '본인 상황'}에 맞는 도원 서비스`;
+    ? '진단을 마쳤습니다 — 전문 노무사 1:1 상담을 권장합니다'
+    : (dx7.track === 'urgent'
+      ? '진단 완료 — 지금 가장 먼저 풀어야 할 문제를 찾았습니다'
+      : `진단 완료 — ${subjectWord} 상황에 꼭 맞는 해결책을 찾았습니다`);
 
   document.getElementById('dxResultDesc').innerHTML = top.length === 0
-    ? '도원 담당자가 무료로 1:1 상담해드립니다. 아래 폼에 연락처를 남겨주세요.'
+    ? '걱정 많으셨죠? 도원 전문 노무사가 무료로 1:1 진단해드립니다. 아래에 연락처만 남겨주세요.'
     : (dx7.track === 'urgent'
-      ? '아래 추천 서비스의 <strong>즉시 행동 CTA</strong>를 통해 도원과 빠르게 연결됩니다.'
-      : '각 카드의 <strong>"사례 자세히 보기"</strong>를 누르면 5단 플로우와 해결 사례를 볼 수 있습니다.');
+      ? '복잡하게 알아보실 필요 없습니다. 도원 전문 노무사가 아래 사안을 <strong>즉시 함께 검토하고 대응</strong>합니다.'
+      : '도원 전문 노무사가 진단 결과를 바탕으로 <strong>해결책을 정리</strong>했습니다. 각 카드에서 실제 해결 사례와 진행 과정을 확인하세요.');
+
+  // v7.6 B안 — 공감 요약 + 리프레임 카피 렌더
+  try { if (window.dx7RenderEmpathyRecap) window.dx7RenderEmpathyRecap(); } catch(e) { console.warn('Empathy recap render failed:', e); }
 
   const urgentBlock = document.getElementById('dx7UrgentBlock');
   if (dx7.track === 'urgent' && top.length > 0) {
@@ -3304,25 +4905,26 @@ function dx7Result() {
       <div class="dx7-urgent-result">
         <span class="dx7-urgent-tag">🚨 즉시 대응 권장</span>
         <div class="dx7-urgent-svc">${escapeHtml(dxServices[t.no].name)}</div>
+        ${t.reason ? `<div class="diagnose-rc-why"><div class="diagnose-rc-why-label">왜 이 서비스를 추천하나요?</div><div class="diagnose-rc-reason">${escapeHtml(t.reason)}</div></div>` : ''}
         ${look.closer ? `<div class="dx7-urgent-closer">💡 ${escapeHtml(look.closer)}</div>` : ''}
-        <button class="dx7-urgent-cta" onclick="dxJump(${t.no})">${escapeHtml(look.cta || '사례·5단 플로우 자세히 보기')} →</button>
+        <button class="dx7-urgent-cta" onclick="window.open(casePage(${t.no}),'_blank','noopener')">${escapeHtml(look.cta || '자세히 보기')} →</button>
       </div>`;
     urgentBlock.hidden = false;
     document.getElementById('dxResultCards').innerHTML = '';
   } else {
     urgentBlock.hidden = true; urgentBlock.innerHTML = '';
     document.getElementById('dxResultCards').innerHTML = top.map((r, i) => {
-      const badge = dxBadge(r.score); const look = dxLookup(r.no);
+      const look = dxLookup(r.no);
       const closerHtml = look.closer ? `<div class="diagnose-rc-closer">💡 ${escapeHtml(look.closer)}</div>` : '';
+      const reasonHtml = r.reason ? `<div class="diagnose-rc-why"><div class="diagnose-rc-why-label">왜 이 서비스를 추천하나요?</div><div class="diagnose-rc-reason">${escapeHtml(r.reason)}</div></div>` : '';
       return `
-        <div class="diagnose-rc ${badge.cls}">
-          <div class="diagnose-rc-rank">${i + 1}</div>
+        <div class="diagnose-rc diagnose-rc-single">
           <div class="diagnose-rc-body">
-            <span class="diagnose-rc-badge diagnose-rc-badge-${badge.cls}">${badge.label}</span>
+            <span class="diagnose-rc-badge diagnose-rc-badge-pick">✓ 가장 먼저 추천하는 서비스</span>
             <div class="diagnose-rc-title">${escapeHtml(dxServices[r.no].name)}</div>
-            <div class="diagnose-rc-reason">${escapeHtml(r.reason || '')}</div>
+            ${reasonHtml}
             ${closerHtml}
-            <button class="diagnose-rc-link" onclick="dxJump(${r.no})">사례·5단 플로우 자세히 보기 →</button>
+            <button class="diagnose-rc-link" onclick="window.open(casePage(${r.no}),'_blank','noopener')">${escapeHtml(look.cta || '자세히 보기')} →</button>
           </div>
         </div>`;
     }).join('');
@@ -3332,11 +4934,11 @@ function dx7Result() {
   if (top.length > 0) {
     const topLook = dxLookup(top[0].no);
     dynCta.textContent = topLook.cta ? `${topLook.cta} →` : '맞춤 무료 상담 신청 →';
-    dynCta.onclick = () => dxJump(top[0].no);
+    dynCta.onclick = () => window.open(casePage(top[0].no),'_blank','noopener');
     dynCta.style.display = dx7.track === 'urgent' ? 'none' : '';
   } else {
     dynCta.textContent = '무료 1:1 상담 신청 →';
-    dynCta.onclick = () => document.getElementById('dxLeadName').focus();
+    dynCta.onclick = () => window.open('https://dowon.channel.io/home?utm_source=lp&utm_medium=cta&utm_content=result_dynamic', '_blank', 'noopener');
   }
 
   const cross = document.getElementById('dx7CrossSell');
@@ -3353,8 +4955,10 @@ function dx7Result() {
     cross.hidden = false;
   } else { cross.hidden = true; cross.innerHTML = ''; }
 
-  document.getElementById('dxLeadForm').style.display = '';
-  document.getElementById('dxLeadSuccess').hidden = true;
+  var __lf = document.getElementById('dxLeadForm');
+  if (__lf) __lf.style.display = '';
+  var __ls = document.getElementById('dxLeadSuccess');
+  if (__ls) __ls.hidden = true;
 }
 
 function dx7CrossSellGo() {
@@ -3400,7 +5004,8 @@ document.getElementById('dxRestart').onclick = () => {
 
 const LEAD_WEBHOOK_URL = '';
 
-document.getElementById('dxLeadForm').addEventListener('submit', async (e) => {
+var __lfSubmit = document.getElementById('dxLeadForm');
+if (__lfSubmit) __lfSubmit.addEventListener('submit', async (e) => {
   e.preventDefault();
   const name = document.getElementById('dxLeadName').value.trim();
   const phone = document.getElementById('dxLeadPhone').value.trim();
@@ -3425,5 +5030,480 @@ document.getElementById('dxLeadForm').addEventListener('submit', async (e) => {
   ok.hidden = false;
 });
 </script>
-</body>
-</html>
+
+<!-- ===== v7.3: Sticky CTA (채널톡 + 전화) ===== -->
+<div class="dx-sticky-cta" id="dxStickyCta">
+  <a href="https://dowon.channel.io/home?utm_source=lp&amp;utm_medium=cta&amp;utm_content=floating_button"
+     target="_blank" rel="noopener" class="dx-sticky-btn dx-sticky-btn-chat">
+    <span class="icon">💬</span><span>채널톡 상담</span>
+  </a>
+</div>
+
+<!-- ===== 채널톡 플로팅 버튼 ===== -->
+<a class="dw-float-chat" id="dwFloatChat"
+   href="https://dowon.channel.io/home?utm_source=lp&amp;utm_medium=float&amp;utm_content=float_banner"
+   target="_blank" rel="noopener" aria-label="채널톡 상담">
+  <span class="dw-float-chat-ico">💬</span>
+  <span>채널톡 상담</span>
+</a>
+
+<!-- ===== v7.3: Exit-intent 팝업 ===== -->
+<div class="dx-exit-overlay" id="dxExitOverlay" role="dialog" aria-modal="true" aria-labelledby="dxExitTitle">
+  <div class="dx-exit-modal">
+    <button class="dx-exit-close" id="dxExitClose" aria-label="닫기" type="button">✕</button>
+    <div class="dx-exit-badge">잠깐만요</div>
+    <div class="dx-exit-title" id="dxExitTitle">30초만 더 — 진단 안 받으셔도<br>채널톡으로 안내해드릴게요</div>
+    <div class="dx-exit-desc">
+      도원 노무사가 정리한 <strong>절세·환급·노무 핵심 체크리스트</strong>를<br>
+      채널톡 1:1 상담으로 무료 안내받으실 수 있습니다.
+    </div>
+    <div class="dx-exit-actions">
+      <a href="https://dowon.channel.io/home?utm_source=lp&amp;utm_medium=exit_popup&amp;utm_content=guide"
+         target="_blank" rel="noopener" class="dx-exit-btn dx-exit-btn-primary" id="dxExitCtaBtn">
+        💬 채널톡 상담 시작하기
+      </a>
+      <button type="button" class="dx-exit-btn dx-exit-btn-secondary" id="dxExitDismiss">
+        괜찮습니다, 그냥 나갈게요
+      </button>
+    </div>
+    <div class="dx-exit-tip">
+      ✓ 무료 · 비공개 · 영업 부담 없음<br>
+      도원 노무사가 영업일 1일 내 직접 답변
+    </div>
+  </div>
+</div>
+
+<!-- ===== v7.3: 광고 캠페인 동적 헤드라인 + Exit-intent JS ===== -->
+<script>
+(function() {
+  'use strict';
+
+  /* ④ 광고 캠페인별 동적 헤드라인 */
+  var campaignMap = {
+    refund: {
+      eyebrow: '4대보험 환급 진단 · 무료',
+      title: '환급 받을 수 있는지<br>10분에 확인됩니다',
+      desc: '동종업계 평균 환급액과 우리 회사의 환급 가능 영역을 즉시 확인하세요.',
+      diagTitle: '환급 진단 · 우리 회사에 맞는 환급 영역을 찾아드립니다'
+    },
+    'welfare-fund': {
+      eyebrow: '사내근로복지기금 진단 · 무료',
+      title: '인건비 절세,<br>사내근로복지기금으로',
+      desc: '국가가 권장하는 유일한 적법 절세 구조. 우리 회사 적합도를 3분에 확인.',
+      diagTitle: '사내근로복지기금 · 우리 회사 적합도 진단'
+    },
+    construction: {
+      eyebrow: '건설업 4대보험 진단 · 무료',
+      title: '건설업 일용직 4대보험,<br>적정 보험료부터',
+      desc: '확정정산·지도점검·국민연금조사까지 — 건설업 특화 노무법인 도원.',
+      diagTitle: '건설업 4대보험 · 우리 회사 절감 가능 영역 진단'
+    },
+    labor: {
+      eyebrow: '노동청 진정 대응 · 긴급',
+      title: '노동청 진정 통지서,<br>받으셨나요?',
+      desc: '대응 골든타임은 3일. 도원 변호사·노무사가 1:1로 즉시 대응합니다.',
+      diagTitle: '노동청 진정 대응 · 골든타임 3일 진단'
+    },
+    worker: {
+      eyebrow: '근로자 권리구제 · 무료 비공개',
+      title: '혼자 결정하지 마세요',
+      desc: '3분이면 가능한 권리구제 옵션이 보입니다. 도원 변호사·노무사 1:1.',
+      diagTitle: '근로자 권리구제 · 가능한 옵션을 찾아드립니다'
+    },
+    advisory: {
+      eyebrow: '노무 자문 진단 · 무료',
+      title: '월정액 노무 자문,<br>우리 회사에 맞는 수준은?',
+      desc: '회사 규모·산업 특화·리스크 기준으로 최적의 자문 플랜을 추천합니다.',
+      diagTitle: '노무 자문 · 우리 회사에 맞는 수준 진단'
+    }
+  };
+
+  var params = new URLSearchParams(window.location.search);
+  var campaign = params.get('campaign');
+  if (campaign && campaignMap[campaign]) {
+    var cfg = campaignMap[campaign];
+    var titleEl   = document.querySelector('.page-title');
+    var descEl    = document.querySelector('.page-desc');
+    var eyebrowEl = document.querySelector('.header-eyebrow');
+    var diagTitleEl = document.querySelector('.diagnose-title');
+    if (titleEl)   titleEl.innerHTML = cfg.title;
+    if (descEl)    descEl.innerHTML  = cfg.desc;
+    if (eyebrowEl) eyebrowEl.textContent = cfg.eyebrow;
+    if (diagTitleEl && cfg.diagTitle) diagTitleEl.textContent = cfg.diagTitle;
+  }
+
+  /* ③ Exit-intent 팝업 트리거 */
+  var overlay    = document.getElementById('dxExitOverlay');
+  var closeBtn   = document.getElementById('dxExitClose');
+  var dismissBtn = document.getElementById('dxExitDismiss');
+  var ctaBtn     = document.getElementById('dxExitCtaBtn');
+  var shown = false;
+  var SESSION_KEY = 'dx_exit_shown_v1';
+
+  try {
+    if (sessionStorage.getItem(SESSION_KEY) === '1') shown = true;
+  } catch(e) {}
+
+  function showExit() {
+    return; /* Exit-intent 팝업 비활성화 */
+    if (shown || !overlay) return;
+    shown = true;
+    overlay.classList.add('dx-show');
+    document.body.style.overflow = 'hidden';
+    try { sessionStorage.setItem(SESSION_KEY, '1'); } catch(e) {}
+  }
+  function hideExit() {
+    if (!overlay) return;
+    overlay.classList.remove('dx-show');
+    document.body.style.overflow = '';
+  }
+
+  if (closeBtn)   closeBtn.addEventListener('click', hideExit);
+  if (dismissBtn) dismissBtn.addEventListener('click', hideExit);
+  if (ctaBtn)     ctaBtn.addEventListener('click', hideExit);
+  if (overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) hideExit();
+    });
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay && overlay.classList.contains('dx-show')) hideExit();
+  });
+
+  // PC: 마우스가 페이지 상단으로 빠르게 이탈
+  document.addEventListener('mouseout', function(e) {
+    if (e.clientY <= 0 && !e.relatedTarget) showExit();
+  });
+
+  // 모바일: 뒤로가기(이탈 시도) 시 1회만 표시
+  var isMobile = window.matchMedia('(max-width: 768px)').matches;
+  if (isMobile && !shown) {
+    history.pushState(null, '', location.href);
+    window.addEventListener('popstate', function() {
+      if (!shown) showExit();
+    });
+  }
+})();
+</script>
+
+
+
+<script>
+/* =========================================================
+   v7.7 — Consultant Card (도원 노무사 1:1 코멘트 카드)
+   15케이스 4단 카피 (확인 → 공감 → pain → 해결)
+   ========================================================= */
+(function() {
+  'use strict';
+
+  // ▼▼▼ 실제 노무사 사진 URL을 여기에 넣으세요 ▼▼▼
+  // (예: https://cdn.imweb.me/upload/.../profile.png)
+  // 비워두면 자동으로 기본 SVG 아바타로 표시됩니다.
+  var DW_NOMUSA_AVATAR_URL = 'https://cdn.imweb.me/thumbnail/20260522/0457a4fd13cfc.png';
+  // ▲▲▲ 도원 측에서 URL만 채우시면 자동 적용됩니다 ▲▲▲
+
+  var FALLBACK_AVATAR_SVG =
+    '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+    '<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>' +
+    '</svg>';
+
+  var SIZE_TEXT = {
+    lt5: '5인 미만',
+    s:   '5~29인',
+    m:   '30~99인',
+    l:   '100인 이상',
+    xl:  '300인 이상',
+    ge5: '5인 이상'
+  };
+
+  // 15케이스 × 4단 카피 (byline · opener · empathy · pain · solution)
+  // opener의 {size}는 SIZE_TEXT[answers.size]로 치환됩니다.
+  var REFRAME = {
+    // ─── 기업 · 긴급 ───────────────────────────────────────
+    'urgent|labor_office': {
+      byline:  '<strong>노동청 진정 대응</strong> 전문',
+      opener:  '{size} 사업장에서 노동청 진정 통지를 받으신 상황이시군요.',
+      empathy: '통지서를 받고 머리가 하얘지시고, 어디부터 손대야 할지 막막하실 거예요.',
+      pain:    '"며칠만 두고 보면 될까?" 하는 생각이 드시나요?',
+      solution:'지금 가장 위험한 건 <strong>대응 시점을 놓치는 것</strong>입니다. 도원은 <strong>골든타임 안에 전담팀을 즉시 투입</strong>해 통지부터 종결까지 함께합니다.'
+    },
+    'urgent|harassment': {
+      byline:  '<strong>조사대응 컨설팅</strong> 전문',
+      opener:  '{size} 사업장에서 직장 내 괴롭힘·성희롱 신고가 발생한 상황이시군요.',
+      empathy: '신고를 다루다 보면 회사도, 신고자도, 가해 지목자도 — 한쪽이 잘못되면 모두 위험해진다는 부담이 크실 거예요.',
+      pain:    '"어떻게 조사해야 공정하면서 회사도 보호할 수 있을까?" 하는 고민이 깊지 않으세요?',
+      solution:'도원은 <strong>공정 조사 매뉴얼</strong>로 회사·당사자 양쪽 리스크를 동시에 차단합니다.'
+    },
+    'urgent|discipline': {
+      byline:  '<strong>징계·인사이동 컨설팅</strong> 전문',
+      opener:  '{size} 사업장에서 특정 직원의 징계·인사이동을 검토 중이시군요.',
+      empathy: '기존 자문에서 "법적으로 안 됩니다", "부당해고로 갈 수 있어요" 같은 답만 듣고 답답하셨을 것 같아요.',
+      pain:    '"그럼 어떻게 하라는 거지?" 한숨이 절로 나오시죠.',
+      solution:'도원은 \'안 됩니다\'로 끝내지 않습니다. <strong>적법하게 도달하는 길</strong>을 함께 설계해드립니다.'
+    },
+    'urgent|payroll_quit': {
+      byline:  '<strong>급여 아웃소싱</strong> 전문',
+      opener:  '{size} 사업장에서 급여 담당자의 퇴사를 앞두고 계시군요.',
+      empathy: '"급여 누락되면 어쩌지", "4대보험·연말정산은 누가 하지" 같은 불안이 한꺼번에 밀려오셨을 거예요.',
+      pain:    '후임 채용과 인수인계 시간이 부족하지 않으세요?',
+      solution:'이 불안의 핵심은 \'연속성\'입니다. 도원의 급여 아웃소싱은 <strong>노무법인이 직접 수행</strong>해 끊김도 위법도 없습니다.'
+    },
+    // ─── 기업 · 절세 ───────────────────────────────────────
+    'savings|refund_curious': {
+      byline:  '<strong>4대보험 환급·고용지원금</strong> 전문',
+      opener:  '{size} 사업장에서 환급·지원금 가능 여부를 확인하고 싶으신 상황이군요.',
+      empathy: '"우리 회사가 환급 받을 게 있긴 한지", "이미 외부 업체에 맡겼는데도 추가가 있을까" — 그 막연함, 익숙하시죠.',
+      pain:    '조회·서류 받는 데만 1시간 걸리는 점검이 부담스럽지 않으세요?',
+      solution:'도원의 <strong>10분 등록</strong>으로 동종업계 평균 환급액과 외부 업체가 못 보는 사각지대까지 즉시 확인됩니다.'
+    },
+    'savings|cost_reduce': {
+      byline:  '<strong>사내근로복지기금</strong> 전문',
+      opener:  '{size} 사업장에서 인건비 절감(절세)을 검토 중이시군요.',
+      empathy: '"인건비는 더 못 줄이는데 직원은 늘려달라 한다" — 이 양립 불가능한 숙제에 머리 아프셨을 것 같아요.',
+      pain:    '급여 인상 없이 직원 만족도를 어떻게 올릴지 막막하지 않으세요?',
+      solution:'<strong>같은 인건비로 회사는 덜 쓰고 직원은 더 받는</strong> 적법 구조가 있습니다. 국가가 권장하는 사내근로복지기금입니다.'
+    },
+    // ─── 기업 · 관리 ───────────────────────────────────────
+    'mgmt|advisory_weak': {
+      byline:  '<strong>노무 자문</strong> 전문',
+      opener:  '{size} 사업장에서 현재 노동법 자문이 부실하다고 느끼고 계시는군요.',
+      empathy: '"자문료는 매월 나가는데 정작 사고 터졌을 땐 제대로 못 받았다" — 다 같이 겪는 답답함이에요.',
+      pain:    '필요할 때 답이 오지 않거나, "알아서 하세요"식 답변에 지치지 않으셨나요?',
+      solution:'도원은 <strong>사후가 아닌 사전에 답을 줍니다.</strong> 일이 터지기 전에 막아드립니다.'
+    },
+    'mgmt|stage_worry': {
+      byline:  '<strong>의무 점검·자문</strong> 전문',
+      opener:  '{size} 사업장에서 인원 변동으로 새로 켜진 의무가 걱정되시는군요.',
+      empathy: '"5·10·30·50·100인 — 단계마다 무슨 의무가 켜지는지" 막막하신 것 같아요.',
+      pain:    '모르고 지나치면 과태료·시정명령·소송으로 옵니다.',
+      solution:'도원은 <strong>5·10·30·50·100인 단계 전환 점검</strong>으로 누락된 의무를 30초에 정리해드립니다.'
+    },
+    // ─── 기업 · 종합 ───────────────────────────────────────
+    'explore|explore': {
+      byline:  '<strong>종합 진단·정밀 컨설팅</strong>',
+      opener:  '{size} 사업장에서 "어디부터 봐야 할지" 정리가 필요한 상황이시군요.',
+      empathy: '회사가 자라면서 무엇이 다음 우선순위인지 가늠이 안 되실 때, 가장 위험한 건 \'몰라서 못 한 것\'들이에요.',
+      pain:    '노무 관련해 뭘 챙겨야 할지 한눈에 보이지 않으시죠?',
+      solution:'도원은 <strong>표면 문제 너머의 진짜 문제부터</strong> 정의해, 단 한 줄의 우선순위로 정리해드립니다.'
+    },
+    // ─── 근로자 ─────────────────────────────────────────────
+    'urgent|dismissed': {
+      byline:  '<strong>부당해고 구제신청</strong> 전문',
+      opener:  '해고·징계·부당 인사이동을 당한 상황이시군요.',
+      empathy: '"회사는 변호사·노무사가 있는데 나는 혼자다" — 그 막막함, 당연한 거예요.',
+      pain:    '혹시 3개월이 다 되어 가는데 결정 못 하고 계신가요?',
+      solution:'혼자 결정하지 마세요. 도원의 <strong>변호사·노무사가 1:1로</strong> 끝까지 함께 섭니다.'
+    },
+    'urgent|unpaid': {
+      byline:  '<strong>임금체불 구제</strong> 전문',
+      opener:  '임금이 미지급된 상황이시군요. 재직 중이시거나 퇴사 후 상황이실 수 있겠어요.',
+      empathy: '"받을 권리는 있는데 어디부터 시작해야 할지 모르겠다" — 회사 변명에 휘둘리지 않을 자신도 없으시죠.',
+      pain:    '정확히 얼마를 받아야 하는지부터 자신이 없으신가요?',
+      solution:'가장 먼저 할 일은 정확한 금액부터입니다. 도원은 <strong>받아야 할 정확액 + 회사 변명의 적법성</strong>을 함께 검토합니다.'
+    },
+    'urgent|injury': {
+      byline:  '<strong>산재보상·민형사</strong> 전문',
+      opener:  '업무상 부상이나 직업병으로 어려움을 겪고 계시는군요.',
+      empathy: '다친 것도 억울한데 회사가 협조하지 않는다 — 이 흔한 패턴이 얼마나 답답한지 잘 알고 있습니다.',
+      pain:    '산재 신청부터 보상까지 혼자 감당할 자신이 없으시죠?',
+      solution:'도원은 <strong>산재 신청 + 민형사 절차를 원스톱</strong>으로 처리합니다.'
+    },
+    'urgent|bankrupt': {
+      byline:  '<strong>대지급금(체당금)</strong> 전문',
+      opener:  '회사가 도산했거나 체불이 확정된 상황이시군요.',
+      empathy: '"회사가 망했는데 받을 수 있을까" — 가장 먼저 드는 그 두려움, 당연합니다.',
+      pain:    '신청 절차도, 시효도 막막하지 않으세요?',
+      solution:'받을 수 있습니다. 도원은 <strong>대지급금(체당금) 신청</strong>으로 끝까지 회수해드립니다.'
+    },
+    'urgent|family': {
+      byline:  '<strong>유족 산재·민형사</strong> 전문',
+      opener:  '가족이 산재로 사망한 상황이시군요. 정말 안타깝습니다.',
+      empathy: '"무엇부터 해야 할지 모르겠다"는 막막함이 가장 크실 거예요.',
+      pain:    '유족 급여 신청부터 회사 책임까지, 동시에 챙길 수 있을지 두렵지 않으세요?',
+      solution:'도원이 <strong>유족 산재·민형사 절차를 원스톱</strong>으로 안내해드립니다. 가족분의 시간이 흐트러지지 않게 함께합니다.'
+    },
+    'urgent|workplace_abuse': {
+      byline:  '<strong>권리구제·증거 컨설팅</strong> 전문',
+      opener:  '직장 내 괴롭힘·성희롱·차별을 겪고 계시는군요.',
+      empathy: '"신고하면 회사가 더 강하게 나올까", "주변에 알려질까" — 그 두려움은 당연한 감정이에요.',
+      pain:    '신고가 부담스럽지만 가만히 있을 수도 없는 상황이시죠?',
+      solution:'도원은 <strong>비공개·1:1로 증거 단계부터</strong> 함께합니다. 절차마다 어떻게 보호받을지 안내해드립니다.'
+    }
+  };
+
+  var DEFAULT_REFRAME = {
+    byline:  '<strong>표면 너머의 진짜 문제</strong> 진단',
+    opener:  '도원의 진단이 도착했습니다.',
+    empathy: '표면적인 답이 아니라 진짜 도움이 되는 방향을 찾고 계신 거죠.',
+    pain:    '"어디부터 시작해야 할지 막막하다" 하는 마음, 잘 알고 있습니다.',
+    solution:'도원은 <strong>표면 문제 너머의 진짜 문제</strong>를 정의하고, 한 줄의 제안으로 결정까지 이끕니다.'
+  };
+
+  function fillOpener(template) {
+    if (!template) return '';
+    var sz = (typeof dx7 !== 'undefined' && dx7.answers) ? dx7.answers.size : '';
+    var sizeText = SIZE_TEXT[sz] || '운영 중인';
+    return template.replace('{size}', sizeText);
+  }
+
+  function renderAvatar() {
+    if (DW_NOMUSA_AVATAR_URL) {
+      // 사진이 있으면 img, 실패 시 SVG로 폴백
+      return '<img src="' + DW_NOMUSA_AVATAR_URL + '" alt="도원 노무사" onerror="this.style.display=\'none\'">';
+    }
+    return FALLBACK_AVATAR_SVG;
+  }
+
+  window.dx7RenderEmpathyRecap = function() {
+    var root = document.getElementById('dx7EmpathyRecap');
+    if (!root) return;
+    if (typeof dx7 === 'undefined' || !dx7.flow) { root.hidden = true; return; }
+
+    var key = (dx7.track || '') + '|' + (dx7.entryAnswer || '');
+    var rf = REFRAME[key] || DEFAULT_REFRAME;
+
+    root.innerHTML =
+      '<div class="dx7-consult-card">' +
+        '<div class="dx7-consult-head">' +
+          '<div class="dx7-consult-avatar" data-dw-avatar>' + renderAvatar() + '</div>' +
+          '<div class="dx7-consult-meta">' +
+            '<div class="dx7-consult-label">도원 노무사가 본 당신의 상황</div>' +
+            '<div class="dx7-consult-byline">노무법인 도원 · ' + rf.byline + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="dx7-consult-body">' +
+          '<p class="dx7-consult-line">' + fillOpener(rf.opener) + '</p>' +
+          '<p class="dx7-consult-line">' + rf.empathy + '</p>' +
+          '<blockquote class="dx7-consult-quote">' + rf.pain + '</blockquote>' +
+          '<p class="dx7-consult-solution">' + rf.solution + '</p>' +
+        '</div>' +
+      '</div>';
+    root.hidden = false;
+  };
+})();
+</script>
+
+<script id="dw-redesign-js">
+/* v7.12 리디자인 동작 — 점진적 공개 · 리빌 · 카운터 · 스마트 스티키
+   각 블록은 try/catch 로 격리: 일부 실패해도 나머지·원본 동작 유지 */
+(function(){
+  'use strict';
+  function ready(fn){
+    if (document.readyState !== 'loading') fn();
+    else document.addEventListener('DOMContentLoaded', fn);
+  }
+  function esc(s){ return String(s).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+
+  ready(function(){
+    /* ---- B4 점진적 공개: 성공 시에만 body.dw-ready 부여 ---- */
+    try {
+      var strips = document.querySelectorAll('.instance-strip');
+      strips.forEach(function(strip){
+        var header = strip.querySelector('.strip-header');
+        if (!header) return;
+        var no = strip.dataset.no, d = null;
+        try { if (typeof data !== 'undefined') d = data.find(function(x){ return String(x.no) === String(no); }); } catch(e){}
+
+        var chev = document.createElement('span');
+        chev.className = 'dw-chev'; chev.textContent = '▾';
+        header.appendChild(chev);
+
+        if (d) {
+          var t = (d.problemMain || d.problem || '').split('\n')[0];
+          if (t) {
+            var teaser = document.createElement('div');
+            teaser.className = 'dw-teaser';
+            teaser.innerHTML = '<span class="dw-hint">진짜 문제 · </span>' + esc(t)
+              + ' &nbsp;<span class="dw-hint">5단 플로우 펼쳐보기 ▾</span>';
+            header.insertAdjacentElement('afterend', teaser);
+          }
+        }
+        header.addEventListener('click', function(e){
+          if (e.target.closest('a, button')) return;
+          strip.classList.toggle('dw-open');
+        });
+      });
+      ['jumpTo','dxJump'].forEach(function(fn){
+        if (typeof window[fn] === 'function') {
+          var orig = window[fn];
+          window[fn] = function(no){
+            var el = document.getElementById('case-' + no);
+            if (el) el.classList.add('dw-open');
+            return orig.apply(this, arguments);
+          };
+        }
+      });
+      document.body.classList.add('dw-ready');
+    } catch(e){ /* 접힘 미적용 — 원본대로 전체 표시 */ }
+
+    /* ---- C 스크롤 리빌 ---- */
+    try {
+      var revealEls = document.querySelectorAll('.instance-strip, .group-header, .section-divider, .diagnose-card-btn');
+      if ('IntersectionObserver' in window && revealEls.length) {
+        revealEls.forEach(function(el){ el.classList.add('dw-reveal'); });
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(en){
+            if (en.isIntersecting) { en.target.classList.add('dw-in'); io.unobserve(en.target); }
+          });
+        }, { rootMargin: '0px 0px -7% 0px', threshold: 0.04 });
+        revealEls.forEach(function(el){ io.observe(el); });
+        setTimeout(function(){ revealEls.forEach(function(el){ el.classList.add('dw-in'); }); }, 1400);
+      }
+    } catch(e){}
+
+    /* ---- C 신뢰 숫자 카운터 ---- */
+    try {
+      var animateCount = function(el){
+        var m = (el.getAttribute('data-dw-target') || '').match(/^([\d,]+)(.*)$/);
+        if (!m) return;
+        var target = parseInt(m[1].replace(/,/g,''), 10), suffix = m[2] || '';
+        var dur = 1150, start = null;
+        var step = function(ts){
+          if (!start) start = ts;
+          var p = Math.min((ts - start) / dur, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * eased).toLocaleString('ko-KR') + suffix;
+          if (p < 1) requestAnimationFrame(step);
+          else el.textContent = target.toLocaleString('ko-KR') + suffix;
+        };
+        requestAnimationFrame(step);
+      };
+      var nums = document.querySelectorAll('.dx-trust-item strong');
+      nums.forEach(function(el){
+        if (/\d/.test(el.textContent)) el.setAttribute('data-dw-target', el.textContent.trim());
+      });
+      if ('IntersectionObserver' in window && nums.length) {
+        var cObs = new IntersectionObserver(function(entries){
+          entries.forEach(function(en){
+            if (en.isIntersecting && en.target.hasAttribute('data-dw-target')) {
+              animateCount(en.target); cObs.unobserve(en.target);
+            }
+          });
+        }, { threshold: 0.6 });
+        nums.forEach(function(el){ if (el.hasAttribute('data-dw-target')) cObs.observe(el); });
+      }
+    } catch(e){}
+
+    /* ---- C 스마트 스티키 CTA (진단 전/후 문구 동적 변경) ---- */
+    try {
+      var sticky = document.getElementById('dxStickyCta');
+      var CHANNEL = 'https://dowon.channel.io/home?utm_source=lp&utm_medium=cta&utm_content=floating_button';
+      var setSticky = function(mode){
+        if (!sticky) return;
+        if (mode === 'consult') {
+          sticky.innerHTML = '<a href="' + CHANNEL + '" target="_blank" rel="noopener" '
+            + 'class="dx-sticky-btn dx-sticky-btn-chat dw-sticky-btn">'
+            + '<span class="icon">💬</span><span>채널톡 무료 상담</span></a>';
+        } else {
+          sticky.innerHTML = '<button type="button" class="dx-sticky-btn dw-sticky-btn dw-sticky-btn-diagnose">'
+            + '<span class="icon">🩺</span><span>30초 무료 진단 시작</span></button>';
+          var btn = sticky.querySelector('button');
+          if (btn) btn.addEventListener('click', function(){
+            var ds = document.querySelector('.diagnose-section');
+            if (ds) ds.scrollIntoView({ behavior:'smooth', block:'start' });
+          });
+        }
+      };
+      setSticky('diagnose');
+      var resultEl = document.querySelector('[data-stage="result"]');
+      if (
