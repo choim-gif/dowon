@@ -4,106 +4,236 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>찾아드림 — 1분 환급 가능성 확인 | 노무법인 도원</title>
-<meta name="description" content="4,000개 기업이 평균 1,933만원씩 환급·지원받았습니다. 사업자번호 입력 1분이면 우리 회사 환급 가능액을 확인합니다.">
+<meta name="description" content="4,000개 기업 진단, 다 받고 있는 회사는 0곳. 사업자번호 1분 입력으로 우리 회사 환급 가능액을 확인합니다. 못 찾으면 수수료 0원.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://choim-gif.github.io/dowon/case-1.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="노무법인 도원">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:title" content="찾아드림 — 1분 환급 가능성 확인 | 노무법인 도원">
-<meta property="og:description" content="4,000개 기업이 평균 1,933만원씩 환급·지원받았습니다. 사업자번호 입력 1분이면 우리 회사 환급 가능액을 확인합니다.">
+<meta property="og:description" content="4,000개 기업 진단, 다 받고 있는 회사는 0곳. 사업자번호 1분 입력으로 우리 회사 환급 가능액을 확인합니다.">
 <meta property="og:url" content="https://choim-gif.github.io/dowon/case-1.html">
 <meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"이미 외부 업체에 맡기고 있는데도 의미 있나요?","acceptedAnswer":{"@type":"Answer","text":"환급·지원금은 노무사·세무사·고용센터가 각자 영역만 봅니다. 다른 업체가 못 찾는 영역에 환급이 남아있는지 1분 진단으로 확인."}},{"@type":"Question","name":"확인이 정말 1분이면 끝나나요?","acceptedAnswer":{"@type":"Answer","text":"사업자번호 입력만으로 자동 진단, 평균 1분. 타 노무법인 조회·서류는 보통 1시간 이상."}},{"@type":"Question","name":"입력한 정보가 안전한가요?","acceptedAnswer":{"@type":"Answer","text":"도원 자체 시스템에서만 처리, 외부 노출 0건. 본인 요청 시 즉시 삭제."}},{"@type":"Question","name":"사업자번호만으로 정말 진단이 되나요?","acceptedAnswer":{"@type":"Answer","text":"사업자번호로 4대보험 납부·고용 이력을 조회해 환급·지원금 가능 영역을 자동 매칭합니다. 추가 서류는 위탁을 결정한 뒤에만 받습니다."}},{"@type":"Question","name":"보고서 받고 진행 안 해도 되나요?","acceptedAnswer":{"@type":"Answer","text":"가능. 보고서 확인 후 진행 여부는 회사 선택. 비용·약속 0건."}},{"@type":"Question","name":"비용은 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"등록·벤치마크·보고서 모두 무료. 실제 환급 진행은 회수액 기준 성공보수, 못 찾으면 0원."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"이미 외부 업체에 맡기고 있는데도 의미 있나요?","acceptedAnswer":{"@type":"Answer","text":"환급·지원금은 노무사·세무사·고용센터가 각자 영역만 봅니다. 다른 업체가 못 찾는 사각지대에 환급이 남아있는지 1분 진단으로 확인."}},{"@type":"Question","name":"사업자번호만으로 정말 진단이 되나요?","acceptedAnswer":{"@type":"Answer","text":"사업자번호로 4대보험 납부·고용 이력을 조회해 환급·지원금 가능 영역을 자동 매칭합니다. 추가 서류는 위탁을 결정한 뒤에만 받습니다."}},{"@type":"Question","name":"비용은 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"진단·보고서 모두 무료. 실제 환급 진행은 회수액 기준 성공보수, 못 찾으면 0원."}}]}</script>
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
 <link href="case-v2.css" rel="stylesheet">
 <style>
-.eyebrow svg{vertical-align:-2px;margin-right:5px;}
-.chk{width:100%;max-width:600px;margin:34px auto 0;}
-.chk-q{font-size:18px;font-weight:800;color:#fff;text-align:center;margin-bottom:18px;}
-.chk-item{display:flex;align-items:center;gap:13px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:16px 18px;margin-bottom:10px;text-align:left;}
-.chk-mark{flex:none;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;}
-.chk-tx{font-size:15.5px;font-weight:600;color:#E4E9F0;line-height:1.5;}
-.chk-tip{background:var(--gold-t);border-radius:12px;padding:16px 18px;margin-top:14px;font-size:14px;line-height:1.6;color:var(--navy);text-align:left;}
-.chk-tip b{color:var(--gold);font-weight:800;}
-.calc-bar{margin-top:16px;height:14px;border-radius:8px;background:#E7E0CC;overflow:hidden;}
-.calc-bar-fill{height:100%;width:0;background:var(--gold);border-radius:8px;transition:width .25s ease;}
-.nr-steps{display:flex;gap:12px;width:100%;max-width:900px;margin:40px auto 0;}
-.nr-step{flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 14px 22px;text-align:center;}
-.nr-step.hl{background:var(--navy);border-color:var(--navy);}
-.nr-badge{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.5px;padding:5px 13px;border-radius:20px;background:var(--gold-t);color:var(--gold);margin-bottom:14px;}
-.nr-step.hl .nr-badge{background:rgba(255,255,255,.14);color:var(--gold-l);}
-.nr-ic{width:50px;height:50px;margin:0 auto 12px;display:block;}
-.nr-t{font-size:16.5px;font-weight:800;color:var(--navy);}
-.nr-step.hl .nr-t{color:#fff;}
-.nr-d{font-size:13px;color:var(--sub);margin-top:7px;line-height:1.55;}
-.nr-step.hl .nr-d{color:#B7C0D0;}
-.norisk{background:var(--navy-d);border-radius:16px;padding:26px 32px;margin-top:28px;width:100%;max-width:900px;}
-.norisk-t{font-size:20px;font-weight:800;color:#fff;line-height:1.5;}
-.norisk-t b{color:var(--gold-l);}
-.norisk-s{margin-top:7px;font-size:14px;color:#9DAAC0;font-weight:600;}
-.start-card{background:#fff;border-radius:20px;padding:26px 24px;width:100%;max-width:560px;margin:32px auto 0;text-align:left;}
-.sc-top{display:flex;justify-content:space-between;align-items:center;}
-.sc-label{font-size:15px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:7px;}
-.sc-dot-red{width:8px;height:8px;border-radius:50%;background:#E24B4A;display:inline-block;}
-.sc-auto{font-size:13px;color:var(--sub);font-weight:600;}
-.sc-mid{display:flex;align-items:center;gap:14px;margin-top:20px;}
-.sc-ic{flex:none;width:54px;height:54px;border-radius:50%;background:var(--gold-t);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:800;color:var(--gold);}
-.sc-mid-t{font-size:18px;font-weight:800;color:var(--navy);}
-.sc-mid-s{font-size:18px;font-weight:800;color:var(--gold);margin-top:3px;}
-.sc-prog{margin-top:24px;}
-.sc-track{height:6px;border-radius:3px;background:var(--line);position:relative;}
-.sc-fill{position:absolute;left:0;top:0;height:100%;width:7%;background:var(--gold);border-radius:3px;}
-.sc-knob{position:absolute;left:7%;top:50%;width:16px;height:16px;border-radius:50%;background:var(--gold);border:3px solid #fff;transform:translate(-50%,-50%);}
-.sc-stages{display:flex;justify-content:space-between;margin-top:11px;}
-.sc-stage{font-size:12px;color:var(--sub);font-weight:600;}
-.sc-stage.on{color:var(--gold);font-weight:800;}
-.sc-btn{display:block;width:100%;margin-top:22px;background:var(--gold);color:#fff;font-size:17px;font-weight:800;text-align:center;text-decoration:none;padding:16px;border-radius:12px;}
-.start-trust{margin-top:26px;font-size:13.5px;line-height:1.85;color:#9DAAC0;font-weight:600;}
-.start-trust b{color:#fff;}
-.start-trust .row2{color:#7C8AA0;}
-.scene.navy{background:linear-gradient(158deg,#244468 0%,#1A3356 52%,#11233E 100%);}
-.scene.soft{background:linear-gradient(180deg,#F4F6F9 0%,#E9EDF2 100%);}
-.hero{background:linear-gradient(180deg,#fff 0%,#F6F8FA 100%);}
-.cta,.sc-btn{background:linear-gradient(135deg,#D0AE66 0%,#B8954A 58%,#A6823A 100%);box-shadow:0 12px 30px rgba(184,149,74,.36);transition:transform .18s ease,box-shadow .18s ease;}
-.cta:hover,.sc-btn:hover{background:linear-gradient(135deg,#D8B772 0%,#BE9B50 58%,#AC8840 100%);transform:translateY(-2px);box-shadow:0 16px 36px rgba(184,149,74,.44);}
-.nr-step{box-shadow:0 12px 30px rgba(26,51,86,.1);transition:transform .2s ease,box-shadow .2s ease;}
-.nr-step:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(26,51,86,.16);}
-.nr-step.hl{background:linear-gradient(158deg,#264568 0%,#172A4B 100%);box-shadow:0 16px 38px rgba(13,29,51,.42);}
-.calc{box-shadow:0 16px 40px rgba(26,51,86,.13);}
-.calc-out{background:linear-gradient(135deg,#F8F1DF 0%,#F1E6CA 100%);}
-.chk-tip{background:linear-gradient(135deg,#F8F1DF 0%,#F1E6CA 100%);}
-.norisk{background:linear-gradient(135deg,#203C62 0%,#0E1D33 100%);box-shadow:0 18px 44px rgba(0,0,0,.3);border:1px solid rgba(205,171,99,.22);}
-.start-card{box-shadow:0 24px 54px rgba(0,0,0,.32);}
-.hero-stat{box-shadow:0 10px 26px rgba(184,149,74,.18);}
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.2,.6,.2,1),transform .6s cubic-bezier(.2,.6,.2,1);}
-.reveal.in{opacity:1;transform:none;}
-.sticky{transition:transform .45s cubic-bezier(.2,.7,.2,1);}
-.sticky.tucked{transform:translateY(130%);}
-.sc-btn,.sticky a{position:relative;overflow:hidden;}
-.sc-btn::after,.sticky a::after{content:"";position:absolute;top:0;left:-60%;width:38%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);animation:shine 4.6s ease-in-out infinite;pointer-events:none;}
-.sticky a{animation:breathe 2.8s ease-in-out infinite;}
-.cta-arrow{display:inline-block;animation:nudge 1.9s ease-in-out infinite;}
-.sc-fill{transition:width .9s cubic-bezier(.2,.7,.2,1);}
-.sc-knob{transition:left .9s cubic-bezier(.2,.7,.2,1);}
-@keyframes shine{0%{left:-60%;}14%{left:150%;}100%{left:150%;}}
-@keyframes breathe{0%,100%{box-shadow:0 6px 18px rgba(184,149,74,.4);}50%{box-shadow:0 9px 28px rgba(184,149,74,.7);}}
-@keyframes nudge{0%,55%,100%{transform:translateX(0);}75%{transform:translateX(5px);}}
-@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none;}.sc-btn::after,.sticky a::after,.cta-arrow,.sticky a{animation:none;}}
-@media(max-width:680px){.nr-steps{flex-wrap:wrap;}.nr-step{flex:1 1 calc(50% - 6px);}}
+/* ===== case-1 c8-* 공통 컴포넌트 (case-8과 동일) ===== */
+/* INSIGHT 섹션 (§ 3) */
+.c8-insight{background:radial-gradient(ellipse 900px 500px at 50% 35%,rgba(212,178,106,.08) 0%,transparent 65%),radial-gradient(ellipse 1500px 900px at 50% 50%,#182c4c 0%,#0F1F38 55%,#07142a 100%);color:#fff;padding:150px max(24px,calc((100% - 940px)/2));position:relative;}
+.c8-insight-inner{max-width:900px;margin:0 auto;text-align:center;}
+.c8-insight-eyebrow{display:inline-block;font-size:13.5px;font-weight:800;letter-spacing:1px;padding:8px 17px;border-radius:30px;margin-bottom:24px;background:rgba(212,178,106,.12);color:#D4B26A;border:1px solid rgba(212,178,106,.3);}
+.c8-insight-head{font-size:44px;font-weight:800;line-height:1.3;letter-spacing:-1.3px;color:#fff;margin:0 0 14px 0;}
+.c8-insight-head em{font-style:normal;color:#D4B26A;}
+.c8-insight-sub{font-size:17px;font-weight:600;color:rgba(255,255,255,.65);margin:0 0 48px 0;line-height:1.5;}
+.c8-insight-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:stretch;margin:0 0 40px 0;}
+.c8-insight-cell{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:32px 24px;text-align:center;}
+.c8-insight-cell-em{font-size:46px;line-height:1;margin-bottom:14px;}
+.c8-insight-cell-name{font-size:14px;font-weight:800;color:#D4B26A;letter-spacing:1.5px;margin-bottom:12px;}
+.c8-insight-cell-q{font-size:17px;font-weight:600;color:#fff;line-height:1.55;}
+.c8-insight-cell-q b{font-weight:800;color:#fff;}
+.c8-insight-punch{font-size:24px;font-weight:800;line-height:1.5;color:#fff;letter-spacing:-.5px;margin:8px 0 14px 0;}
+.c8-insight-punch b{color:#D4B26A;font-weight:800;}
+.c8-insight-conseq{font-size:16.5px;font-weight:600;line-height:1.55;color:rgba(255,255,255,.72);}
+/* SOLUTION 섹션 (§ 4) — 무기 카드 */
+.c8-weapon{background:#fff;border:1px solid #E7E9EE;border-radius:18px;padding:30px 28px;margin-bottom:18px;box-shadow:0 10px 28px rgba(26,51,86,.07);transition:transform 0.3s cubic-bezier(.4,0,.2,1),box-shadow 0.3s cubic-bezier(.4,0,.2,1);}
+.c8-weapon:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(26,51,86,.14);}
+.c8-weapon-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+.c8-weapon-num{display:inline-flex;width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#1A3356 0%,#2d3d6a 100%);color:#fff;font-size:20px;font-weight:800;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 14px rgba(26,51,86,.25);}
+.c8-weapon-label{font-size:13.5px;font-weight:800;color:#B8954A;letter-spacing:1.2px;margin-bottom:4px;}
+.c8-weapon-title{font-size:25px;font-weight:800;color:#1A3356;line-height:1.3;letter-spacing:-.5px;}
+.c8-weapon-problem{background:#F5F7FB;border-radius:10px;padding:14px 18px;margin-bottom:18px;font-size:15.5px;color:#5A626E;font-weight:600;}
+.c8-weapon-problem b{color:#1A3356;font-weight:800;}
+.c8-weapon-body{font-size:16.5px;color:#1A3356;font-weight:600;line-height:1.7;}
+.c8-weapon-body b{font-weight:800;}
+.c8-weapon-shields{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding-top:18px;border-top:1px dashed rgba(26,51,86,.16);}
+.c8-shield-chip{display:inline-flex;align-items:center;gap:7px;background:#F6F0E1;border:1px solid rgba(184,149,74,.32);border-radius:30px;padding:7px 16px 7px 7px;font-size:14px;font-weight:700;color:#1A3356;letter-spacing:-.1px;}
+.c8-shield-tick{display:inline-flex;width:20px;height:20px;border-radius:50%;background:#B8954A;color:#fff;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;flex-shrink:0;}
+.c8-result{background:linear-gradient(160deg,#1A3356 0%,#2d3d6a 100%);border-radius:16px;padding:26px 28px;color:#fff;text-align:center;margin:8px 0 0 0;box-shadow:0 12px 28px rgba(26,51,86,.3);}
+.c8-result-eyebrow{font-size:13.5px;font-weight:800;color:#D4B26A;letter-spacing:1.5px;margin-bottom:8px;}
+.c8-result-head{font-size:27px;font-weight:800;color:#fff;line-height:1.4;letter-spacing:-.5px;}
+.c8-result-head em{font-style:normal;color:#D4B26A;}
+/* §4 전문가 이미지 */
+.c8-expert-img{position:absolute;top:0;right:0;width:360px;height:200px;object-fit:cover;object-position:center top;border-radius:20px;box-shadow:0 16px 36px rgba(26,51,86,.15);pointer-events:none;user-select:none;}
+@media(max-width:1080px){.c8-expert-img{width:280px;height:160px;}}
+@media(max-width:780px){.c8-expert-img{display:none;}}
+/* 스크롤 페이드인 */
+.fade-in{opacity:0;transform:translateY(28px);transition:opacity 0.85s cubic-bezier(.16,1,.3,1),transform 0.85s cubic-bezier(.16,1,.3,1);}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+@media(prefers-reduced-motion:reduce){.fade-in{opacity:1!important;transform:none!important;transition:none;}.c8-weapon{transition:none;}.c8-weapon:hover{transform:none;}}
+
+/* §2 LOSS — .scene.navy 톤 + 충격 비주얼 (4,000 → 0) */
+.scene.navy{min-height:auto;padding-top:150px;padding-bottom:150px;background:radial-gradient(ellipse 1400px 700px at 50% 0%,#243f68 0%,#1A3356 55%,#122a48 100%);}
+.c1-shock{display:flex;align-items:center;justify-content:center;gap:60px;margin:50px auto 0;max-width:780px;}
+.c1-shock-side{text-align:center;}
+.c1-shock-num{font-size:112px;font-weight:800;line-height:1;letter-spacing:-4px;color:#fff;}
+.c1-shock-num.zero{color:#FF7872;font-size:148px;}
+.c1-shock-label{font-size:17px;font-weight:700;color:rgba(255,255,255,.82);margin-top:14px;letter-spacing:-.3px;}
+.c1-shock-arr{font-size:48px;color:#D4B26A;font-weight:800;line-height:1;}
+.c1-shock-tip{background:linear-gradient(135deg,#2C1F12 0%,#1A140A 100%);border:1px solid rgba(205,171,99,.32);border-radius:12px;padding:14px 18px;margin:32px auto 0;max-width:780px;font-size:15px;font-weight:700;color:#F1E6CA;text-align:center;line-height:1.55;}
+.c1-shock-tip b{color:var(--gold-l);}
+@media(max-width:780px){
+  .c1-shock{flex-direction:column;gap:16px;}
+  .c1-shock-num{font-size:78px;}
+  .c1-shock-num.zero{font-size:100px;}
+  .c1-shock-arr{transform:rotate(90deg);font-size:32px;}
+  .c1-shock-tip{font-size:13.5px;}
+  .c8-insight{padding:64px 22px;}
+  .c8-insight-head{font-size:30px;}
+  .c8-insight-grid-3{grid-template-columns:1fr;gap:10px;}
+  .c8-insight-punch{font-size:19px;}
+  .c8-weapon{padding:24px 20px;}
+  .c8-weapon-title{font-size:21px;}
+  .c8-result-head{font-size:22px;}
+}
+/* §4 NEW — 1분 CTA 카드 (단순화·직관화) */
+.c1-cta-eyebrow{display:inline-block;font-size:13.5px;font-weight:800;letter-spacing:1px;padding:8px 17px;border-radius:30px;margin-bottom:20px;background:#F6F0E1;color:#B8954A;}
+.c1-cta-h2{font-size:42px;font-weight:800;line-height:1.32;letter-spacing:-1.3px;color:#1A3356;margin:0 0 14px 0;}
+.c1-cta-sub{font-size:17px;font-weight:600;color:#5A626E;margin:0 0 44px 0;line-height:1.5;}
+.c1-flow{display:flex;align-items:stretch;justify-content:center;gap:12px;margin:0 auto 44px;max-width:760px;}
+.c1-flow-step{flex:1;background:#fff;border:1px solid #E7E9EE;border-radius:14px;padding:24px 16px;text-align:center;box-shadow:0 6px 16px rgba(26,51,86,.05);}
+.c1-flow-num{display:inline-flex;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#1A3356 0%,#2d3d6a 100%);color:#fff;font-size:17px;font-weight:800;align-items:center;justify-content:center;margin-bottom:12px;box-shadow:0 4px 10px rgba(26,51,86,.18);}
+.c1-flow-text{font-size:16.5px;font-weight:800;color:#1A3356;line-height:1.3;}
+.c1-flow-sub{font-size:13px;color:#5A626E;font-weight:600;margin-top:6px;}
+.c1-flow-arr{display:flex;align-items:center;color:#B8954A;font-size:26px;font-weight:800;flex:none;}
+.c1-cta-card{background:linear-gradient(160deg,#1A3356 0%,#2d3d6a 100%);color:#fff;border-radius:22px;padding:36px 32px;box-shadow:0 22px 56px rgba(26,51,86,.32);max-width:540px;margin:0 auto;text-align:left;}
+.c1-cta-chips{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;}
+.c1-cta-chip{display:flex;align-items:center;gap:12px;font-size:16px;font-weight:700;color:#fff;}
+.c1-cta-chip .tick{display:inline-flex;width:24px;height:24px;border-radius:50%;background:#B8954A;color:#fff;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;}
+.c1-cta-button{display:block;background:linear-gradient(135deg,#D0AE66 0%,#B8954A 58%,#A6823A 100%);color:#fff;font-size:20px;font-weight:800;text-decoration:none;padding:22px 24px;border-radius:14px;text-align:center;box-shadow:0 16px 36px rgba(184,149,74,.42);transition:transform .2s cubic-bezier(.4,0,.2,1),box-shadow .2s cubic-bezier(.4,0,.2,1);}
+.c1-cta-button:hover{transform:translateY(-2px);box-shadow:0 20px 44px rgba(184,149,74,.55);}
+.c1-cta-foot{margin-top:22px;font-size:14px;font-weight:600;color:rgba(255,255,255,.78);text-align:center;}
+.c1-cta-foot b{color:#fff;font-weight:800;}
+@media(max-width:780px){
+  .c1-flow{flex-direction:column;gap:10px;}
+  .c1-flow-arr{transform:rotate(90deg);justify-content:center;}
+  .c1-cta-h2{font-size:30px;}
+  .c1-cta-card{padding:28px 22px;}
+  .c1-cta-button{font-size:18px;padding:20px 22px;}
+  .c1-cta-chip{font-size:15px;}
+}
 </style>
 </head>
 <body>
 <div class="top"><div class="brand">노무법인 <i>도원</i></div><a href="index.html">← 무료 진단</a></div>
-<header class="hero"><span class="eyebrow">사업주 대상 · 절세·환급</span><h1 class="big">받을 수 있는 환급금<br>있는지조차 모르고 계시죠?</h1><div class="svc-line">우리 회사 4대보험 환급·지원금,<br>도원이 1분 만에 찾아드립니다.</div><svg class="viz" width="288" height="268" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="숨은 환급금을 찾는 모습"><ellipse cx="112" cy="224" rx="52" ry="17" fill="#B8954A"/><ellipse cx="112" cy="205" rx="52" ry="17" fill="#CDAB63"/><ellipse cx="112" cy="186" rx="52" ry="17" fill="#B8954A"/><ellipse cx="112" cy="167" rx="52" ry="17" fill="#CDAB63"/><text x="112" y="172" text-anchor="middle" font-size="17" fill="#fff" font-weight="800">₩</text><circle cx="192" cy="118" r="58" fill="#fff" fill-opacity=".55" stroke="#1A3356" stroke-width="6"/><line x1="151" y1="159" x2="118" y2="192" stroke="#1A3356" stroke-width="11" stroke-linecap="round"/><text x="192" y="135" text-anchor="middle" font-size="52" fill="#1A3356" font-weight="800">?</text></svg><div class="hero-stat"><span class="n"><span id="heroNum">1,933</span>만원</span><span class="l">4,000개 이상 기업이 평균적으로 돌려받은 환급·지원액</span></div><div class="cue">스크롤<span class="arr">↓</span></div></header>
-<section class="scene navy"><span class="eyebrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l9 16H3z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg>진짜 문제</span><div class="big">4,000개 기업을 진단했지만,<br>다 받고 있는 회사는 단 한 곳도 없었습니다</div><div class="chk"><div class="chk-q">혹시 우리 회사도 해당하시나요?</div><div class="chk-item"><span class="chk-mark">✓</span><span class="chk-tx">최근 3년간 4대보험료 환급을 받아본 적이 없다</span></div><div class="chk-item"><span class="chk-mark">✓</span><span class="chk-tx">신규 채용 계획은 있지만 고용지원금을 활용해본 적이 없다</span></div><div class="chk-item"><span class="chk-mark">✓</span><span class="chk-tx">받을 수 있는 자금이 있는지 객관적으로 점검받고 싶다</span></div><div class="chk-tip">신규 채용 계획이 있다면 더 유리합니다. <b>인당 최대 1,440만원</b>의 정부 지원금을 추가로 받을 수 있습니다.</div></div></section>
-<section class="qsec"><span class="eyebrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V11M12 21V4M19 21v-6"/></svg>내 점검액 미리보기</span><div class="qh">우리 회사는 얼마나 될까요?</div><div class="calc"><div class="calc-row"><span class="calc-lab">우리 회사 직원 수</span><span class="calc-val"><b id="empOut">30</b>명</span></div><input type="range" id="emp" min="5" max="200" step="5" value="30" aria-label="직원 수"><div class="calc-out"><div class="calc-cap">예상 절감·환급 점검 범위</div><div class="calc-num">약 <span id="loOut">300</span>만 ~ <span id="hiOut">1,200</span>만원</div><div class="calc-bar"><div class="calc-bar-fill" id="calcBar"></div></div></div><div class="calc-dis">* 4대보험 환급 평균 320만원~, 고용지원금 인당 최대 1,440만원/년 기준 추정치입니다. 실제 금액은 무료 진단으로 확정됩니다.</div></div></section>
-<section class="scene soft"><span class="eyebrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6"/></svg>위험 부담 0</span><div class="big">못 받으면, 수수료도 0원입니다</div><div class="note">진단·보고서까지 100% 무료 —<br>실제 받은 금액에서만 수수료가 발생합니다.</div><div class="nr-steps"><div class="nr-step"><span class="nr-badge">STEP 01</span><svg class="nr-ic" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="25" cy="25" r="25" fill="#1A3356"/><circle cx="23" cy="22" r="9" fill="none" stroke="#fff" stroke-width="2.4"/><line x1="29.5" y1="28.5" x2="36" y2="35" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><path d="M19 22l3 3 6-7" stroke="#CDAB63" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="nr-t">진단 100% 무료</div><div class="nr-d">사업자번호 입력만으로 1분 자동 진단</div></div><div class="nr-step"><span class="nr-badge">STEP 02</span><svg class="nr-ic" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="25" cy="25" r="25" fill="#1A3356"/><rect x="16" y="13" width="18" height="24" rx="3" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M20 21h10M20 26h10M20 31h6" stroke="#CDAB63" stroke-width="2.2" stroke-linecap="round"/></svg><div class="nr-t">진단보고서 발급</div><div class="nr-d">받을 수 있는 금액과 진행 방법 안내</div></div><div class="nr-step"><span class="nr-badge">STEP 03</span><svg class="nr-ic" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="25" cy="25" r="25" fill="#1A3356"/><circle cx="25" cy="25" r="11" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M20 25l3.5 3.5L31 20" stroke="#CDAB63" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="nr-t">위탁 결정은 자유</div><div class="nr-d">결과 확인 후 진행 여부 자유 결정</div></div><div class="nr-step hl"><span class="nr-badge">STEP 04</span><svg class="nr-ic" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="25" cy="25" r="25" fill="#B8954A"/><circle cx="25" cy="25" r="12" fill="none" stroke="#fff" stroke-width="2.4"/><text x="25" y="30.5" text-anchor="middle" font-size="15" fill="#fff" font-weight="800">₩</text></svg><div class="nr-t">받은 만큼만 수수료</div><div class="nr-d">못 받으면 수수료도 0원</div></div></div><div class="norisk"><div class="norisk-t">받을 수 있는 자금이 0원이어도,<br><b>수수료도 0원</b>입니다</div><div class="norisk-s">시간만 1분, 잃을 게 없습니다</div></div></section>
-<div class="trust"><b>누적 4,000+ 기업 진단</b> · 분야별 전문가 200+ · 하나금융·KT estate·LH·무신사 자문 실적</div>
-<div class="faqwrap"><h3>자주 묻는 질문</h3><details class="faq"><summary>이미 외부 업체에 맡기고 있는데도 의미 있나요?</summary><div class="faq-a">환급·지원금은 노무사·세무사·고용센터가 각자 영역만 봅니다. 다른 업체가 못 찾는 영역에 환급이 남아있는지 1분 진단으로 확인.</div></details><details class="faq"><summary>확인이 정말 1분이면 끝나나요?</summary><div class="faq-a">사업자번호 입력만으로 자동 진단, 평균 1분. 타 노무법인 조회·서류는 보통 1시간 이상.</div></details><details class="faq"><summary>입력한 정보가 안전한가요?</summary><div class="faq-a">도원 자체 시스템에서만 처리, 외부 노출 0건. 본인 요청 시 즉시 삭제.</div></details><details class="faq"><summary>사업자번호만으로 정말 진단이 되나요?</summary><div class="faq-a">사업자번호로 4대보험 납부·고용 이력을 조회해 환급·지원금 가능 영역을 자동 매칭합니다. 추가 서류는 위탁을 결정한 뒤에만 받습니다.</div></details><details class="faq"><summary>보고서 받고 진행 안 해도 되나요?</summary><div class="faq-a">가능. 보고서 확인 후 진행 여부는 회사 선택. 비용·약속 0건.</div></details><details class="faq"><summary>비용은 어떻게 되나요?</summary><div class="faq-a">등록·벤치마크·보고서 모두 무료. 실제 환급 진행은 회수액 기준 성공보수, 못 찾으면 0원.</div></details></div>
-<section class="scene navy"><span class="eyebrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7"/></svg>지금 시작하세요</span><div class="closer-tx">지금 1분이면,<br>우리 회사 환급액을 알 수 있습니다</div><div class="closer-sub">사업자번호만 있으면 됩니다. 어렵지 않아요.</div><div class="start-card"><div class="sc-top"><span class="sc-label">내 환급금<span class="sc-dot-red"></span></span><span class="sc-auto">자동 진단</span></div><div class="sc-mid"><div class="sc-ic">₩</div><div><div class="sc-mid-t">아직 못 찾은 환급금</div><div class="sc-mid-s">1분이면 확인 가능</div></div></div><div class="sc-prog"><div class="sc-track"><div class="sc-fill"></div><div class="sc-knob"></div></div><div class="sc-stages"><span class="sc-stage on">신청 전</span><span class="sc-stage">자동 진단</span><span class="sc-stage">전문가 검토</span><span class="sc-stage">환급 완료</span></div></div><a class="sc-btn" href="https://dowon.channel.io/home?utm_source=casepage&amp;utm_medium=cta&amp;utm_content=case_1" target="_blank" rel="noopener">환급액 확인하기 <span class="cta-arrow">→</span></a></div><div class="start-trust">누적 <b>4,000+ 기업 진단</b> · 분야별 <b>전문가 200+</b><br><span class="row2">하나금융 · KT estate · LH · 무신사 컨설팅 실적 · <b>도원노무법인</b> 운영</span></div></section>
+<header class="hero"><span class="eyebrow">사업주 대상 · 절세·환급</span><h1 class="big">노무사에 맡기고 계시니,<br>다 받고 있다고 생각하시죠?</h1><div class="svc-line">사업자번호 1줄, 1분 만에<br>도원이 진짜 가능 금액을 보여드립니다.</div><svg class="viz" width="288" height="268" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="숨은 환급금을 찾는 모습"><ellipse cx="112" cy="224" rx="52" ry="17" fill="#B8954A"/><ellipse cx="112" cy="205" rx="52" ry="17" fill="#CDAB63"/><ellipse cx="112" cy="186" rx="52" ry="17" fill="#B8954A"/><ellipse cx="112" cy="167" rx="52" ry="17" fill="#CDAB63"/><text x="112" y="172" text-anchor="middle" font-size="17" fill="#fff" font-weight="800">₩</text><circle cx="192" cy="118" r="58" fill="#fff" fill-opacity=".55" stroke="#1A3356" stroke-width="6"/><line x1="151" y1="159" x2="118" y2="192" stroke="#1A3356" stroke-width="11" stroke-linecap="round"/><text x="192" y="135" text-anchor="middle" font-size="52" fill="#1A3356" font-weight="800">?</text></svg><div class="hero-stat"><span class="n">1,933만원</span><span class="l">4,000개+ 기업이 평균적으로<br>돌려받은 환급·지원액</span></div><div class="cue">스크롤<span class="arr">↓</span></div></header>
+
+<!-- §2 LOSS — 4,000 진단했지만 다 받는 곳은 0곳 -->
+<section class="scene navy"><span class="eyebrow">진짜 문제</span><div class="big fade-in">4,000개를 진단했지만,<br>다 받고 있는 회사는 한 곳도 없었습니다</div>
+<div class="c1-shock fade-in">
+  <div class="c1-shock-side">
+    <div class="c1-shock-num">4,000</div>
+    <div class="c1-shock-label">진단한 기업</div>
+  </div>
+  <div class="c1-shock-arr">→</div>
+  <div class="c1-shock-side">
+    <div class="c1-shock-num zero">0</div>
+    <div class="c1-shock-label">다 받고 있던 곳</div>
+  </div>
+</div>
+<div class="c1-shock-tip fade-in">⚠️ 환급은 <b>3년 소급 한계</b> — 지나가면 영영 받을 수 없습니다</div>
+</section>
+
+<!-- §3 INSIGHT — 노무사가 못해서가 아닙니다, 구조상 못 봅니다 (클라이맥스) -->
+<section class="c8-insight">
+  <div class="c8-insight-inner fade-in">
+    <span class="c8-insight-eyebrow">왜 다 못 받는가</span>
+    <h2 class="c8-insight-head">노무사가 못해서가 아닙니다.<br><em>구조상 못 보는 영역</em>이 있습니다</h2>
+    <p class="c8-insight-sub">환급 발굴이 본업이 아니기 때문입니다</p>
+
+    <div class="c8-insight-grid-3">
+      <div class="c8-insight-cell">
+        <div class="c8-insight-cell-em">🧩</div>
+        <div class="c8-insight-cell-name">영역 분절</div>
+        <div class="c8-insight-cell-q">노무사·세무사·고용센터가<br><b>각자 영역만</b> 봅니다</div>
+      </div>
+      <div class="c8-insight-cell">
+        <div class="c8-insight-cell-em">⏱</div>
+        <div class="c8-insight-cell-name">시간 부재</div>
+        <div class="c8-insight-cell-q">노무·급여 처리만으로도<br><b>본업이 빠듯</b>합니다</div>
+      </div>
+      <div class="c8-insight-cell">
+        <div class="c8-insight-cell-em">🔗</div>
+        <div class="c8-insight-cell-name">조합 노하우</div>
+        <div class="c8-insight-cell-q">여러 지원금을 <b>묶어야</b><br>최대치가 나옵니다</div>
+      </div>
+    </div>
+
+    <div class="c8-insight-punch">결국, <b>평균 1,933만원</b>이 매년 새고 있습니다</div>
+    <div class="c8-insight-conseq">→ 3년 지나면 소급도 불가능, 영영 받을 수 없습니다</div>
+  </div>
+</section>
+
+<!-- §4 SOLUTION — 도원이 들고 가는 두 가지 -->
+<section class="c8-resolve" style="background:linear-gradient(180deg,#F4F6FA 0%,#EEF1F5 50%,#E8EBF0 100%);padding:80px max(24px,calc((100% - 940px)/2));position:relative;overflow:hidden;">
+<div style="max-width:900px;margin:0 auto;position:relative;z-index:2;">
+<img class="c8-expert-img" src="https://cdn.imweb.me/thumbnail/20260508/0a2b708d0f9e3.jpg" alt="도원 전문가 컨설팅" loading="lazy">
+<span style="display:inline-block;font-size:13.5px;font-weight:800;letter-spacing:1px;padding:8px 17px;border-radius:30px;margin-bottom:24px;background:#F6F0E1;color:#B8954A;">도원의 해결</span>
+<h2 style="font-size:42px;font-weight:800;line-height:1.32;letter-spacing:-1.3px;color:#1A3356;margin:0 0 14px 0;">도원이 들고 가는 두 가지,<br><span style="color:#B8954A;">1분 진단 + 비용 0원</span></h2>
+<p style="font-size:17px;font-weight:600;color:#5A626E;margin:0 0 36px 0;line-height:1.5;">사각지대까지 1분 만에, 못 받으면 수수료 0원</p>
+
+<!-- 무기 1 -->
+<div class="c8-weapon fade-in">
+  <div class="c8-weapon-head">
+    <span class="c8-weapon-num">①</span>
+    <div>
+      <div class="c8-weapon-label">무기 1</div>
+      <div class="c8-weapon-title">사업자번호 1줄, 1분 통합 진단</div>
+    </div>
+  </div>
+  <div class="c8-weapon-problem"><b>푸는 문제 →</b> 영역 분절, 사각지대, 조합 노하우 부재</div>
+  <div class="c8-weapon-body">사업자번호로 <b>4대보험 납부·고용 이력</b>을 자동 조회해 환급·지원금 가능 영역을 통합 매칭. 단건이 아니라 <b>조합 최대치</b>까지 산출합니다.</div>
+  <div class="c8-weapon-shields">
+    <span class="c8-shield-chip"><span class="c8-shield-tick">✓</span>4대보험 환급</span>
+    <span class="c8-shield-chip"><span class="c8-shield-tick">✓</span>고용지원금</span>
+    <span class="c8-shield-chip"><span class="c8-shield-tick">✓</span>조합 노하우</span>
+  </div>
+</div>
+
+<!-- 무기 2 -->
+<div class="c8-weapon fade-in">
+  <div class="c8-weapon-head">
+    <span class="c8-weapon-num">②</span>
+    <div>
+      <div class="c8-weapon-label">무기 2</div>
+      <div class="c8-weapon-title">못 받으면, 수수료도 0원</div>
+    </div>
+  </div>
+  <div class="c8-weapon-problem"><b>푸는 문제 →</b> "괜히 비용 새는 것 아닐까" 위험 부담</div>
+  <div class="c8-weapon-body">진단·보고서까지 <b>100% 무료</b>. 받은 금액에서만 성공보수가 발생하고, <b>못 찾으면 0원</b>입니다. 결과 확인 후 위탁 여부는 회사가 결정합니다.</div>
+  <div class="c8-weapon-shields">
+    <span class="c8-shield-chip"><span class="c8-shield-tick">✓</span>진단 무료</span>
+    <span class="c8-shield-chip"><span class="c8-shield-tick">✓</span>보고서 무료</span>
+    <span class="c8-shield-chip"><span class="c8-shield-tick">✓</span>실패 시 0원</span>
+  </div>
+</div>
+
+<!-- 결과 -->
+<div class="c8-result fade-in">
+  <div class="c8-result-eyebrow">결 과</div>
+  <div class="c8-result-head">4,000+ 기업 평균 <em>1,933만원</em> 회수, 못 찾으면 <em>0원</em></div>
+</div>
+
+</div></section>
+<div class="faqwrap"><h3>자주 묻는 질문</h3><details class="faq"><summary>이미 외부 업체에 맡기고 있는데도 의미 있나요?</summary><div class="faq-a">환급·지원금은 노무사·세무사·고용센터가 각자 영역만 봅니다. 다른 업체가 못 찾는 사각지대에 환급이 남아있는지 1분 진단으로 확인.</div></details><details class="faq"><summary>사업자번호만으로 정말 진단이 되나요?</summary><div class="faq-a">사업자번호로 4대보험 납부·고용 이력을 조회해 환급·지원금 가능 영역을 자동 매칭합니다. 추가 서류는 위탁을 결정한 뒤에만 받습니다.</div></details><details class="faq"><summary>비용은 어떻게 되나요?</summary><div class="faq-a">진단·보고서 모두 무료. 실제 환급 진행은 회수액 기준 성공보수, 못 찾으면 0원.</div></details></div>
 <footer><b>노무법인 도원</b> · 대표 노무사 윤상필 · 공인노무사 10인 이상 재직<br>서울시 강남구 역삼로 212, 동아빌딩 6층 · 02-2038-3355 · help@dowonhr.com<br>© 2026 노무법인 도원</footer>
 <div class="sticky"><a href="https://dowon.channel.io/home?utm_source=casepage&amp;utm_medium=cta&amp;utm_content=case_1" target="_blank" rel="noopener">우리 회사 환급 가능 영역, 1분 만에 확인하기 <span class="cta-arrow">→</span></a></div>
-<script>(function(){var $=function(id){return document.getElementById(id);};var s=$("emp"),eo=$("empOut"),lo=$("loOut"),hi=$("hiOut"),bar=$("calcBar");function f(n){return n.toLocaleString("ko-KR");}function c(){var n=+s.value;eo.textContent=n;lo.textContent=f(n*10);hi.textContent=f(n*40);bar.style.width=Math.min(100,Math.round(n*40/4000*100))+"%";}if(s){s.addEventListener("input",c);c();}var hasIO=("IntersectionObserver" in window);var sticky=document.querySelector(".sticky");if(sticky){sticky.classList.add("tucked");var onScroll=function(){if(window.pageYOffset>460)sticky.classList.remove("tucked");else sticky.classList.add("tucked");};window.addEventListener("scroll",onScroll,{passive:true});onScroll();}if(hasIO){var sels=[".scene .big",".chk",".qh",".calc",".nr-step",".norisk",".trust",".faq",".closer-tx",".closer-sub",".start-card",".start-trust"];var els=[];sels.forEach(function(sel){var l=document.querySelectorAll(sel);for(var i=0;i<l.length;i++)els.push(l[i]);});var rObs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");rObs.unobserve(e.target);}});},{threshold:0.15});var nrI=0;els.forEach(function(el){el.classList.add("reveal");if(el.className.indexOf("nr-step")>-1){el.style.transitionDelay=(nrI%4*0.09)+"s";nrI++;}rObs.observe(el);});}function countUp(el,target,dur){var t0=null;function step(ts){if(!t0)t0=ts;var pr=Math.min(1,(ts-t0)/dur);el.textContent=Math.round(target*(1-Math.pow(1-pr,3))).toLocaleString("ko-KR");if(pr<1)requestAnimationFrame(step);}requestAnimationFrame(step);}var heroNum=$("heroNum"),hsBox=document.querySelector(".hero-stat");if(heroNum&&hsBox&&hasIO){var nObs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){countUp(heroNum,1933,1300);nObs.unobserve(e.target);}});},{threshold:0.4});nObs.observe(hsBox);}var scFill=document.querySelector(".sc-fill"),scKnob=document.querySelector(".sc-knob"),scCard=document.querySelector(".start-card");if(scFill&&scKnob&&scCard&&hasIO){scFill.style.width="0%";scKnob.style.left="0%";var pObs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){scFill.style.width="7%";scKnob.style.left="7%";pObs.unobserve(e.target);}});},{threshold:0.4});pObs.observe(scCard);}})();</script>
+<script>
+(function(){
+  if(!('IntersectionObserver' in window)){
+    document.querySelectorAll('.fade-in').forEach(function(el){el.classList.add('visible');});
+    return;
+  }
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.12,rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.fade-in').forEach(function(el){observer.observe(el);});
+})();
+</script>
 </body>
 </html>
