@@ -3049,6 +3049,10 @@ body {
 .dx-side-panel { display: none; }
 .dx-side-logo { font-size: 21px; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
 .dx-side-tag { margin-top: 7px; font-size: 11px; font-weight: 700; letter-spacing: 1.6px; color: #C0A04E; }
+.dx-side-logo-link { display: inline-block; line-height: 0; transition: opacity .15s ease; }
+.dx-side-logo-link:hover { opacity: 0.85; }
+.dx-side-logo-link:focus-visible { outline: 2px solid #C0A04E; outline-offset: 4px; border-radius: 2px; }
+.dx-side-logo-img { display: block; height: auto; width: auto; max-width: 220px; max-height: 64px; filter: brightness(0) invert(1); }
 .dx-side-headline { font-size: 32px; font-weight: 800; letter-spacing: -1px; line-height: 1.34; color: #fff; margin: 0 0 14px; }
 .dx-side-sub { font-size: 14.5px; line-height: 1.7; color: rgba(255,255,255,0.6); margin: 0 0 20px; letter-spacing: -0.3px; }
 .dx-side-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 18px; border-top: 1px solid rgba(255,255,255,0.13); padding-top: 28px; }
@@ -3158,6 +3162,7 @@ body {
 .diagnose-restart { font-size: 18px !important; }
 .dx-side-logo { font-size: 24px !important; }
 .dx-side-tag { font-size: 12px !important; }
+.dx-side-logo-img { max-width: 260px !important; max-height: 76px !important; }
 .dx-side-headline { font-size: 36px !important; }
 .dx-side-sub { font-size: 17px !important; }
 .dx-side-stat-num { font-size: 30px !important; }
@@ -3280,8 +3285,9 @@ body {
 <section class="diagnose-section">
   <aside class="dx-side-panel">
     <div class="dx-side-top">
-      <div class="dx-side-logo">도원 노무법인</div>
-      <div class="dx-side-tag">DOWON LABOR LAW FIRM</div>
+      <a href="https://choim-gif.github.io/dowon/" class="dx-side-logo-link" aria-label="도원 노무법인 메인페이지로 이동">
+        <img src="https://cdn.imweb.me/thumbnail/20260522/a313af5ea598d.png" alt="도원 노무법인 — DOWON LABOR LAW FIRM" class="dx-side-logo-img">
+      </a>
     </div>
     <div class="dx-side-mid">
       <h2 class="dx-side-headline"><span class="dx-side-hl">고객과</span> 함께하는<br>인사·노무 파트너</h2>
