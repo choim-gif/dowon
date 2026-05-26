@@ -14,21 +14,415 @@
 <meta property="og:description" content="우리 회사 사람으로는 이 사건을 공정하게 끝낼 수 없다">
 <meta property="og:url" content="https://choim-gif.github.io/dowon/case-8.html">
 <meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"외부 조사가 정말 빠른가요?","acceptedAnswer":{"@type":"Answer","text":"신고 접수일 기준 영업일 5일 안에 조사 착수, 평균 3~6주 안에 보고서 마무리."}},{"@type":"Question","name":"가해자가 대표·임원이어도 가능한가요?","acceptedAnswer":{"@type":"Answer","text":"가능. 오히려 이 경우 외부 조사가 사실상 유일한 해법. 조사 독립성 보장."}},{"@type":"Question","name":"피해자가 외부 노무법인을 거부하면요?","acceptedAnswer":{"@type":"Answer","text":"조사 시작 전 양쪽 동의 절차 진행. 거부 시 사유를 정리해 회사 측 조치 의무 이행 근거 확보."}},{"@type":"Question","name":"비공개 보장이 되나요?","acceptedAnswer":{"@type":"Answer","text":"도원 별도 채널로 진행, 사내 공유 0건이 원칙. 보고서도 결정자 한 명에게만 우선 전달."}},{"@type":"Question","name":"노동청·노동위로 가면 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"같은 팀이 이어받아 대응. 외부 조사보고서가 회사 측 조치 이행의 강력한 증거가 됨."}},{"@type":"Question","name":"비용은 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"사전 진단 무료. 조사·컨설팅은 사건 규모에 따라 정액제. 노동청·노동위 단계는 별도 견적."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"가해자가 대표·임원이어도 가능한가요?","acceptedAnswer":{"@type":"Answer","text":"가능. 오히려 이 경우 외부 조사가 사실상 유일한 해법. 조사 독립성 보장."}},{"@type":"Question","name":"비공개 보장이 되나요?","acceptedAnswer":{"@type":"Answer","text":"도원 별도 채널로 진행, 사내 공유 0건이 원칙. 보고서도 결정자 한 명에게만 우선 전달."}},{"@type":"Question","name":"비용은 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"사전 진단 무료. 조사·컨설팅은 사건 규모에 따라 정액제. 노동청·노동위 단계는 별도 견적."}}]}</script>
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
-<link href="case-v2.css" rel="stylesheet">
+<style>
+/* ===== case-v2.css 통합 (자체완결을 위해 HTML 내부 삽입) ===== */
+/* 도원 케이스 랜딩페이지 v2 — 3장면 + 미니 인터랙션 공통 스타일 */
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--navy:#1A3356;--navy-d:#0E1D33;--gold:#B8954A;--gold-l:#CDAB63;--gold-t:#F6F0E1;--ink:#23272E;--sub:#5A626E;--line:#E7E9EE;--soft:#EEF1F5;}
+html{scroll-behavior:smooth;}
+body{font-family:'Pretendard',-apple-system,sans-serif;background:#fff;color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6;padding-bottom:88px;}
+.top{display:flex;justify-content:space-between;align-items:center;padding:16px max(24px,calc((100% - 1040px)/2));position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);z-index:40;}
+.brand{font-size:18px;font-weight:800;color:var(--navy);}
+.brand i{color:var(--gold);font-style:normal;}
+.top a{font-size:14px;color:var(--sub);text-decoration:none;font-weight:600;}
+.scene{min-height:92vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px max(24px,calc((100% - 900px)/2));}
+.scene.navy{background:var(--navy);color:#fff;}
+.scene.soft{background:var(--soft);}
+.eyebrow{display:inline-block;font-size:13.5px;font-weight:800;letter-spacing:1px;padding:8px 17px;border-radius:30px;margin-bottom:26px;background:var(--gold-t);color:var(--gold);}
+.scene.navy .eyebrow{background:rgba(255,255,255,.13);color:var(--gold-l);}
+.big{font-size:47px;font-weight:800;line-height:1.32;letter-spacing:-1.3px;max-width:820px;}
+.big .g{color:var(--gold);}
+.scene.navy .big .g{color:var(--gold-l);}
+.svc-line{margin-top:20px;font-size:21px;font-weight:700;color:var(--navy);}
+.note{margin-top:20px;font-size:18.5px;color:var(--sub);max-width:580px;}
+.scene.navy .note{color:#B3BECE;}
+.scene .viz{margin-top:38px;}
+.hero-stat{margin-top:32px;display:flex;align-items:center;gap:18px;background:var(--gold-t);border-radius:16px;padding:20px 28px;}
+.hero-stat .n{font-size:39px;font-weight:800;color:var(--gold);white-space:nowrap;}
+.hero-stat .l{font-size:15px;color:var(--navy);font-weight:600;text-align:left;line-height:1.45;}
+.cue{margin-top:40px;font-size:13.5px;font-weight:700;color:var(--sub);letter-spacing:.5px;}
+.cue .arr{display:block;font-size:24px;color:var(--gold);margin-top:2px;animation:bob 1.6s infinite;}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(7px);}}
+.qsec{padding:84px max(24px,calc((100% - 760px)/2));text-align:center;background:#fff;}
+.qsec .eyebrow{margin-bottom:22px;}
+.qh{font-size:32px;font-weight:800;color:var(--navy);letter-spacing:-.7px;}
+.qbtns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:32px;}
+.qbtn{padding:16px 26px;border:2px solid var(--line);border-radius:14px;background:#fff;font-size:16.5px;font-weight:700;color:var(--navy);cursor:pointer;font-family:inherit;transition:.12s;}
+.qbtn:hover{border-color:var(--gold-l);}
+.qbtn.on{border-color:var(--gold);background:var(--gold-t);}
+.qresult{margin:28px auto 0;max-width:580px;font-size:20px;font-weight:700;color:var(--navy);line-height:1.6;background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:12px;padding:24px 26px;min-height:90px;display:flex;align-items:center;justify-content:center;}
+.calc{max-width:540px;margin:32px auto 0;background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px 28px;box-shadow:0 8px 30px rgba(26,51,86,.08);}
+.calc-row{display:flex;justify-content:space-between;align-items:baseline;}
+.calc-lab{font-size:15.5px;color:var(--sub);font-weight:600;}
+.calc-val{font-size:19px;font-weight:800;color:var(--navy);}
+.calc-val b{font-size:28px;color:var(--gold);}
+input[type=range]{width:100%;margin:20px 0 4px;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:var(--line);outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--gold);border:3px solid #fff;box-shadow:0 2px 7px rgba(0,0,0,.22);cursor:pointer;}
+input[type=range]::-moz-range-thumb{width:25px;height:25px;border-radius:50%;background:var(--gold);border:3px solid #fff;cursor:pointer;}
+.calc-out{margin-top:24px;background:var(--gold-t);border-radius:14px;padding:24px 22px;}
+.calc-cap{font-size:14px;font-weight:800;color:var(--gold);letter-spacing:.3px;}
+.calc-num{font-size:35px;font-weight:800;color:var(--navy);margin-top:8px;letter-spacing:-.6px;}
+.calc-dis{margin-top:18px;font-size:12.5px;color:var(--sub);line-height:1.65;text-align:left;}
+.steps3{display:flex;gap:18px;margin-top:46px;width:100%;max-width:880px;}
+.step3{flex:1;background:#fff;border:1px solid var(--line);border-radius:18px;padding:32px 22px;}
+.step3 .ic{margin:0 auto 18px;}
+.step3 .st-t{font-size:20px;font-weight:800;color:var(--navy);}
+.step3 .st-s{font-size:15.5px;color:var(--sub);margin-top:9px;line-height:1.6;}
+.afterlabel{margin-top:50px;font-size:14px;font-weight:800;letter-spacing:.5px;color:var(--gold);}
+.afterflow{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px;}
+.af{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 17px;font-size:14.5px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:9px;}
+.af .afn{flex:none;width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+.afar{display:flex;align-items:center;color:var(--gold);font-size:18px;font-weight:800;}
+.cta{display:inline-block;background:var(--gold);color:#fff;font-size:20px;font-weight:800;text-decoration:none;padding:21px 50px;border-radius:14px;margin-top:32px;box-shadow:0 10px 26px rgba(184,149,74,.4);}
+.cta:hover{background:#a3823c;}
+.cta-sub{margin-top:15px;font-size:14.5px;font-weight:700;color:var(--sub);}
+.cta-sub b{color:var(--navy);}
+.trust{background:var(--navy-d);color:#B3BECE;text-align:center;font-size:14.5px;font-weight:600;padding:22px 24px;}
+.trust b{color:var(--gold-l);}
+.faqwrap{padding:74px max(24px,calc((100% - 720px)/2));background:var(--soft);}
+.faqwrap h3{font-size:25px;font-weight:800;color:var(--navy);text-align:center;letter-spacing:-.4px;margin-bottom:28px;}
+.faq{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:12px;box-shadow:0 3px 12px rgba(26,51,86,.06);}
+.faq summary{padding:21px 50px 21px 24px;font-size:17px;font-weight:700;color:var(--navy);cursor:pointer;list-style:none;position:relative;}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary::after{content:'+';position:absolute;right:24px;top:17px;font-size:23px;color:var(--gold);}
+.faq[open] summary::after{content:'\2013';}
+.faq-a{padding:0 24px 20px;font-size:15.5px;color:var(--sub);line-height:1.8;}
+footer{background:var(--navy-d);color:#7C8AA0;text-align:center;padding:32px 24px;font-size:12.5px;line-height:1.9;}
+footer b{color:#AEB9CB;}
+.sticky{position:fixed;bottom:0;left:0;right:0;padding:13px 24px;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-top:1px solid var(--line);z-index:50;}
+.sticky a{display:block;max-width:460px;margin:0 auto;text-align:center;background:var(--gold);color:#fff;font-size:17px;font-weight:800;text-decoration:none;padding:17px;border-radius:12px;box-shadow:0 6px 18px rgba(184,149,74,.36);}
+.hero{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px max(24px,calc((100% - 900px)/2)) 72px;background:#fff;}
+.closer-tx{font-size:30px;font-weight:800;line-height:1.42;letter-spacing:-.7px;max-width:760px;}
+.closer-sub{margin-top:18px;font-size:15px;font-weight:600;color:#B3BECE;max-width:560px;line-height:1.6;}
+@media(max-width:680px){.big{font-size:33px;}.qh{font-size:27px;}.hero{padding:64px 22px 56px;}.closer-tx{font-size:24px;}.svc-line{font-size:18px;}.note{font-size:16.5px;}.steps3,.afterflow{flex-direction:column;}.afar{transform:rotate(90deg);justify-content:center;}.scene{min-height:auto;padding:68px 22px;}.hero-stat{flex-direction:column;gap:6px;}.hero-stat .l{text-align:center;}.faqwrap h3{font-size:22px;}}
+
+/* Toolkit v2: case-7 패턴 (.chk · .norisk · .start-card) */
+.chk{width:100%;max-width:600px;margin:34px auto 0;}
+.chk-q{font-size:18px;font-weight:800;color:#fff;text-align:center;margin-bottom:18px;}
+.chk-item{display:flex;align-items:center;gap:13px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:16px 18px;margin-bottom:10px;text-align:left;}
+.chk-mark{flex:none;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;}
+.chk-tx{font-size:15.5px;font-weight:600;color:#E4E9F0;line-height:1.5;}
+.chk-tip{background:linear-gradient(135deg,#F8F1DF 0%,#F1E6CA 100%);border-radius:12px;padding:16px 18px;margin-top:14px;font-size:14px;line-height:1.6;color:var(--navy);text-align:left;}
+.chk-tip b{color:var(--gold);font-weight:800;}
+.norisk{background:linear-gradient(135deg,#203C62 0%,#0E1D33 100%);border-radius:16px;padding:26px 32px;margin:28px auto 0;width:100%;max-width:900px;box-shadow:0 18px 44px rgba(0,0,0,.3);border:1px solid rgba(205,171,99,.22);text-align:left;}
+.norisk-t{font-size:20px;font-weight:800;color:#fff;line-height:1.5;}
+.norisk-t b{color:var(--gold-l);}
+.norisk-s{margin-top:7px;font-size:14px;color:#9DAAC0;font-weight:600;}
+.start-card{background:#fff;border-radius:20px;padding:26px 24px;width:100%;max-width:560px;margin:32px auto 0;text-align:left;box-shadow:0 24px 54px rgba(0,0,0,.32);}
+.sc-top{display:flex;justify-content:space-between;align-items:center;}
+.sc-label{font-size:15px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:7px;}
+.sc-dot-red{width:8px;height:8px;border-radius:50%;background:#E24B4A;display:inline-block;}
+.sc-auto{font-size:13px;color:var(--sub);font-weight:600;}
+.sc-mid{display:flex;align-items:center;gap:14px;margin-top:20px;}
+.sc-ic{flex:none;width:54px;height:54px;border-radius:50%;background:var(--gold-t);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:800;color:var(--gold);}
+.sc-mid-t{font-size:18px;font-weight:800;color:var(--navy);}
+.sc-mid-s{font-size:18px;font-weight:800;color:var(--gold);margin-top:3px;}
+.sc-prog{margin-top:24px;}
+.sc-track{height:6px;border-radius:3px;background:var(--line);position:relative;}
+.sc-fill{position:absolute;left:0;top:0;height:100%;width:7%;background:var(--gold);border-radius:3px;transition:width .9s cubic-bezier(.2,.7,.2,1);}
+.sc-knob{position:absolute;left:7%;top:50%;width:16px;height:16px;border-radius:50%;background:var(--gold);border:3px solid #fff;transform:translate(-50%,-50%);transition:left .9s cubic-bezier(.2,.7,.2,1);}
+.sc-stages{display:flex;justify-content:space-between;margin-top:11px;}
+.sc-stage{font-size:12px;color:var(--sub);font-weight:600;}
+.sc-stage.on{color:var(--gold);font-weight:800;}
+.sc-btn{display:block;width:100%;margin-top:22px;background:linear-gradient(135deg,#D0AE66 0%,#B8954A 58%,#A6823A 100%);color:#fff;font-size:17px;font-weight:800;text-align:center;text-decoration:none;padding:16px;border-radius:12px;box-shadow:0 12px 30px rgba(184,149,74,.36);transition:transform .18s ease,box-shadow .18s ease;position:relative;overflow:hidden;}
+.sc-btn:hover{background:linear-gradient(135deg,#D8B772 0%,#BE9B50 58%,#AC8840 100%);transform:translateY(-2px);box-shadow:0 16px 36px rgba(184,149,74,.44);}
+.start-trust{margin-top:26px;font-size:13.5px;line-height:1.85;color:#9DAAC0;font-weight:600;text-align:center;}
+.start-trust b{color:#fff;}
+.start-trust .row2{color:#7C8AA0;}
+@media(prefers-reduced-motion:reduce){.sc-fill,.sc-knob{transition:none;}}
+
+/* Emoji Diagrams (diag-loss · diag-distrust · diag-flow) */
+.diag-loss{width:100%;max-width:780px;margin:34px auto 0;}
+.diag-loss-head{text-align:center;margin-bottom:20px;}
+.diag-loss-head-em{font-size:38px;line-height:1;}
+.diag-loss-head-t{font-size:16px;font-weight:700;color:rgba(255,255,255,.88);margin-top:10px;letter-spacing:-.2px;}
+.diag-loss-head-arr{font-size:22px;color:var(--gold-l);margin-top:8px;line-height:1;}
+.diag-loss-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.diag-loss-item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:20px 12px 18px;text-align:center;}
+.diag-loss-em{font-size:36px;line-height:1;display:block;margin-bottom:12px;}
+.diag-loss-num{font-size:17px;font-weight:800;color:var(--gold-l);margin-bottom:6px;letter-spacing:-.3px;line-height:1.2;}
+.diag-loss-lab{font-size:13px;color:#C5CDDB;line-height:1.45;}
+.diag-loss-tip{background:linear-gradient(135deg,#2C1F12 0%,#1A140A 100%);border:1px solid rgba(205,171,99,.32);border-radius:12px;padding:14px 18px;margin-top:18px;font-size:15px;font-weight:700;color:#F1E6CA;text-align:center;line-height:1.55;}
+.diag-loss-tip b{color:var(--gold-l);}
+.diag-distrust{width:100%;max-width:780px;margin:44px auto 0;}
+.diag-d-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;align-items:stretch;}
+.diag-d-cell{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:22px 14px 18px;text-align:center;}
+.diag-d-cell.center{background:rgba(192,160,78,.1);border-color:rgba(192,160,78,.35);}
+.diag-d-em{font-size:42px;line-height:1;display:block;margin-bottom:10px;}
+.diag-d-name{font-size:15px;font-weight:800;color:#fff;margin-bottom:6px;}
+.diag-d-quote{font-size:13px;color:#CDAB63;font-style:italic;line-height:1.5;}
+.diag-d-cell.center .diag-d-quote{color:#F1E6CA;font-style:normal;font-weight:600;}
+.diag-d-arr{text-align:center;font-size:22px;color:var(--gold-l);margin:14px 0 12px;line-height:1;}
+.diag-d-final{background:rgba(226,75,74,.12);border:1px solid rgba(226,75,74,.4);border-radius:12px;padding:14px 18px;font-size:15px;font-weight:700;color:#FFC2BF;text-align:center;}
+.diag-d-final-em{font-size:20px;margin-right:6px;}
+.diag-flow{display:flex;align-items:stretch;justify-content:space-between;gap:8px;width:100%;max-width:880px;margin:36px auto 0;}
+.diag-flow-step{flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 12px;text-align:center;box-shadow:0 8px 22px rgba(26,51,86,.08);min-width:0;}
+.diag-flow-step.hl{background:linear-gradient(158deg,#264568 0%,#172A4B 100%);border-color:transparent;color:#fff;box-shadow:0 14px 32px rgba(13,29,51,.32);}
+.diag-flow-em{font-size:36px;line-height:1;display:block;margin-bottom:10px;}
+.diag-flow-lab{font-size:13.5px;font-weight:700;color:var(--navy);line-height:1.45;}
+.diag-flow-step.hl .diag-flow-lab{color:#fff;}
+.diag-flow-step.hl .diag-flow-lab b{color:var(--gold-l);}
+.diag-flow-arr{display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--gold);font-weight:800;flex:none;padding:0 2px;}
+.beat-bridge{margin:60px auto 0;font-size:14px;font-weight:700;color:var(--gold-l);letter-spacing:1px;text-transform:uppercase;}
+.cta-urgency{display:inline-block;background:rgba(226,75,74,.12);border:1px solid rgba(226,75,74,.45);border-radius:30px;padding:10px 20px;margin-top:32px;font-size:14.5px;font-weight:800;color:#C0392B;letter-spacing:-.2px;animation:urgentPulse 2.4s ease-in-out infinite;}
+.cta-urgency .em{margin-right:4px;}
+@keyframes urgentPulse{0%,100%{box-shadow:0 0 0 0 rgba(226,75,74,.35);}50%{box-shadow:0 0 0 8px rgba(226,75,74,0);}}
+@media(prefers-reduced-motion:reduce){.cta-urgency{animation:none;}}
+
+/* Shield Diagram (방패가 막는 4가지) */
+.diag-shield{width:100%;max-width:880px;margin:36px auto 0;}
+.diag-shield-title{display:block;text-align:center;font-size:13px;font-weight:800;letter-spacing:1.4px;color:var(--gold);margin-bottom:18px;text-transform:uppercase;}
+.diag-shield-grid{display:flex;flex-direction:column;gap:10px;}
+.ds-row{display:grid;grid-template-columns:1fr 40px 1.4fr;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 20px;box-shadow:0 6px 16px rgba(26,51,86,.06);transition:box-shadow .2s,transform .2s;}
+.ds-row:hover{box-shadow:0 10px 24px rgba(26,51,86,.1);transform:translateY(-1px);}
+.ds-loss{display:flex;align-items:center;gap:10px;color:#94999F;}
+.ds-loss .ds-em{font-size:22px;line-height:1;flex:none;opacity:.65;}
+.ds-loss .ds-tx{font-size:14px;line-height:1.45;font-weight:600;text-decoration:line-through;text-decoration-color:rgba(192,57,43,.45);text-decoration-thickness:1.5px;}
+.ds-arr{text-align:center;font-size:22px;line-height:1;}
+.ds-prot{display:flex;align-items:center;gap:10px;color:var(--navy);}
+.ds-prot .ds-em{font-size:22px;line-height:1;flex:none;}
+.ds-prot .ds-tx{font-size:14.5px;line-height:1.5;font-weight:600;}
+.ds-prot b{color:var(--gold);font-weight:800;}
+
+/* Why Dowon Band */
+.diag-why-dowon{margin:26px auto 0;width:100%;max-width:860px;background:linear-gradient(135deg,#F4F1E8 0%,#EDE7D2 100%);border:1px solid rgba(184,149,74,.25);border-radius:12px;padding:13px 20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 12px;}
+.dwd-item{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;font-weight:700;color:var(--navy);}
+.dwd-em{font-size:14px;line-height:1;}
+.dwd-divider{color:var(--gold);font-weight:800;}
+@media(max-width:680px){
+  .ds-row{grid-template-columns:1fr;gap:8px;padding:14px 16px;}
+  .ds-arr{transform:rotate(90deg);justify-self:center;}
+  .diag-why-dowon{flex-direction:column;gap:8px;}
+  .dwd-divider{display:none;}
+}
+@media(max-width:780px){
+  .diag-loss-grid{grid-template-columns:repeat(2,1fr);}
+  .diag-d-row{grid-template-columns:1fr;}
+  .diag-flow{flex-direction:column;}
+  .diag-flow-arr{transform:rotate(90deg);}
+}
+
+/* ===== case-8 비트4 새 디자인 — c8-* 네임스페이스 ===== */
+.c8-row{display:grid;grid-template-columns:1fr 60px 1.4fr;align-items:center;gap:14px;}
+.c8-flow-row{display:grid;grid-template-columns:1fr 28px 1fr 28px 1fr;gap:8px;align-items:stretch;}
+/* INSIGHT 섹션 (§ 3) */
+.c8-insight{background:radial-gradient(ellipse 900px 500px at 50% 35%,rgba(212,178,106,.08) 0%,transparent 65%),radial-gradient(ellipse 1500px 900px at 50% 50%,#182c4c 0%,#0F1F38 55%,#07142a 100%);color:#fff;padding:150px max(24px,calc((100% - 940px)/2));position:relative;}
+.c8-insight-inner{max-width:900px;margin:0 auto;text-align:center;}
+.c8-insight-eyebrow{display:inline-block;font-size:13.5px;font-weight:800;letter-spacing:1px;padding:8px 17px;border-radius:30px;margin-bottom:24px;background:rgba(212,178,106,.12);color:#D4B26A;border:1px solid rgba(212,178,106,.3);}
+.c8-insight-head{font-size:44px;font-weight:800;line-height:1.3;letter-spacing:-1.3px;color:#fff;margin:0 0 14px 0;}
+.c8-insight-head em{font-style:normal;color:#D4B26A;}
+.c8-insight-sub{font-size:17px;font-weight:600;color:rgba(255,255,255,.65);margin:0 0 48px 0;line-height:1.5;}
+.c8-insight-grid{display:grid;grid-template-columns:1fr 80px 1fr;gap:16px;align-items:stretch;margin:0 0 40px 0;}
+.c8-insight-cell{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:32px 24px;text-align:center;}
+.c8-insight-cell-em{font-size:46px;line-height:1;margin-bottom:14px;}
+.c8-insight-cell-name{font-size:14px;font-weight:800;color:#D4B26A;letter-spacing:1.5px;margin-bottom:12px;}
+.c8-insight-cell-q{font-size:18px;font-weight:700;color:#fff;line-height:1.55;}
+.c8-insight-vs{display:flex;align-items:center;justify-content:center;font-size:38px;color:#D4B26A;font-weight:800;}
+.c8-insight-punch{font-size:24px;font-weight:800;line-height:1.5;color:#fff;letter-spacing:-.5px;margin:8px 0 14px 0;}
+.c8-insight-punch b{color:#D4B26A;font-weight:800;}
+.c8-insight-conseq{font-size:16.5px;font-weight:600;line-height:1.55;color:rgba(255,255,255,.72);}
+/* SOLUTION 섹션 (§ 4) — 무기 카드 */
+.c8-weapon{background:#fff;border:1px solid #E7E9EE;border-radius:18px;padding:30px 28px;margin-bottom:18px;box-shadow:0 10px 28px rgba(26,51,86,.07);}
+.c8-weapon-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+.c8-weapon-num{display:inline-flex;width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#1A3356 0%,#2d3d6a 100%);color:#fff;font-size:20px;font-weight:800;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 14px rgba(26,51,86,.25);}
+.c8-weapon-label{font-size:13.5px;font-weight:800;color:#B8954A;letter-spacing:1.2px;margin-bottom:4px;}
+.c8-weapon-title{font-size:25px;font-weight:800;color:#1A3356;line-height:1.3;letter-spacing:-.5px;}
+.c8-weapon-problem{background:#F5F7FB;border-radius:10px;padding:14px 18px;margin-bottom:18px;font-size:15.5px;color:#5A626E;font-weight:600;}
+.c8-weapon-problem b{color:#1A3356;font-weight:800;}
+.c8-weapon-body{font-size:16.5px;color:#1A3356;font-weight:600;line-height:1.7;}
+.c8-weapon-body b{font-weight:800;}
+.c8-weapon-shields{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding-top:18px;border-top:1px dashed rgba(26,51,86,.16);}
+.c8-shield-chip{display:inline-flex;align-items:center;gap:7px;background:#F6F0E1;border:1px solid rgba(184,149,74,.32);border-radius:30px;padding:7px 16px 7px 7px;font-size:14px;font-weight:700;color:#1A3356;letter-spacing:-.1px;}
+.c8-shield-tick{display:inline-flex;width:20px;height:20px;border-radius:50%;background:#B8954A;color:#fff;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;flex-shrink:0;}
+.c8-result{background:linear-gradient(160deg,#1A3356 0%,#2d3d6a 100%);border-radius:16px;padding:26px 28px;color:#fff;text-align:center;margin:8px 0 32px 0;box-shadow:0 12px 28px rgba(26,51,86,.3);}
+.c8-result-eyebrow{font-size:13.5px;font-weight:800;color:#D4B26A;letter-spacing:1.5px;margin-bottom:8px;}
+.c8-result-head{font-size:27px;font-weight:800;color:#fff;line-height:1.4;letter-spacing:-.5px;}
+.c8-result-head em{font-style:normal;color:#D4B26A;}
+@media(max-width:780px){
+  .c8-resolve .c8-big{font-size:32px !important;}
+  .c8-row{grid-template-columns:1fr !important;gap:8px !important;}
+  .c8-row .c8-mid{transform:rotate(90deg);justify-self:center;}
+  .c8-flow-row{grid-template-columns:1fr !important;gap:10px !important;}
+  .c8-flow-row .c8-arr{transform:rotate(90deg);justify-self:center;}
+  .c8-insight{padding:64px 22px;}
+  .c8-insight-head{font-size:30px;}
+  .c8-insight-grid{grid-template-columns:1fr;gap:10px;}
+  .c8-insight-vs{transform:rotate(90deg);justify-self:center;font-size:30px;}
+  .c8-insight-punch{font-size:19px;}
+  .c8-weapon{padding:24px 20px;}
+  .c8-weapon-title{font-size:21px;}
+  .c8-result-head{font-size:22px;}
+}
+/* §2 LOSS — 점진 확대 비주얼 (Grid 3행 정렬) */
+.scene.navy{min-height:auto;padding-top:150px;padding-bottom:150px;background:radial-gradient(ellipse 1400px 700px at 50% 0%,#243f68 0%,#1A3356 55%,#122a48 100%);}
+.c8-grow{width:100%;max-width:780px;margin:42px auto 0;}
+.c8-grow-row{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:140px auto auto;
+  row-gap:20px;
+  column-gap:8px;
+  justify-items:center;
+  align-items:end;
+  margin-bottom:24px;
+  padding:0 10px;
+}
+.c8-grow-circle{border-radius:50%;align-self:end;}
+.c8-grow-circle.lv1{width:28px;height:28px;background:#CDAB63;box-shadow:0 0 0 4px rgba(205,171,99,.15);}
+.c8-grow-circle.lv2{width:52px;height:52px;background:#E89C3F;box-shadow:0 0 0 6px rgba(232,156,63,.15);}
+.c8-grow-circle.lv3{width:78px;height:78px;background:#D85C4C;box-shadow:0 0 0 8px rgba(216,92,76,.18);}
+.c8-grow-circle.lv4{width:108px;height:108px;background:#C0392B;box-shadow:0 0 0 10px rgba(192,57,43,.22);animation:c8-grow-pulse 3s ease-in-out infinite;}
+@keyframes c8-grow-pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.04);}}
+@media(prefers-reduced-motion:reduce){.c8-grow-circle.lv4{animation:none;}}
+.c8-grow-week{font-size:17px;font-weight:800;letter-spacing:-.3px;text-align:center;line-height:1.2;}
+.c8-grow-week.lv1{color:#CDAB63;}
+.c8-grow-week.lv2{color:#E89C3F;}
+.c8-grow-week.lv3{color:#FFB07A;}
+.c8-grow-week.lv4{color:#FF7872;}
+.c8-grow-label{font-size:15.5px;font-weight:700;color:rgba(255,255,255,.78);text-align:center;line-height:1.4;}
+.c8-grow-tip{background:linear-gradient(135deg,#2C1F12 0%,#1A140A 100%);border:1px solid rgba(205,171,99,.32);border-radius:12px;padding:14px 18px;margin-top:28px;font-size:15px;font-weight:700;color:#F1E6CA;text-align:center;line-height:1.55;}
+.c8-grow-tip b{color:var(--gold-l);}
+/* §4 SOLUTION — 전문가 이미지 (heading 우측 자연 배치) */
+.c8-expert-img{position:absolute;top:0;right:0;width:360px;height:200px;object-fit:cover;object-position:center top;border-radius:20px;box-shadow:0 16px 36px rgba(26,51,86,.15);pointer-events:none;user-select:none;}
+@media(max-width:1080px){.c8-expert-img{width:280px;height:160px;}}
+@media(max-width:780px){.c8-expert-img{display:none;}}
+/* 카드 호버 lift */
+.c8-weapon{transition:transform 0.3s cubic-bezier(.4,0,.2,1),box-shadow 0.3s cubic-bezier(.4,0,.2,1);}
+.c8-weapon:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(26,51,86,.14);}
+/* 스크롤 페이드인 */
+.fade-in{opacity:0;transform:translateY(28px);transition:opacity 0.85s cubic-bezier(.16,1,.3,1),transform 0.85s cubic-bezier(.16,1,.3,1);}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+@media(prefers-reduced-motion:reduce){.fade-in{opacity:1!important;transform:none!important;transition:none;}.c8-weapon{transition:none;}.c8-weapon:hover{transform:none;}}
+@media(max-width:780px){
+  .c8-grow-row{grid-template-rows:96px auto auto;column-gap:4px;padding:0 4px;row-gap:14px;}
+  .c8-grow-circle.lv1{width:18px;height:18px;box-shadow:0 0 0 3px rgba(205,171,99,.15);}
+  .c8-grow-circle.lv2{width:34px;height:34px;box-shadow:0 0 0 4px rgba(232,156,63,.15);}
+  .c8-grow-circle.lv3{width:54px;height:54px;box-shadow:0 0 0 5px rgba(216,92,76,.18);}
+  .c8-grow-circle.lv4{width:72px;height:72px;box-shadow:0 0 0 7px rgba(192,57,43,.22);}
+  .c8-grow-week{font-size:14px;}
+  .c8-grow-label{font-size:13px;}
+  .c8-grow-tip{font-size:13.5px;}
+}
+</style>
 </head>
 <body>
 <div class="top"><div class="brand">노무법인 <i>도원</i></div><a href="index.html">← 무료 진단</a></div>
 <header class="hero"><span class="eyebrow">사업주 대상 · 리스크 대응</span><h1 class="big">직장 내 괴롭힘·성희롱 신고,<br>접수되셨나요?</h1><div class="svc-line">공정한 외부 조사로,<br>도원이 회사를 지킵니다.</div><svg class="viz" width="288" height="276" viewBox="0 0 300 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="노동 리스크 통지서"><rect x="62" y="38" width="176" height="218" rx="14" fill="#fff" stroke="#1A3356" stroke-width="3"/><rect x="86" y="64" width="92" height="13" rx="6.5" fill="#1A3356"/><rect x="86" y="98" width="128" height="9" rx="4.5" fill="#E7E9EE"/><rect x="86" y="118" width="128" height="9" rx="4.5" fill="#E7E9EE"/><rect x="86" y="138" width="96" height="9" rx="4.5" fill="#E7E9EE"/><rect x="86" y="166" width="128" height="9" rx="4.5" fill="#E7E9EE"/><rect x="86" y="186" width="74" height="9" rx="4.5" fill="#E7E9EE"/><circle cx="196" cy="208" r="36" fill="none" stroke="#C0392B" stroke-width="3" opacity=".85"/><text x="196" y="213" text-anchor="middle" font-size="13" fill="#C0392B" font-weight="800">통지</text><circle cx="234" cy="50" r="24" fill="#B8954A"/><text x="234" y="59" text-anchor="middle" font-size="26" fill="#fff" font-weight="800">!</text></svg><div class="hero-stat"><span class="n">5영업일</span><span class="l">신고 접수 후 외부 조사에 착수하기까지</span></div><div class="cue">스크롤<span class="arr">↓</span></div></header>
-<section class="scene navy"><span class="eyebrow">진짜 문제</span><div class="big">우리 회사 사람으로는<br>이 사건을 공정하게 끝낼 수 없다</div><svg class="viz" width="376" height="244" viewBox="0 0 380 248" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="문제 1건이 다수로 번지는 구조"><g stroke="#CDAB63" stroke-width="2" fill="none" opacity=".55"><path d="M190 96 C190 134 70 130 70 158"/><path d="M190 96 C190 134 130 130 130 158"/><path d="M190 96 L190 158"/><path d="M190 96 C190 134 250 130 250 158"/><path d="M190 96 C190 134 310 130 310 158"/></g><g transform="translate(190,52)"><rect x="-30" y="-34" width="60" height="78" rx="9" fill="#B8954A"/><rect x="-16" y="-18" width="32" height="6" rx="3" fill="#fff" opacity=".9"/><rect x="-16" y="-4" width="32" height="6" rx="3" fill="#fff" opacity=".9"/><rect x="-16" y="10" width="20" height="6" rx="3" fill="#fff" opacity=".9"/><text x="0" y="34" text-anchor="middle" font-size="11" fill="#fff" font-weight="800">1건</text></g><g fill="none" stroke="#7E8BA3" stroke-width="2.4"><rect x="50" y="160" width="40" height="54" rx="7"/><rect x="110" y="160" width="40" height="54" rx="7"/><rect x="170" y="160" width="40" height="54" rx="7"/><rect x="230" y="160" width="40" height="54" rx="7"/><rect x="290" y="160" width="40" height="54" rx="7"/></g><g fill="#CDAB63" opacity=".9"><circle cx="70" cy="232" r="4"/><circle cx="130" cy="232" r="4"/><circle cx="190" cy="232" r="4"/><circle cx="250" cy="232" r="4"/><circle cx="310" cy="232" r="4"/></g></svg></section>
-<section class="qsec"><span class="eyebrow">내 상황 확인</span><div class="qh">지금, 어떤 상황이세요?</div><div class="qbtns"><button class="qbtn" data-k="a" type="button">이미 일이 발생했다</button><button class="qbtn" data-k="b" type="button">곧 닥칠 것 같다</button><button class="qbtn" data-k="c" type="button">미리 대비하려 한다</button></div><div class="qresult" id="qresult">위 버튼을 눌러 내 상황에 맞는 안내를 확인해보세요.</div></section>
-<section class="scene soft"><span class="eyebrow">도원의 해결</span><div class="big">도원은 이렇게 해결합니다.</div><div class="steps3"><div class="step3"><svg class="ic" width="58" height="58" viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="29" cy="29" r="29" fill="#1A3356"/><path d="M17 20h24a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H27l-8 7v-7h-2a4 4 0 0 1-4-4V24a4 4 0 0 1 4-4z" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/><path d="M23 28h12M23 34h8" stroke="#CDAB63" stroke-width="2.4" stroke-linecap="round"/></svg><div class="st-t">신고 접수 즉시 사전 진단</div><div class="st-s">사건 윤곽·법적 위험도·조사 범위 5영업일 안에 설계</div></div><div class="step3"><svg class="ic" width="58" height="58" viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="29" cy="29" r="29" fill="#1A3356"/><circle cx="27" cy="26" r="11" fill="none" stroke="#fff" stroke-width="2.6"/><line x1="35" y1="34" x2="43" y2="42" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><path d="M22 26l4 4 7-8" stroke="#CDAB63" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="st-t">외부 조사 진행</div><div class="st-s">피해자·가해자·참고인 인터뷰, 증거 검토, 조사보고서 작성</div></div><div class="step3"><svg class="ic" width="58" height="58" viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="29" cy="29" r="29" fill="#1A3356"/><path d="M29 15l12 5v9c0 8-5 13-12 16-7-3-12-8-12-16v-9z" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 30l4 4 7-8" stroke="#CDAB63" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><div class="st-t">조치·재발방지 컨설팅</div><div class="st-s">보고서 기반 징계 자문, 재발방지 교육, 노동청·노동위 확전 시 동일팀 대응</div></div></div><div class="afterlabel">신청하면 이렇게 진행됩니다</div><div class="afterflow"><div class="af"><span class="afn">1</span>채널톡 상담 신청</div><div class="afar">→</div><div class="af"><span class="afn">2</span>영업일 1일 내 1:1 답변</div><div class="afar">→</div><div class="af"><span class="afn">3</span>무료 검토 후 맞춤 안내</div></div><a class="cta" href="https://dowon.channel.io/home?utm_source=casepage&amp;utm_medium=cta&amp;utm_content=case_8" target="_blank" rel="noopener">신고 접수서 보내고 회사가 안전한 처리 방법 확인하기 →</a><div class="cta-sub"><b>무료</b> · <b>비공개</b> · 영업 부담 없음</div></section>
-<div class="trust"><b>공인노무사 10인 이상</b> 재직 · 노무·법무·세무 원스톱 · 영업일 1일 내 답변</div>
-<div class="faqwrap"><h3>자주 묻는 질문</h3><details class="faq"><summary>외부 조사가 정말 빠른가요?</summary><div class="faq-a">신고 접수일 기준 영업일 5일 안에 조사 착수, 평균 3~6주 안에 보고서 마무리.</div></details><details class="faq"><summary>가해자가 대표·임원이어도 가능한가요?</summary><div class="faq-a">가능. 오히려 이 경우 외부 조사가 사실상 유일한 해법. 조사 독립성 보장.</div></details><details class="faq"><summary>피해자가 외부 노무법인을 거부하면요?</summary><div class="faq-a">조사 시작 전 양쪽 동의 절차 진행. 거부 시 사유를 정리해 회사 측 조치 의무 이행 근거 확보.</div></details><details class="faq"><summary>비공개 보장이 되나요?</summary><div class="faq-a">도원 별도 채널로 진행, 사내 공유 0건이 원칙. 보고서도 결정자 한 명에게만 우선 전달.</div></details><details class="faq"><summary>노동청·노동위로 가면 어떻게 되나요?</summary><div class="faq-a">같은 팀이 이어받아 대응. 외부 조사보고서가 회사 측 조치 이행의 강력한 증거가 됨.</div></details><details class="faq"><summary>비용은 어떻게 되나요?</summary><div class="faq-a">사전 진단 무료. 조사·컨설팅은 사건 규모에 따라 정액제. 노동청·노동위 단계는 별도 견적.</div></details></div>
-<section class="scene navy"><span class="eyebrow">지금 시작하세요</span><div class="closer-tx">내부 조사로는 양쪽 다 못 믿습니다.<br>외부 조사보고서 한 장이 회사를 지킵니다.</div><div class="closer-sub">채널톡으로 도원 전문 노무사가 1:1 안내 · 영업일 1일 내 답변 · 무료 · 비공개</div><a class="cta" href="https://dowon.channel.io/home?utm_source=casepage&amp;utm_medium=cta&amp;utm_content=case_8" target="_blank" rel="noopener">신고 접수서 보내고 회사가 안전한 처리 방법 확인하기 →</a></section>
+
+<!-- §2 LOSS — 가만히 두면 -->
+<section class="scene navy"><span class="eyebrow">진짜 문제</span><div class="big fade-in">가만히 두면, 사건 한 건이<br>회사 전체를 흔듭니다</div>
+<div class="c8-grow fade-in">
+  <div class="c8-grow-row">
+    <div class="c8-grow-circle lv1"></div>
+    <div class="c8-grow-circle lv2"></div>
+    <div class="c8-grow-circle lv3"></div>
+    <div class="c8-grow-circle lv4"></div>
+    <div class="c8-grow-week lv1">1주</div>
+    <div class="c8-grow-week lv2">2주</div>
+    <div class="c8-grow-week lv3">1개월</div>
+    <div class="c8-grow-week lv4">2개월+</div>
+    <div class="c8-grow-label">사내 소문</div>
+    <div class="c8-grow-label">SNS 박제</div>
+    <div class="c8-grow-label">줄퇴사</div>
+    <div class="c8-grow-label">노동청·과태료</div>
+  </div>
+  <div class="c8-grow-tip">⚠️ 가해자가 <b>임원·핵심 인력</b>이면 내부 조사 자체가 불공정 시비가 됩니다</div>
+</div>
+</section>
+
+<!-- §3 INSIGHT — 회사 안에서는 결론을 낼 수 없습니다 (NEW 단독 섹션, 클라이맥스) -->
+<section class="c8-insight">
+  <div class="c8-insight-inner fade-in">
+    <span class="c8-insight-eyebrow">왜 사건이 끝나지 않는가</span>
+    <h2 class="c8-insight-head">회사 안에서는,<br><em>결론을 낼 수 없습니다</em></h2>
+    <p class="c8-insight-sub">사건을 끝내는 건 결론이 아니라, 양쪽이 인정하는 결론입니다</p>
+
+    <div class="c8-insight-grid">
+      <div class="c8-insight-cell">
+        <div class="c8-insight-cell-em">😠</div>
+        <div class="c8-insight-cell-name">가해자</div>
+        <div class="c8-insight-cell-q">"회사가 피해자<br>편을 들었다"</div>
+      </div>
+      <div class="c8-insight-vs">≠</div>
+      <div class="c8-insight-cell">
+        <div class="c8-insight-cell-em">😔</div>
+        <div class="c8-insight-cell-name">피해자</div>
+        <div class="c8-insight-cell-q">"회사가 가해자<br>편을 들었다"</div>
+      </div>
+    </div>
+
+    <div class="c8-insight-punch">누가 조사해도, <b>한쪽은 불복합니다</b></div>
+    <div class="c8-insight-conseq">→ 결국 노동위·언론으로 자동 확전, 사건은 끝나지 않습니다</div>
+  </div>
+</section>
+
+<!-- §4 SOLUTION — 도원이 들고 가는 두 가지 (4 방패 → 2 무기로 압축) -->
+<section class="c8-resolve" style="background:linear-gradient(180deg,#F4F6FA 0%,#EEF1F5 50%,#E8EBF0 100%);padding:80px max(24px,calc((100% - 940px)/2));position:relative;overflow:hidden;">
+<div style="max-width:900px;margin:0 auto;position:relative;z-index:2;">
+<img class="c8-expert-img" src="https://cdn.imweb.me/thumbnail/20260508/0a2b708d0f9e3.jpg" alt="도원 전문가 컨설팅" loading="lazy">
+<span style="display:inline-block;font-size:13.5px;font-weight:800;letter-spacing:1px;padding:8px 17px;border-radius:30px;margin-bottom:24px;background:#F6F0E1;color:#B8954A;">도원의 해결</span>
+<h2 class="c8-big" style="font-size:42px;font-weight:800;line-height:1.32;letter-spacing:-1.3px;color:#1A3356;margin:0 0 14px 0;">도원이 들고 가는 두 가지,<br><span style="color:#B8954A;">외부 권위 + 비공개</span></h2>
+<p style="font-size:17px;font-weight:600;color:#5A626E;margin:0 0 36px 0;line-height:1.5;">한쪽이 불복할 수 없는 결론, 사외로 새지 않는 진행</p>
+
+<!-- 무기 1 -->
+<div class="c8-weapon fade-in">
+  <div class="c8-weapon-head">
+    <span class="c8-weapon-num">①</span>
+    <div>
+      <div class="c8-weapon-label">무기 1</div>
+      <div class="c8-weapon-title">외부 권위의 조사보고서</div>
+    </div>
+  </div>
+  <div class="c8-weapon-problem"><b>푸는 문제 →</b> 누가 조사해도 한쪽이 불복하던 문제</div>
+  <div class="c8-weapon-body">제3자 권위가 만든 조사보고서로 <b>양쪽 모두 인정할 수밖에 없는 결론</b>을 만듭니다. 노동위·법원에 가도 회사 측 <b>조치의무 이행 증거</b>로 그대로 인정됩니다.</div>
+</div>
+
+<!-- 무기 2 -->
+<div class="c8-weapon fade-in">
+  <div class="c8-weapon-head">
+    <span class="c8-weapon-num">②</span>
+    <div>
+      <div class="c8-weapon-label">무기 2</div>
+      <div class="c8-weapon-title">도원만의 비공개 채널</div>
+    </div>
+  </div>
+  <div class="c8-weapon-problem"><b>푸는 문제 →</b> 내부 조사의 비밀유지 한계 · 누설 시 과태료 위험</div>
+  <div class="c8-weapon-body">사내에서 조사하면 비밀유지가 어렵습니다. 누설 시 회사가 <b>과태료까지 부담</b>할 수 있습니다. 도원은 별도 채널로 진행, 사내 공유 <b>0건 원칙</b>으로 외부 확산을 원천 차단합니다.</div>
+  <div class="c8-weapon-shields">
+    <span class="c8-shield-chip"><span class="c8-shield-tick">✓</span>개인정보 동의서</span>
+    <span class="c8-shield-chip"><span class="c8-shield-tick">✓</span>비밀유지 서약서</span>
+    <span class="c8-shield-chip"><span class="c8-shield-tick">✓</span>도원 별도 채널</span>
+  </div>
+</div>
+
+<!-- 결과: 조기 종결 -->
+<div class="c8-result fade-in" style="margin-bottom:0;">
+  <div class="c8-result-eyebrow">결 과</div>
+  <div class="c8-result-head">평균 <em>3~6주 안에 종결</em>, 노동위까지 같은 팀이 끝까지</div>
+</div>
+
+</div></section>
+<div class="faqwrap"><h3>자주 묻는 질문</h3><details class="faq"><summary>가해자가 대표·임원이어도 가능한가요?</summary><div class="faq-a">가능. 오히려 이 경우 외부 조사가 사실상 유일한 해법. 조사 독립성 보장.</div></details><details class="faq"><summary>비공개 보장이 되나요?</summary><div class="faq-a">도원 별도 채널로 진행, 사내 공유 0건이 원칙. 보고서도 결정자 한 명에게만 우선 전달.</div></details><details class="faq"><summary>비용은 어떻게 되나요?</summary><div class="faq-a">사전 진단 무료. 조사·컨설팅은 사건 규모에 따라 정액제. 노동청·노동위 단계는 별도 견적.</div></details></div>
 <footer><b>노무법인 도원</b> · 대표 노무사 윤상필 · 공인노무사 10인 이상 재직<br>서울시 강남구 역삼로 212, 동아빌딩 6층 · 02-2038-3355 · help@dowonhr.com<br>© 2026 노무법인 도원</footer>
-<div class="sticky"><a href="https://dowon.channel.io/home?utm_source=casepage&amp;utm_medium=cta&amp;utm_content=case_8" target="_blank" rel="noopener">신고 접수서 보내고 회사가 안전한 처리 방법 확인하기 →</a></div>
-<script>(function(){var m={"a":"지금이 골든타임입니다. 바로 도원의 무료 검토를 받아보세요.","b":"발생 전이 가장 유리합니다. 미리 대응 시나리오를 설계할 수 있습니다.","c":"가장 현명한 선택입니다. 문제가 생기기 전에 위험부터 진단해 드립니다."};var b=document.querySelectorAll(".qbtn"),r=document.getElementById("qresult");for(var i=0;i<b.length;i++){b[i].addEventListener("click",function(){for(var j=0;j<b.length;j++)b[j].classList.remove("on");this.classList.add("on");r.textContent=m[this.getAttribute("data-k")];});}})();</script>
+<div class="sticky"><a href="https://dowon.channel.io/home?utm_source=casepage&amp;utm_medium=cta&amp;utm_content=case_8" target="_blank" rel="noopener">⏰ 골든타임 놓치기 전에 지금 상담  <span class="cta-arrow">→</span></a></div>
+<script>
+(function(){
+  if(!('IntersectionObserver' in window)){
+    document.querySelectorAll('.fade-in').forEach(function(el){el.classList.add('visible');});
+    return;
+  }
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.12,rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.fade-in').forEach(function(el){observer.observe(el);});
+})();
+</script>
 </body>
 </html>
