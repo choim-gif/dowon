@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도원 HR팀 마케팅 전략 — 직장 내 괴롭힘 & 인증 컨설팅</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif;
+    background: #f5f6fa;
+    color: #1a1a1a;
+    line-height: 1.65;
+    padding: 32px 16px;
+    font-size: 17px;
+  }
+  .container { max-width: 1280px; margin: 0 auto; }
+
+  /* 헤더 */
+  .header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    color: white;
+    padding: 48px 36px;
+    border-radius: 16px;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 24px rgba(30, 58, 138, 0.15);
+  }
+  .header h1 { font-size: 36px; font-weight: 800; margin-bottom: 10px; }
+  .header .subtitle { font-size: 19px; opacity: 0.9; }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 15px;
+    margin-top: 14px;
+  }
+
+  /* 탭 */
+  .tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .tab {
+    padding: 16px 32px;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    color: #6b7280;
+    transition: all 0.2s;
+  }
+  .tab.active {
+    background: #1e3a8a;
+    color: white;
+    border-color: #1e3a8a;
+  }
+  .tab:hover:not(.active) { border-color: #1e3a8a; color: #1e3a8a; }
+
+  /* 섹션 */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* 카드 그리드 */
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 900px) {
+    .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  /* 플로우 캔버스 */
+  .flow-canvas {
+    display: grid;
+    grid-template-columns: 1.1fr 28px 1.1fr 28px 1.1fr 48px 1.1fr 28px 1.1fr;
+    gap: 0;
+    align-items: stretch;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 1100px) {
+    .flow-canvas {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .flow-arrow, .flow-gap { display: none; }
+  }
+  .flow-card {
+    border-radius: 16px;
+    padding: 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #cbd5e1;
+    font-weight: 700;
+  }
+  .flow-head {
+    font-size: 17px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .flow-card.customer { background: #fef9c3; border: 1px solid #fde68a; color: #713f12; }
+  .flow-card.customer .flow-head { color: #92400e; }
+  .flow-card.problem { background: #fffaf3; border: 2px solid #fdba74; color: #7c2d12; }
+  .flow-card.problem .flow-head { color: #c2410c; }
+  .flow-card.solution { background: #1e3a8a; color: white; }
+  .flow-card.solution .flow-head { color: #93c5fd; }
+  .flow-card.proposal { background: #dc2626; color: white; }
+  .flow-card.proposal .flow-head { color: #fecaca; }
+  .flow-card.cta { background: #fffbeb; border: 1px solid #fde68a; color: #78350f; }
+  .flow-card.cta .flow-head { color: #92400e; }
+
+  .flow-main {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.55;
+  }
+  .flow-meta {
+    display: inline-block;
+    background: rgba(0,0,0,0.08);
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(0,0,0,0.7);
+  }
+  .flow-card.solution .flow-meta, .flow-card.proposal .flow-meta {
+    background: rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.9);
+  }
+  .flow-divider {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(0,0,0,0.4);
+    margin: 2px 0;
+    position: relative;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .flow-divider::before, .flow-divider::after {
+    content: '';
+    height: 1px;
+    background: rgba(0,0,0,0.15);
+    flex: 1;
+  }
+  .flow-divider span {
+    padding: 0 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(0,0,0,0.5);
+  }
+  .flow-bullets { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .flow-bullets li { font-size: 14px; line-height: 1.55; padding-left: 16px; position: relative; }
+  .flow-bullets li::before {
+    content: '↳';
+    position: absolute;
+    left: 0;
+    opacity: 0.7;
+    font-weight: 700;
+  }
+  .flow-footer-tag {
+    margin-top: auto;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: right;
+    padding-top: 10px;
+    opacity: 0.7;
+  }
+  .flow-quote {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.55;
+    position: relative;
+    padding: 4px 8px 4px 16px;
+  }
+  .flow-quote::before {
+    content: '"';
+    position: absolute;
+    left: 0;
+    top: -4px;
+    font-size: 30px;
+    line-height: 1;
+    opacity: 0.7;
+  }
+  .flow-cta-btn {
+    background: #dc2626;
+    color: white;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .flow-cta-desc {
+    font-size: 13px;
+    line-height: 1.55;
+    color: #78350f;
+  }
+  .flow-cta-link {
+    font-size: 12px;
+    color: #92400e;
+    text-decoration: underline;
+    opacity: 0.7;
+  }
+
+  /* 블록 카드 */
+  .block {
+    background: white;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border-top: 4px solid #3b82f6;
+  }
+  .block h3 {
+    font-size: 17px;
+    color: #6b7280;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+  }
+  .block .icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+  .block ul { list-style: none; padding: 0; }
+  .block li {
+    padding: 12px 0;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 17px;
+    color: #374151;
+  }
+  .block li:last-child { border-bottom: none; }
+  .block li strong { color: #1e3a8a; font-size: 17px; }
+
+  /* 페르소나 카드 */
+  .persona-section { margin-top: 40px; }
+  .persona-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e5e7eb;
+  }
+  .persona-header h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .persona-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-left: 6px solid;
+  }
+  .persona-card.type-a { border-left-color: #2563eb; }
+  .persona-card.type-b { border-left-color: #059669; }
+  .persona-card.type-c { border-left-color: #dc2626; }
+  .persona-card.type-d { border-left-color: #7c3aed; }
+
+  .persona-tag {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .type-a .persona-tag { background: #dbeafe; color: #1e40af; }
+  .type-b .persona-tag { background: #d1fae5; color: #065f46; }
+  .type-c .persona-tag { background: #fee2e2; color: #991b1b; }
+  .type-d .persona-tag { background: #ede9fe; color: #5b21b6; }
+
+  .persona-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+  }
+  .persona-desc {
+    font-size: 16px;
+    color: #374151;
+    margin-bottom: 18px;
+    padding: 12px 16px;
+    background: #f9fafb;
+    border-radius: 8px;
+    line-height: 1.65;
+    border-left: 3px solid #d1d5db;
+  }
+  .persona-desc strong {
+    color: #111827;
+    font-weight: 800;
+    margin-right: 4px;
+  }
+  .type-a .persona-desc { border-left-color: #93c5fd; }
+  .type-b .persona-desc { border-left-color: #6ee7b7; }
+  .type-c .persona-desc { border-left-color: #fca5a5; }
+  .type-d .persona-desc { border-left-color: #c4b5fd; }
+
+  .persona-message {
+    background: #fafafa;
+    padding: 22px 26px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 26px;
+    font-style: normal;
+    border-left: 5px solid #e5e7eb;
+    line-height: 1.7;
+  }
+  .type-a .persona-message { border-left-color: #2563eb; background: #eff6ff; }
+  .type-b .persona-message { border-left-color: #059669; background: #ecfdf5; }
+  .type-c .persona-message { border-left-color: #dc2626; background: #fef2f2; }
+  .type-d .persona-message { border-left-color: #7c3aed; background: #f5f3ff; }
+
+  .channel-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 900px) {
+    .channel-grid { grid-template-columns: 1fr; }
+  }
+  .channel {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+  .channel-label {
+    font-weight: 700;
+    font-size: 15px;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e5e7eb;
+  }
+  .type-a .channel-label { color: #2563eb; border-bottom-color: #dbeafe; }
+  .type-b .channel-label { color: #059669; border-bottom-color: #d1fae5; }
+  .type-c .channel-label { color: #dc2626; border-bottom-color: #fee2e2; }
+  .type-d .channel-label { color: #7c3aed; border-bottom-color: #ede9fe; }
+  .channel-content { color: #374151; line-height: 1.55; font-size: 16px; }
+  .sample-list { list-style: none; padding: 0; margin: 0; }
+  .sample-list li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #e5e7eb;
+    font-size: 15px;
+    color: #374151;
+    line-height: 1.5;
+  }
+  .sample-list li:last-child { border-bottom: none; }
+  .sample-list li .sample-tag {
+    display: inline-block;
+    font-size: 12px;
+    background: #fff;
+    color: #6b7280;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 6px;
+    border: 1px solid #e5e7eb;
+    font-weight: 600;
+  }
+  .type-a .sample-list li .sample-tag { color: #2563eb; border-color: #dbeafe; background: #eff6ff; }
+  .type-b .sample-list li .sample-tag { color: #059669; border-color: #d1fae5; background: #ecfdf5; }
+  .type-c .sample-list li .sample-tag { color: #dc2626; border-color: #fee2e2; background: #fef2f2; }
+  .type-d .sample-list li .sample-tag { color: #7c3aed; border-color: #ede9fe; background: #f5f3ff; }
+
+  /* 푸터 노트 */
+  .note {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 32px;
+    font-size: 16px;
+    color: #78350f;
+    line-height: 1.6;
+  }
+  .note strong { display: block; margin-bottom: 6px; font-size: 17px; }
+
+  /* 섹션 타이틀 */
+  .section-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111827;
+    margin: 36px 0 20px;
+    padding-left: 14px;
+    border-left: 5px solid #3b82f6;
+  }
+
+  /* 블록 내부 보조 문구(span) 사이즈 업 */
+  .block li span { font-size: 15px !important; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>도원 HR팀 마케팅 전략</h1>
+    <div class="subtitle">직장 내 괴롭힘 방지 · 가족친화 / 일·생활균형 인증 컨설팅</div>
+    <span class="badge">2026 신규 매출 확장 플랜</span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab(0)">1. 직장 내 괴롭힘 방지</div>
+    <div class="tab" onclick="switchTab(1)">2. 성희롱 사건 조사</div>
+    <div class="tab" onclick="switchTab(2)">3. 가족친화 인증</div>
+    <div class="tab" onclick="switchTab(3)">4. 일·생활균형 우수기업</div>
+  </div>
+
+  <!-- ========= 섹션 1: 직장 내 괴롭힘 방지 ========= -->
+  <div class="section active" id="section-0">
+
+    <h2 class="section-title">전략 캔버스</h2>
+    <div class="flow-canvas">
+
+      <div class="flow-card customer">
+        <div class="flow-head">👥 고객</div>
+        <div class="flow-main">직장 내 괴롭힘 신고가 발생했거나, 자문사에 맡기는 게 다인 줄 아는 바쁜 대표·HR 담당자</div>
+        <div class="flow-meta">결정자: 대표 / 추천자: HR 담당자·법무팀</div>
+        <div class="flow-divider"><span>상황</span></div>
+        <div class="flow-main" style="font-weight:500;">자문 노무사에게 맡기면 공정성 시비, 직접 조사하면 편파 시비 — 어디에 맡길지 모르겠다</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-card problem">
+        <div class="flow-head">💡 진짜 문제</div>
+        <div class="flow-main">어디에 맡겨도 '공정성 시비'가 따라온다 — 자문사·내부 모두 한계</div>
+        <ul class="flow-bullets">
+          <li>인사팀·대표 직접 조사 → 피해자·가해자 양쪽 편파 시비</li>
+          <li>평소 자문사에 맡기면 → 이해충돌(자문사 편향) 의심</li>
+          <li>결국 노동청 진정·민사소송으로 확대 → 회사·대표 책임</li>
+        </ul>
+        <div class="flow-footer-tag">↳ 이 문제를 풀어야 한다</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-card solution">
+        <div class="flow-head">🎯 해결 서비스</div>
+        <div class="flow-main">도원 독립 조사관 시스템<br><span style="font-weight:400;font-size:13px;opacity:0.85;">(자문 미수임 = 구조적 공정성)</span></div>
+        <ul class="flow-bullets">
+          <li>72시간 긴급 출동 → 초동 분리·면담</li>
+          <li>자문 분리형 외부 조사관 → 객관 보고서 발급</li>
+          <li>취업규칙·고충처리·법정의무교육 일괄 정비</li>
+        </ul>
+      </div>
+
+      <div class="flow-gap"></div>
+
+      <div class="flow-card proposal">
+        <div class="flow-head">💬 제안 — 진짜 문제의 답</div>
+        <div class="flow-quote">자문 노무사에게 조사 맡기면 안 됩니다.<br>도원은 자문을 받지 않습니다 — 그게 공정성입니다.</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-card cta">
+        <div class="flow-head">🎯 마무리 — 결정 유도</div>
+        <div class="flow-cta-btn">5분 자가진단표 무료 다운로드 →</div>
+        <div class="flow-cta-desc">우리 회사 직괴 대응 프로세스 취약점을 5분 만에 진단하세요. 타 법인은 자문·조사 병행, 도원은 분리 운영입니다.</div>
+        <div class="flow-cta-link">📄 익명 조사 보고서 샘플 보기</div>
+      </div>
+
+    </div>
+
+    <h2 class="section-title">타겟별 MKT 포인트</h2>
+
+    <div class="persona-card type-a">
+      <span class="persona-tag">A형 · 긴급</span>
+      <div class="persona-title">직괴 신고 발생 기업</div>
+      <div class="persona-desc"><strong>실질 이익:</strong> 노동청 진정 회피 · 손해배상 면피 · 임금·근로시간 동시 적발 차단</div>
+      <div class="persona-message">"노동청 진정 가면 손배 + 임금·근로시간·4대보험까지 다 털립니다.<br><br>외부 조사 보고서로 그 전에 종결하세요."</div>
+      <div class="channel-grid">
+        <div class="channel">
+          <div class="channel-label">📝 블로그</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">샘플</span>외부 조사 보고서 양식 + 비식별화 샘플 PDF 다운로드</li>
+            <li><span class="sample-tag">절차</span>신고 접수 후 72시간 골든타임 단계별 매뉴얼</li>
+            <li><span class="sample-tag">면피</span>외부 조사가 사용자 책임 감경한 판례 분석</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">📱 인스타</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">긴급</span>"지금 신고당하셨나요?" 72시간 행동 요령 인포그래픽</li>
+            <li><span class="sample-tag">릴스</span>"조사 첫날 절대 하지 말아야 할 것" 1분 긴급 릴스</li>
+            <li><span class="sample-tag">QA</span>외부조사관 비용·기간·범위 Q&A 카드뉴스</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">🤝 영업</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">SA</span>네이버·구글 "직괴 신고"·"외부조사관" 긴급 키워드 광고</li>
+            <li><span class="sample-tag">핫라인</span>24시간 카톡·전화 핫라인 (영업일 4시간 회신 SLA)</li>
+            <li><span class="sample-tag">제휴</span>기업 자문 변호사·법무팀 상호 추천 네트워크</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-card type-b">
+      <span class="persona-tag">B형 · 대량</span>
+      <div class="persona-title">30인↑ 취업규칙 미정비 기업</div>
+      <div class="persona-desc"><strong>실질 이익:</strong> 근기법 §93·§76조의2 위반 과태료 회피 · 진정 시 동시 적발 가중 차단</div>
+      <div class="persona-message">"취업규칙·고충처리절차 미정비, 신고 한 통에 의무 위반까지 동시 적발.<br><br>사건 터지기 전 정비하세요."</div>
+      <div class="channel-grid">
+        <div class="channel">
+          <div class="channel-label">📝 블로그</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">의무</span>30인↑ 사업장 필수 정비 항목 체크리스트 (취업규칙·고충처리·교육)</li>
+            <li><span class="sample-tag">과태료</span>미정비 + 진정 시 가중 적발 사례 분석</li>
+            <li><span class="sample-tag">패키지</span>정비 패키지 후기 — 30인↑ 의뢰 기업 익명 사례</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">📱 인스타</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">체크</span>"30인 이상 사업장 의무 5가지" 카드뉴스</li>
+            <li><span class="sample-tag">릴스</span>"취업규칙 안 고쳐서 과태료 N백만원" 30초 릴스</li>
+            <li><span class="sample-tag">실수</span>"인사팀이 가장 자주 빠뜨리는 정비 항목 3가지" 카드</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">🤝 영업</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">DM</span>30인↑ HR 미보유·겸직 기업 링크드인 다이렉트</li>
+            <li><span class="sample-tag">세미나</span>30인 이상 사업장 노동법 무료 세미나 (리드 확보)</li>
+            <li><span class="sample-tag">제휴</span>회계법인·세무사 추천 네트워크 (인사 컨설팅 부재 풀)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-card type-c">
+      <span class="persona-tag">C형 · 후순위</span>
+      <div class="persona-title">기존 자문사 보유 + 사건 발생 기업</div>
+      <div class="persona-desc"><strong>실질 이익:</strong> 자문·조사 이해충돌 시비 차단 · 노동청 진정 보강 방어</div>
+      <div class="persona-message">"자문 노무사가 조사하면 '편파' 시비가 진정에 더 힘 실립니다.<br><br>도원은 자문을 안 받는 독립 조사 전문."</div>
+      <div class="channel-grid">
+        <div class="channel">
+          <div class="channel-label">📝 블로그</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">판례</span>자문사 조사 후 공정성 시비로 진정 보강된 판례 분석</li>
+            <li><span class="sample-tag">구조</span>"자문 + 조사" 동시 수행의 구조적 이해충돌 도식</li>
+            <li><span class="sample-tag">정책</span>도원 자문 미수임 정책 안내 — "왜 우리는 자문을 안 받는가"</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">📱 인스타</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">도식</span>"자문 = 조사 → 시비" 인포그래픽 카드뉴스</li>
+            <li><span class="sample-tag">릴스</span>"자문사에게 조사 맡기면 안 되는 이유" 30초 릴스</li>
+            <li><span class="sample-tag">비교</span>도원 vs 일반 노무법인 구조 비교 카드</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">🤝 영업</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">DM</span>기존 자문 보유 + 사건 발생 기업 변호사 추천 네트워크</li>
+            <li><span class="sample-tag">추천</span>법무법인 상호 추천 (이중 자문 검토 시점)</li>
+            <li><span class="sample-tag">조찬</span>"조사 분리" 라운드테이블 인사책임자 조찬</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========= 섹션 2: 성희롱 사건 조사 ========= -->
+  <div class="section" id="section-1">
+
+    <h2 class="section-title">전략 캔버스</h2>
+    <div class="flow-canvas">
+
+      <div class="flow-card customer">
+        <div class="flow-head">👥 고객</div>
+        <div class="flow-main">성희롱 신고가 접수되었거나, 예방·대응 체계가 부재한 대표·HR 담당자</div>
+        <div class="flow-meta">결정자: 대표·인사책임자 / 추천자: HR 담당자·법무팀</div>
+        <div class="flow-divider"><span>상황</span></div>
+        <div class="flow-main" style="font-weight:500;">법적 책임은 무거운데 자체 조사는 부담스럽고, 자문사 조사는 신뢰성이 의심된다</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-card problem">
+        <div class="flow-head">💡 진짜 문제</div>
+        <div class="flow-main">성희롱은 "조사 부실 = 사용자 책임" 직결 — 어설픈 조사가 더 위험</div>
+        <ul class="flow-bullets">
+          <li>남녀고용평등법 §14 신속 조사 의무 미이행 → 회사·대표 손해배상</li>
+          <li>가해자가 임원·고위직이면 내부 조사 자체가 불가능</li>
+          <li>2차 가해(비밀유지 위반·불이익 처분) 발생 시 추가 책임</li>
+        </ul>
+        <div class="flow-footer-tag">↳ 이 문제를 풀어야 한다</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-card solution">
+        <div class="flow-head">🎯 해결 서비스</div>
+        <div class="flow-main">도원 성희롱 전담 조사 시스템<br><span style="font-weight:400;font-size:13px;opacity:0.85;">(자문 미수임 = 독립성·전문성)</span></div>
+        <ul class="flow-bullets">
+          <li>외부 독립 조사관 → 임원·고위직 가해자도 부담 없이 조사</li>
+          <li>피해자·증인 전문 면담 → 2차 가해 차단 프로토콜</li>
+          <li>법령 기준 보고서 + 징계 권고안 + 후속 모니터링</li>
+        </ul>
+      </div>
+
+      <div class="flow-gap"></div>
+
+      <div class="flow-card proposal">
+        <div class="flow-head">💬 제안 — 진짜 문제의 답</div>
+        <div class="flow-quote">성희롱은 "안 한 것"보다<br>"잘못 조사한 것"이 더 위험합니다.<br>외부 전문가에게 맡기세요.</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-card cta">
+        <div class="flow-head">🎯 마무리 — 결정 유도</div>
+        <div class="flow-cta-btn">5분 성희롱 대응 체크리스트 다운로드 →</div>
+        <div class="flow-cta-desc">신고 접수부터 보고서까지 전 과정 가이드. 우리 회사 대응 체계의 빈틈을 5분 만에 확인하세요.</div>
+        <div class="flow-cta-link">📄 익명 조사 사례집 보기</div>
+      </div>
+
+    </div>
+
+    <h2 class="section-title">타겟별 MKT 포인트</h2>
+
+    <div class="persona-card type-a">
+      <span class="persona-tag">A형 · 긴급</span>
+      <div class="persona-title">임원 가해자 신고 발생 기업</div>
+      <div class="persona-desc"><strong>실질 이익:</strong> 남녀고용평등법 §14 미이행 손해배상 회피 · 이사회 결정 합법화 보고서</div>
+      <div class="persona-message">"임원 처분, 회사가 직접 정하지 마세요.<br><br>외부 보고서가 이사회 결정의 명분이자 면피 근거입니다."</div>
+      <div class="channel-grid">
+        <div class="channel">
+          <div class="channel-label">📝 블로그</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">판례</span>임원 성희롱 — 사용자 책임 인정 대법원 판례 분석</li>
+            <li><span class="sample-tag">절차</span>이사회 보고용 외부 조사 보고서 구조·항목 가이드</li>
+            <li><span class="sample-tag">면피</span>"신속 조사 의무" 미이행 손해배상 사례 분석</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">📱 인스타</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">릴스</span>"임원 신고 받았을 때 회사가 해야 할 일" 60초 릴스</li>
+            <li><span class="sample-tag">체크</span>사용자 의무 7가지 체크리스트 카드뉴스</li>
+            <li><span class="sample-tag">QA</span>"임원 가해자, 조사위 구성 어떻게?" Q&A 카드</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">🤝 영업</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">DM</span>링크드인 인사책임자·법무팀장 타겟 (사례집 첨부)</li>
+            <li><span class="sample-tag">제휴</span>기업 자문 변호사·법무법인 상호 추천 네트워크</li>
+            <li><span class="sample-tag">익명</span>익명 인입 폼 (비밀 보장 유입 채널)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-card type-b">
+      <span class="persona-tag">B형 · 대량</span>
+      <div class="persona-title">예방교육 미실시 5인↑ 사업장</div>
+      <div class="persona-desc"><strong>실질 이익:</strong> 남녀고용평등법 §13 의무 + §39 과태료 최대 1천만 원 회피</div>
+      <div class="persona-message">"예방교육 미실시 적발 시 과태료 1천만 원, 사건 발생 시 가중.<br><br>단체 교육으로 한 번에 정비."</div>
+      <div class="channel-grid">
+        <div class="channel">
+          <div class="channel-label">📝 블로그</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">의무</span>남녀고용평등법 §13 의무교육 이행 가이드 — 횟수·대상·증빙</li>
+            <li><span class="sample-tag">과태료</span>미실시 + 사건 발생 시 과태료 가중 시나리오 분석</li>
+            <li><span class="sample-tag">방식</span>온라인 vs 집체 — 우리 회사에 맞는 교육 방식 선택법</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">📱 인스타</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">체크</span>"5인 이상 사업장 성희롱 의무 5가지" 카드뉴스</li>
+            <li><span class="sample-tag">강사</span>도원 노무사 강사 소개 릴스 — 강의 스타일·이력</li>
+            <li><span class="sample-tag">현장</span>출강 현장 브이로그 (의뢰 동의 기반)</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">🤝 영업</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">SA</span>네이버·구글 "성희롱 예방교육 의무"·"단체 교육" 키워드</li>
+            <li><span class="sample-tag">업셀</span>기존 자문 고객 "직괴 + 성희롱 교육 묶음" 업셀</li>
+            <li><span class="sample-tag">단체</span>협회·상공회의소 단체 교육 입찰·수주</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-card type-c">
+      <span class="persona-tag">C형 · 후순위</span>
+      <div class="persona-title">노조 활성·외부 단체 개입 우려 기업</div>
+      <div class="persona-desc"><strong>실질 이익:</strong> 미온 대응 → 노조 개입 → 협상 비용 폭증 회피</div>
+      <div class="persona-message">"미온적 대응 한 번에 노조·언론·노동청까지 동시 개입.<br><br>외부 조사로 사내에서 종결하세요."</div>
+      <div class="channel-grid">
+        <div class="channel">
+          <div class="channel-label">📝 블로그</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">사례</span>미온 대응 → 노조 개입 → 협상 비용 폭증 사례 분석 (익명)</li>
+            <li><span class="sample-tag">차단</span>외부 조사가 노조 개입을 차단한 케이스 분석</li>
+            <li><span class="sample-tag">구조</span>노조·언론·노동청 트라이앵글 리스크 도식</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">📱 인스타</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">위험</span>"노조 개입 = 비용 폭증" 인포그래픽 카드</li>
+            <li><span class="sample-tag">릴스</span>"미온 대응의 함정" 30초 릴스</li>
+            <li><span class="sample-tag">QA</span>"노조 있는 회사, 조사 어떻게?" Q&A 카드</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">🤝 영업</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">DM</span>노조 보유·산별 노조 가입 기업 인사책임자 콜드 DM</li>
+            <li><span class="sample-tag">추천</span>노동조합 자문 변호사 상호 추천</li>
+            <li><span class="sample-tag">조찬</span>"노사 분쟁 차단" 인사책임자 라운드테이블</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========= 섹션 3: 가족친화 인증 ========= -->
+  <div class="section" id="section-2">
+
+    <h2 class="section-title">전략 캔버스</h2>
+    <div class="flow-canvas">
+
+      <div class="flow-card customer">
+        <div class="flow-head">👥 고객</div>
+        <div class="flow-main">핵심 인재 유출이 사업 운명을 좌우하는 성장기 강소기업·스타트업 대표·HR 담당자</div>
+        <div class="flow-meta">결정자: 대표·HR 헤드 / 추천자: 인사담당자·이사회·VC</div>
+        <div class="flow-divider"><span>상황</span></div>
+        <div class="flow-main" style="font-weight:500;">대기업 연봉으로는 못 이긴다. 핵심 인재 1명 유출이 사업을 흔든다.</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-card problem">
+        <div class="flow-head">💡 진짜 문제</div>
+        <div class="flow-main">"워라밸 회사"라는 신뢰 신호 부재 — 채용·리텐션·IR 동시 약화</div>
+        <ul class="flow-bullets">
+          <li>연봉 못 올리면 차별화 수단 없음 → 핵심 인재 1년 내 이탈</li>
+          <li>"복지 좋아요" 자체 주장은 채용 시장 신뢰 신호 안 됨</li>
+          <li>VC·투자자 IR 시 ESG·거버넌스 점수 부재 → 펀딩 평가 감점</li>
+        </ul>
+        <div class="flow-footer-tag">↳ 이 문제를 풀어야 한다</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-card solution">
+        <div class="flow-head">🎯 해결 서비스</div>
+        <div class="flow-main">가족친화인증 + 채용·IR 활용 패키지<br><span style="font-weight:400;font-size:13px;opacity:0.85;">(여성가족부 · 유효기간 3년)</span></div>
+        <ul class="flow-bullets">
+          <li>정부 매칭 → 자부담 최소화 (또는 0원)</li>
+          <li>인증 통과형 제도 설계 (생산성 영향 최소화)</li>
+          <li>채용 페이지·IR 자료용 인증 마크 활용 가이드</li>
+        </ul>
+      </div>
+
+      <div class="flow-gap"></div>
+
+      <div class="flow-card proposal">
+        <div class="flow-head">💬 제안 — 진짜 문제의 답</div>
+        <div class="flow-quote">대기업 연봉 못 줘도,<br>"국가 인증 워라밸 회사" 신뢰 자산은<br>비용 0원으로 만듭니다.</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-card cta">
+        <div class="flow-head">🎯 마무리 — 결정 유도</div>
+        <div class="flow-cta-btn">5분 입력 → 인증 가능성 + 채용 효과 시뮬레이션 →</div>
+        <div class="flow-cta-desc">우리 회사 평가 점수와 인증 후 예상 채용·리텐션 효과를 즉시 확인하세요. 자비 추진 전, 정부 매칭 가능 영역부터.</div>
+        <div class="flow-cta-link">📊 의뢰 기업 채용 데이터 비교 보기</div>
+      </div>
+
+    </div>
+
+    <h2 class="section-title">타겟별 MKT 포인트</h2>
+
+    <div class="persona-card type-a">
+      <span class="persona-tag">A형 · 시즌</span>
+      <div class="persona-title">대기업·공기업 협력업체 등록·유지 중견기업</div>
+      <div class="persona-desc"><strong>실질 이익:</strong> 1차 협력사 동반성장 평가 가점 → 협력 매출 직결</div>
+      <div class="persona-message">"동반성장 평가 시즌이 다가옵니다.<br><br>가족친화 인증 가점 항목 챙기지 않으면 협력 매출이 흔들립니다."</div>
+      <div class="channel-grid">
+        <div class="channel">
+          <div class="channel-label">📝 블로그</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">평가</span>삼성·LG·SK 동반성장 평가 항목 분석 — 인증 가점 비중</li>
+            <li><span class="sample-tag">등록</span>공기업 협력업체 등록 시 인증 가점표 정리</li>
+            <li><span class="sample-tag">후기</span>인증 후 협력업체 등록·유지 성공 사례 (익명)</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">📱 인스타</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">카드</span>"동반성장 평가 가점 항목" 카드뉴스</li>
+            <li><span class="sample-tag">릴스</span>"협력 매출 0원이면 회사 끝" 30초 임팩트 릴스</li>
+            <li><span class="sample-tag">체크</span>인증 평가 항목 10가지 자가진단 카드</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">🤝 영업</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">시즌</span>동반성장 평가 시즌(분기·반기) 1차 협력사 DM</li>
+            <li><span class="sample-tag">제휴</span>대기업 구매팀 추천 네트워크</li>
+            <li><span class="sample-tag">단체</span>협력사 협의회 단체 컨설팅 제안</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-card type-b">
+      <span class="persona-tag">B형 · 시즌</span>
+      <div class="persona-title">정부지원사업·R&D 가산점 필요 기업</div>
+      <div class="persona-desc"><strong>실질 이익:</strong> 이노비즈·메인비즈·R&D 사업 평가 가산점 → 정부지원금 수령 확률 상승</div>
+      <div class="persona-message">"이노비즈·R&D 가산점, 인증 하나로 매년 챙기세요.<br><br>정부지원금 수령 확률에 직접 영향."</div>
+      <div class="channel-grid">
+        <div class="channel">
+          <div class="channel-label">📝 블로그</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">총정리</span>이노비즈·메인비즈 평가 가산점 항목 — 가족친화 비중</li>
+            <li><span class="sample-tag">R&D</span>R&D 사업 평가 가산점에 포함된 인증 항목 정리</li>
+            <li><span class="sample-tag">계산</span>"가산점 1점이 사업 선정에 미치는 영향" 분석</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">📱 인스타</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">계산기</span>우리 회사 가산점 효과 계산기 카드뉴스</li>
+            <li><span class="sample-tag">릴스</span>"가점 1점 차이로 사업 떨어지는 진짜 이유" 30초 릴스</li>
+            <li><span class="sample-tag">QA</span>"이노비즈 갱신 시기, 인증 언제까지?" Q&A 카드</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">🤝 영업</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">시즌</span>이노비즈 갱신·R&D 신청 시즌 회사 타겟 DM</li>
+            <li><span class="sample-tag">제휴</span>중소기업중앙회·기술보증기금 협력 채널</li>
+            <li><span class="sample-tag">세미나</span>R&D 사업 가산점 무료 진단 세미나</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-card type-c">
+      <span class="persona-tag">C형 · 시즌</span>
+      <div class="persona-title">정책자금 융자 한도·금리 우대 자금난 기업</div>
+      <div class="persona-desc"><strong>실질 이익:</strong> KOSME·중기부 정책자금 평가 가점 → 한도 증액 + 금리 인하</div>
+      <div class="persona-message">"정책자금 한도 N억 더, 금리 0.5%p 인하.<br><br>인증 가점이 융자에 직결됩니다."</div>
+      <div class="channel-grid">
+        <div class="channel">
+          <div class="channel-label">📝 블로그</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">총정리</span>정책자금 평가 시 가족친화 인증 가점표</li>
+            <li><span class="sample-tag">사례</span>인증 후 정책자금 한도 증액·금리 인하 사례 (익명)</li>
+            <li><span class="sample-tag">시뮬</span>우리 회사 정책자금 시뮬레이션 가이드</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">📱 인스타</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">계산</span>"정책자금 한도 N억 증액 효과" 카드뉴스</li>
+            <li><span class="sample-tag">릴스</span>"금리 0.5%p 차이의 진짜 값어치" 30초 릴스</li>
+            <li><span class="sample-tag">체크</span>정책자금 신청 전 체크리스트 카드</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">🤝 영업</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">시즌</span>정책자금 신청 시즌(연초·하반기) DM</li>
+            <li><span class="sample-tag">제휴</span>회계법인·세무사 추천 네트워크</li>
+            <li><span class="sample-tag">세미나</span>정책자금 가점 무료 진단 세미나</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-card type-d">
+      <span class="persona-tag">D형 · 후순위</span>
+      <div class="persona-title">정부 매칭 컨설팅 자부담 0~30% 노리는 중소기업</div>
+      <div class="persona-desc"><strong>실질 이익:</strong> 일가양립·일터혁신 매칭 사업 → 컨설팅 시장가 대비 자부담 절감</div>
+      <div class="persona-message">"인증 컨설팅 시장가 OOO만 원, 정부 매칭이면 자부담 0~30%.<br><br>매칭 사업 시즌 놓치지 마세요."</div>
+      <div class="channel-grid">
+        <div class="channel">
+          <div class="channel-label">📝 블로그</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">매칭</span>일가양립·일터혁신 매칭 사업 안내 — 자부담 절감 구조</li>
+            <li><span class="sample-tag">신청</span>매칭 사업 신청 일정·서류 가이드</li>
+            <li><span class="sample-tag">후기</span>매칭 받은 중소기업 후기 — 자부담 0원 사례</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">📱 인스타</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">카드</span>"자부담 0원" 매칭 사업 카드뉴스</li>
+            <li><span class="sample-tag">릴스</span>"정부 매칭 신청 5분 정리" 릴스</li>
+            <li><span class="sample-tag">QA</span>"매칭 받으려면 자격은?" Q&A 카드</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">🤝 영업</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">시즌</span>매칭 사업 공고 시점에 맞춘 SA·SEO</li>
+            <li><span class="sample-tag">제휴</span>노사발전재단 협력 채널</li>
+            <li><span class="sample-tag">단체</span>중소기업 협회 단체 신청 제안</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========= 섹션 4: 일·생활균형 우수기업 ========= -->
+  <div class="section" id="section-3">
+
+    <h2 class="section-title">전략 캔버스</h2>
+    <div class="flow-canvas">
+
+      <div class="flow-card customer">
+        <div class="flow-head">👥 고객</div>
+        <div class="flow-main">공공조달·병역특례·정책자금이 사업 생존에 필수인 제조·IT 중소기업 대표</div>
+        <div class="flow-meta">결정자: 대표·재무팀 / 추천자: 영업·구매팀·CTO</div>
+        <div class="flow-divider"><span>상황</span></div>
+        <div class="flow-main" style="font-weight:500;">인증 하나로 매출(조달)·인재(병역특례)·자금(정책자금) 3가지가 풀린다 — 그런데 절차가 복잡하다.</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-card problem">
+        <div class="flow-head">💡 진짜 문제</div>
+        <div class="flow-main">절차 복잡해 못 챙기는 사이, 경쟁사는 가점 받고 입찰 따간다</div>
+        <ul class="flow-bullets">
+          <li>조달 입찰 0.5~2점 가산점이 낙찰 좌우 → 매출 직접 영향</li>
+          <li>병역특례(전문연구요원·산업기능요원) 지정·유지 평가 항목 충족 어려움</li>
+          <li>일터혁신 컨설팅 등 정부 매칭 자금 활용 방법 모름</li>
+        </ul>
+        <div class="flow-footer-tag">↳ 이 문제를 풀어야 한다</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-card solution">
+        <div class="flow-head">🎯 해결 서비스</div>
+        <div class="flow-main">일·생활균형 우수기업 인증 올인원<br><span style="font-weight:400;font-size:13px;opacity:0.85;">(고용노동부 · 유효기간 2년)</span></div>
+        <ul class="flow-bullets">
+          <li>일터혁신 컨설팅 매칭 → 자부담 0원 가능</li>
+          <li>유연근무 제도 도입 → 생산성 영향 최소화</li>
+          <li>조달·병역특례 평가 항목 동시 매핑</li>
+        </ul>
+      </div>
+
+      <div class="flow-gap"></div>
+
+      <div class="flow-card proposal">
+        <div class="flow-head">💬 제안 — 진짜 문제의 답</div>
+        <div class="flow-quote">조달 가점 + 병역특례 + 정책자금.<br>인증 하나로 3중 잠금해제.</div>
+      </div>
+
+      <div class="flow-arrow">→</div>
+
+      <div class="flow-card cta">
+        <div class="flow-head">🎯 마무리 — 결정 유도</div>
+        <div class="flow-cta-btn">5분 입력 → 조달 가점·병역특례 가능성 시뮬레이션 →</div>
+        <div class="flow-cta-desc">우리 회사의 조달 가점·병역특례 평가·정책자금 한도 영향을 즉시 계산. 자비 추진 전, 정부 매칭 영역부터 확인.</div>
+        <div class="flow-cta-link">📊 평가 항목 자가진단표 보기</div>
+      </div>
+
+    </div>
+
+    <h2 class="section-title">타겟별 MKT 포인트</h2>
+
+    <div class="persona-card type-a">
+      <span class="persona-tag">A형 · 즉시 검증</span>
+      <div class="persona-title">병역지정업체 등록·갱신 IT·제조 중소기업</div>
+      <div class="persona-desc"><strong>실질 이익:</strong> 병역지정업체 평가 가점 → 전문연구요원 1명 = 3년 핵심 인력 잠금 (인건비 환산 가치)</div>
+      <div class="persona-message">"전문연구요원 1명 = 3년 핵심 인력 잠금.<br><br>인증 가점으로 지정·갱신 평가 통과 확률을 올리세요."</div>
+      <div class="channel-grid">
+        <div class="channel">
+          <div class="channel-label">📝 블로그</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">평가</span>병역지정업체 평가 항목 분해 — 인증 비중 분석</li>
+            <li><span class="sample-tag">갱신</span>지정 취소 위기 → 인증으로 회복한 IT 기업 사례 (익명)</li>
+            <li><span class="sample-tag">전략</span>전문연구요원 vs 산업기능요원 — 우리 회사 선택 가이드</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">📱 인스타</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">릴스</span>"5년 개발자 잠금하는 인증 활용법" 30초 (CTO 타겟)</li>
+            <li><span class="sample-tag">점수</span>병역지정업체 평가 점수표 카드뉴스</li>
+            <li><span class="sample-tag">QA</span>"지정 유지하려면 인증 언제까지?" Q&A 카드</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">🤝 영업</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">콜드</span>병역지정업체 등록·갱신 희망 IT 기업 콜드콜 + 무료 시뮬레이션</li>
+            <li><span class="sample-tag">제휴</span>코딩 아카데미·IT 채용 플랫폼 제휴</li>
+            <li><span class="sample-tag">클러스터</span>판교·구로·강남 IT 클러스터 CTO 모임 연사</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-card type-b">
+      <span class="persona-tag">B형 · 시즌</span>
+      <div class="persona-title">공공조달 입찰 매출 비중↑ 중소제조업</div>
+      <div class="persona-desc"><strong>실질 이익:</strong> 조달청·LH·한전 입찰 가점 0.5~2점 → 낙찰 직결 매출</div>
+      <div class="persona-message">"입찰 가점 0.5~2점이 낙찰을 가릅니다.<br><br>인증 하나로 매년 가점을 챙기세요."</div>
+      <div class="channel-grid">
+        <div class="channel">
+          <div class="channel-label">📝 블로그</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">가점</span>조달청·LH·한전 입찰 가점 — 인증 점수표 정리</li>
+            <li><span class="sample-tag">사례</span>인증 후 공공조달 매출 N억 증가 사례 (익명·동의)</li>
+            <li><span class="sample-tag">비교</span>이노비즈·메인비즈·일·생활균형 — 입찰 가점 인증 비교표</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">📱 인스타</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">릴스</span>"0.5점 차이 낙찰, 인증 하나로 매년 가점" 30초 임팩트</li>
+            <li><span class="sample-tag">계산</span>우리 회사 입찰 매출 × 가점 환산 카드뉴스</li>
+            <li><span class="sample-tag">체크</span>평가 항목 10가지 자가진단 카드</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">🤝 영업</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">DM</span>나라장터 자주 입찰 기업 리스트 제안서 (이메일·팩스)</li>
+            <li><span class="sample-tag">제휴</span>중소기업중앙회·KOSME·산업단지공단</li>
+            <li><span class="sample-tag">단체</span>제조업 협동조합·업종별 협회 단체 컨설팅</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-card type-c">
+      <span class="persona-tag">C형 · 후순위</span>
+      <div class="persona-title">일터혁신 컨설팅 자부담 매칭 받고 싶은 기업</div>
+      <div class="persona-desc"><strong>실질 이익:</strong> 일터혁신 매칭 시 자부담 0~30% → 컨설팅 시장가 대비 절감</div>
+      <div class="persona-message">"일터혁신 사업 매칭, 자부담 0~30%.<br><br>인증 + 컨설팅 통합 패키지로 한 번에 정비."</div>
+      <div class="channel-grid">
+        <div class="channel">
+          <div class="channel-label">📝 블로그</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">매칭</span>일터혁신 컨설팅 매칭 구조 — 자부담 절감 안내</li>
+            <li><span class="sample-tag">패키지</span>인증 + 컨설팅 통합 패키지 후기</li>
+            <li><span class="sample-tag">신청</span>매칭 신청 일정·서류 가이드</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">📱 인스타</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">카드</span>"자부담 0원" 매칭 사업 카드뉴스</li>
+            <li><span class="sample-tag">릴스</span>"정부 매칭 신청 5분 정리" 릴스</li>
+            <li><span class="sample-tag">QA</span>"매칭 자격 조건은?" Q&A 카드</li>
+          </ul>
+        </div>
+        <div class="channel">
+          <div class="channel-label">🤝 영업</div>
+          <ul class="sample-list">
+            <li><span class="sample-tag">시즌</span>매칭 사업 공고 시점 SA·SEO</li>
+            <li><span class="sample-tag">제휴</span>노사발전재단 협력 채널</li>
+            <li><span class="sample-tag">단체</span>중소기업 협회 단체 신청 제안</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="note">
+    <strong>⚖️ 컴플라이언스 체크</strong>
+    공인노무사법 §13(비밀엄수) — 사례 공개 시 의뢰인 서면 동의 필수 / §18(광고 제한) — 과장·허위·확정적 결과 약속 금지. 모든 콘텐츠 발행 전 내부 컴플라이언스 점검 절차 필수.
+  </div>
+
+</div>
+
+<script>
+  function switchTab(idx) {
+    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+    document.querySelectorAll('.section').forEach((s, i) => s.classList.toggle('active', i === idx));
+  }
+</script>
+</body>
+</html>
