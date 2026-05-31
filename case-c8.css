@@ -1,0 +1,302 @@
+/* ============================================================
+   도원 케이스 c8 공통 컴포넌트 (case-1~9 공유)
+   - case-v2.css 의 base 위에 얹어서 사용
+   - 페이지 고유 시각화(c1-shock·c2-shock·c3-proof·c6-clock 등)는
+     각 페이지 인라인 스타일로 유지
+   ============================================================ */
+
+/* ----- 가격 신호 슬롯 (hero 직후) ----- */
+.price-signal{
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+  gap:10px 22px;padding:18px 24px;background:#fff;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  text-align:center;
+}
+.price-signal-item{
+  font-size:15px;font-weight:700;color:var(--navy);
+  display:inline-flex;align-items:center;gap:7px;
+}
+.price-signal-item::before{
+  content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);
+  display:inline-block;
+}
+.price-signal-item b{color:var(--gold);font-weight:800;}
+@media(max-width:680px){
+  .price-signal{padding:14px 18px;gap:8px 14px;}
+  .price-signal-item{font-size:13.5px;}
+}
+
+/* ----- INSIGHT 섹션 (§ 3) ----- */
+.c8-insight{
+  background:
+    radial-gradient(ellipse 900px 500px at 50% 35%,rgba(212,178,106,.08) 0%,transparent 65%),
+    radial-gradient(ellipse 1500px 900px at 50% 50%,#182c4c 0%,#0F1F38 55%,#07142a 100%);
+  color:#fff;
+  padding:150px max(24px,calc((100% - 940px)/2));
+  position:relative;
+}
+.c8-insight-inner{max-width:900px;margin:0 auto;text-align:center;}
+.c8-insight-eyebrow{
+  display:inline-block;font-size:13.5px;font-weight:800;letter-spacing:1px;
+  padding:8px 17px;border-radius:30px;margin-bottom:24px;
+  background:rgba(212,178,106,.12);color:#D4B26A;
+  border:1px solid rgba(212,178,106,.3);
+}
+.c8-insight-head{
+  font-size:44px;font-weight:800;line-height:1.3;letter-spacing:-1.3px;
+  color:#fff;margin:0 0 14px 0;
+}
+.c8-insight-head em{font-style:normal;color:#D4B26A;}
+.c8-insight-sub{
+  font-size:17px;font-weight:600;color:rgba(255,255,255,.65);
+  margin:0 0 48px 0;line-height:1.5;
+}
+.c8-insight-grid-3{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;
+  align-items:stretch;margin:0 0 40px 0;
+}
+.c8-insight-cell{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:32px 24px;text-align:center;
+}
+.c8-insight-cell-em{font-size:46px;line-height:1;margin-bottom:14px;}
+.c8-insight-cell-name{
+  font-size:14px;font-weight:800;color:#D4B26A;
+  letter-spacing:1.5px;margin-bottom:12px;
+}
+.c8-insight-cell-q{font-size:17px;font-weight:600;color:#fff;line-height:1.55;}
+.c8-insight-cell-q b{font-weight:800;color:#fff;}
+.c8-insight-punch{
+  font-size:24px;font-weight:800;line-height:1.5;color:#fff;
+  letter-spacing:-.5px;margin:8px 0 14px 0;
+}
+.c8-insight-punch b{color:#D4B26A;font-weight:800;}
+.c8-insight-conseq{
+  font-size:16.5px;font-weight:600;line-height:1.55;
+  color:rgba(255,255,255,.72);
+}
+
+/* ----- SOLUTION 섹션 (§ 4) — 무기 카드 ----- */
+.c8-resolve{
+  background:linear-gradient(180deg,#F4F6FA 0%,#EEF1F5 50%,#E8EBF0 100%);
+  padding:80px max(24px,calc((100% - 940px)/2));
+  position:relative;overflow:hidden;
+}
+.c8-resolve-inner{max-width:900px;margin:0 auto;position:relative;z-index:2;}
+.c8-resolve-eyebrow{
+  display:inline-block;font-size:13.5px;font-weight:800;letter-spacing:1px;
+  padding:8px 17px;border-radius:30px;margin-bottom:24px;
+  background:#F6F0E1;color:#B8954A;
+}
+.c8-resolve-h2{
+  font-size:42px;font-weight:800;line-height:1.32;letter-spacing:-1.3px;
+  color:#1A3356;margin:0 0 10px 0;
+}
+.c8-resolve-h2-gold{
+  font-size:42px;font-weight:800;color:#B8954A;
+  letter-spacing:-1.3px;line-height:1.32;margin:0 0 22px 0;
+}
+.c8-resolve-sub{
+  font-size:17px;font-weight:600;color:#5A626E;
+  margin:0 0 36px 0;line-height:1.5;
+}
+.c8-weapon{
+  background:#fff;border:1px solid #E7E9EE;border-radius:18px;
+  padding:30px 28px;margin-bottom:18px;
+  box-shadow:0 10px 28px rgba(26,51,86,.07);
+  position:relative;overflow:hidden;
+  transition:transform 0.3s cubic-bezier(.4,0,.2,1),box-shadow 0.3s cubic-bezier(.4,0,.2,1);
+}
+/* [호버 ①] 카드 좌측 골드 보더 슬라이드 인 */
+.c8-weapon::before{
+  content:'';position:absolute;left:0;top:0;
+  width:4px;height:0;background:var(--gold);
+  transition:height .4s cubic-bezier(.16,1,.3,1);
+}
+.c8-weapon:hover::before{height:100%;}
+.c8-weapon:hover{
+  transform:translateY(-4px);
+  box-shadow:0 22px 50px rgba(26,51,86,.14);
+}
+.c8-weapon-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+.c8-weapon-num{
+  display:inline-flex;width:46px;height:46px;border-radius:12px;
+  background:linear-gradient(135deg,#1A3356 0%,#2d3d6a 100%);
+  color:#fff;font-size:20px;font-weight:800;
+  align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:0 6px 14px rgba(26,51,86,.25);
+  transition:background .35s cubic-bezier(.16,1,.3,1),
+             transform .35s cubic-bezier(.16,1,.3,1),
+             box-shadow .35s ease;
+}
+/* [호버 ②] 숫자 박스 네이비 → 골드 변환 + 미세 회전·확대 */
+.c8-weapon:hover .c8-weapon-num{
+  background:linear-gradient(135deg,#B8954A 0%,#CDAB63 100%);
+  transform:rotate(-4deg) scale(1.06);
+  box-shadow:0 10px 22px rgba(184,149,74,.36);
+}
+.c8-weapon-label{
+  font-size:13.5px;font-weight:800;color:#B8954A;
+  letter-spacing:1.2px;margin-bottom:4px;
+}
+.c8-weapon-title{
+  font-size:25px;font-weight:800;color:#1A3356;
+  line-height:1.3;letter-spacing:-.5px;
+}
+.c8-weapon-problem{
+  background:#F5F7FB;border-radius:10px;padding:14px 18px;margin-bottom:18px;
+  font-size:15.5px;color:#5A626E;font-weight:600;
+}
+.c8-weapon-problem b{color:#1A3356;font-weight:800;}
+.c8-weapon-body{font-size:16.5px;color:#1A3356;font-weight:600;line-height:1.7;}
+.c8-weapon-body b{font-weight:800;}
+.c8-weapon-shields{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding-top:18px;
+  border-top:1px dashed rgba(26,51,86,.16);
+}
+.c8-shield-chip{
+  display:inline-flex;align-items:center;gap:7px;
+  background:#F6F0E1;border:1px solid rgba(184,149,74,.32);
+  border-radius:30px;padding:7px 16px 7px 7px;
+  font-size:14px;font-weight:700;color:#1A3356;letter-spacing:-.1px;
+  transition:transform .3s cubic-bezier(.16,1,.3,1),
+             box-shadow .3s ease,
+             background .3s ease;
+}
+/* [호버 ③] shield-chip 순차 미세 lift (카드 호버 시) */
+.c8-weapon:hover .c8-shield-chip{
+  transform:translateY(-3px);
+  box-shadow:0 6px 14px rgba(184,149,74,.18);
+  background:#FAF4DE;
+}
+.c8-weapon:hover .c8-shield-chip:nth-child(1){transition-delay:.04s;}
+.c8-weapon:hover .c8-shield-chip:nth-child(2){transition-delay:.10s;}
+.c8-weapon:hover .c8-shield-chip:nth-child(3){transition-delay:.16s;}
+.c8-weapon:hover .c8-shield-chip:nth-child(4){transition-delay:.22s;}
+.c8-weapon:hover .c8-shield-chip:nth-child(5){transition-delay:.28s;}
+.c8-shield-tick{
+  display:inline-flex;width:20px;height:20px;border-radius:50%;
+  background:#B8954A;color:#fff;
+  align-items:center;justify-content:center;
+  font-size:11.5px;font-weight:800;flex-shrink:0;
+}
+.c8-result{
+  background:linear-gradient(160deg,#1A3356 0%,#2d3d6a 100%);
+  border-radius:16px;padding:26px 28px;color:#fff;
+  text-align:center;margin:8px 0 0 0;
+  box-shadow:0 12px 28px rgba(26,51,86,.3);
+}
+.c8-result-eyebrow{
+  font-size:13.5px;font-weight:800;color:#D4B26A;
+  letter-spacing:1.5px;margin-bottom:8px;
+}
+.c8-result-head{
+  font-size:27px;font-weight:800;color:#fff;
+  line-height:1.4;letter-spacing:-.5px;
+}
+.c8-result-head em{font-style:normal;color:#D4B26A;}
+
+/* §4 전문가 이미지 */
+.c8-expert-img{
+  position:absolute;top:0;right:0;
+  width:360px;height:200px;object-fit:cover;object-position:center top;
+  border-radius:20px;box-shadow:0 16px 36px rgba(26,51,86,.15);
+  pointer-events:none;user-select:none;
+}
+
+/* ----- 솔직한 안내 박스 (FAQ 위) ----- */
+.disclaimer{
+  max-width:720px;margin:0 auto 32px;
+  padding:18px 22px;border-radius:14px;
+  background:#FFFBEB;border:1px solid #F6E2A8;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.disclaimer-icon{
+  flex:none;font-size:22px;line-height:1.3;
+}
+.disclaimer-body{
+  font-size:14.5px;color:#5C4A26;line-height:1.65;
+}
+.disclaimer-body b{color:#7C5C16;font-weight:800;}
+@media(max-width:680px){
+  .disclaimer{margin:0 18px 24px;padding:16px 18px;}
+  .disclaimer-body{font-size:13.5px;}
+}
+
+/* ----- 스크롤 페이드인 ----- */
+.fade-in{
+  opacity:0;transform:translateY(28px);
+  transition:opacity 0.85s cubic-bezier(.16,1,.3,1),transform 0.85s cubic-bezier(.16,1,.3,1);
+}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+
+/* ----- Sticky CTA 반짝임·박동·화살표 (전체 페이지 공통) ----- */
+.sticky a{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#D0AE66 0%,#B8954A 58%,#A6823A 100%);
+  animation:dw-sticky-breathe 2.8s ease-in-out infinite;
+}
+.sticky a::after{
+  content:"";position:absolute;top:0;left:-60%;
+  width:38%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);
+  transform:skewX(-20deg);
+  animation:dw-sticky-shine 4.6s ease-in-out infinite;
+  pointer-events:none;
+}
+.cta-arrow{
+  display:inline-block;
+  animation:dw-cta-nudge 1.9s ease-in-out infinite;
+}
+@keyframes dw-sticky-shine{
+  0%{left:-60%;}
+  14%{left:150%;}
+  100%{left:150%;}
+}
+@keyframes dw-sticky-breathe{
+  0%,100%{box-shadow:0 6px 18px rgba(184,149,74,.4);}
+  50%{box-shadow:0 9px 28px rgba(184,149,74,.7);}
+}
+@keyframes dw-cta-nudge{
+  0%,55%,100%{transform:translateX(0);}
+  75%{transform:translateX(5px);}
+}
+
+/* ----- 스크롤 진행률 바 (case-fx.js가 자동 주입) ----- */
+.scroll-progress{
+  position:fixed;top:0;left:0;
+  height:2.5px;width:0;
+  background:linear-gradient(90deg,var(--gold-l),var(--gold));
+  z-index:1000;
+  transition:width .15s ease-out;
+  pointer-events:none;
+}
+
+/* ----- 접근성: 동작 줄이기 ----- */
+@media(prefers-reduced-motion:reduce){
+  .fade-in{opacity:1!important;transform:none!important;transition:none;}
+  .c8-weapon,.c8-weapon::before,.c8-weapon-num,.c8-shield-chip{transition:none;}
+  .c8-weapon:hover{transform:none;}
+  .c8-weapon:hover::before{height:0;}
+  .c8-weapon:hover .c8-weapon-num{transform:none;background:linear-gradient(135deg,#1A3356 0%,#2d3d6a 100%);}
+  .c8-weapon:hover .c8-shield-chip{transform:none;box-shadow:none;background:#F6F0E1;}
+  .scroll-progress{transition:none;}
+  .sticky a,.sticky a::after,.cta-arrow{animation:none;}
+}
+
+/* ----- 모바일 ----- */
+@media(max-width:1080px){
+  .c8-expert-img{width:280px;height:160px;}
+}
+@media(max-width:780px){
+  .c8-expert-img{display:none;}
+  .c8-insight{padding:64px 22px;}
+  .c8-insight-head{font-size:30px;}
+  .c8-insight-grid-3{grid-template-columns:1fr;gap:10px;}
+  .c8-insight-punch{font-size:19px;}
+  .c8-resolve{padding:56px 22px;}
+  .c8-resolve-h2,.c8-resolve-h2-gold{font-size:28px;}
+  .c8-weapon{padding:24px 20px;}
+  .c8-weapon-title{font-size:21px;}
+  .c8-result-head{font-size:22px;}
+}

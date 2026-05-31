@@ -14,56 +14,13 @@
 <meta property="og:description" content="직원 단계마다 켜지는 의무, 한 번 등록 → 도원이 평생 추적. 위반 시 1차 방어까지. 30초 무료 진단.">
 <meta property="og:url" content="https://choim-gif.github.io/dowon/case-4.html">
 <meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"과태료 말고 어떤 손해가 더 있나요?","acceptedAnswer":{"@type":"Answer","text":"노동부 진정 대응 시간·채용 브랜드 하락·인력 리텐션 하락·거래처·투자자 실사 감점·정부 입찰 감점·산재 시 가중처벌·대표 형사책임까지. 과태료는 시작일 뿐."}},{"@type":"Question","name":"기존 노무사가 있는데도 가능한가요?","acceptedAnswer":{"@type":"Answer","text":"가능. 단계 의무 전환은 운영 위탁 영역과 별도라 진단만 받고 결과를 가져가는 옵션도 있습니다."}},{"@type":"Question","name":"비용은 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"진단·리포트 무료. 도입은 회사 규모에 따라 정액제."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"과태료 말고 어떤 손해가 더 있나요?","acceptedAnswer":{"@type":"Answer","text":"노동부 진정 대응 시간·채용 브랜드 하락·인력 리텐션 하락·거래처·투자자 실사 감점·정부 입찰 감점·산재 시 가중처벌·대표 형사책임까지. 과태료는 시작일 뿐."}},{"@type":"Question","name":"인원 단계별로 무엇이 켜지나요?","acceptedAnswer":{"@type":"Answer","text":"5인 근로기준법 전면 적용, 10인 취업규칙 의무, 30인 노사협의회·고충처리·복지기금 권고, 50인 안전관리책임자·중대재해처벌법, 100인 적극적 고용개선 등 단계마다 의무가 누적·전환됩니다. 30초 진단에서 우리 회사 단계별 현황 확인."}},{"@type":"Question","name":"이미 단계를 넘긴 회사도 가능한가요?","acceptedAnswer":{"@type":"Answer","text":"가능합니다. 단계를 지나친 시점부터 누락 의무를 역추적해 정비 우선순위 리포트를 받습니다. 사건이 터지기 전 사후 정비가 훨씬 안전합니다."}},{"@type":"Question","name":"기존 노무사가 있는데도 가능한가요?","acceptedAnswer":{"@type":"Answer","text":"가능. 단계 의무 전환은 운영 위탁 영역과 별도라 진단만 받고 결과를 가져가는 옵션도 있습니다."}},{"@type":"Question","name":"등록 후 회사가 추가로 해야 할 일이 있나요?","acceptedAnswer":{"@type":"Answer","text":"인원 변동 시점 정보만 도원에 공유하면 됩니다. 그 외 단계 진입 시 의무 알림·정비 항목·기한은 도원이 자동 추적·안내합니다."}}]}</script>
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
 <link href="case-v2.css" rel="stylesheet">
+<link href="case-c8.css" rel="stylesheet">
 <style>
-/* ===== case-4 — case-1/2/3과 동일한 c8-* 공통 컴포넌트 ===== */
-/* INSIGHT 섹션 (§ 3) */
-.c8-insight{background:radial-gradient(ellipse 900px 500px at 50% 35%,rgba(212,178,106,.08) 0%,transparent 65%),radial-gradient(ellipse 1500px 900px at 50% 50%,#182c4c 0%,#0F1F38 55%,#07142a 100%);color:#fff;padding:150px max(24px,calc((100% - 940px)/2));position:relative;}
-.c8-insight-inner{max-width:900px;margin:0 auto;text-align:center;}
-.c8-insight-eyebrow{display:inline-block;font-size:13.5px;font-weight:800;letter-spacing:1px;padding:8px 17px;border-radius:30px;margin-bottom:24px;background:rgba(212,178,106,.12);color:#D4B26A;border:1px solid rgba(212,178,106,.3);}
-.c8-insight-head{font-size:44px;font-weight:800;line-height:1.3;letter-spacing:-1.3px;color:#fff;margin:0 0 14px 0;}
-.c8-insight-head em{font-style:normal;color:#D4B26A;}
-.c8-insight-sub{font-size:17px;font-weight:600;color:rgba(255,255,255,.65);margin:0 0 48px 0;line-height:1.5;}
-.c8-insight-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:stretch;margin:0 0 40px 0;}
-.c8-insight-cell{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:32px 24px;text-align:center;}
-.c8-insight-cell-em{font-size:46px;line-height:1;margin-bottom:14px;}
-.c8-insight-cell-name{font-size:14px;font-weight:800;color:#D4B26A;letter-spacing:1.5px;margin-bottom:12px;}
-.c8-insight-cell-q{font-size:17px;font-weight:600;color:#fff;line-height:1.55;}
-.c8-insight-cell-q b{font-weight:800;color:#fff;}
-.c8-insight-punch{font-size:24px;font-weight:800;line-height:1.5;color:#fff;letter-spacing:-.5px;margin:8px 0 14px 0;}
-.c8-insight-punch b{color:#D4B26A;font-weight:800;}
-.c8-insight-conseq{font-size:16.5px;font-weight:600;line-height:1.55;color:rgba(255,255,255,.72);}
+/* ===== case-4 페이지 고유 — c4-escalation 시각화 ===== */
 .c8-insight-conseq b{color:#fff;font-weight:800;}
-/* SOLUTION 섹션 (§ 4) — 무기 카드 */
-.c8-weapon{background:#fff;border:1px solid #E7E9EE;border-radius:18px;padding:30px 28px;margin-bottom:18px;box-shadow:0 10px 28px rgba(26,51,86,.07);transition:transform 0.3s cubic-bezier(.4,0,.2,1),box-shadow 0.3s cubic-bezier(.4,0,.2,1);}
-.c8-weapon:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(26,51,86,.14);}
-.c8-weapon-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
-.c8-weapon-num{display:inline-flex;width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#1A3356 0%,#2d3d6a 100%);color:#fff;font-size:20px;font-weight:800;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 14px rgba(26,51,86,.25);}
-.c8-weapon-label{font-size:13.5px;font-weight:800;color:#B8954A;letter-spacing:1.2px;margin-bottom:4px;}
-.c8-weapon-title{font-size:25px;font-weight:800;color:#1A3356;line-height:1.3;letter-spacing:-.5px;}
-.c8-weapon-problem{background:#F5F7FB;border-radius:10px;padding:14px 18px;margin-bottom:18px;font-size:15.5px;color:#5A626E;font-weight:600;}
-.c8-weapon-problem b{color:#1A3356;font-weight:800;}
-.c8-weapon-body{font-size:16.5px;color:#1A3356;font-weight:600;line-height:1.7;}
-.c8-weapon-body b{font-weight:800;}
-.c8-weapon-shields{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding-top:18px;border-top:1px dashed rgba(26,51,86,.16);}
-.c8-shield-chip{display:inline-flex;align-items:center;gap:7px;background:#F6F0E1;border:1px solid rgba(184,149,74,.32);border-radius:30px;padding:7px 16px 7px 7px;font-size:14px;font-weight:700;color:#1A3356;letter-spacing:-.1px;}
-.c8-shield-tick{display:inline-flex;width:20px;height:20px;border-radius:50%;background:#B8954A;color:#fff;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;flex-shrink:0;}
-.c8-result{background:linear-gradient(160deg,#1A3356 0%,#2d3d6a 100%);border-radius:16px;padding:26px 28px;color:#fff;text-align:center;margin:8px 0 0 0;box-shadow:0 12px 28px rgba(26,51,86,.3);}
-.c8-result-eyebrow{font-size:13.5px;font-weight:800;color:#D4B26A;letter-spacing:1.5px;margin-bottom:8px;}
-.c8-result-head{font-size:27px;font-weight:800;color:#fff;line-height:1.4;letter-spacing:-.5px;}
-.c8-result-head em{font-style:normal;color:#D4B26A;}
-/* §4 전문가 이미지 */
-.c8-expert-img{position:absolute;top:0;right:0;width:360px;height:200px;object-fit:cover;object-position:center top;border-radius:20px;box-shadow:0 16px 36px rgba(26,51,86,.15);pointer-events:none;user-select:none;}
-@media(max-width:1080px){.c8-expert-img{width:280px;height:160px;}}
-@media(max-width:780px){.c8-expert-img{display:none;}}
-/* 스크롤 페이드인 */
-.fade-in{opacity:0;transform:translateY(28px);transition:opacity 0.85s cubic-bezier(.16,1,.3,1),transform 0.85s cubic-bezier(.16,1,.3,1);}
-.fade-in.visible{opacity:1;transform:translateY(0);}
-@media(prefers-reduced-motion:reduce){.fade-in{opacity:1!important;transform:none!important;transition:none;}.c8-weapon{transition:none;}.c8-weapon:hover{transform:none;}}
-
-/* §2 LOSS — 단계별 escalation 비주얼 (c4-escalation) */
 .scene.navy{min-height:auto;padding-top:150px;padding-bottom:150px;background:radial-gradient(ellipse 700px 450px at 50% 52%,rgba(255,120,114,.10) 0%,transparent 55%),radial-gradient(ellipse 1300px 900px at 50% 50%,#2b4a76 0%,#1A3356 48%,#08152a 100%);}
 .c4-escalation{width:100%;max-width:880px;margin:46px auto 0;}
 .c4-escalation-head{font-size:17px;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:28px;text-align:center;letter-spacing:-.3px;}
@@ -104,19 +61,19 @@
   .c4-escalation-steps{flex-direction:column;}
   .c4-step{min-width:auto;}
   .c4-step-arrow{transform:rotate(90deg);justify-content:center;align-self:center;}
-  .c8-insight{padding:64px 22px;}
-  .c8-insight-head{font-size:30px;}
-  .c8-insight-grid-3{grid-template-columns:1fr;gap:10px;}
-  .c8-insight-punch{font-size:19px;}
-  .c8-weapon{padding:24px 20px;}
-  .c8-weapon-title{font-size:21px;}
-  .c8-result-head{font-size:22px;}
 }
 </style>
 </head>
 <body>
 <div class="top"><div class="brand">노무법인 <i>도원</i></div><a href="index.html">← 무료 진단</a></div>
 <header class="hero"><span class="eyebrow">사업주 대상 · 단계 의무 점검</span><h1 class="big">직원이 늘면서 새로 생긴 의무,<br>다 챙기고 계신가요?</h1><div class="svc-line">5·10·30·50·100인 단계마다 켜지는 의무,<br>한 번 등록하면 도원이 평생 추적합니다.</div><svg class="viz" width="300" height="278" viewBox="0 0 340 295" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="인원 단계별 의무 폭증 - 50인 단계 중대재해처벌법 시작"><defs><linearGradient id="c4norm" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6E7A93"/><stop offset="100%" stop-color="#3E4654"/></linearGradient><linearGradient id="c4dng" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF6B6B"/><stop offset="55%" stop-color="#D63838"/><stop offset="100%" stop-color="#7A1818"/></linearGradient><radialGradient id="c4glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF5252" stop-opacity="0.5"/><stop offset="55%" stop-color="#FF5252" stop-opacity="0.14"/><stop offset="100%" stop-color="#FF5252" stop-opacity="0"/></radialGradient></defs><text x="170" y="22" text-anchor="middle" font-size="13" fill="#7E8BA3" font-weight="800" letter-spacing=".3">인원 단계마다 의무 폭증</text><ellipse cx="227" cy="170" rx="90" ry="130" fill="url(#c4glow)"/><line x1="18" y1="266" x2="322" y2="266" stroke="#3a4458" stroke-width="1.5" opacity=".5"/><rect x="25" y="222" width="46" height="44" rx="6" fill="url(#c4norm)"/><text x="48" y="250" text-anchor="middle" font-size="13" fill="#fff" font-weight="800">5인</text><rect x="83" y="188" width="46" height="78" rx="6" fill="url(#c4norm)"/><text x="106" y="216" text-anchor="middle" font-size="13" fill="#fff" font-weight="800">10인</text><rect x="141" y="146" width="46" height="120" rx="6" fill="url(#c4norm)"/><text x="164" y="174" text-anchor="middle" font-size="13" fill="#fff" font-weight="800">30인</text><rect x="198" y="88" width="58" height="178" rx="6" fill="url(#c4dng)" stroke="#FF8585" stroke-width="2"/><text x="227" y="120" text-anchor="middle" font-size="15" fill="#fff" font-weight="800">50인</text><text x="227" y="148" text-anchor="middle" font-size="11" fill="#FFE5E5" font-weight="800" letter-spacing=".3">중대재해</text><text x="227" y="163" text-anchor="middle" font-size="11" fill="#FFE5E5" font-weight="800" letter-spacing=".3">처벌법</text><circle cx="227" cy="50" r="22" fill="#FF3737"><animate attributeName="r" values="22;26;22" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;.78;1" dur="1.6s" repeatCount="indefinite"/></circle><text x="227" y="60" text-anchor="middle" font-size="28" fill="#fff" font-weight="800">!</text><rect x="268" y="58" width="46" height="208" rx="6" fill="url(#c4norm)" opacity=".4"/><text x="291" y="86" text-anchor="middle" font-size="13" fill="#fff" font-weight="800" opacity=".82">100인</text></svg><div class="hero-stat"><span class="n">30초</span><span class="l">우리 회사가 놓친 인원 단계 의무 즉시 확인</span></div><div class="cue">스크롤<span class="arr">↓</span></div></header>
+
+<!-- 가격 신호 -->
+<section class="price-signal">
+  <span class="price-signal-item"><b>30초</b> 무료 진단</span>
+  <span class="price-signal-item"><b>1회 등록</b> · 평생 추적</span>
+  <span class="price-signal-item">기존 노무사와 <b>분리 가능</b></span>
+</section>
 
 <!-- §2 LOSS — 과태료 → 진정 → 소송 → 대표 형사책임 escalation -->
 <section class="scene navy"><span class="eyebrow">진짜 문제</span><div class="big fade-in">과태료는 시작일 뿐,<br>마지막은 <em style="font-style:normal;color:#FF7872;">대표 형사책임</em></div>
@@ -233,26 +190,17 @@
 </div>
 
 </div></section>
-<div class="faqwrap"><h3>자주 묻는 질문</h3><details class="faq"><summary>과태료 말고 어떤 손해가 더 있나요?</summary><div class="faq-a">노동부 진정 대응 시간·채용 브랜드 하락·인력 리텐션 하락·거래처/투자자 실사 감점·정부 입찰 감점·산재 시 가중처벌·대표 형사책임까지. 과태료는 시작일 뿐.</div></details><details class="faq"><summary>기존 노무사가 있는데도 가능한가요?</summary><div class="faq-a">가능. 단계 의무 전환은 운영 위탁 영역과 별도라 진단만 받고 결과를 가져가는 옵션도 있습니다.</div></details><details class="faq"><summary>비용은 어떻게 되나요?</summary><div class="faq-a">진단·리포트 무료. 도입은 회사 규모에 따라 정액제.</div></details></div>
+<div class="faqwrap">
+<div class="disclaimer">
+  <span class="disclaimer-icon">💡</span>
+  <div class="disclaimer-body">
+    단계 의무는 <b>회사 인원 규모·업종·근로 형태</b>에 따라 켜지는 항목이 달라집니다. 본문의 5·10·30·50·100인 단계는 일반 사업장 기준이며, 우리 회사 누락 의무는 <b>30초 진단</b>에서 확인하세요.
+  </div>
+</div>
+<h3>자주 묻는 질문</h3><details class="faq"><summary>과태료 말고 어떤 손해가 더 있나요?</summary><div class="faq-a">노동부 진정 대응 시간·채용 브랜드 하락·인력 리텐션 하락·거래처/투자자 실사 감점·정부 입찰 감점·산재 시 가중처벌·대표 형사책임까지. 과태료는 시작일 뿐.</div></details><details class="faq"><summary>인원 단계별로 무엇이 켜지나요?</summary><div class="faq-a">5인 근로기준법 전면 적용, 10인 취업규칙 의무, 30인 노사협의회·고충처리·복지기금 권고, 50인 안전관리책임자·중대재해처벌법, 100인 적극적 고용개선 등 단계마다 의무가 누적·전환됩니다. 30초 진단에서 우리 회사 단계별 현황 확인.</div></details><details class="faq"><summary>이미 단계를 넘긴 회사도 가능한가요?</summary><div class="faq-a">가능합니다. 단계를 지나친 시점부터 누락 의무를 역추적해 정비 우선순위 리포트를 받습니다. 사건이 터지기 전 사후 정비가 훨씬 안전합니다.</div></details><details class="faq"><summary>기존 노무사가 있는데도 가능한가요?</summary><div class="faq-a">가능. 단계 의무 전환은 운영 위탁 영역과 별도라 진단만 받고 결과를 가져가는 옵션도 있습니다.</div></details><details class="faq"><summary>등록 후 회사가 추가로 해야 할 일이 있나요?</summary><div class="faq-a">인원 변동 시점 정보만 도원에 공유하면 됩니다. 그 외 단계 진입 시 의무 알림·정비 항목·기한은 도원이 자동 추적·안내합니다.</div></details></div>
 <footer><b>노무법인 도원</b> · 대표 노무사 윤상필 · 공인노무사 10인 이상 재직<br>서울시 강남구 역삼로 212, 동아빌딩 6층 · 02-2038-3355 · help@dowonhr.com<br>© 2026 노무법인 도원</footer>
-<div class="sticky"><a href="https://dowon.channel.io/home?utm_source=casepage&amp;utm_medium=cta&amp;utm_content=case_4" target="_blank" rel="noopener">우리 회사가 놓친 인원 단계 의무 30초로 확인하기 →</a></div>
-<script>
-(function(){
-  var hasIO = ('IntersectionObserver' in window);
-  if(!hasIO){
-    document.querySelectorAll('.fade-in').forEach(function(el){el.classList.add('visible');});
-  } else {
-    var observer=new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },{threshold:0.12,rootMargin:'0px 0px -60px 0px'});
-    document.querySelectorAll('.fade-in').forEach(function(el){observer.observe(el);});
-  }
-})();
-</script>
+<div class="sticky"><a href="https://dowon.channel.io/home?utm_source=casepage&amp;utm_medium=cta&amp;utm_content=case_4" target="_blank" rel="noopener">우리 회사가 놓친 인원 단계 의무 30초로 확인하기 <span class="cta-arrow">→</span></a></div>
+<script src="case-fx.js" defer></script>
 </body>
 </html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
