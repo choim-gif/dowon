@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>직장 내 괴롭힘·성희롱 대응 진단 | 노무법인 도원</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="직장 내 괴롭힘·성희롱 대응 진단 | 노무법인 도원">
+<meta property="og:description" content="지금 상황에 맞는 대응을 1분 만에 확인하세요. 회사·근로자 맞춤 진단.">
+<meta property="og:image" content="https://cdn.imweb.me/thumbnail/20260608/b9493801c1525.png">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1F2D52;--navy-700:#16213D;--gold:#C0A04E;--gold-tint:#F7F2E4;
+    --ink:#191F28;--gray:#4E5968;--gray-3:#8B95A1;--line:#E5E8EB;--bg:#F2F4F6;--card:#fff;
+    --red:#C0392B;--red-bg:#FDECEA;--red-line:#F4CCC6;--amber:#B7791F;--amber-bg:#FFF7E6;
+    --calm:#2F8A74;--calm-700:#236B5A;--calm-800:#1B5246;--calm-bg:#F0F7F4;--calm-soft:#E1EFE9;
+    --soft-red:#B5635C;--soft-red-bg:#FBF0EF;
+  }
+  body[data-theme="company"]{--pri:#1F2D52;--pri-700:#16213D;--pri-bg:#E9ECF5;--rec:#C0A04E}
+  body[data-theme="victim"]{--pri:#2F8A74;--pri-700:#236B5A;--pri-bg:#E1EFE9;--rec:#2F8A74}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);
+    color:var(--ink);line-height:1.7;font-size:16.5px;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+
+  /* trust bar */
+  .trustbar{background:var(--card);border-bottom:1px solid var(--line);padding:11px 20px}
+  .trustbar-in{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;align-items:center;max-width:560px;margin:0 auto}
+  .trust-it{font-size:13px;color:var(--gray-3);font-weight:600}
+  .trust-it strong{color:var(--gray);font-weight:800}
+
+  /* ===== Landing ===== */
+  .landing{display:none}
+  .landing.on{display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100vh;padding:24px 0}
+  .landing-main{width:100%;max-width:640px;padding:30px 22px 40px}
+  .lm-head{margin-bottom:24px}
+  .kicker{display:inline-block;font-size:13.5px;font-weight:700;padding:6px 13px;border-radius:999px;margin-bottom:14px;color:var(--navy);background:#E9ECF5}
+  .topic{display:block;font-size:32px;font-weight:800;color:#8A6E2E;line-height:1.35;letter-spacing:-.5px;margin-bottom:6px}
+  .lm-head h1{font-size:32px;line-height:1.35;letter-spacing:-.5px;margin:0 0 12px}
+  .lm-head .sub{color:var(--gray);font-size:16.5px}
+  .lp-logo{font-size:21px;font-weight:800;color:#fff;letter-spacing:-.3px}
+  .lp-logo b{color:var(--gold)}
+  .lp-tag{margin-top:7px;font-size:11px;font-weight:700;letter-spacing:1.6px;color:var(--gold)}
+  .lp-headline{font-size:32px;font-weight:800;letter-spacing:-.8px;line-height:1.4;color:#fff;margin:0 0 14px;text-wrap:balance}
+  .lp-hl{color:var(--gold)}
+  .lp-sub{font-size:15.5px;line-height:1.75;color:rgba(255,255,255,.64);margin:0 0 22px}
+  .lp-photo{margin:6px -44px 26px;overflow:hidden}
+  .lp-photo img{display:block;width:100%;height:auto}
+  .lp-stats{display:grid;grid-template-columns:1fr 1fr;gap:22px 18px;border-top:1px solid rgba(255,255,255,.13);padding-top:26px}
+  .lp-stat{display:flex;flex-direction:column;gap:5px}
+  .lp-num{font-size:28px;font-weight:800;letter-spacing:-.6px;color:#fff}
+  .lp-acc{color:var(--gold)}
+  .lp-label{font-size:13px;color:rgba(255,255,255,.54)}
+  .lp-foot{display:flex;flex-direction:column;gap:13px}
+  .lp-company{display:flex;flex-direction:column;gap:4px}
+  .lp-company strong{font-size:14px;font-weight:800;color:rgba(255,255,255,.9);margin-bottom:2px}
+  .lp-company span{font-size:12.5px;line-height:1.65;color:rgba(255,255,255,.46)}
+  .lp-link{font-size:13.5px;font-weight:700;color:var(--gold);text-decoration:none}
+  .lp-copy{font-size:11.5px;color:rgba(255,255,255,.34)}
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .pick{border:1.5px solid var(--line);border-radius:20px;padding:26px 14px;cursor:pointer;text-align:center;
+    background:var(--card);transition:.18s;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    aspect-ratio:4/5;min-height:250px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .pick>div{width:100%}
+  .pick:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(20,30,60,.12)}
+  .pick .ic{width:78px;height:78px;flex-shrink:0;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:40px;margin-bottom:18px}
+  .pick.company .ic{background:#E9ECF5}.pick.victim .ic{background:var(--calm-soft)}
+  .pick .t{font-weight:800;font-size:20px;margin-bottom:9px;line-height:1.35}
+  .pick .d{font-size:14.5px;color:var(--gray);line-height:1.55}
+  .pick.company:hover{border-color:var(--navy)}.pick.victim:hover{border-color:var(--calm)}
+  .pick .cta-mini{margin-top:16px;font-size:16.5px;font-weight:700;line-height:1.5}
+  @media(max-width:380px){.pick{padding:22px 10px}.pick .ic{width:54px;height:54px;font-size:28px;margin-bottom:12px}.pick .t{font-size:15.5px}.pick .d{font-size:12px}}
+  .pick.company .cta-mini{color:var(--navy)}.pick.victim .cta-mini{color:var(--calm-700)}
+  .disc{font-size:13px;color:var(--gray-3);text-align:center;padding:18px 12px 0;line-height:1.6}
+  .doors-label{font-size:14.5px;font-weight:800;color:var(--gray);margin:2px 0 12px}
+  .hero-img{display:block;width:100%;max-width:100%;height:auto;border:none;border-radius:16px;margin:30px 0 6px}
+  .steps3{display:flex;align-items:center;justify-content:center;gap:6px;margin:26px 0 0;padding:16px 12px;background:#F8F9FB;border:1px solid var(--line);border-radius:14px}
+  .s3{display:flex;flex-direction:column;align-items:center;gap:7px;flex:1}
+  .s3-no{width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+  .s3-t{font-size:13px;font-weight:700;color:var(--ink);text-align:center;line-height:1.35}
+  .s3-ar{color:var(--gray-3);font-weight:700;flex-shrink:0;font-size:15px}
+  .preview{margin-top:26px}
+  .preview-h{font-size:14.5px;color:var(--gray);margin-bottom:12px;text-align:center}
+  .preview-h b{color:var(--navy)}
+  .pv-card{border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 10px 28px rgba(20,30,60,.12);max-width:340px;margin:0 auto}
+  .pv-cover{background:linear-gradient(160deg,var(--navy),var(--navy-700));padding:15px 18px;display:flex;justify-content:space-between;align-items:center}
+  .pv-ct{color:#fff;font-weight:800;font-size:13px;letter-spacing:2.5px}
+  .pv-badge{font-size:11px;font-weight:700;color:var(--navy);background:var(--gold);border-radius:5px;padding:3px 9px}
+  .pv-body{padding:16px 18px;background:#fff}
+  .pv-line{height:8px;background:#eef1f5;border-radius:4px;margin-bottom:9px}
+  .pv-line.w60{width:60%}.pv-line.w90{width:90%}.pv-line.w75{width:75%}
+  .pv-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px}
+  .pv-chips span{font-size:11.5px;font-weight:600;color:var(--navy);background:#E9ECF5;border-radius:5px;padding:4px 9px}
+  .brandmark{font-size:16px;font-weight:800;color:var(--navy);letter-spacing:-.2px;margin-bottom:22px}
+  .brandmark b{color:var(--gold)}
+  .land-foot{margin-top:32px;padding-top:20px;border-top:1px solid var(--line);text-align:center}
+  .lf-co{font-size:12.5px;color:var(--gray-3);line-height:1.75}
+  .lf-co b{color:var(--gray);font-weight:800}
+  .lf-link{display:inline-block;margin-top:9px;font-size:13.5px;font-weight:700;color:var(--navy);text-decoration:none}
+  .lf-link:hover{text-decoration:underline}
+  @media(min-width:1100px){
+    .landing-main{padding:40px 44px}
+    .lm-head h1{font-size:34px}.topic{font-size:34px}
+  }
+
+  /* ===== wrap ===== */
+  .wrap{max-width:620px;margin:0 auto;background:var(--card);min-height:100vh;box-shadow:0 0 40px rgba(20,30,60,.06)}
+  .screen{display:none;animation:fade .35s ease}.screen.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* question */
+  .qpad{padding:30px 22px 44px}
+  .bar{height:5px;background:var(--line);border-radius:5px;margin-bottom:26px;overflow:hidden}
+  .bar>i{display:block;height:100%;width:0;border-radius:5px;transition:width .4s ease}
+  body[data-theme="company"] .bar>i{background:var(--navy)}
+  body[data-theme="victim"] .bar>i{background:var(--calm)}
+  .back{background:none;border:none;color:var(--gray-3);font-size:14px;cursor:pointer;padding:6px 0;margin-bottom:14px}
+  .qkicker{display:inline-block;font-size:12.5px;font-weight:700;padding:6px 12px;border-radius:999px;margin-bottom:14px}
+  body[data-theme="company"] .qkicker{color:var(--navy);background:#E9ECF5}
+  body[data-theme="victim"] .qkicker{color:var(--calm-700);background:var(--calm-soft)}
+  h2.qt{font-size:23px;line-height:1.4;letter-spacing:-.4px;margin-bottom:8px}
+  .qsub{color:var(--gray);font-size:15.5px;margin-bottom:22px}
+  .empathy{border-radius:14px;padding:14px 16px;font-size:15px;line-height:1.6;margin-bottom:18px}
+  body[data-theme="company"] .empathy{background:#E9ECF5;color:var(--navy-700)}
+  body[data-theme="victim"] .empathy{background:var(--calm-soft);color:var(--calm-700)}
+  .empathy strong{font-weight:800}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{border:1.5px solid var(--line);border-radius:16px;padding:17px 18px;cursor:pointer;font-size:17px;font-weight:600;
+    background:var(--card);transition:.16s;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left}
+  .opt small{display:block;font-weight:400;font-size:13.5px;color:var(--gray);margin-top:3px}
+  .opt:hover{transform:translateY(-1px)}
+  body[data-theme="company"] .opt:hover{border-color:var(--navy);background:#F4F6FC}
+  body[data-theme="victim"] .opt:hover{border-color:var(--calm);background:var(--calm-bg)}
+  .opt .chev{color:#c3c8d4;font-size:18px;flex-shrink:0}
+
+  /* loading */
+  #loading{min-height:60vh;display:none}#loading.active{display:flex;align-items:center;justify-content:center}
+  .load-card{display:flex;flex-direction:column;align-items:center;gap:20px;padding:40px 20px;text-align:center}
+  .spinner{width:54px;height:54px;border:4px solid var(--line);border-radius:50%;animation:spin .8s linear infinite}
+  body[data-theme="company"] .spinner{border-top-color:var(--navy)}
+  body[data-theme="victim"] .spinner{border-top-color:var(--calm)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .load-txt{font-size:19px;font-weight:800}
+  body[data-theme="company"] .load-txt{color:var(--navy)}
+  body[data-theme="victim"] .load-txt{color:var(--calm-700)}
+  .load-track{width:210px;height:6px;background:var(--line);border-radius:999px;overflow:hidden}
+  .load-track>i{display:block;height:100%;width:0;border-radius:999px}
+  body[data-theme="company"] .load-track>i{background:var(--navy)}
+  body[data-theme="victim"] .load-track>i{background:var(--calm)}
+  .load-sub{font-size:13.5px;color:var(--gray-3)}
+
+  /* ===== RESULT — 의견서 문서 ===== */
+  .cover{padding:30px 26px 26px;color:#fff}
+  body[data-theme="company"] .cover{background:linear-gradient(160deg,var(--navy),var(--navy-700))}
+  body[data-theme="victim"] .cover{background:linear-gradient(160deg,var(--calm),var(--calm-800))}
+  .cover-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px}
+  .cover-logo{font-size:15px;font-weight:800}
+  body[data-theme="company"] .cover-logo b{color:var(--gold)}
+  .cover-en{font-size:10px;font-weight:700;letter-spacing:2px;margin-top:4px}
+  body[data-theme="company"] .cover-en{color:var(--gold)}
+  body[data-theme="victim"] .cover-en{color:rgba(255,255,255,.66)}
+  .cover-meta{text-align:right;font-size:11.5px;color:rgba(255,255,255,.6);line-height:1.7}
+  .cover-meta span{color:#fff;font-weight:700}
+  .cover-title{font-size:13px;font-weight:700;letter-spacing:3px;margin-bottom:6px}
+  body[data-theme="company"] .cover-title{color:var(--gold)}
+  body[data-theme="victim"] .cover-title{color:rgba(255,255,255,.82)}
+  .cover h1{font-size:24px;font-weight:800;letter-spacing:-.5px;line-height:1.4}
+  .cover-badge{display:inline-flex;align-items:center;gap:8px;margin-top:16px;background:rgba(255,255,255,.16);color:#fff;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:800}
+  .cover-badge.danger{background:var(--red)}
+  .cover-badge .lv{background:#fff;color:var(--pri-700);border-radius:5px;padding:2px 8px;font-size:12px}
+  .cover-badge.danger .lv{background:rgba(255,255,255,.25);color:#fff}
+  .cover-main{display:flex;align-items:flex-end;gap:16px}
+  .cover-text{flex:1;min-width:0}
+  .cover-photo{width:42%;max-width:230px;flex-shrink:0;border-radius:12px;overflow:hidden;line-height:0}
+  .cover-photo img{width:100%;height:auto;display:block}
+  @media(max-width:560px){.cover-photo{display:none}}
+
+  .docbody{position:relative}
+  .sec{position:relative;padding:34px 26px 34px 60px;border-bottom:1px solid var(--line)}
+  .sec::before{content:'';position:absolute;left:32px;top:0;bottom:0;width:2px;background:var(--line)}
+  .sec:last-child::before{display:none}
+  .sec-no{position:absolute;left:21px;top:34px;width:24px;height:24px;border-radius:50%;background:var(--pri);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;z-index:1}
+  .sec-k{font-size:11.5px;font-weight:800;letter-spacing:1px;margin-bottom:7px}
+  body[data-theme="company"] .sec-k{color:var(--gold)}
+  body[data-theme="victim"] .sec-k{color:var(--calm-700)}
+  .sec h2{font-size:19px;letter-spacing:-.4px;margin-bottom:16px;line-height:1.45}
+  .sec h2 em{font-style:normal}
+  body[data-theme="company"] .sec h2 em{color:var(--navy)}
+  body[data-theme="victim"] .sec h2 em{color:var(--calm-700)}
+  .secsub{font-size:14px;color:var(--gray);margin-bottom:16px;line-height:1.7}
+
+  .gist{border:1px solid var(--line);border-left:3px solid var(--pri);border-radius:8px;padding:20px 22px;font-size:15.5px;line-height:1.8}
+  body[data-theme="company"] .gist{background:#F8F9FB}
+  body[data-theme="victim"] .gist{background:var(--calm-bg);border-color:#cfe3da}
+  .gist b{color:var(--pri-700)}
+
+  .facts{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .facts .row{display:flex;border-top:1px solid var(--line);font-size:14.5px}
+  .facts .row:first-child{border-top:none}
+  .facts .k{width:122px;flex-shrink:0;background:#F8F9FB;padding:11px 14px;font-weight:700;color:var(--gray)}
+  .facts .v{padding:11px 14px;font-weight:600}
+  body[data-theme="company"] .facts .v.hi{color:var(--red)}
+  body[data-theme="victim"] .facts .v.hi{color:var(--calm-700)}
+
+  /* 판단(회사) */
+  .judge{display:flex;flex-direction:column;gap:12px}
+  .liab-it{border:1px solid var(--line);border-left:4px solid var(--red);border-radius:7px;padding:16px 18px;background:#fff}
+  .liab-it.amber{border-left-color:var(--amber);background:var(--amber-bg)}
+  .liab-it.plain{border-left-color:var(--gray-3)}
+  .liab-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:5px}
+  .liab-nm{font-size:14.5px;font-weight:700;line-height:1.5}
+  .liab-amt{font-size:16px;font-weight:800;color:var(--red);white-space:nowrap;text-align:right;letter-spacing:-.3px}
+  .liab-it.amber .liab-amt{color:var(--amber)}
+  .liab-it.plain .liab-amt{color:var(--gray);font-size:14px}
+  .liab-desc{font-size:13px;color:var(--gray);line-height:1.6}
+  .liab-trig{margin-top:6px;font-size:12px;font-weight:700;color:var(--red);background:#fff;border:1px dashed var(--red-line);border-radius:5px;padding:4px 9px;display:inline-block}
+  .liab-it.amber .liab-trig{color:var(--amber);border-color:#e9d5a8}
+  /* 보호(피해자) */
+  .shield-it{border:1px solid #cfe3da;border-left:4px solid var(--calm);border-radius:7px;padding:16px 18px;background:var(--calm-bg)}
+  .shield-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:4px}
+  .shield-nm{font-size:14.5px;font-weight:700}
+  .shield-tag{font-size:13px;font-weight:800;color:var(--calm-700);white-space:nowrap}
+  .shield-desc{font-size:13.5px;color:#3a4f48;line-height:1.6}
+  .mini-note{font-size:12px;color:var(--gray-3);margin-top:10px;line-height:1.6}
+
+  /* 권고/첫걸음 */
+  .recs{display:flex;flex-direction:column}
+  .rec{position:relative;padding:0 0 24px 40px}.rec:last-child{padding-bottom:0}
+  .rec::before{content:'';position:absolute;left:13px;top:4px;bottom:-4px;width:2px;background:var(--rec);opacity:.45}
+  .rec:last-child::before{display:none}
+  .rec-no{position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--rec);
+    display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;z-index:1}
+  body[data-theme="company"] .rec-no{color:var(--navy)}
+  body[data-theme="victim"] .rec-no{color:#fff}
+  .rec-when{display:inline-block;font-size:11px;font-weight:800;color:#fff;background:var(--pri);border-radius:4px;padding:3px 8px;margin-bottom:6px}
+  .rec-when.now{background:var(--red)}
+  .rec-main{font-size:15.5px;font-weight:700;line-height:1.5}
+  .rec-meta{margin-top:7px;display:flex;flex-wrap:wrap;gap:6px}
+  .rec-meta span{font-size:12px;font-weight:600;color:var(--pri-700);background:var(--pri-bg);border-radius:5px;padding:3px 9px}
+  .rec-meta span.doc{color:#8A6E2E;background:var(--gold-tint)}
+  .rec-dont{margin-top:14px;display:flex;gap:9px;align-items:flex-start;border-radius:7px;padding:11px 13px;font-size:13.5px;font-weight:600;line-height:1.55}
+  body[data-theme="company"] .rec-dont{background:var(--red-bg);color:var(--red)}
+  body[data-theme="victim"] .rec-dont{background:var(--soft-red-bg);color:var(--soft-red)}
+  .rec-dont b{font-weight:800}
+
+  /* 판례 */
+  .case-it{display:flex;gap:11px;border-radius:7px;padding:15px 16px;margin-bottom:11px}
+  body[data-theme="company"] .case-it{background:#F8F9FB;border:1px solid var(--line)}
+  body[data-theme="victim"] .case-it{background:var(--calm-bg);border:1px solid #cfe3da}
+  .case-ic{font-size:17px;flex-shrink:0}
+  .case-tx p{font-size:14px;line-height:1.6;color:#39414f;margin:0}
+  .case-cite{display:inline-block;margin-top:5px;font-size:11px;color:var(--gray-3);background:#fff;border:1px solid var(--line);border-radius:4px;padding:2px 7px}
+  .case-link{display:inline-block;margin-top:4px;font-size:13.5px;font-weight:700;text-decoration:none;color:var(--pri-700)}
+  .case-link:hover{text-decoration:underline}
+
+  /* 노무사 소견 */
+  .nm{border:1px solid var(--line);border-left:3px solid var(--pri);border-radius:8px;padding:20px 22px;font-size:14.5px;line-height:1.85;color:#39414f}
+  body[data-theme="company"] .nm{background:#F8F9FB}
+  body[data-theme="victim"] .nm{background:var(--calm-bg);border-color:#cfe3da}
+  .nm-h{display:flex;align-items:center;gap:11px;margin-bottom:11px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+  .nm-av{width:42px;height:42px;border-radius:50%;background:var(--pri-bg);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+  .nm-av img{width:100%;height:100%;object-fit:cover}
+  .nm-name{font-size:14px;font-weight:800}
+  .nm-by{font-size:12px;color:var(--gray);margin-top:2px}
+  .nm-by strong{color:var(--pri-700)}
+  .nm b.hl{color:var(--red);font-weight:800}
+  body[data-theme="victim"] .nm b.hl{color:var(--calm-700)}
+  .nm .s{font-weight:600}.nm .s strong{color:var(--pri-700);font-weight:800}
+
+  /* 다음 단계 */
+  .next{padding:36px 26px 40px}
+  body[data-theme="company"] .next{background:linear-gradient(160deg,#F8F9FB,#EEF1F7)}
+  body[data-theme="victim"] .next{background:linear-gradient(160deg,var(--calm-bg),#E3EFEA)}
+  .next-k{font-size:11.5px;font-weight:800;letter-spacing:1px;margin-bottom:7px}
+  body[data-theme="company"] .next-k{color:var(--gold)}
+  body[data-theme="victim"] .next-k{color:var(--calm-700)}
+  .next h2{font-size:20px;letter-spacing:-.4px;margin-bottom:6px}
+  .next-sub{font-size:14.5px;color:var(--gray);margin-bottom:24px;line-height:1.75}
+  .deliv{display:flex;flex-direction:column;gap:14px;margin-bottom:24px}
+  .deliv-it{display:flex;gap:14px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:17px}
+  body[data-theme="victim"] .deliv-it{border-color:#cfe3da}
+  .mini-doc{width:62px;flex-shrink:0;background:#fff;border:1px solid #d7dbe2;border-radius:5px;padding:7px 7px 9px;box-shadow:0 2px 6px rgba(20,30,60,.08)}
+  body[data-theme="victim"] .mini-doc{border-color:#cfe3da}
+  .mini-doc .mb{height:4px;background:var(--pri);border-radius:2px;margin-bottom:6px}
+  .mini-doc .ml{height:3px;background:#dde1e8;border-radius:2px;margin-bottom:4px}
+  .mini-doc .ml.s{width:64%}.mini-doc .ml.g{background:var(--gold);width:50%}
+  .deliv-tx{flex:1}
+  .deliv-tx h3{font-size:15.5px;font-weight:800;margin-bottom:5px}
+  .deliv-tx h3 .dtag{font-size:11px;font-weight:700;color:var(--pri-700);background:var(--pri-bg);border-radius:4px;padding:2px 7px;margin-left:6px;vertical-align:middle}
+  .deliv-tx p{font-size:13.5px;color:var(--gray);line-height:1.6}
+  .deliv-toc{margin-top:7px;display:flex;flex-wrap:wrap;gap:5px}
+  .deliv-toc span{font-size:11.5px;color:var(--gray);background:#F2F4F6;border-radius:4px;padding:3px 8px}
+  .cta{display:block;text-align:center;color:#fff;font-weight:800;font-size:17px;padding:18px;border-radius:11px;text-decoration:none}
+  body[data-theme="company"] .cta{background:var(--navy);box-shadow:0 8px 22px rgba(31,45,82,.3)}
+  body[data-theme="victim"] .cta{background:var(--calm);box-shadow:0 8px 22px rgba(47,138,116,.32)}
+  .cta-sub{text-align:center;font-size:13px;color:var(--gray-3);margin-top:11px}
+  .cta-sub a{font-weight:700;color:var(--pri-700)}
+  .restart{background:var(--bg);border:none;border-radius:9px;color:var(--gray);font-size:14.5px;font-weight:600;padding:13px;width:100%;margin-top:14px;cursor:pointer}
+  .share-btn{display:block;width:calc(100% - 48px);max-width:580px;margin:16px auto 0;background:#fff;border:1.5px solid var(--line);border-radius:10px;color:var(--gray);font-size:15px;font-weight:700;padding:14px;cursor:pointer}
+  .share-btn:hover{border-color:var(--pri);color:var(--pri-700)}
+  .toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%) translateY(12px);background:var(--ink);color:#fff;font-size:14px;font-weight:600;padding:11px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;z-index:200}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .rdisc{font-size:11.5px;color:var(--gray-3);text-align:center;padding:18px 24px;line-height:1.6}
+
+  .rv{opacity:0;transform:translateY(14px)}
+  .rv.in{opacity:1;transform:none;transition:opacity .5s ease,transform .5s cubic-bezier(.34,1.4,.64,1)}
+
+  /* floating 채널톡 */
+  .float-chat{position:fixed;right:20px;bottom:20px;z-index:120;display:flex;align-items:center;gap:10px;
+    padding:12px 18px 12px 12px;color:#fff;border-radius:50px;text-decoration:none;font-size:15px;font-weight:700;
+    border:1.5px solid rgba(192,160,78,.55);box-shadow:0 10px 28px rgba(31,45,82,.4)}
+  body[data-theme="company"] .float-chat{background:linear-gradient(135deg,#1F2D52,#2B3C68)}
+  body[data-theme="victim"] .float-chat{background:linear-gradient(135deg,#2F8A74,#236B5A);border-color:rgba(255,255,255,.45)}
+  .float-chat:hover{transform:translateY(-3px)}
+  .float-ic{position:relative;width:34px;height:34px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--gold);color:var(--navy)}
+  body[data-theme="victim"] .float-ic{background:#fff;color:var(--calm-700)}
+  .float-ic::after{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid rgba(192,160,78,.65);animation:pulse 2.4s ease-out infinite}
+  @keyframes pulse{0%{transform:scale(1);opacity:.75}70%{transform:scale(1.7);opacity:0}100%{opacity:0}}
+
+  @media(max-width:480px){
+    body{font-size:15.5px}
+    .lm-head h1{font-size:25px}.topic{font-size:25px}.cover h1{font-size:21px}.qt{font-size:21px}
+    .landing-main{padding:24px 16px 36px}
+    .lm-head{margin-bottom:20px}
+    .choices{gap:10px}
+    .doors-label{font-size:14px}
+    .pick .ic{width:64px;height:64px;font-size:34px;margin-bottom:14px}
+    .pick .t{font-size:17px}.pick .d{font-size:13px}.pick .cta-mini{font-size:13.5px}
+    .sec{padding-left:54px}.sec-no{left:18px}.sec::before{left:29px}
+    .facts .k{width:96px}
+    .float-chat{right:14px;bottom:14px;padding:11px 15px 11px 11px;font-size:14px}
+  }
+</style>
+</head>
+<body data-theme="company">
+
+<section class="landing on" id="start">
+  <div class="landing-main">
+    <div class="lm-head">
+      <div class="topic">직장 내 괴롭힘·성희롱 대응</div>
+      <h1>혼자 고민하지 마세요.</h1>
+      <p class="sub">지금 해야 할 대응을 1분 만에 확인하세요.</p>
+    </div>
+    <div class="choices">
+      <div class="pick company" onclick="startTrack('company')">
+        <div class="ic">🏢</div>
+        <div>
+          <div class="t">회사 담당자<br>(인사·대표)</div>
+          <div class="cta-mini">과태료·처벌,<br>어떻게 피하죠? →</div>
+        </div>
+      </div>
+      <div class="pick victim" onclick="startTrack('victim')">
+        <div class="ic">🌿</div>
+        <div>
+          <div class="t">피해자·근로자<br>본인</div>
+          <div class="cta-mini">신고해도<br>괜찮을까요? →</div>
+        </div>
+      </div>
+    </div>
+
+    <img class="hero-img" src="https://cdn.imweb.me/thumbnail/20260608/b9493801c1525.png" alt="도원 노무법인 구성원" loading="lazy" onerror="this.style.display='none'">
+
+    <div class="land-foot">
+      <div class="lf-co"><b>노무법인 도원</b> · 02-2038-3355</div>
+      <a class="lf-link" href="https://dowon.channel.io" target="_blank" rel="noopener">채널톡 상담 →</a>
+    </div>
+    <p class="disc">입력 내용은 어디에도 저장되지 않습니다 · 무료 · 비공개<br>진단 결과는 일반 정보 제공이며, 개별 사안의 법적 판단을 대체하지 않습니다.</p>
+  </div>
+</section>
+
+<div class="wrap" id="wrap" style="display:none">
+  <section class="screen" id="q"><div class="qpad">
+    <div class="bar"><i id="prog"></i></div>
+    <button class="back" onclick="goBack()">← 이전</button>
+    <div class="qkicker" id="qkicker"></div>
+    <h2 class="qt" id="qtitle"></h2>
+    <p class="qsub" id="qsub"></p>
+    <div id="qempathy"></div>
+    <div class="opts" id="qopts"></div>
+  </div></section>
+
+  <section class="screen" id="loading">
+    <div class="load-card">
+      <div class="spinner"></div>
+      <div class="load-txt" id="loadTxt">상황을 분석하는 중…</div>
+      <div class="load-track"><i id="loadBar"></i></div>
+      <div class="load-sub">도원 진단 엔진이 분석하고 있어요</div>
+    </div>
+  </section>
+
+  <section class="screen" id="result">
+    <div id="resultBody"></div>
+    <button class="share-btn" onclick="shareResult()">🔗 진단 결과 공유하기</button>
+    <button class="restart" onclick="restart()" style="max-width:580px;margin:10px auto 0;display:block;width:calc(100% - 48px)">↻ 처음부터 다시 진단하기</button>
+    <p class="rdisc">본 1차 진단은 입력 정보 기반의 예비 의견이며, 법적 효력을 갖는 정식 문서는 담당 노무사 상담을 통해 작성됩니다. 일반 정보 제공이며 개별 사안의 법적 자문을 대체하지 않습니다.</p>
+  </section>
+</div>
+
+<a class="float-chat" href="https://dowon.channel.io" target="_blank" rel="noopener">
+  <span class="float-ic">💬</span><span>채널톡 무료 상담</span>
+</a>
+<div id="shareToast" class="toast">링크가 복사되었습니다</div>
+
+<script>
+var NOMUSA_AVATAR='https://cdn.imweb.me/thumbnail/20260522/0457a4fd13cfc.png';
+var SHARE_URL='https://dowonhr.com';/* ← 아임웹 진단 페이지 주소로 교체하세요 */
+var AV_SVG='<svg viewBox="0 0 24 24" fill="currentColor" style="width:58%;height:58%"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+var S={track:null,ans:{},path:[],idx:0};
+
+var FLOWS={
+  company:[
+    {k:'sanan',kicker:'사안 유형',q:'어떤 사안인가요?',sub:'적용되는 법과 회사의 의무 수위가 달라집니다.',
+     o:[{v:'bully',t:'직장 내 괴롭힘'},{v:'harass',t:'직장 내 성희롱'},{v:'unsure',t:'잘 모르겠어요',s:'해당 여부부터 판단을 도와드릴게요'}]},
+    {k:'stage',kicker:'진행 단계',q:'지금 어느 단계인가요?',sub:'단계에 따라 지금 당장 해야 할 일이 달라집니다.',
+     o:[{v:'before',t:'아직 신고 전',s:'소문·징후만 있는 상태'},{v:'received',t:'신고가 접수됨',s:'조사를 시작하기 전'},{v:'inquiry',t:'조사 진행 중'},{v:'decision',t:'조사가 끝나 조치를 정하는 단계'}]},
+    {k:'actor',kicker:'행위자',q:'지목된 행위자는 누구인가요?',sub:'조사의 공정성 확보 방식이 달라집니다.',
+     o:[{v:'staff',t:'일반 직원·관리자'},{v:'exec',t:'대표·임원 등 고위직'}]},
+    {k:'rule',kicker:'사내 절차',q:'사내에 처리 절차(취업규칙)가 있나요?',sub:'',
+     o:[{v:'yes',t:'있습니다'},{v:'no',t:'없습니다'},{v:'idk',t:'잘 모르겠습니다'}]}
+  ],
+  victim:[
+    {k:'ilan',kicker:'어떤 일',q:'어떤 일을 겪으셨나요?',sub:'편하게 선택해 주세요. 함께 정리해 드릴게요.',
+     o:[{v:'bully',t:'직장 내 괴롭힘'},{v:'harass',t:'직장 내 성희롱'},{v:'unsure',t:'이게 괴롭힘·성희롱이 맞는지 모르겠어요'}]},
+    {k:'reported',kicker:'신고 여부',q:'회사에 알리셨나요?',sub:'',
+     o:[{v:'not',t:'아직 아무에게도 말하지 않았어요'},{v:'verbal',t:'구두로만 이야기했어요'},{v:'formal',t:'정식으로 신고했어요'}]},
+    {k:'reaction',kicker:'회사의 반응',q:'회사는 어떻게 반응했나요?',sub:'',
+     o:[{v:'investigating',t:'조사를 시작했어요'},{v:'ignored',t:'묵살하거나 방치하고 있어요'},{v:'retaliated',t:'오히려 저에게 불이익을 줬어요',s:'부서 이동, 평가 불이익, 따돌림 등'},{v:'none',t:'아직 별다른 반응이 없어요'}]},
+    {k:'worry',kicker:'가장 큰 걱정',q:'지금 가장 걱정되는 건 무엇인가요?',sub:'그 걱정에 먼저 답해 드릴게요.',
+     o:[{v:'revenge',t:'신고하면 보복당할까 봐'},{v:'job',t:'계속 회사를 다닐 수 있을지'},{v:'evidence',t:'증거가 없어서'},{v:'how',t:'어떻게 신고해야 할지 몰라서'}]}
+  ]
+};
+var UNSURE={
+  company:[{k:'u1',q:'행위자가 직장에서의 지위나 업무 관계를 이용했나요?'},{k:'u2',q:'그 행위가 업무상 적정 범위를 넘었나요?'},{k:'u3',q:'상대 근로자가 신체적·정신적 고통을 받았거나 근무환경이 나빠졌나요?'}],
+  victim:[{k:'u1',q:'상대가 직장 내 지위나 업무 관계를 이용했나요?'},{k:'u2',q:'그 말이나 행동이 업무상 필요한 정도를 넘었다고 느끼셨나요?'},{k:'u3',q:'그로 인해 정신적·신체적으로 힘들거나 일하기 어려워졌나요?'}]
+};
+var YN=[{v:'y',t:'네'},{v:'n',t:'아니오'}];
+var EMPATHY={
+  company:{bully:'<strong>괜찮습니다.</strong> 신고를 받았다고 회사가 잘못되는 게 아니라, 절차를 어떻게 밟느냐가 전부입니다.',harass:'<strong>성희롱은 특히 절차가 중요합니다.</strong> 순서만 정확히 지키면 회사를 지킬 수 있어요.',unsure:'판단이 애매하셔도 괜찮습니다. 몇 가지만 확인하면 회사가 지금 무엇을 해야 하는지 분명해집니다.'},
+  victim:{bully:'<strong>혼자 고민하지 않으셔도 됩니다.</strong> 먼저 상황부터 함께 차분히 정리해볼게요.',harass:'<strong>당신의 잘못이 아닙니다.</strong> 안전하게 대응하는 길이 있어요.',unsure:'이게 맞는 건지 헷갈리는 것 자체가 당연해요. 몇 가지만 같이 짚어보면 됩니다.'}
+};
+
+function startTrack(tr){S.track=tr;S.ans={};S.path=FLOWS[tr].slice();S.idx=0;document.body.setAttribute('data-theme',tr);show('q');renderQ();}
+function renderQ(){
+  var step=S.path[S.idx],total=S.path.length;
+  document.getElementById('prog').style.width=Math.round((S.idx)/total*100+5)+'%';
+  document.getElementById('qkicker').textContent=step.kicker||'추가 확인';
+  document.getElementById('qtitle').textContent=step.q;
+  var sub=document.getElementById('qsub');sub.textContent=step.sub||'';sub.style.display=step.sub?'block':'none';
+  var emp=document.getElementById('qempathy'),firstKey=(S.track==='company')?'sanan':'ilan';
+  if(S.idx===1&&S.ans[firstKey]&&EMPATHY[S.track][S.ans[firstKey]]) emp.innerHTML='<div class="empathy">'+EMPATHY[S.track][S.ans[firstKey]]+'</div>';
+  else emp.innerHTML='';
+  var box=document.getElementById('qopts');box.innerHTML='';
+  (step.o||YN).forEach(function(o){
+    var d=document.createElement('div');d.className='opt';
+    d.innerHTML='<span>'+o.t+(o.s?'<small>'+o.s+'</small>':'')+'</span><span class="chev">›</span>';
+    d.onclick=function(){pick(step,o.v);};box.appendChild(d);
+  });
+}
+function pick(step,v){
+  S.ans[step.k]=v;
+  if((step.k==='sanan'||step.k==='ilan')&&v==='unsure'){
+    var subs=UNSURE[S.track].map(function(u){return {k:u.k,kicker:'판단 도움',q:u.q,sub:'',o:YN};});
+    Array.prototype.splice.apply(S.path,[S.idx+1,0].concat(subs));
+  }
+  if(S.idx<S.path.length-1){S.idx++;renderQ();}else{runLoading();}
+}
+function goBack(){if(S.idx>0){S.idx--;renderQ();}else{show('start');}}
+function show(id){
+  var landing=document.getElementById('start'),wrap=document.getElementById('wrap');
+  if(id==='start'){landing.classList.add('on');wrap.style.display='none';}
+  else{landing.classList.remove('on');wrap.style.display='block';
+    ['q','loading','result'].forEach(function(s){document.getElementById(s).classList.remove('active');});
+    document.getElementById(id).classList.add('active');}
+  window.scrollTo(0,0);reportHeight();
+}
+function restart(){document.body.setAttribute('data-theme','company');S={track:null,ans:{},path:[],idx:0};show('start');}
+function runLoading(){
+  document.getElementById('prog').style.width='100%';show('loading');
+  var msgs=(S.track==='company')?['회사 상황을 분석하는 중…','법정 의무 절차를 대조하는 중…','의견서를 작성하는 중…']:['상황을 차분히 살펴보는 중…','당신의 권리를 확인하는 중…','진단서를 작성하는 중…'];
+  var txt=document.getElementById('loadTxt'),bar=document.getElementById('loadBar');
+  txt.textContent=msgs[0];bar.style.transition='none';bar.style.width='0%';void bar.offsetWidth;
+  bar.style.transition='width 1.5s ease';bar.style.width='100%';
+  setTimeout(function(){txt.textContent=msgs[1];},600);
+  setTimeout(function(){txt.textContent=msgs[2];},1150);
+  setTimeout(function(){buildResult();show('result');playReveal();},1650);
+}
+function playReveal(){
+  var items=document.querySelectorAll('#result .rv');
+  items.forEach(function(el){el.classList.remove('in');});void document.getElementById('result').offsetWidth;
+  items.forEach(function(el,i){setTimeout(function(){el.classList.add('in');reportHeight();},i*110);});
+}
+function resolveUnsure(){if(S.ans.u1){var y=['u1','u2','u3'].filter(function(k){return S.ans[k]==='y';}).length;return y>=2?'likely':'unclear';}return null;}
+
+/* ---------- document render helpers ---------- */
+function sec(n,k,title,inner){return '<section class="sec rv"><div class="sec-no">'+n+'</div><div class="sec-k">'+k+'</div>'+(title?'<h2>'+title+'</h2>':'')+inner+'</section>';}
+function coverInfo(){
+  var a=S.ans;
+  if(S.track==='company'){
+    var isH=a.sanan==='harass';
+    var ts=isH?'성희롱':(a.sanan==='unsure'?'괴롭힘·성희롱':'괴롭힘');
+    var badge=(a.stage==='before')?{text:'사전 대비 단계',lv:'주의 / WATCH',danger:false}:{text:'즉시 대응 권장',lv:'높음 / HIGH',danger:true};
+    return {docType:'1차 진단 의견서',title:'직장 내 '+ts+' 사건<br>대응 진단 결과',badge:badge};
+  }
+  return {docType:'1차 권리 진단',title:'혼자 고민하지 않으셔도 됩니다.<br>함께 정리해 봤어요.',badge:{text:'상태',lv:'법적 보호 대상 · 대응 가능',danger:false}};
+}
+function factsRows(){
+  var a=S.ans;
+  if(S.track==='company'){
+    var tl=(a.sanan==='harass')?'직장 내 성희롱':(a.sanan==='unsure'?'괴롭힘·성희롱 소지':'직장 내 괴롭힘');
+    var stg={before:'아직 신고 전',received:'신고 접수됨',inquiry:'조사 진행 중',decision:'조치 결정 단계'};
+    var rows=[{k:'사안 유형',v:tl},{k:'진행 단계',v:stg[a.stage]},
+      {k:'행위자',v:(a.actor==='exec'?'대표·임원 등 고위직':'일반 직원·관리자'),hi:a.actor==='exec'},
+      {k:'사내 절차',v:(a.rule==='yes'?'처리 절차 있음':a.rule==='no'?'처리 절차 없음':'절차 여부 불명확'),hi:(a.rule!=='yes')}];
+    return rows;
+  }
+  var il=(a.ilan==='harass')?'직장 내 성희롱':(a.ilan==='unsure'?'괴롭힘·성희롱(판단 필요)':'직장 내 괴롭힘');
+  var rep={not:'아직 신고 전',verbal:'구두로만 전달',formal:'정식 신고함'};
+  var rows=[{k:'어떤 일',v:il},{k:'신고 여부',v:rep[a.reported]}];
+  if(a.reported!=='not'){var rc={investigating:'조사 시작함',ignored:'묵살·방치',retaliated:'불이익 받음',none:'반응 없음'};rows.push({k:'회사 반응',v:rc[a.reaction],hi:(a.reaction==='ignored'||a.reaction==='retaliated')});}
+  var wm={revenge:'신고 후 보복',job:'계속 근무 가능 여부',evidence:'증거가 없어서',how:'신고 방법을 몰라서'};
+  rows.push({k:'가장 큰 걱정',v:wm[a.worry],hi:true});
+  return rows;
+}
+function factsTable(){return '<div class="facts">'+factsRows().map(function(r){return '<div class="row"><div class="k">'+r.k+'</div><div class="v'+(r.hi?' hi':'')+'">'+r.v+'</div></div>';}).join('')+'</div>';}
+function judgeItems(items){
+  return items.map(function(it){
+    if(S.track==='victim'){
+      return '<div class="shield-it"><div class="shield-top"><span class="shield-nm">'+it.name+'</span><span class="shield-tag">'+it.amt+'</span></div><div class="shield-desc">'+it.desc+'</div></div>';
+    }
+    var cls=it.cls==='cond'?' amber':(it.cls==='plain'?' plain':'');
+    return '<div class="liab-it'+cls+'"><div class="liab-top"><span class="liab-nm">'+it.name+'</span><span class="liab-amt">'+it.amt+'</span></div>'+
+      (it.desc?'<div class="liab-desc">'+it.desc+'</div>':'')+(it.trigger?'<div class="liab-trig">'+it.trigger+'</div>':'')+'</div>';
+  }).join('');
+}
+function recsBlock(action){
+  var n=0,html='<div class="recs">',donts=[];
+  action.groups.forEach(function(g){
+    g.tasks.forEach(function(t){
+      if(t.dont){donts.push(t.main);return;}
+      n++;
+      var meta='';
+      if(t.who||t.doc){meta='<div class="rec-meta">'+(t.who?'<span>'+t.who+'</span>':'')+(t.doc?'<span class="doc">'+t.doc+'</span>':'')+'</div>';}
+      html+='<div class="rec"><div class="rec-no">'+n+'</div><div class="rec-when'+(g.badge==='now'?' now':'')+'">'+g.label+'</div><div class="rec-main">'+t.main+'</div>'+meta+'</div>';
+    });
+  });
+  html+='</div>';
+  if(donts.length){
+    html+='<div class="rec-dont">'+(S.track==='company'?'✕':'!')+'&nbsp;<span><b>'+(S.track==='company'?'하지 마세요:':'주의:')+'</b> '+donts.join(' / ')+'</span></div>';
+  }
+  return html;
+}
+function casesHtml(cc){
+  var items=cc.items.map(function(it){return '<div class="case-it"><div class="case-ic">⚖️</div><div class="case-tx"><p>'+it.line+'</p>'+(it.cite?'<span class="case-cite">'+it.cite+'</span>':'')+'</div></div>';}).join('');
+  return '<p class="secsub">'+cc.intro+'</p><div class="cases">'+items+'</div>'+
+    '<a class="case-link" href="'+cc.link.url+'" target="_blank" rel="noopener">'+cc.link.label+' →</a>'+
+    '<p class="mini-note">'+cc.note+'</p>';
+}
+function nmBlock(c){
+  var av=NOMUSA_AVATAR?'<img src="'+NOMUSA_AVATAR+'" alt="도원 노무사" onerror="this.style.display=\'none\'">':AV_SVG;
+  return '<div class="nm"><div class="nm-h"><div class="nm-av">'+av+'</div><div><div class="nm-name">도원 노무사가 본 '+(S.track==='company'?'귀사의':'당신의')+' 상황</div><div class="nm-by">노무법인 도원 · <strong>'+c.byline+'</strong></div></div></div>'+
+    '<p>'+c.mine+'</p><p class="s">'+c.sol+'</p></div>';
+}
+function deliverables(){
+  if(S.track==='company') return {h2:'정식 진행 시 받으시는 것',sub:'이 1차 진단을, 법적 효력을 갖춘 정식 문서와 대응으로 완성합니다.',cta:'이 진단을 정식 의견서로 완성받기 →',sublabel:'바로',items:[
+    {title:'사건 조사보고서',tag:'법정 양식',desc:'외부 조사위원이 작성하는 공식 보고서. 사실관계를 확정해 회사 조치의 근거가 됩니다.',toc:['사건 개요','조사 경과','인정 사실','판단','조치 의견','증거목록']},
+    {title:'법적 의견서',desc:'회사가 어떤 조치를, 어떤 근거로, 어떤 리스크를 안고 해야 하는지 정리한 자문 문서.',toc:['징계 수위 자문','리스크 진단','재발방지']},
+    {title:'단계별 대응 대리',desc:'외부 조사부터 노동청·노동위로 확전될 경우의 방어까지 같은 팀이 끝까지.',toc:['외부 조사','징계 절차','노동위 대응']}
+  ]};
+  return {h2:'함께 진행하면 받으시는 도움',sub:'이 1차 진단을, 실제 행동으로 옮기는 것까지 도원이 함께합니다.',cta:'내 권리, 노무사와 함께 확인하기 →',sublabel:'비공개',items:[
+    {title:'권리·증거 진단 의견서',tag:'맞춤',desc:'당신이 받을 수 있는 것, 지금 증거로 충분한지를 노무사가 정리해 드립니다.',toc:['내 권리','증거 점검','예상 결과']},
+    {title:'신고서·진정서 작성 대리',desc:'사내 신고 이메일부터 노동청 진정서까지, 막막한 서류를 대신 써 드립니다.',toc:['신고 이메일','진정서']},
+    {title:'사건 대리 (끝까지 함께)',desc:'회사 대응부터 노동청·노동위까지, 혼자가 아니라 같은 팀이 끝까지 함께합니다.',toc:['회사 대응','노동청','노동위']}
+  ]};
+}
+function nextBlock(){
+  var d=deliverables();
+  var pats=[['','g','s',''],['s','','g','s'],['','g','s','']];
+  var items=d.items.map(function(it,i){
+    var p=pats[i%3];
+    var doc='<div class="mini-doc"><div class="mb"></div><div class="ml '+p[0]+'"></div><div class="ml '+p[1]+'"></div><div class="ml '+p[2]+'"></div><div class="ml '+p[3]+'"></div></div>';
+    var toc=it.toc.map(function(x){return '<span>'+x+'</span>';}).join('');
+    var tag=it.tag?'<span class="dtag">'+it.tag+'</span>':'';
+    return '<div class="deliv-it">'+doc+'<div class="deliv-tx"><h3>'+it.title+tag+'</h3><p>'+it.desc+'</p><div class="deliv-toc">'+toc+'</div></div></div>';
+  }).join('');
+  return '<div class="next rv"><div class="next-k">NEXT · 다음 단계</div><h2>'+d.h2+'</h2><p class="next-sub">'+d.sub+'</p>'+
+    '<div class="deliv">'+items+'</div>'+
+    '<a class="cta" href="https://dowon.channel.io" target="_blank" rel="noopener">'+d.cta+'</a>'+
+    '<p class="cta-sub">전화 <a href="tel:0220383355">02-2038-3355</a> · 채널톡 '+d.sublabel+' 상담</p></div>';
+}
+function buildResult(){
+  var C=(S.track==='company')?companyContent():victimContent();
+  var CC=casesContent();
+  var cov=coverInfo();
+  var now=new Date();
+  var dno='DW-'+now.getFullYear()+'-'+(Math.floor(Math.random()*9000)+1000);
+  var dt=now.getFullYear()+'. '+('0'+(now.getMonth()+1)).slice(-2)+'. '+('0'+now.getDate()).slice(-2);
+  var h='';
+  h+='<div class="cover rv"><div class="cover-top"><div><div class="cover-logo">노무법인 <b>도원</b></div><div class="cover-en">DOWON LABOR LAW FIRM</div></div>'+
+     '<div class="cover-meta"><div>문서 No. <span>'+dno+'</span></div><div>발급일 <span>'+dt+'</span></div></div></div>'+
+     '<div class="cover-main"><div class="cover-text">'+
+     '<div class="cover-title">'+cov.docType+'</div><h1>'+cov.title+'</h1>'+
+     '<div class="cover-badge'+(cov.badge.danger?' danger':'')+'">'+cov.badge.text+' <span class="lv">'+cov.badge.lv+'</span></div></div>'+
+     '<div class="cover-photo"><img src="https://cdn.imweb.me/thumbnail/20260608/b9493801c1525.png" alt="도원 노무법인 구성원" loading="lazy" onerror="this.parentNode.style.display=\'none\'"></div>'+
+     '</div></div>';
+  h+='<div class="docbody">';
+  h+=sec('1','SUMMARY · 진단 요지',C.focusH,'<div class="gist">'+C.focusP+'</div>');
+  h+=sec('2','FACTS · '+(S.track==='company'?'사실관계':'내 상황'),(S.track==='company'?'입력하신 상황 정리':'알려주신 상황 정리'),factsTable());
+  h+=sec('3',(S.track==='company'?'ASSESSMENT · 판단':'PROTECTION · 나를 지키는 법'),C.risk.title,
+        '<p class="secsub">'+C.risk.intro+'</p><div class="judge">'+judgeItems(C.risk.items)+'</div>'+(C.risk.note?'<p class="mini-note">'+C.risk.note+'</p>':''));
+  h+=sec('4',(S.track==='company'?'ACTION · 권고 조치':'STEPS · 안전한 첫걸음'),C.action.title,recsBlock(C.action));
+  h+=sec('5','CASE · 참고 판례',CC.title,casesHtml(CC));
+  h+=sec('6','COMMENT · 담당 노무사 소견','',nmBlock(C.consult));
+  h+='</div>';
+  h+=nextBlock();
+  document.getElementById('resultBody').innerHTML=h;
+}
+
+/* ================= COMPANY CONTENT ================= */
+function companyContent(){
+  var a=S.ans,un=resolveUnsure();
+  var isH=a.sanan==='harass';
+  var type=isH?'성희롱':(a.sanan==='unsure'?'괴롭힘·성희롱 소지':'괴롭힘');
+  var typeLabel=isH?'직장 내 성희롱':(a.sanan==='unsure'?'괴롭힘·성희롱 소지 사안':'직장 내 괴롭힘');
+  var lawRef=isH?'남녀고용평등법 제14조·제37조':'근로기준법 제76조의3·제109조';
+  var procRef=isH?'남녀고용평등법 제39조':'근로기준법 제116조';
+  var actorAmt=isH?'+300~1,000만원':'1,000만원 이하';
+  var actorDesc=isH?'지목된 임원이 대표이사 등 <b>사업경영담당자(=사업주)</b>라면, 성희롱 행위 자체로 별도 과태료가 추가됩니다.':'행위자가 <b>사용자 또는 그 친족인 근로자</b>라면, 괴롭힘 행위 자체로 1,000만원 이하 과태료가 추가됩니다.';
+  var exec=a.actor==='exec';
+  var crim={cls:'crit',name:'신고자·피해자에 대한 불리한 처우',amt:'3년 이하 징역<br>또는 3,000만원',desc:'가장 무겁습니다. <b>형사처벌</b>입니다('+lawRef+').',trigger:'⚠ 신고·피해를 이유로 해고·대기발령·평가 불이익·따돌림 방치 시 해당'};
+  var proc=function(tr){return {cls:'',name:'조사·조치의무 위반 / 비밀 누설',amt:'500만원 이하',desc:'조사를 미루거나, 확인 후 조치를 안 하거나, 조사 내용이 사내에 새면 각각 과태료('+procRef+').',trigger:tr};};
+  var actorIt={cls:'cond',name:'행위자가 사업주·사용자에 해당할 경우',amt:actorAmt,desc:actorDesc,trigger:'해당 여부는 직위·권한으로 판단 — 확인 필요'};
+  var C={};
+  if(a.stage==='before'){
+    C.focusH='아직 신고 전인 지금이, <em>리스크를 0에서 멈출 수 있는</em> 유일한 시점입니다.';
+    C.focusP='하지만 이미 소문·징후를 "알게 된" 이상, 모른 척하는 순간 회사 의무가 켜집니다. 지금 핵심은 <b>① 인지한 정황을 기록하고</b> <b>② 처리 절차를 갖춰</b> 신고가 들어와도 흔들리지 않게 준비하는 것입니다.';
+    C.risk={title:'아직 작지만, 방치하면 커지는 리스크',intro:'신고 전이라 의무는 약하지만, "인지"하는 순간부터 시계가 돌기 시작합니다.',
+      items:[proc('⚠ 이미 알게 된 사안을 "소문"이라며 방치하면 인지 시점부터 조사의무 위반'),
+        {cls:'plain',name:'사내 처리절차 미비',amt:'분쟁 시 불리',desc:'취업규칙에 처리 절차가 없으면, 향후 분쟁에서 "회사가 준비가 없었다"는 불리한 정황이 됩니다.'}],
+      note:'※ 금액은 '+procRef+' 기준의 일반적 범위이며, 실제 부과는 사안에 따라 달라집니다.'};
+    if(exec) C.risk.items.push(actorIt);
+    C.action={title:'신고 전, 지금 해두면 좋은 일',intro:'',
+      groups:[
+        {badge:'now',label:'오늘',tasks:[
+          {main:'신고 접수 채널·담당자를 정해 직원이 알 수 있게 안내',who:'인사담당',doc:'신고 안내문'},
+          {main:'인지한 정황(언제·누가·무슨 일)을 사실대로 기록해 보관',who:'인사담당',doc:'인지 경위 메모'},
+          {main:'섣불리 당사자를 불러 "사실이냐"고 캐묻지 않기 (비공식 조사는 증거 오염)',dont:true}
+        ]},
+        {badge:'d3',label:'이번 주',tasks:[
+          {main:(a.rule==='yes'?'기존 취업규칙의 처리 절차가 현행법에 맞는지 점검':'취업규칙에 괴롭힘·성희롱 처리 절차를 반영'),who:'대표/인사임원',doc:'취업규칙 개정안'},
+          {main:'신고가 들어올 경우에 대비해 외부 자문(노무법인) 연결선을 확보',who:'대표 결정'}
+        ]}
+      ]};
+    C.consult={byline:typeLabel+' 사건처리 전문',
+      mine:'제가 이 단계에서 가장 안타깝게 보는 게 둘 있습니다. <b class="hl">"소문일 뿐"이라며 덮어둔 것</b>이 나중에 "회사가 알고도 방치했다"는 인지 시점 다툼으로 돌아오고, <b class="hl">대표가 직접 당사자를 불러 캐묻다</b> 비공식 대화가 증거를 오염시킵니다.',
+      sol:'지금은 아무 일도 안 일어난 게 아니라, 가장 싸게 대비할 수 있는 시점이에요. <strong>취업규칙 정비와 사전 점검</strong>을 도원이 한 번에 맡아드립니다.'};
+  }
+  else if(a.stage==='received'){
+    C.focusH='신고를 받은 지금, <em>"지체 없이" 조사를 시작하는 것</em>이 전부입니다.';
+    C.focusP='법은 신고를 받으면 즉시 객관적으로 조사하라고 정합니다('+lawRef+'). 가장 흔한 사고는 조사 없이 "둘이 잘 풀어보라"며 화해를 종용하는 것 — 그 순간 절차 위반이 됩니다. 지금 핵심은 <b>① 즉시 조사 착수</b>와 <b>② 피해자 보호·비밀유지</b>입니다.';
+    C.risk={title:'신고를 받은 지금, 노출된 책임',intro:'신고가 접수된 순간부터 아래 의무가 동시에 켜집니다.',
+      items:[crim,proc('⚠ 조사 지연·화해 종용·비밀유지 서약 누락이 흔한 트리거')],
+      note:'※ 금액은 '+lawRef+'·'+procRef+' 기준의 일반적 범위입니다.'};
+    if(exec) C.risk.items.push(actorIt);
+    C.action={title:'이 순서대로 움직이세요',intro:'',
+      groups:[
+        {badge:'now',label:'오늘 · 즉시',tasks:[
+          {main:'객관적 조사 착수를 결정하고, 조사자를 지정',who:'대표/인사임원',doc:'조사 착수 결정'},
+          {main:'피해자–행위자를 분리하고 보호조치 검토(피해자 의사 확인)',who:'인사담당',doc:'분리·보호조치 통보문'},
+          {main:'조사 관여자 전원에게 비밀유지 서약을 받기',who:'인사담당',doc:'비밀유지 서약서'},
+          {main:'당사자에게 "둘이 알아서 화해하라"고 종용하기 (조사 없는 합의는 절차 위반)',dont:true}
+        ]},
+        {badge:'d3',label:'3일 안에',tasks:[
+          {main:(exec?'행위자가 임원이므로 외부 조사위원(노무법인) 위촉을 검토 — 공정성 시비 차단':'조사 계획서(범위·일정·대상·방식)를 문서로 수립'),who:'대표 결정',doc:(exec?'위촉 사유 회의록':'조사 계획서')}
+        ]}
+      ]};
+    C.consult={byline:typeLabel+' 사건처리 전문',
+      mine:'제가 이 단계에서 가장 많이 막는 사고는 셋입니다. <b class="hl">조사 없이 화해를 종용</b>하면 절차 위반, <b class="hl">신고를 며칠 묵히면</b> "지체 없이" 조사 의무 위반, <b class="hl">비밀유지 없이 소문이 도는</b> 순간 과태료에 2차 피해까지 번집니다.',
+      sol:'세 가지 모두 "바로·제대로 시작하지 않아서" 생깁니다. 오늘 조사 착수와 보호조치만 해두시면, '+(exec?'<strong>외부 조사 전환</strong>을 도원이 맡습니다.':'<strong>조사 설계부터 종결까지</strong> 도원이 함께 검토합니다.')};
+  }
+  else if(a.stage==='inquiry'){
+    C.focusH=(exec?'우리 직원이 조사하는 것, <em>그 자체가 리스크</em>입니다.':'조사 중인 지금, <em>피해자에게 생기는 작은 불이익 하나</em>가 가장 위험합니다.');
+    C.focusP=(exec?'행위자가 임원이면 사내 조사는 "회사가 감싼다"는 공정성 시비로 결과가 무력화되기 쉽습니다. 조사가 길어지는 사이 피해자에게 생기는 불이익 하나가 <b>3,000만원·형사처벌</b>로 돌아옵니다. 지금 핵심은 <b>① 조사 주체를 외부로 바꾸는 것</b>과 <b>② 피해자 불이익 완전 차단</b>입니다.':'"조사 중"은 가장 사고가 많이 나는 구간입니다. 피해자를 "보호한다며" 본인 동의 없이 쉬게 하거나 자리를 옮기면, 그게 <b>불리한 처우(보복)</b>로 간주돼 형사처벌 영역으로 넘어갑니다. 지금 핵심은 <b>① 피해자 불이익 금지</b>와 <b>② 비밀유지</b>입니다.');
+    C.risk={title:'조사 중인 지금, 노출된 책임',intro:'"조사 중"은 절차 하나가 어긋나면 아래 금액이 실제가 되는 구간입니다.',
+      items:[crim,proc('⚠ 조사 지연·비밀유지 누락이 흔한 트리거')],
+      note:'※ 금액은 '+lawRef+'·'+procRef+' 기준의 일반적 범위입니다.'};
+    if(exec) C.risk.items.push(actorIt);
+    C.action={title:'이 순서대로 움직이세요',intro:'',
+      groups:[
+        {badge:'now',label:'오늘 · 즉시',tasks:[
+          {main:'피해자–행위자 분리·보호조치를 유지하고 있는지 확인',who:'인사담당',doc:'보호조치 현황'},
+          {main:'조사 참여자 비밀유지가 지켜지는지 점검',who:'인사담당'},
+          {main:'피해자를 본인 동의 없이 휴가·대기발령 보내기 (보복으로 간주됨)',dont:true}
+        ]},
+        {badge:'d3',label:'3일 안에',tasks:[
+          (exec?{main:'외부 조사위원(노무법인)으로 조사 주체를 전환 — 내부 조사의 공정성 시비를 차단',who:'대표 결정',doc:'위촉 사유 회의록'}:{main:'조사 계획서대로 진술·증거 수집이 진행되는지 점검',who:'조사팀',doc:'조사 진행표'})
+        ]},
+        {badge:'end',label:'조사 종료 전',tasks:[
+          {main:'피해자·행위자·참고인 진술과 객관 증거(메신저·CCTV·이메일 등) 확보·기록화',who:'조사위원',doc:'조사보고서'},
+          {main:'징계 수위를 정하기 전, 반드시 피해자 의견을 먼저 청취 (필수 절차)',who:'인사임원'}
+        ]}
+      ]};
+    C.consult={byline:typeLabel+' 사건처리 전문',
+      mine:'제가 이 단계에서 회사들이 똑같이 밟는 지뢰를 셋 봅니다. '+(exec?'<b class="hl">임원을 사내 인력이 조사</b>해 결과가 무력화되고, ':'<b class="hl">사내 인력만으로 조사</b>해 객관성 시비가 붙고, ')+'피해자를 배려한답시고 <b class="hl">원치 않는 휴가·대기발령</b>을 보내 보복이 되고, <b class="hl">소문이 사내에 도는</b> 순간 2차 피해로 번집니다.',
+      sol:'셋 다 "조사를 우리 손으로 하려다" 생기는 사고예요. 그래서 필요한 건 <strong>'+(exec?'조사 주체를 외부로 바꾸는 것':'외부 시각으로 조사의 객관성을 확보하는 것')+'</strong>입니다. 오늘 보호조치만 해두시면 나머지는 도원이 맡습니다.'};
+  }
+  else{
+    C.focusH='결과가 나온 지금, <em>절차를 건너뛴 징계 한 방</em>이 회사를 뒤집습니다.';
+    C.focusP='의견 청취·소명 없이 행위자를 즉시 해고하면 노동위에서 부당해고로 뒤집혀 복직+임금 소급이 됩니다. 반대로 "조용히 덮자"며 무마하면 과소조치로 또 다른 위반이 됩니다. 지금 핵심은 <b>① 징계 전 피해자 의견 청취</b>와 <b>② 양형의 적정성(과소·과잉 모두 위험)</b>입니다.';
+    C.risk={title:'조치를 정하는 지금, 노출된 책임',intro:'조사는 끝났지만, 마지막 한 걸음에서 가장 많이 뒤집힙니다.',
+      items:[
+        {cls:'',name:'과잉징계 → 부당해고·부당징계 분쟁',amt:'복직·임금 소급',desc:'의견청취·소명 없이 즉시 해고하면 노동위에서 뒤집혀 복직 + 임금 소급으로 돌아옵니다.',trigger:'⚠ 의견청취 생략·징계 사유/증거 부실이 흔한 트리거'},
+        crim,proc('⚠ 확인됐는데 조치를 안 하거나 미루면 과태료')
+      ],
+      note:'※ 금액은 '+lawRef+'·'+procRef+' 기준의 일반적 범위입니다.'};
+    if(exec) C.risk.items.push(actorIt);
+    C.action={title:'이 순서대로 마무리하세요',intro:'',
+      groups:[
+        {badge:'now',label:'오늘 · 즉시',tasks:[
+          {main:'징계 수위를 확정하기 전, 피해자 의견을 먼저 청취 (필수 절차)',who:'인사임원',doc:'의견청취 기록'},
+          {main:'양형의 적정성 검토 — 과소(무마)도 과잉(즉시 해고)도 모두 위험',who:'대표/인사임원'},
+          {main:'신고자·피해자에게 어떤 불이익도 가지 않는지 재확인',who:'인사담당'}
+        ]},
+        {badge:'d3',label:'이번 주',tasks:[
+          {main:'행위자에 대한 징계 절차(소명 기회 부여 등)의 적법성을 점검',who:'인사임원',doc:'징계 절차 체크'},
+          {main:'재발방지 조치·교육 계획 수립',who:'인사담당',doc:'재발방지 계획'},
+          {main:'분쟁 대비해 조사보고서·징계 근거를 정리·보관',who:'조사팀',doc:'징계 근거 자료'}
+        ]}
+      ]};
+    C.consult={byline:typeLabel+' 사건처리 전문',
+      mine:'이 단계의 가장 흔한 역전 패턴이 셋입니다. <b class="hl">의견청취 없이 즉시 해고</b>하면 부당해고로 뒤집히고, 반대로 <b class="hl">"조용히 덮자"며 경징계로 무마</b>하면 과소조치 위반에 피해자 추가 진정, <b class="hl">징계 사유·증거가 부실</b>하면 행위자 측 부당징계 구제신청에 휘말립니다.',
+      sol:'징계는 "세게 하느냐"가 아니라 "절차에 맞게, 적정하게 하느냐"입니다. <strong>징계 수위 자문과 분쟁 방어</strong>까지 도원이 같은 팀으로 마무리합니다.'};
+  }
+  return C;
+}
+
+/* ================= VICTIM CONTENT ================= */
+function victimContent(){
+  var a=S.ans,un=resolveUnsure();
+  var isH=a.ilan==='harass';
+  var typeLabel=isH?'직장 내 성희롱':(a.ilan==='unsure'?'지금 겪고 계신 일':'직장 내 괴롭힘');
+  var repMap={not:'아직 회사에 알리지 않으신',verbal:'구두로만 이야기하신',formal:'정식으로 신고하신'};
+  var reactMap={investigating:'회사가 조사를 시작한',ignored:'회사가 묵살·방치하고 있는',retaliated:'오히려 불이익을 받으신',none:'아직 회사 반응이 없는'};
+  var sit=(a.reaction==='ignored'||a.reaction==='retaliated')?'external':((a.reported==='not'||a.reported==='verbal')?'record':'prepare');
+  var protect={
+    boss:{cls:'calm',name:'회사의 보복 = 회사가 형사처벌',amt:'회사 3년/3,000만원',desc:'신고·피해를 이유로 불이익을 주면 <b>회사가 형사처벌</b> 대상입니다. 보복은 당신을 약하게 만드는 게 아니라 회사를 더 무겁게 만듭니다.'},
+    investigate:{cls:'calm',name:'회사의 조사 의무',amt:'안 하면 회사 과태료',desc:'회사는 신고를 받으면 지체 없이 조사할 의무가 있고, 묵살하면 회사가 과태료(500만원) 대상입니다.'},
+    external:{cls:'calm',name:'회사 밖의 길',amt:'비용 0원',desc:'고용노동부(지방고용노동청) 진정은 전국 어디서나 무료로 가능합니다.'+(isH?' 성희롱은 노동위원회 시정신청도 가능합니다.':'')},
+    report:{cls:'calm',name:'서면 신고 → 회사 의무 발동',amt:'지체 없이 조사',desc:'사내 채널에 서면으로 신고하면 회사는 즉시 조사할 의무가 생깁니다.'},
+    nodisadv:{cls:'calm',name:'신고 이유 불이익 금지',amt:'어기면 회사 형사',desc:'신고했다는 이유로 불이익을 주는 건 법으로 금지(어기면 회사 3년 이하 징역/3,000만원).'},
+    evid:{cls:'calm',name:'완벽한 증거가 없어도',amt:'메신저·메모 OK',desc:'카톡·이메일·메모·목격자 진술도 증거가 됩니다. 지금부터 남기면 됩니다.'},
+    proof:{cls:'calm',name:'입증 책임은 회사가',amt:'남녀고용평등법 제30조',desc:'성희롱 분쟁에서 "내가 다 증명해야 한다"가 아닙니다. 입증 책임은 사업주(회사)에게 있습니다.'},
+    protectRight:{cls:'calm',name:'조사 중 보호받을 권리',amt:'근무장소 변경·유급휴가',desc:'조사 기간 동안 회사는 당신을 보호할 의무가 있습니다. 필요하면 요청할 수 있어요.'},
+    opinion:{cls:'calm',name:'징계 전 의견 청취권',amt:'당신 의견 필수',desc:'행위자 징계 수위를 정하기 전, 회사는 당신의 의견을 들어야 합니다.'}
+  };
+  var painMine={
+    revenge:'"신고하면 보복당할까"가 가장 무서우시죠. 그런데 제가 안타깝게 보는 건, 그 두려움에 <b>아무 기록도 안 남긴 채</b> 시간만 보내다 정작 있던 증거까지 흐려지는 경우예요.',
+    job:'"계속 다닐 수 있을까"가 가장 걱정되시죠. 그런데 신고를 이유로 한 불이익은 법으로 금지돼 있어요. 제가 안타깝게 보는 건, 그걸 모른 채 <b>혼자 참다</b> 상황이 굳어지는 경우입니다.',
+    evidence:'"증거가 없어서…"라는 걱정, 정말 많이 들어요. 그런데 제가 안타깝게 보는 건, 무서워서 <b>아무 기록도 안 남긴 채</b> 시간만 보내다 정작 있던 증거까지 흐려지는 경우예요.',
+    how:'"어떻게 신고해야 할지 모르겠다"가 막막하시죠. 제가 안타깝게 보는 건, 막막함에 미루다가 혹은 화가 나서 <b>상대와 먼저 부딪히다</b> 감정 싸움이 되는 경우입니다.'
+  };
+  var C={};
+  if(sit==='external'){
+    C.focusH='회사가 움직이지 않을 때, <em>당신에겐 회사 밖의 길</em>이 있습니다.';
+    C.focusP='회사가 묵살하거나 오히려 불이익을 줬다면, 이미 회사가 법을 어기고 있는 것입니다. 보복은 회사를 더 무겁게(형사처벌) 만들 뿐이에요. 지금 핵심은 <b>① 묵살·보복 정황을 기록</b>하고 <b>② 고용노동청 진정 같은 외부의 힘</b>을 쓰는 것입니다.';
+    C.risk={title:'법은 이렇게 당신을 지킵니다',intro:'무서우시겠지만, 이런 상황일수록 법은 더 분명하게 당신 편입니다.',
+      items:[protect.boss,protect.investigate,protect.external],
+      note:'※ 보복 정황(부서이동·평가·따돌림 등)은 날짜와 함께 기록해두면 강력한 증거가 됩니다.'};
+    C.action={title:'이 순서대로 하시면 됩니다',intro:'',
+      groups:[
+        {badge:'now',label:'오늘',tasks:[
+          {main:'묵살·보복 정황을 날짜와 함께 기록 (언제·누가·무슨 일)',who:'본인',doc:'경위 기록'},
+          {main:'관련 증거(메신저·이메일·평가서·인사발령) 원본을 안전하게 보관',who:'본인'},
+          {main:'회사와 감정적으로 대질하기 — 기록이 먼저입니다',dont:true}
+        ]},
+        {badge:'d3',label:'이번 주',tasks:[
+          {main:'고용노동부(지방고용노동청) 진정 준비 — 혼자 부담되면 노무사 동행 가능',who:'본인/노무사',doc:'진정서'},
+          (isH?{main:'성희롱은 노동위원회 시정신청도 검토',who:'본인/노무사'}:{main:'필요시 회사에 서면으로 조사를 공식 요구',who:'본인'})
+        ]}
+      ]};
+    C.consult={byline:'피해 근로자 권리구제 전문',
+      mine:(painMine[a.worry]||'')+' 회사가 보복하는 순간 <b>유리해지는 건 당신</b>입니다. 그 정황 하나하나가 나중에 강력한 증거가 됩니다.',
+      sol:'순서가 중요해요. 먼저 기록, 그다음 외부 구제. <strong>노동청 진정·노동위 절차</strong>를 혼자 하기 부담되면 도원이 대신 정리해드릴게요.'};
+  }
+  else if(sit==='record'){
+    C.focusH='지금 가장 강력한 무기는 <em>"기록"</em>입니다.';
+    C.focusP='아직 신고 전이거나 구두로만 말한 상태라면, 지금이 증거를 모을 수 있는 가장 중요한 시점입니다. 서면으로 신고하는 순간 회사의 조사 의무가 켜집니다. 지금 핵심은 <b>① 사실을 시간순으로 기록</b>하고 <b>② 서면으로 신고</b>해 회사를 움직이게 하는 것입니다.';
+    C.risk={title:'법은 이렇게 당신을 지킵니다',intro:'생각보다 당신은 약자가 아닙니다. 법이 이렇게 보호합니다.',
+      items:[isH?protect.proof:protect.report,protect.nodisadv,protect.evid],
+      note:'※ 기록은 "언제·어디서·무슨 일이 있었고 누가 봤는지"를 사실대로 적는 것만으로 충분합니다.'};
+    C.action={title:'이 순서대로 하시면 됩니다',intro:'',
+      groups:[
+        {badge:'now',label:'오늘',tasks:[
+          {main:'언제·어디서·무슨 일이 있었는지 시간순으로 메모',who:'본인',doc:'사건 경위 메모'},
+          {main:'관련 메신저·이메일·사진을 원본 그대로 보관(캡처+원본)',who:'본인'},
+          {main:'원본을 지우거나, 상대와 1:1로 담판 짓기',dont:true}
+        ]},
+        {badge:'d3',label:'이번 주',tasks:[
+          {main:'사내 신고 채널(인사팀·고충처리위원)에 서면(이메일)으로 신고 — 기록이 남게',who:'본인',doc:'신고 이메일'}
+        ]}
+      ]};
+    C.consult={byline:'피해 근로자 권리구제 전문',
+      mine:painMine[a.worry]||'무서워서 아무 기록도 안 남긴 채 시간만 보내다 증거가 흐려지는 경우가 가장 안타까워요.',
+      sol:'완벽한 증거가 없어도 괜찮습니다. 지금 가진 것으로 충분한지, <strong>신고 이메일을 어떻게 쓸지</strong>부터 같이 정리해드릴게요. 혼자 판단하지 않으셔도 됩니다.'};
+  }
+  else{
+    C.focusH='조사가 시작된 지금, 할 일은 <em>"사실을 정확히 남기는 것"</em>입니다.';
+    C.focusP='정식 신고로 회사가 조사를 시작했다면, 이제 당신은 조사 기간 동안 보호받을 권리가 있습니다. 지금 핵심은 <b>① 사실을 시간순으로 정리</b>해 진술에 대비하고 <b>② 부당함을 느끼면 그것도 기록</b>해두는 것입니다.';
+    C.risk={title:'조사 중인 당신을 지키는 권리',intro:'조사가 진행되는 동안 회사는 당신을 보호할 의무가 있습니다.',
+      items:[protect.protectRight,protect.nodisadv,protect.opinion],
+      note:'※ 조사 과정에서 부당함을 느끼면, 그 부분도 날짜와 함께 따로 기록해두세요.'};
+    C.action={title:'이 순서대로 하시면 됩니다',intro:'',
+      groups:[
+        {badge:'now',label:'오늘',tasks:[
+          {main:'사실관계를 시간순으로 정리해 진술에 대비',who:'본인',doc:'진술 정리 메모'},
+          {main:'조사 과정에서 부당함을 느끼면 그 부분도 따로 기록',who:'본인'}
+        ]},
+        {badge:'d3',label:'이번 주',tasks:[
+          {main:'필요하면 보호조치(근무장소 변경·유급휴가)를 회사에 요청',who:'본인'},
+          {main:'징계 수위 결정 전, 의견을 진술할 수 있게 준비',who:'본인'}
+        ]}
+      ]};
+    C.consult={byline:'피해 근로자 권리구제 전문',
+      mine:'신고까지 하신 것만으로도 큰 용기를 내신 거예요. 이 단계에서 가장 아쉬운 건, 조사에 그냥 끌려가다 <b>사실을 정리 못 한 채 진술</b>하거나, 부당함을 느껴도 <b>그때그때 기록을 안 남겨</b> 입증이 어려워지는 경우입니다.',
+      sol:'당신에겐 보호받을 권리와 의견을 말할 권리가 분명히 있습니다. <strong>조사 대응과 보호조치 요청</strong>을 도원이 옆에서 도와드릴게요.'};
+  }
+  if(a.ilan==='unsure'){
+    C.focusP=(un==='likely'?'말씀하신 내용은 괴롭힘·성희롱에 해당할 가능성이 높아 보입니다. ':'')+C.focusP;
+  }
+  return C;
+}
+
+/* ================= CASES ================= */
+function casesContent(){
+  var a=S.ans,NOTE='※ 사례는 참고용이며, 결론은 개별 사안에 따라 다릅니다.';
+  var cn=function(q){return 'https://casenote.kr/search/?q='+encodeURIComponent(q);};
+  if(S.track==='company'){
+    var t=(a.sanan==='harass')?'성희롱':(a.sanan==='unsure'?'성희롱 괴롭힘':'괴롭힘');
+    if(a.stage==='before') return {title:'미리 갖춘 회사는, 같은 사건에서도 책임을 덜었습니다',
+      intro:'아직 신고 전이라면 가장 유리한 위치예요. 법원·노동위는 절차를 갖춘 회사를 다르게 봅니다.',
+      items:[{line:'회사가 신고 절차를 갖추고 인지 후 신속히 대응한 경우, 사용자 책임이 인정되지 않거나 줄어든 사례가 있습니다.'}],
+      note:NOTE,link:{label:'관련 판례 더 보기',url:cn('직장 내 '+t+' 사용자 조치의무 책임')}};
+    if(a.stage==='decision') return {title:'절차를 지킨 징계는, 법원에서도 유효합니다',
+      intro:'마지막 한 걸음만 절차에 맞으면, 회사의 조치는 인정됩니다.',
+      items:[{line:'피해자 진술 등 증거에 근거해 절차를 지켜 내린 징계(해고·면직)는 정당하다고 인정된 사례가 있습니다.'},
+        {line:'반대로 의견청취·소명 없이 즉시 해고하면 부당해고로 뒤집힌 사례가 있어, 결국 절차가 관건입니다.'}],
+      note:NOTE,link:{label:'관련 판례 더 보기',url:cn('직장 내 '+t+' 징계해고 정당 절차')}};
+    var items=[{line:'회사가 신고 후 지체 없이 조사하고 적절히 조치한 경우, 사용자 손해배상 책임이 부정된 사례가 있습니다.'}];
+    if(a.actor==='exec') items.push({line:'행위자가 임원이어도 외부 조사 등 공정한 절차를 거치면 조사·징계 결과가 인정된 사례가 있습니다.'});
+    return {title:'절차만 제대로 밟으면, 회사는 책임에서 벗어날 수 있습니다',
+      intro:'지금 중요한 건 "조사를 했느냐"가 아니라 "제대로 된 절차로 했느냐"입니다.',
+      items:items,note:NOTE,link:{label:'관련 판례 더 보기',url:cn('직장 내 '+t+' 사용자 책임 조사 조치')}};
+  }else{
+    var sit=(a.reaction==='ignored'||a.reaction==='retaliated')?'external':((a.reported==='not'||a.reported==='verbal')?'record':'prepare');
+    var t2=(a.ilan==='harass')?'성희롱':(a.ilan==='unsure'?'성희롱 괴롭힘':'괴롭힘');
+    if(sit==='external') return {title:'회사가 보복할수록, 법은 더 분명히 당신 편입니다',
+      intro:'무서우시겠지만, 이런 상황에서 법원은 회사에 더 무거운 책임을 물었어요.',
+      items:[{line:'법원은 신고한 피해자나 그를 도운 동료에게 회사가 불이익을 주면, 회사가 손해배상 책임을 진다고 보았습니다.',cite:'대법원 2016다202947'},
+        {line:'신고와 가까운 시기에 이뤄진 전보·평가 불이익은 "보복"으로 보고 부당하다고 판단한 사례들이 있습니다.'}],
+      note:NOTE,link:{label:'관련 판례 더 보기',url:cn('직장 내 '+t2+' 불리한 처우 보복 손해배상')}};
+    if(sit==='record') return {title:'완벽한 증거가 없어도, 법은 당신 진술을 쉽게 무시하지 않습니다',
+      intro:'증거가 부족해 걱정이시죠. 그런데 법은 이렇게 봅니다.',
+      items:[{line:'법원은 피해자 진술이 주요 부분에서 일관되면, 특별한 이유 없이 함부로 배척해서는 안 된다고 봅니다.'},
+        {line:'성희롱 분쟁에서는 입증 책임을 회사(사업주)가 지도록 법이 정하고 있습니다(남녀고용평등법 제30조).'}],
+      note:NOTE,link:{label:'관련 판례 더 보기',url:cn('직장 내 '+t2+' 피해자 진술 신빙성 입증책임')}};
+    return {title:'조사가 제대로 진행되면, 가해 행위는 책임을 집니다',
+      intro:'정식 신고로 조사가 시작됐다면, 이렇게 진행된 사례들이 있어요.',
+      items:[{line:'피해자의 진술을 주된 근거로 가해자에 대한 징계가 정당하다고 인정된 사례가 있습니다.'},
+        {line:'조사 기간 중 회사는 피해자를 보호할 의무가 있고, 이를 어기면 회사가 책임진 사례가 있습니다.'}],
+      note:NOTE,link:{label:'관련 판례 더 보기',url:cn('직장 내 '+t2+' 징계 정당 피해자 보호')}};
+  }
+}
+
+/* ---------- 공유하기 ---------- */
+function showToast(msg){var t=document.getElementById('shareToast');if(!t)return;t.textContent=msg||'링크가 복사되었습니다';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},1900);}
+function copyLink(url){
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){showToast('링크가 복사되었습니다');}).catch(function(){legacyCopy(url);});}
+  else legacyCopy(url);
+}
+function legacyCopy(url){
+  try{var ta=document.createElement('textarea');ta.value=url;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('링크가 복사되었습니다');}catch(e){showToast('주소: '+url);}
+}
+function shareResult(){
+  var url=SHARE_URL||location.href;
+  var data={title:'직장 내 괴롭힘·성희롱 대응 진단 | 노무법인 도원',text:'지금 상황에 맞는 대응을 1분 만에 확인해보세요.',url:url};
+  if(navigator.share){navigator.share(data).catch(function(err){if(err&&err.name!=='AbortError')copyLink(url);});}
+  else copyLink(url);
+}
+
+/* ---------- iframe height ---------- */
+function reportHeight(){try{parent.postMessage({dwFlowHeight:document.documentElement.scrollHeight},'*');}catch(e){}}
+window.addEventListener('load',reportHeight);
+window.addEventListener('resize',reportHeight);
+if(window.ResizeObserver){try{new ResizeObserver(reportHeight).observe(document.body);}catch(e){}}
+(function(){var f=null;try{f=new URLSearchParams(location.search).get('flow');}catch(e){}if(f==='company'||f==='victim'){startTrack(f);}})();
+</script>
+</body>
+</html>
