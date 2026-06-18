@@ -3,472 +3,552 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>건설업 고용·산재보험료 계산기 | 확정·개산보험료</title>
-<meta name="description" content="건설업 고용·산재 확정보험료/개산보험료를 보수총액 또는 총공사금액×노무비율 방식으로 즉시 계산하는 무료 계산기. 2026년 최신 요율 반영.">
-<meta name="keywords" content="건설업 보험료 계산기, 확정보험료, 개산보험료, 고용산재보험료, 노무비율, 보수총액">
+<title>건설업 고용산재보험료 확정보험료/개산보험료 계산기</title>
+<meta name="description" content="건설업 고용산재 확정보험료·개산보험료를 매출비율·상용/일용/사업소득·외주·요율 단계별로 입력해 본사/일괄까지 산출하는 계산기.">
 <style>
   :root{
     --blue:#3182F6; --blue-d:#1B64DA; --blue-l:#EAF2FE;
-    --ok:#1DB66B; --warn:#F04452;
+    --ok:#1DB66B; --warn:#F04452; --warn-l:#FFF0F1;
     --ink:#191F28; --ink2:#333D4B; --mut:#6B7684; --mut2:#8B95A1;
-    --line:#E5E8EB; --bg:#F2F4F6; --card:#fff;
+    --line:#E5E8EB; --bg:#F2F4F6; --card:#fff; --thbg:#EAF1FB;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
-    background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%;font-size:17px}
-  .wrap{max-width:720px;margin:0 auto;padding:0 16px 80px}
-  /* header */
-  header{background:linear-gradient(135deg,var(--blue),var(--blue-d));color:#fff;
-    padding:40px 20px 36px;text-align:center}
-  header h1{font-size:28px;font-weight:700;letter-spacing:-.7px;line-height:1.4}
-  header p{font-size:16px;opacity:.92;margin-top:10px}
-  .yrbadge{display:inline-block;margin-top:16px;background:rgba(255,255,255,.18);
-    border:1px solid rgba(255,255,255,.32);border-radius:999px;padding:7px 16px;font-size:14px;font-weight:600}
+    background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%;font-size:19px}
+  .wrap{max-width:800px;margin:0 auto;padding:0 16px 96px}
+  header{background:linear-gradient(135deg,var(--blue),var(--blue-d));color:#fff;padding:40px 22px 34px;text-align:center}
+  header h1{font-size:28px;font-weight:800;letter-spacing:-.6px;line-height:1.4}
+  header p{font-size:17px;opacity:.92;margin-top:11px}
+  /* progress */
+  .prog{margin:22px 0 4px}
+  .prog .ptop{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+  .prog .pstep{font-size:17px;font-weight:800;color:var(--blue)}
+  .prog .ptitle{font-size:16px;color:var(--mut);font-weight:600}
+  .prog .pbar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+  .prog .pfill{height:100%;background:var(--blue);border-radius:99px;transition:width .25s}
   /* card */
-  .card{background:var(--card);border-radius:22px;
-    padding:26px 24px;margin-top:16px;box-shadow:0 1px 4px rgba(0,20,60,.05)}
-  .card h2{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:6px;letter-spacing:-.3px}
-  .card .sub{font-size:14.5px;color:var(--mut2);margin-bottom:20px;line-height:1.55}
-  .row{margin-bottom:20px}
-  .row:last-child{margin-bottom:0}
-  label.lbl{display:block;font-size:16px;font-weight:600;margin-bottom:10px;color:var(--ink2)}
-  .hint{font-size:13.5px;color:var(--mut2);margin-top:8px;line-height:1.5}
-  /* segmented */
-  .seg{display:flex;gap:6px;background:var(--bg);padding:6px;border-radius:15px}
-  .seg button{flex:1;border:0;background:transparent;color:var(--mut2);font-weight:600;
-    font-size:15.5px;padding:14px 6px;border-radius:11px;cursor:pointer;transition:.15s;font-family:inherit}
-  .seg button.on{background:#fff;color:var(--blue);box-shadow:0 1px 6px rgba(0,30,80,.13)}
-  /* inputs */
-  input[type=text],select{width:100%;border:1.5px solid var(--line);border-radius:14px;
-    padding:16px;font-size:17px;font-family:inherit;color:var(--ink);background:#fff;transition:.15s}
-  input[type=text]:focus,select:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 4px rgba(49,130,246,.15)}
-  select{cursor:pointer}
-  .money{position:relative}
-  .money input{padding-right:42px;text-align:right;font-weight:700;font-size:18px}
-  .money .won{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:16px;pointer-events:none;font-weight:600}
-  .pct input{text-align:right;font-weight:700;font-size:18px}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .calcline{font-size:14.5px;color:var(--blue-d);background:var(--blue-l);border-radius:12px;
-    padding:13px 15px;margin-top:10px;font-weight:600}
-  .switch{display:flex;align-items:center;gap:11px;cursor:pointer;font-size:14.5px;color:var(--mut);font-weight:500;user-select:none;line-height:1.5}
-  .switch input{width:22px;height:22px;flex-shrink:0;accent-color:var(--blue)}
-  details.rates{margin-top:6px;border:1.5px solid var(--line);border-radius:14px;padding:0 16px}
-  details.rates summary{cursor:pointer;font-size:15px;font-weight:600;color:var(--blue);padding:16px 0;list-style:none}
-  details.rates summary::-webkit-details-marker{display:none}
-  details.rates summary::before{content:'⚙ ';}
-  details.rates[open] summary{border-bottom:1.5px solid var(--line)}
-  .rateblk{padding:16px 0}
-  /* CTA calc */
-  .calcbtn{width:100%;background:var(--blue);color:#fff;border:0;border-radius:16px;
-    padding:19px;font-size:18.5px;font-weight:700;cursor:pointer;margin-top:24px;font-family:inherit;transition:.15s}
-  .calcbtn:hover{background:var(--blue-d)}
-  .calcbtn:active{transform:scale(.99)}
-  /* results */
-  #result{display:none}
-  .rtop{text-align:center;padding:8px 0 22px}
-  .rtop .rlabel{font-size:15px;color:var(--mut2);font-weight:600}
-  .rtop .rbig{font-size:42px;font-weight:800;color:var(--blue);letter-spacing:-1.5px;margin-top:6px;line-height:1.1}
-  .rtop .rbig.refund{color:var(--ok)}
-  .rtop .rbig.pay{color:var(--warn)}
-  .rtop .rnote{font-size:14.5px;color:var(--mut2);margin-top:9px}
-  table{width:100%;border-collapse:collapse;font-size:15.5px;margin-top:8px}
-  table th,table td{padding:14px 8px;border-bottom:1px solid var(--bg);text-align:right}
-  table th:first-child,table td:first-child{text-align:left}
-  table thead th{background:#F8F9FA;color:var(--mut);font-weight:700;font-size:14px;border-bottom:0}
-  table tbody tr:last-child td{border-bottom:0}
-  tr.subtot td{font-weight:700;background:#FBFCFD}
-  tr.total td{font-weight:800;color:var(--ink);font-size:17px;border-top:2px solid var(--ink)}
-  .rsec-title{font-size:17px;font-weight:700;color:var(--ink);margin:24px 0 6px}
-  .splitbox{background:#F8F9FB;border-radius:16px;padding:18px;margin-top:16px;font-size:15px}
-  .splitbox .sline{display:flex;justify-content:space-between;align-items:center;padding:7px 0;gap:10px}
-  .splitbox .sline b{color:var(--ink);font-size:16px}
+  .card{background:var(--card);border-radius:24px;padding:30px 24px;margin-top:16px;box-shadow:0 2px 10px rgba(0,20,60,.05)}
+  .stephead{text-align:center;border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:24px}
+  .stephead .big{font-size:28px;font-weight:800;color:var(--blue);letter-spacing:-.5px}
+  .stephead h2{font-size:25px;font-weight:800;color:var(--ink);margin-top:10px;letter-spacing:-.4px}
+  .stephead .desc{font-size:16.5px;color:var(--mut2);margin-top:9px}
+  /* 참고 배너 */
+  .refbar{display:flex;gap:9px;align-items:flex-start;background:#FFF7E6;border:1px solid #FFE3A3;
+    color:#8B6D1F;border-radius:14px;padding:15px 17px;font-size:15.5px;line-height:1.55;margin-bottom:20px;font-weight:500}
+  .refbar .ic{flex-shrink:0;font-weight:800;font-size:17px}
+  /* input table */
+  .itbl{width:100%;border-collapse:collapse;font-size:16.5px;margin-bottom:10px}
+  .itbl th,.itbl td{border:1px solid var(--line);padding:0;text-align:center}
+  .itbl thead th{background:var(--thbg);color:var(--ink2);font-weight:800;padding:14px 6px;font-size:16px;line-height:1.4}
+  .itbl thead th small{display:block;color:var(--mut2);font-weight:500;font-size:13px}
+  .itbl td.rl{background:#F8FAFD;font-weight:700;color:var(--ink2);padding:15px 11px;font-size:16px;text-align:left;white-space:nowrap}
+  .itbl td.rl small{color:var(--mut2);font-weight:600}
+  .itbl td.rl .num{display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:13px;align-items:center;justify-content:center;margin-right:6px;vertical-align:middle;font-weight:800}
+  .itbl td.tot{background:#EFF4FB;font-weight:800;color:var(--blue)}
+  .itbl input{width:100%;border:0;padding:16px 12px;font-size:18px;font-family:inherit;text-align:right;color:var(--ink);font-weight:700;background:transparent}
+  .itbl input:focus{outline:0;background:var(--blue-l)}
+  .itbl td.ro{background:#FAFBFC;color:var(--mut);font-weight:700;text-align:right;padding:16px 12px;font-size:17px}
+  .redhint{font-size:15px;color:var(--warn);margin:4px 0 18px;font-weight:600}
+  .notes{font-size:15px;color:var(--mut);line-height:1.7;margin:8px 0 4px}
+  .notes .n{display:flex;gap:8px;margin-bottom:8px}
+  .notes .n .num{flex-shrink:0;display:inline-flex;width:21px;height:21px;border-radius:50%;background:var(--blue);color:#fff;font-size:12.5px;align-items:center;justify-content:center;font-weight:800;margin-top:1px}
+  .notes .star{color:var(--ink2);font-weight:700}
+  .seccap{font-size:17px;font-weight:800;color:var(--ink2);margin:24px 0 10px}
+  /* 준비단계 폼 */
+  .frm .row{margin-bottom:20px}
+  .frm label{display:block;font-size:17px;font-weight:700;color:var(--blue-d);margin-bottom:9px}
+  .frm input{width:100%;border:1.5px solid var(--line);border-radius:14px;padding:16px 17px;font-size:18px;font-family:inherit;color:var(--ink)}
+  .frm input:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 4px rgba(49,130,246,.14)}
+  .frm .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .agree{display:flex;align-items:center;justify-content:center;gap:11px;font-size:16px;color:var(--mut);margin:14px 0 2px;cursor:pointer;font-weight:600}
+  .agree input{width:23px;height:23px;accent-color:var(--blue)}
+  /* nav */
+  .nav{display:flex;gap:11px;margin-top:28px}
+  .nav button{flex:1;border:0;border-radius:99px;padding:18px;font-size:18.5px;font-weight:800;cursor:pointer;font-family:inherit}
+  .nav .prev{flex:0 0 34%;background:#fff;color:var(--ink2);border:1.5px solid var(--line)}
+  .nav .next{background:var(--ink);color:#fff}
+  .nav .next:hover{background:#000}
+  .nav .next:active{transform:scale(.99)}
+  .agency{text-align:center;margin-top:22px}
+  .agency a{display:inline-block;border:1.5px solid var(--blue);color:var(--blue);border-radius:99px;padding:15px 32px;font-size:17px;font-weight:800;text-decoration:none}
+  .agency p{font-size:15px;color:var(--mut2);margin-top:10px}
+  /* result */
+  .rtop{text-align:center;padding:8px 0 20px}
+  .rtop .rlabel{font-size:17px;color:var(--mut2);font-weight:700}
+  .rtop .rbig{font-size:47px;font-weight:800;color:var(--blue);letter-spacing:-1.8px;margin-top:6px;line-height:1.1}
+  .rtop .rbig.refund{color:var(--ok)} .rtop .rbig.pay{color:var(--warn)}
+  .rtop .rnote{font-size:16px;color:var(--mut2);margin-top:9px}
+  .gtitle{font-size:18px;font-weight:800;color:var(--ink);margin:24px 0 8px;display:flex;align-items:center;gap:8px}
+  .gtitle .tag{font-size:14px;font-weight:800;color:#fff;background:var(--blue);border-radius:7px;padding:3px 10px}
+  .gtitle .tag.f{background:var(--ink2)}
+  .rtbl{width:100%;border-collapse:collapse;font-size:16.5px}
+  .rtbl th,.rtbl td{padding:14px 8px;border-bottom:1px solid var(--bg);text-align:right}
+  .rtbl th:first-child,.rtbl td:first-child{text-align:left}
+  .rtbl thead th{background:#F8F9FA;color:var(--mut);font-weight:800;font-size:15px;border-bottom:0}
+  .rtbl tr.total td{font-weight:800;color:var(--ink);font-size:17.5px;border-top:2px solid var(--ink)}
+  .splitbox{background:#F8F9FB;border-radius:16px;padding:20px;margin-top:16px;font-size:16.5px}
+  .splitbox .sline{display:flex;justify-content:space-between;align-items:center;padding:8px 0;gap:10px}
+  .splitbox .sline b{color:var(--ink);font-size:17.5px}
   .splitbox .disc{color:var(--ok);font-weight:700}
-  /* disclaimer + cta */
-  .disc-card{background:#FFF9EC;border:1px solid #FFE3A3;color:#8B6D1F;font-size:14px;
-    border-radius:16px;padding:17px 19px;margin-top:20px;line-height:1.7}
-  .lead{background:linear-gradient(135deg,var(--blue),var(--blue-d));color:#fff;border-radius:22px;
-    padding:32px 24px;margin-top:18px;text-align:center}
-  .lead h3{font-size:20px;font-weight:700;margin-bottom:10px;letter-spacing:-.3px}
-  .lead p{font-size:15px;opacity:.92;margin-bottom:20px;line-height:1.6}
-  .lead a{display:inline-block;background:#fff;color:var(--blue);text-decoration:none;
-    font-weight:700;font-size:17px;padding:16px 36px;border-radius:999px}
-  footer{text-align:center;font-size:13px;color:var(--mut2);margin-top:30px;line-height:1.8}
-  @media(max-width:520px){
-    body{font-size:16px}
-    header{padding:34px 18px 30px}header h1{font-size:24px}.rtop .rbig{font-size:34px}
-    .card{padding:22px 20px}table th,table td{padding:12px 5px;font-size:14.5px}
-    .money input,.pct input,input[type=text],select{font-size:16.5px}
+  .disc-card{background:#FFF9EC;border:1px solid #FFE3A3;color:#8B6D1F;font-size:15.5px;border-radius:16px;padding:18px 20px;margin-top:20px;line-height:1.7}
+  .lead{background:linear-gradient(135deg,var(--blue),var(--blue-d));color:#fff;border-radius:24px;padding:34px 26px;margin-top:18px;text-align:center}
+  .lead h3{font-size:22px;font-weight:800;margin-bottom:11px;letter-spacing:-.3px}
+  .lead p{font-size:16.5px;opacity:.92;margin-bottom:20px;line-height:1.6}
+  .lead a{display:inline-block;background:#fff;color:var(--blue);text-decoration:none;font-weight:800;font-size:18px;padding:16px 38px;border-radius:999px}
+  footer{text-align:center;font-size:14.5px;color:var(--mut2);margin-top:32px;line-height:1.8}
+  .hidden{display:none}
+  @media(max-width:560px){
+    body{font-size:17px}
+    header h1{font-size:23px} .stephead .big{font-size:24px} .stephead h2{font-size:21px}
+    .itbl{font-size:14.5px} .itbl thead th{font-size:14px;padding:11px 3px} .itbl thead th small{font-size:11.5px}
+    .itbl td.rl{font-size:13.5px;padding:12px 6px;white-space:normal} .itbl td.rl .num{width:20px;height:20px;font-size:11.5px}
+    .itbl input{font-size:16px;padding:14px 8px} .itbl td.ro{font-size:15px;padding:14px 8px}
+    .frm .grid2{grid-template-columns:1fr;gap:0} .rtop .rbig{font-size:37px}
+    .rtbl{font-size:15px} .rtbl th,.rtbl td{padding:12px 5px}
   }
+  /* 시작화면 */
+  .intro p{font-size:17px;color:var(--ink2);line-height:1.7;text-align:center;margin-bottom:4px}
+  .prep{background:var(--blue-l);border-radius:18px;padding:20px 22px;margin:20px 0 4px}
+  .prep h3{font-size:17px;font-weight:800;color:var(--blue-d);margin-bottom:10px}
+  .prep ul{list-style:none}
+  .prep li{display:flex;gap:10px;padding:6px 0;font-size:16px;color:var(--ink2);font-weight:600}
+  .prep li::before{content:'✔';color:var(--blue);font-weight:800}
+  .timetag{display:inline-block;background:#fff;border:1.5px solid var(--blue);color:var(--blue);
+    border-radius:999px;padding:7px 16px;font-size:15px;font-weight:800;margin:6px 0 2px}
+  /* 아코디언 */
+  details.acc{border:1.5px solid var(--line);border-radius:16px;margin:16px 0 6px;overflow:hidden}
+  details.acc>summary{cursor:pointer;list-style:none;padding:16px 18px;font-size:16px;font-weight:700;
+    color:var(--ink2);background:#F8FAFD;display:flex;justify-content:space-between;align-items:center}
+  details.acc>summary::-webkit-details-marker{display:none}
+  details.acc>summary .hd small{display:block;font-size:13px;color:var(--mut2);font-weight:500;margin-top:2px}
+  details.acc>summary::after{content:'＋';color:var(--mut2);font-size:20px;font-weight:700}
+  details.acc[open]>summary::after{content:'－'}
+  details.acc[open]>summary{border-bottom:1px solid var(--line)}
+  details.acc .accbody{padding:16px 16px 6px}
+  /* 인사이트 */
+  .insight{background:var(--blue-l);border:1px solid #CFE0FB;border-radius:16px;padding:16px 18px;margin-top:18px;font-size:15.5px;color:var(--blue-d);line-height:1.65}
+  .insight .ih{font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .copybtn{display:block;width:100%;margin-top:14px;border:1.5px solid var(--blue);background:#fff;color:var(--blue);
+    border-radius:16px;padding:15px;font-size:16.5px;font-weight:800;cursor:pointer;font-family:inherit}
+  .copybtn:active{background:var(--blue-l)}
+  .savetag{text-align:center;font-size:13px;color:var(--mut2);margin-top:14px}
 </style>
 </head>
 <body>
 <header>
-  <h1>건설업 고용·산재보험료 계산기</h1>
-  <p>확정보험료 · 개산보험료를 한 번에 계산하세요</p>
-  <span class="yrbadge" id="yrBadge">2026년 기준 요율 반영</span>
+  <h1>건설업 고용산재보험료<br>확정보험료/개산보험료 계산기</h1>
+  <p>복잡한 고용산재보험료 계산, 단계별로 해결하세요</p>
 </header>
 
 <div class="wrap">
-
-  <!-- 1. 계산 종류 -->
-  <div class="card">
-    <h2>1. 무엇을 계산할까요?</h2>
-    <div class="sub">확정보험료는 전년도 실적 정산, 개산보험료는 올해 추정 선납입니다.</div>
-    <div class="seg" id="segMode">
-      <button data-v="both" class="on">확정+개산</button>
-      <button data-v="hwa">확정보험료만</button>
-      <button data-v="gae">개산보험료만</button>
-    </div>
-    <div class="row" style="margin-top:16px">
-      <div class="grid2">
-        <div>
-          <label class="lbl">귀속연도(요율 기준)</label>
-          <select id="year">
-            <option value="2026" selected>2026년 요율</option>
-            <option value="2025">2025년 요율</option>
-          </select>
-        </div>
-        <div>
-          <label class="lbl">사업장 구분</label>
-          <select id="site">
-            <option value="field" selected>건설현장(건설일괄)</option>
-            <option value="head">본사</option>
-          </select>
-        </div>
-      </div>
-      <div class="hint">산재보험요율은 현장(건설일괄)과 본사가 다릅니다. 정확한 요율은 근로복지공단 고지서를 확인하세요.</div>
-    </div>
+  <div class="prog">
+    <div class="ptop"><span class="pstep" id="pstep">시작</span><span class="ptitle" id="ptitle">계산 준비</span></div>
+    <div class="pbar"><div class="pfill" id="pfill" style="width:11%"></div></div>
   </div>
 
-  <!-- 2. 보수총액 -->
-  <div class="card">
-    <h2>2. 보수총액 입력</h2>
-    <div class="sub">실제 보수총액을 알면 직접 입력하고, 모르면 총공사금액×노무비율로 추정합니다.</div>
-    <div class="seg" id="segMethod">
-      <button data-v="direct" class="on">보수총액 직접입력</button>
-      <button data-v="ratio">총공사금액 × 노무비율</button>
+  <!-- STEP 0 · 시작화면 -->
+  <section class="card step" data-step="0">
+    <div class="stephead"><div class="big">시작하기</div><h2>건설업 고용산재보험료 계산</h2><div class="desc">확정·개산보험료를 단계별로 계산해요</div></div>
+    <div class="intro">
+      <p>재무제표(손익계산서)와 고용산재토탈서비스 보험료신고서만 있으면<br>약 3분이면 끝나요.</p>
+      <div style="text-align:center"><span class="timetag">⏱ 예상 소요시간 약 3분</span></div>
+      <div class="prep"><h3>미리 준비하면 좋아요</h3><ul>
+        <li>재무제표 — 손익계산서·원가명세서 (인건비·외주비 계정)</li>
+        <li>계정별원장 — 공사수입금·외주공사비·장비사용료</li>
+        <li>고용산재토탈서비스 — 보험료신고서 (요율·전년도 개산)</li>
+        <li>상용근로자 원천징수부·일용직 지급명세서</li>
+      </ul></div>
     </div>
+    <div class="nav"><button class="next" data-go="1" style="flex:1">계산 시작하기 ›</button></div>
+    <div class="agency"><a href="#" id="agencyCta" target="_blank" rel="noopener">고용산재보험료 계산 대행 신청하기</a><p>합리적 가격으로 대행을 맡겨보세요</p></div>
+  </section>
 
-    <!-- 직접입력 -->
-    <div id="mDirect" style="margin-top:16px">
-      <div class="row">
-        <label class="lbl">산재보험 보수총액</label>
-        <div class="money"><input type="text" id="baseSan" inputmode="numeric" placeholder="0"><span class="won">원</span></div>
-      </div>
-      <div class="row">
-        <label class="switch"><input type="checkbox" id="sepGo"> 고용보험 보수총액을 따로 입력 (65세 이상·외국인 등 제외 시)</label>
-        <div class="money" id="goWrap" style="display:none;margin-top:9px"><input type="text" id="baseGo" inputmode="numeric" placeholder="0"><span class="won">원</span></div>
-        <div class="hint">체크하지 않으면 산재 보수총액과 동일하게 적용됩니다.</div>
-      </div>
+  <!-- STEP 1 · 7/1 매출 비율 -->
+  <section class="card step hidden" data-step="1">
+    <div class="stephead"><div class="big">7/1</div><h2>매출 비율 입력하기</h2><div class="desc">확정보험료 계산 대상년도의 매출 비율 입력하기</div></div>
+    <div class="refbar"><span class="ic">ⓘ</span><span>이번 단계에서 참고하면 좋을 자료: 계정별원장 공사수입금 계정 / 고용산재토탈 사업개시신고 정보조회</span></div>
+    <table class="itbl">
+      <thead><tr><th>구분</th><th>금액</th><th>비율</th></tr></thead>
+      <tbody>
+        <tr><td class="rl"><span class="num">1</span>원도급 매출</td><td><input type="text" inputmode="numeric" placeholder="0" id="mk_won" class="mny mk"></td><td class="ro" id="rt_won">-</td></tr>
+        <tr><td class="rl"><span class="num">2</span>고용승인 매출</td><td><input type="text" inputmode="numeric" placeholder="0" id="mk_go" class="mny mk"></td><td class="ro" id="rt_go">-</td></tr>
+        <tr><td class="rl"><span class="num">3</span>산재승인 매출</td><td><input type="text" inputmode="numeric" placeholder="0" id="mk_san" class="mny mk"></td><td class="ro" id="rt_san">-</td></tr>
+        <tr><td class="rl">미승인하도급 매출</td><td><input type="text" inputmode="numeric" placeholder="0" id="mk_mi" class="mny mk"></td><td class="ro" id="rt_mi">-</td></tr>
+        <tr><td class="rl tot">합계</td><td class="ro tot" id="mk_sum">0</td><td class="ro tot" id="rt_sum">0</td></tr>
+      </tbody>
+    </table>
+    <div class="redhint">해당값이 없으면 비워두면 0으로 처리돼요.</div>
+    <div class="notes">
+      <div class="n"><span class="num">1</span>원수급 매출에는 고용+산재 하수급인 사업주 인정 승인 매출도 포함해야 해요</div>
+      <div class="n"><span class="num">2</span>고용승인 매출이란 우리회사의 하도급 매출 중 고용보험만 하수급인 사업주 인정승인을 받은 공사 매출을 말해요</div>
+      <div class="n"><span class="num">3</span>산재승인 매출이란 우리회사의 하도급 매출 중 산재보험만 하수급인 사업주 인정승인을 받은 공사 매출을 말해요</div>
     </div>
+    <div class="nav"><button class="prev" data-go="0">‹ 이전단계</button><button class="next" data-go="2">다음단계 ›</button></div>
+  </section>
 
-    <!-- 노무비율 -->
-    <div id="mRatio" style="margin-top:16px;display:none">
-      <div class="row">
-        <label class="lbl">총공사금액 (또는 외주공사비)</label>
-        <div class="money"><input type="text" id="amount" inputmode="numeric" placeholder="0"><span class="won">원</span></div>
-      </div>
-      <div class="row">
-        <label class="lbl">노무비율</label>
-        <select id="ratioSel">
-          <option value="27">일반 건설공사 노무비율 27% (총공사금액 기준)</option>
-          <option value="30">하도급공사 노무비율 30% (하도급금액 기준)</option>
-          <option value="custom">직접 입력</option>
-        </select>
-        <div class="pct" id="ratioCustomWrap" style="display:none;margin-top:9px">
-          <div class="money"><input type="text" id="ratioCustom" inputmode="decimal" placeholder="0"><span class="won">%</span></div>
-        </div>
-        <div class="calcline" id="ratioCalc">보수총액 = 0원</div>
-        <div class="hint">고용노동부 고시 노무비율입니다. 보수총액 = 총공사금액 × 노무비율.</div>
-      </div>
+  <!-- STEP 2 · 7/2 상용직 급여 -->
+  <section class="card step hidden" data-step="2">
+    <div class="stephead"><div class="big">7/2</div><h2>상용직 급여 입력하기</h2><div class="desc">확정보험료 계산 대상년도의 상용직 급여 입력하기</div></div>
+    <div class="refbar"><span class="ic">ⓘ</span><span>이번 단계에서 참고하면 좋을 자료: 상용근로자 원천징수부</span></div>
+    <table class="itbl">
+      <thead><tr><th>구분</th><th>급여<small>(비과세제외)</small></th><th>상여<small>(비과세제외)</small></th><th>보수총액<small>(비과세제외)</small></th></tr></thead>
+      <tbody>
+        <tr><td class="rl"><span class="num">1</span>본사 상용직</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny sb" id="sb_pay"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny sb" id="sb_bon"></td><td class="ro" id="sb_tot">0</td></tr>
+        <tr><td class="rl"><span class="num">2</span>현장 상용직</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny sh" id="sh_pay"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny sh" id="sh_bon"></td><td class="ro" id="sh_tot">0</td></tr>
+      </tbody>
+    </table>
+    <div class="redhint">해당값이 없으면 비워두면 0으로 처리돼요.</div>
+    <div class="notes">
+      <div class="n"><span class="num">1</span>본사 상용직이란 사무실에서 근무한 상용근로자를 말해요</div>
+      <div class="n"><span class="num">2</span>현장상용직이란 현장에서 근무한 상용근로자를 말해요</div>
+      <div class="n"><span class="star">* 상용직 중 대표자 및 대표자 동거친족의 보수는 제외해야 해요!</span></div>
     </div>
-  </div>
+    <details class="acc">
+      <summary><span class="hd">상용직 보수 차감 (적용 제외)<small>65세 이상·외국인 등 — 해당 시 펼치기</small></span></summary>
+      <div class="accbody">
+        <table class="itbl">
+          <thead><tr><th>보수 차감항목<small>(적용 제외)</small></th><th>본사상용직</th><th>현장상용직</th></tr></thead>
+          <tbody>
+            <tr><td class="rl">65세 이상 근로자</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="dsb_65"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="dsh_65"></td></tr>
+            <tr><td class="rl">적용제외 외국인(H2, E9)</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="dsb_f1"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="dsh_f1"></td></tr>
+            <tr><td class="rl">적용제외 외국인(H2, E9 외)</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="dsb_f2"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="dsh_f2"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+    <div class="nav"><button class="prev" data-go="1">‹ 이전단계</button><button class="next" data-go="3">다음단계 ›</button></div>
+  </section>
+  <!-- STEP 3 · 7/3 일용직 급여 -->
+  <section class="card step hidden" data-step="3">
+    <div class="stephead"><div class="big">7/3</div><h2>일용직 급여 입력하기</h2><div class="desc">확정보험료 계산 대상년도의 일용직 급여 입력하기</div></div>
+    <div class="refbar"><span class="ic">ⓘ</span><span>이번 단계에서 참고하면 좋을 자료: 일용근로자 지급명세서</span></div>
+    <table class="itbl">
+      <thead><tr><th>구분</th><th>급여</th><th><span class="num" style="background:var(--blue)">2</span> 기타소득</th></tr></thead>
+      <tbody>
+        <tr><td class="rl"><span class="num">1</span>본사 일용직</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="ib_pay"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="ib_etc"></td></tr>
+        <tr><td class="rl">현장 일용직</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="ih_pay"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="ih_etc"></td></tr>
+      </tbody>
+    </table>
+    <div class="redhint">해당값이 없으면 비워두면 0으로 처리돼요.</div>
+    <div class="notes">
+      <div class="n"><span class="num">1</span>본사 일용직이란 본사 관리번호로 신고한 일용직이 아니라, 사무실에서만 근무한(서류작업 일바 등) 일용근로자를 말해요</div>
+      <div class="n"><span class="num">2</span>기타소득에는 일당 외 다른 항목으로 일용직에게 지급된 보수가 있을 경우 입력해요 (각종 수당 등)</div>
+    </div>
+    <details class="acc">
+      <summary><span class="hd">일용직 보수 차감 (적용 제외)<small>65세 이상·외국인 등 — 해당 시 펼치기</small></span></summary>
+      <div class="accbody">
+        <table class="itbl">
+          <thead><tr><th>보수 차감항목<small>(적용 제외)</small></th><th>본사일용직</th><th>현장일용직</th></tr></thead>
+          <tbody>
+            <tr><td class="rl">65세 이상 근로자</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="dib_65"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="dih_65"></td></tr>
+            <tr><td class="rl">적용제외 외국인(H2, E9)</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="dib_f1"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="dih_f1"></td></tr>
+            <tr><td class="rl">적용제외 외국인(H2, E9 외)</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="dib_f2"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="dih_f2"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+    <div class="nav"><button class="prev" data-go="2">‹ 이전단계</button><button class="next" data-go="4">다음단계 ›</button></div>
+  </section>
 
-  <!-- 3. 요율 -->
-  <div class="card">
-    <h2>3. 적용 요율</h2>
-    <div class="sub">연도·구분에 따라 자동 입력됩니다. 필요 시 직접 수정할 수 있어요.</div>
-    <div class="row">
-      <label class="lbl">기업 규모 (고용안정·직업능력개발 요율)</label>
-      <select id="size">
-        <option value="2.5" selected>우선지원 대상기업 (상시 150인 미만) · 0.25%</option>
-        <option value="4.5">150인 이상 (우선지원 대상) · 0.45%</option>
-        <option value="6.5">150인 이상 ~ 1,000인 미만 · 0.65%</option>
-        <option value="8.5">1,000인 이상 · 0.85%</option>
-      </select>
-      <div class="hint">건설업은 상시근로자 300인 이하면 우선지원 대상기업입니다.</div>
+  <!-- STEP 4 · 7/4 현장 사업소득자 -->
+  <section class="card step hidden" data-step="4">
+    <div class="stephead"><div class="big">7/4</div><h2>현장 사업소득자 소득 입력하기</h2><div class="desc">확정보험료 계산 대상년도의 사업소득자 소득 입력하기</div></div>
+    <div class="refbar"><span class="ic">ⓘ</span><span>이번 단계에서 참고하면 좋을 자료: 사업소득 지급명세서 등</span></div>
+    <table class="itbl">
+      <thead><tr><th>구분</th><th>총액</th></tr></thead>
+      <tbody>
+        <tr><td class="rl">현장 사업소득자 급여</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="sauh"></td></tr>
+      </tbody>
+    </table>
+    <div class="redhint">해당값이 없으면 비워두면 0으로 처리돼요.</div>
+    <div class="nav"><button class="prev" data-go="3">‹ 이전단계</button><button class="next" data-go="5">다음단계 ›</button></div>
+  </section>
+
+  <!-- STEP 5 · 7/5 외주공사비 및 장비 -->
+  <section class="card step hidden" data-step="5">
+    <div class="stephead"><div class="big">7/5</div><h2>외주공사비 및 장비사용료 입력하기</h2><div class="desc">확정보험료 계산 대상년도의 외주비, 장비(건설기계노무제공자)</div></div>
+    <div class="refbar"><span class="ic">ⓘ</span><span>이번 단계에서 참고하면 좋을 자료: 계정별원장 외주공사비, 장비사용료, 원재료 및 기타계정</span></div>
+    <table class="itbl">
+      <thead><tr><th>구분</th><th>총액</th></tr></thead>
+      <tbody>
+        <tr><td class="rl"><span class="num">1</span>외주공사비</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="oj_out"></td></tr>
+        <tr><td class="rl"><span class="num">2</span>장비사용료</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="oj_jang"></td></tr>
+        <tr><td class="rl"><span class="num">3</span>건설기계 노무제공자</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="oj_geon"></td></tr>
+        <tr><td class="rl"><span class="num">4</span>화물차주 노무제공자</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="oj_hwa"></td></tr>
+      </tbody>
+    </table>
+    <div class="redhint">해당값이 없으면 비워두면 0으로 처리돼요.</div>
+    <div class="notes">
+      <div class="n"><span class="num">1</span>외주공사비는 외주공사비 계정 뿐만 아니라 원재료, 지급수수료 계정 등 실제로 외주공사에 해당하는 모든 항목을 발췌해서 합산금액을 입력해요.</div>
+      <div class="n"><span class="num">2</span>장비사용료 중 노무제공에 해당하는 금액은 제외해요.</div>
+      <div class="n"><span class="num">3</span>노무제공자 보수총액은 기준보수월액으로 환산한 금액의 연간 합계액을 입력해요</div>
     </div>
-    <details class="rates">
-      <summary>요율 직접 수정 (‰ = 1,000분율)</summary>
-      <div class="rateblk">
-        <div class="grid2">
-          <div>
-            <label class="lbl">산재보험요율 (‰)</label>
-            <div class="pct"><input type="text" id="rSan" inputmode="decimal"></div>
-            <div class="hint">임금채권부담금·석면·출퇴근재해요율 포함</div>
+    <details class="acc">
+      <summary><span class="hd">하수급인 인정승인 내려준 외주공사<small>승인 내려준 공사가 있을 때만 펼치기</small></span></summary>
+      <div class="accbody">
+        <table class="itbl">
+          <thead><tr><th>구분</th><th>하수급인 인정승인 내려준 외주공사</th></tr></thead>
+          <tbody>
+            <tr><td class="rl"><span class="num">4</span>고용승인외주공사</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="ap_go"></td></tr>
+            <tr><td class="rl"><span class="num">5</span>산재승인외주공사</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="ap_san"></td></tr>
+            <tr><td class="rl"><span class="num">6</span>고용+산재승인외주공사</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="ap_both"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+    <div class="nav"><button class="prev" data-go="4">‹ 이전단계</button><button class="next" data-go="6">다음단계 ›</button></div>
+  </section>
+  <!-- STEP 6 · 7/6 보험료율 -->
+  <section class="card step hidden" data-step="6">
+    <div class="stephead"><div class="big">7/6</div><h2>보험료율</h2><div class="desc">보험료신고 대상년도 보험료신고서에 입력된 보험요율 입력하기</div></div>
+    <div class="refbar"><span class="ic">ⓘ</span><span>이번 단계에서 참고하면 좋을 자료: 고용산재토탈서비스 보험료신고서</span></div>
+    <table class="itbl">
+      <thead><tr><th>구분</th><th>확정</th><th>개산</th></tr></thead>
+      <tbody>
+        <tr><td class="rl">본사산재<small>(특고제외)</small></td><td><input type="text" inputmode="decimal" class="rate" id="rate_bsX_h" value="9.56"></td><td><input type="text" inputmode="decimal" class="rate" id="rate_bsX_g" value="9.56"></td></tr>
+        <tr><td class="rl">본사산재<small>(건설기계)</small></td><td><input type="text" inputmode="decimal" class="rate" id="rate_bsG_h" value="34.6"></td><td><input type="text" inputmode="decimal" class="rate" id="rate_bsG_g" value="34.6"></td></tr>
+        <tr><td class="rl">본사산재<small>(건설화물)</small></td><td><input type="text" inputmode="decimal" class="rate" id="rate_bsH_h" value="34.6"></td><td><input type="text" inputmode="decimal" class="rate" id="rate_bsH_g" value="34.6"></td></tr>
+        <tr><td class="rl">본사실업</td><td><input type="text" inputmode="decimal" class="rate" id="rate_bsU_h" value="18"></td><td><input type="text" inputmode="decimal" class="rate" id="rate_bsU_g" value="18"></td></tr>
+        <tr><td class="rl">본사안정</td><td><input type="text" inputmode="decimal" class="rate" id="rate_bsA_h" value="2.5"></td><td><input type="text" inputmode="decimal" class="rate" id="rate_bsA_g" value="2.5"></td></tr>
+        <tr><td class="rl">일괄산재<small>(특고제외)</small></td><td><input type="text" inputmode="decimal" class="rate" id="rate_ilX_h" value="36.56"></td><td><input type="text" inputmode="decimal" class="rate" id="rate_ilX_g" value="36.56"></td></tr>
+        <tr><td class="rl">일괄산재<small>(건설기계)</small></td><td><input type="text" inputmode="decimal" class="rate" id="rate_ilG_h" value="34.6"></td><td><input type="text" inputmode="decimal" class="rate" id="rate_ilG_g" value="34.6"></td></tr>
+        <tr><td class="rl">일괄산재<small>(건설화물)</small></td><td><input type="text" inputmode="decimal" class="rate" id="rate_ilH_h" value="34.6"></td><td><input type="text" inputmode="decimal" class="rate" id="rate_ilH_g" value="34.6"></td></tr>
+        <tr><td class="rl">일괄실업</td><td><input type="text" inputmode="decimal" class="rate" id="rate_ilU_h" value="18"></td><td><input type="text" inputmode="decimal" class="rate" id="rate_ilU_g" value="18"></td></tr>
+        <tr><td class="rl">일괄안정</td><td><input type="text" inputmode="decimal" class="rate" id="rate_ilA_h" value="2.5"></td><td><input type="text" inputmode="decimal" class="rate" id="rate_ilA_g" value="2.5"></td></tr>
+      </tbody>
+    </table>
+    <div class="redhint">요율은 ‰(1,000분율) 단위이며 2026년 기준 기본값이 채워져 있어요. 신고서 값과 다르면 수정하세요.</div>
+    <div class="nav"><button class="prev" data-go="5">‹ 이전단계</button><button class="next" data-go="7">다음단계 ›</button></div>
+  </section>
+
+  <!-- STEP 7 · 7/7 전년도 개산보험료 -->
+  <section class="card step hidden" data-step="7">
+    <div class="stephead"><div class="big">7/7</div><h2>전년도 개산보험료 신고 및 납부액</h2><div class="desc">보험료신고 대상년도 보험료신고서에 입력된 전년도 개산보험료 입력하기</div></div>
+    <div class="refbar"><span class="ic">ⓘ</span><span>이번 단계에서 참고하면 좋을 자료: 고용산재토탈서비스 보험료신고서</span></div>
+    <table class="itbl">
+      <thead><tr><th>구분</th><th>신고보험료</th><th>납부보험료</th></tr></thead>
+      <tbody>
+        <tr><td class="rl">본사산재<small>(특고제외)</small></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_bsX_d"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_bsX_p"></td></tr>
+        <tr><td class="rl">본사산재<small>(건설기계)</small></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_bsG_d"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_bsG_p"></td></tr>
+        <tr><td class="rl">본사산재<small>(건설화물)</small></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_bsH_d"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_bsH_p"></td></tr>
+        <tr><td class="rl">본사실업</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_bsU_d"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_bsU_p"></td></tr>
+        <tr><td class="rl">본사안정</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_bsA_d"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_bsA_p"></td></tr>
+        <tr><td class="rl">일괄산재<small>(특고제외)</small></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_ilX_d"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_ilX_p"></td></tr>
+        <tr><td class="rl">일괄산재<small>(건설기계)</small></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_ilG_d"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_ilG_p"></td></tr>
+        <tr><td class="rl">일괄산재<small>(건설화물)</small></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_ilH_d"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_ilH_p"></td></tr>
+        <tr><td class="rl">일괄실업</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_ilU_d"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_ilU_p"></td></tr>
+        <tr><td class="rl">일괄안정</td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_ilA_d"></td><td><input type="text" inputmode="numeric" placeholder="0" class="mny" id="paid_ilA_p"></td></tr>
+      </tbody>
+    </table>
+    <div class="redhint">해당값이 없으면 비워두면 0으로 처리돼요.</div>
+    <div class="nav"><button class="prev" data-go="6">‹ 이전단계</button><button class="next" id="calcBtn">계산 결과 보기 ›</button></div>
+  </section>
+
+  <!-- STEP 8 · 결과 -->
+  <section class="card step hidden" data-step="8">
+    <div class="stephead"><div class="big">결과</div><h2>고용산재보험료 계산 결과</h2></div>
+    <div id="resBox"></div>
+    <div id="insightBox"></div>
+    <button class="copybtn" id="copyBtn">📋 결과 요약 복사하기</button>
+    <div class="disc-card">⚠ <b>참고용 추정 결과입니다.</b> 근로복지공단의 원재료·장비·노무제공자 적용기준과 회사 판단 기준의 차이, 매출비율·하수급승인 처리 방식에 따라 실제 신고·정산 금액은 달라질 수 있어요. 보험료는 10원 미만 절사 기준입니다.</div>
+    <div class="lead"><h3>정확한 확정정산이 필요하신가요?</h3><p>외주·승인공사 분류와 매출비율 적용이 추징을 좌우합니다.<br>건설업 전문 노무진이 직접 검토해 드립니다.</p><a href="#" id="leadCta" target="_blank" rel="noopener">무료 상담 문의하기</a></div>
+    <details class="acc" style="margin-top:18px">
+      <summary><span class="hd">상담 신청 정보 입력 (선택)<small>상담을 원하시면 연락처를 남겨주세요</small></span></summary>
+      <div class="accbody">
+        <div class="frm">
+          <div class="grid2">
+            <div class="row"><label>사업구분</label><input type="text" id="c_type"></div>
+            <div class="row"><label>사업장관리번호</label><input type="text" id="c_mgmt"></div>
+            <div class="row"><label>공사명(건설공사)</label><input type="text" id="c_work"></div>
+            <div class="row"><label>사업장명칭</label><input type="text" id="c_name"></div>
+            <div class="row"><label>대표자명</label><input type="text" id="c_ceo"></div>
+            <div class="row"><label>소재지</label><input type="text" id="c_addr"></div>
+            <div class="row"><label>전화번호</label><input type="text" id="c_tel"></div>
+            <div class="row"><label>휴대전화</label><input type="text" id="c_mobile"></div>
+            <div class="row"><label>FAX</label><input type="text" id="c_fax"></div>
+            <div class="row"><label>E-mail</label><input type="text" id="c_email"></div>
           </div>
-          <div>
-            <label class="lbl">실업급여 (‰)</label>
-            <div class="pct"><input type="text" id="rUnemp" inputmode="decimal" value="18"></div>
-            <div class="hint">사업주+근로자 합산</div>
-          </div>
-        </div>
-        <div class="grid2" style="margin-top:12px">
-          <div>
-            <label class="lbl">고용안정·직업능력개발 (‰)</label>
-            <div class="pct"><input type="text" id="rStab" inputmode="decimal" value="2.5"></div>
-          </div>
-          <div></div>
+          <label class="agree"><input type="checkbox" id="c_agree"> 회사의 정보수집 및 이용에 동의합니다.</label>
         </div>
       </div>
     </details>
-  </div>
+    <div class="savetag">⤓ 입력 내용은 이 브라우저에 자동 저장돼요</div>
+    <div class="nav"><button class="prev" data-go="7">‹ 수정</button><button class="next" id="restartBtn">처음부터 다시</button></div>
+  </section>
 
-  <!-- 4. 정산(확정) -->
-  <div class="card" id="cardSettle">
-    <h2>4. 확정보험료 정산 (선택)</h2>
-    <div class="sub">작년에 미리 낸 개산보험료를 입력하면 추가납부/환급액까지 계산합니다.</div>
-    <div class="grid2">
-      <div>
-        <label class="lbl">기신고 개산보험료 · 산재</label>
-        <div class="money"><input type="text" id="paidSan" inputmode="numeric" placeholder="0"><span class="won">원</span></div>
-      </div>
-      <div>
-        <label class="lbl">기신고 개산보험료 · 고용</label>
-        <div class="money"><input type="text" id="paidGo" inputmode="numeric" placeholder="0"><span class="won">원</span></div>
-      </div>
-    </div>
-    <div class="hint" style="margin-top:8px">모르면 비워두세요. 확정보험료만 계산됩니다.</div>
-  </div>
-
-  <button class="calcbtn" id="calcBtn">보험료 계산하기</button>
-
-  <!-- 결과 -->
-  <div id="result">
-    <div class="card">
-      <div id="resHwa"></div>
-      <div id="resGae"></div>
-    </div>
-
-    <div class="disc-card">
-      ⚠ <b>참고용 계산 결과입니다.</b> 근로복지공단의 원재료·장비·노무제공자 적용 기준과
-      회사가 판단한 기준의 차이에 따라 실제 신고·정산 금액은 달라질 수 있습니다.
-      보험료는 10원 미만 절사 기준으로 표시됩니다. 정확한 신고는 전문가 검토를 권장합니다.
-    </div>
-
-    <div class="lead">
-      <h3>확정정산 추징이 걱정되시나요?</h3>
-      <p>외주비 노무비율 적용, 원·하도급 구분 하나로 수천만 원이 갈립니다.<br>건설업 전문 노무진이 직접 검토해 드립니다.</p>
-      <a href="#" id="leadCta" target="_blank" rel="noopener">무료 상담 문의하기</a>
-    </div>
-  </div>
-
-  <footer>
-    건설업 고용·산재 확정/개산보험료 계산기 · 2026년 요율 기준<br>
-    본 계산기는 정보 제공 목적이며 법적 효력이 없습니다.
-  </footer>
+  <footer>건설업 고용산재 확정/개산보험료 계산기 · 2026년 요율 기준<br>본 계산기는 정보 제공 목적이며 법적 효력이 없습니다.</footer>
 </div>
-
 <script>
 (function(){
   var $=function(s){return document.querySelector(s)};
-  // ---- 요율 프리셋 (‰) ----
-  var RATES={
-    '2026':{san:{field:36.56,head:9.56},unemp:18,stab:2.5},
-    '2025':{san:{field:36.26,head:9.26},unemp:18,stab:2.5}
-  };
-  var DISCOUNT=0.03; // 개산보험료 일시납 3% 경감
-
-  // ★ 상담 문의 페이지 URL (여기를 실제 주소로 바꾸세요) ★
   var CONTACT_URL='https://dowonhr.com';
-
-  var mode='both', method='direct';
-
-  // ---- 숫자 유틸 ----
+  var DISCOUNT=0.03, NB=0.30, LSKEY='gongmu_calc_v1';
+  var STEPS=[
+    {s:'시작',t:'계산 준비'},
+    {s:'7/1',t:'매출 비율 입력하기'},{s:'7/2',t:'상용직 급여 입력하기'},
+    {s:'7/3',t:'일용직 급여 입력하기'},{s:'7/4',t:'현장 사업소득자 소득 입력하기'},
+    {s:'7/5',t:'외주공사비 및 장비사용료'},{s:'7/6',t:'보험료율'},
+    {s:'7/7',t:'전년도 개산보험료'},{s:'결과',t:'계산 결과'}
+  ];
   function num(v){v=(v||'').toString().replace(/[^0-9.]/g,'');return v===''?0:parseFloat(v)}
+  function g(id){var e=document.getElementById(id);return e?num(e.value):0}
+  function gt(id){var e=document.getElementById(id);return e?(e.value||'').trim():''}
   function comma(n){return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',')}
-  function floor10(n){return Math.floor(n/10)*10} // 10원 미만 절사
+  function floor10(n){return Math.floor(n/10)*10}
   function won(n){return comma(n)+'원'}
+  function pctv(n){return (Math.round(n*10000)/100)+'%'}
 
-  // 천단위 콤마 입력 처리
-  function bindMoney(el){
-    el.addEventListener('input',function(){
-      var raw=el.value.replace(/[^0-9]/g,'');
-      el.value=raw===''?'':comma(parseFloat(raw));
-      updateRatioCalc();
-    });
+  // ----- 자동 저장/복원 -----
+  function allInputs(){ return document.querySelectorAll('input'); }
+  function saveState(){ try{ var o={}; allInputs().forEach(function(el){ if(!el.id)return;
+    o[el.id]=el.type==='checkbox'?(el.checked?1:0):el.value; }); localStorage.setItem(LSKEY,JSON.stringify(o)); }catch(e){} }
+  function loadState(){ try{ var s=localStorage.getItem(LSKEY); if(!s)return; var o=JSON.parse(s);
+    allInputs().forEach(function(el){ if(el.id && Object.prototype.hasOwnProperty.call(o,el.id)){
+      if(el.type==='checkbox') el.checked=!!o[el.id]; else el.value=o[el.id]; } }); }catch(e){} }
+  function resetAll(){ allInputs().forEach(function(el){ if(el.type==='checkbox') el.checked=false; else el.value=el.defaultValue; });
+    try{localStorage.removeItem(LSKEY);}catch(e){} updateRatio(); updateSangTot(); }
+
+  document.addEventListener('input',function(e){
+    var el=e.target;
+    if(el.classList.contains('mny')){ var r=el.value.replace(/[^0-9]/g,''); el.value=r===''?'':comma(parseFloat(r)); }
+    if(el.classList.contains('mk')) updateRatio();
+    if(el.classList.contains('sb')||el.classList.contains('sh')) updateSangTot();
+    saveState();
+  });
+  document.addEventListener('change',saveState);
+
+  function updateRatio(){
+    var w=g('mk_won'),go=g('mk_go'),sa=g('mk_san'),mi=g('mk_mi'),sum=w+go+sa+mi;
+    $('#mk_sum').textContent=comma(sum);
+    function r(id,v){document.getElementById(id).textContent=sum>0?pctv(v/sum):'-';}
+    r('rt_won',w);r('rt_go',go);r('rt_san',sa);r('rt_mi',mi);
+    $('#rt_sum').textContent=sum>0?'100%':'0';
   }
-  document.querySelectorAll('input[inputmode=numeric]').forEach(bindMoney);
-
-  // ---- 세그먼트 토글 ----
-  $('#segMode').addEventListener('click',function(e){
-    if(e.target.tagName!=='BUTTON')return;
-    mode=e.target.dataset.v;
-    [].forEach.call(this.children,function(b){b.classList.toggle('on',b===e.target)});
-    $('#cardSettle').style.display=(mode==='gae')?'none':'block';
-  });
-  $('#segMethod').addEventListener('click',function(e){
-    if(e.target.tagName!=='BUTTON')return;
-    method=e.target.dataset.v;
-    [].forEach.call(this.children,function(b){b.classList.toggle('on',b===e.target)});
-    $('#mDirect').style.display=(method==='direct')?'block':'none';
-    $('#mRatio').style.display=(method==='ratio')?'block':'none';
-  });
-
-  $('#sepGo').addEventListener('change',function(){
-    $('#goWrap').style.display=this.checked?'block':'none';
-  });
-  $('#ratioSel').addEventListener('change',function(){
-    $('#ratioCustomWrap').style.display=this.value==='custom'?'block':'none';
-    updateRatioCalc();
-  });
-  $('#ratioCustom').addEventListener('input',updateRatioCalc);
-  $('#size').addEventListener('change',function(){ $('#rStab').value=this.value; });
-
-  // ---- 요율 자동 채우기 ----
-  function applyRates(){
-    var y=$('#year').value, s=$('#site').value, r=RATES[y];
-    $('#rSan').value=r.san[s];
-    $('#rUnemp').value=r.unemp;
-    $('#rStab').value=$('#size').value;
-    $('#yrBadge').textContent=y+'년 기준 요율 반영';
-  }
-  $('#year').addEventListener('change',applyRates);
-  $('#site').addEventListener('change',applyRates);
-  applyRates();
-
-  function ratioVal(){
-    var sel=$('#ratioSel').value;
-    return sel==='custom'?num($('#ratioCustom').value):parseFloat(sel);
-  }
-  function updateRatioCalc(){
-    if(method!=='ratio')return;
-    var base=num($('#amount').value)*ratioVal()/100;
-    $('#ratioCalc').textContent='보수총액 = '+won(base)+'  ( '+comma(num($('#amount').value))+' × '+ratioVal()+'% )';
+  function updateSangTot(){
+    $('#sb_tot').textContent=comma(g('sb_pay')+g('sb_bon'));
+    $('#sh_tot').textContent=comma(g('sh_pay')+g('sh_bon'));
   }
 
-  // ---- 보수총액 산출 ----
-  function getBases(){
-    var san,go;
-    if(method==='direct'){
-      san=num($('#baseSan').value);
-      go=$('#sepGo').checked?num($('#baseGo').value):san;
+  // ----- 단계 이동 -----
+  var step=0;
+  function showStep(n){
+    step=n;
+    document.querySelectorAll('.step').forEach(function(s){ s.classList.toggle('hidden',parseInt(s.dataset.step,10)!==n); });
+    $('#pstep').textContent=STEPS[n].s; $('#ptitle').textContent=STEPS[n].t;
+    $('#pfill').style.width=((n+1)/9*100)+'%';
+    window.scrollTo({top:0,behavior:'smooth'}); postHeight();
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-go]');
+    if(b){ showStep(parseInt(b.dataset.go,10)); }
+  });
+  $('#restartBtn').addEventListener('click',function(){ if(confirm('입력 내용을 모두 지우고 처음부터 시작할까요?')){ resetAll(); } showStep(0); });
+  function linkCta(el){ if(!el)return; el.addEventListener('click',function(e){ if(!CONTACT_URL){e.preventDefault();return;} this.href=CONTACT_URL; }); }
+  linkCta($('#leadCta')); linkCta($('#agencyCta'));
+
+  // ----- 계산 -----
+  function prem(base,rate){ return floor10(base*rate/1000); }
+  function lumpOf(x){ return x-floor10(x*DISCOUNT); }
+  function compute(){
+    var sb=g('sb_pay')+g('sb_bon'), sh=g('sh_pay')+g('sh_bon');
+    var ib=g('ib_pay')+g('ib_etc'), ih=g('ih_pay')+g('ih_etc'), sau=g('sauh');
+    var dsb65=g('dsb_65'),dsbF=g('dsb_f1')+g('dsb_f2');
+    var dsh65=g('dsh_65'),dshF=g('dsh_f1')+g('dsh_f2');
+    var dib65=g('dib_65'),dibF=g('dib_f1')+g('dib_f2');
+    var dih65=g('dih_65'),dihF=g('dih_f1')+g('dih_f2');
+    var ojOut=g('oj_out'),ojJang=g('oj_jang'),ojGeon=g('oj_geon'),ojHwa=g('oj_hwa');
+    var apGo=g('ap_go'),apSan=g('ap_san'),apBoth=g('ap_both');
+    var outSan=Math.max(ojOut-apSan-apBoth,0)*NB, outGo=Math.max(ojOut-apGo-apBoth,0)*NB, jang=ojJang*NB;
+    var base={};
+    base.bsX=sb+ib; base.bsG=0; base.bsH=0;
+    var goB=sb+sh+ib;
+    base.bsU=Math.max(goB-(dsb65+dsbF+dsh65+dshF+dib65+dibF),0);
+    base.bsA=Math.max(goB-(dsbF+dshF+dibF),0);
+    base.ilX=sh+ih+sau+outSan+jang; base.ilG=ojGeon; base.ilH=ojHwa;
+    var goF=ih+outGo;
+    base.ilU=Math.max(goF-(dih65+dihF),0); base.ilA=Math.max(goF-(dihF),0);
+    var keys=['bsX','bsG','bsH','bsU','bsA','ilX','ilG','ilH','ilU','ilA'],hwa={},gae={},declTot=0;
+    keys.forEach(function(k){ hwa[k]=prem(base[k],g('rate_'+k+'_h')); gae[k]=prem(base[k],g('rate_'+k+'_g')); declTot+=g('paid_'+k+'_d'); });
+    return {base:base,hwa:hwa,gae:gae,keys:keys,declTot:declTot,ojOut:ojOut,outSan:outSan};
+  }
+  var ROWLAB={bsX:'산재(특고제외)',bsG:'산재(건설기계)',bsH:'산재(건설화물)',bsU:'실업급여',bsA:'고용안정·직능',
+              ilX:'산재(특고제외)',ilG:'산재(건설기계)',ilH:'산재(건설화물)',ilU:'실업급여',ilA:'고용안정·직능'};
+  function grpTable(p,prefix){
+    var keys=p.keys.filter(function(k){return k.indexOf(prefix)===0}),rows='',tot=0;
+    keys.forEach(function(k){ var amt=p.hwa[k]; if(p.base[k]<=0&&amt<=0)return; tot+=amt;
+      rows+='<tr><td>'+ROWLAB[k]+'</td><td>'+comma(p.base[k])+'</td><td>'+document.getElementById('rate_'+k+'_h').value+'</td><td>'+comma(amt)+'</td></tr>'; });
+    return {html:'<table class="rtbl"><thead><tr><th>구분</th><th>보수총액</th><th>요율(‰)</th><th>보험료</th></tr></thead><tbody>'+rows+'<tr class="total"><td>소계</td><td></td><td></td><td>'+comma(tot)+'</td></tr></tbody></table>',tot:tot};
+  }
+  function sumOf(p,which,prefix){var t=0;p.keys.forEach(function(k){if(k.indexOf(prefix)===0)t+=p[which][k];});return t;}
+  function splitBox(total){
+    var l=lumpOf(total),q=floor10(total/4),q1=total-q*3;
+    return '<div class="splitbox"><div class="sline"><span>① 일시납부 (3/31)</span><b>'+won(l)+'</b></div>'+
+      '<div class="sline disc"><span>　└ 3% 경감</span><span class="disc">−'+won(total-l)+'</span></div>'+
+      '<div class="sline" style="border-top:1px solid #cdddee;margin-top:6px;padding-top:10px"><span>② 분할납부(4회)</span><b>'+won(total)+'</b></div>'+
+      '<div class="sline"><span>　1기</span><span>'+won(q1)+'</span></div><div class="sline"><span>　2·3·4기</span><span>각 '+won(q)+'</span></div></div>';
+  }
+  var LAST=null;
+  function render(){
+    var p=compute();
+    var hb=grpTable(p,'bs'),hf=grpTable(p,'il'),hwaTot=hb.tot+hf.tot;
+    var gaeTot=sumOf(p,'gae','bs')+sumOf(p,'gae','il'),diff=hwaTot-p.declTot;
+    LAST={p:p,hwaTot:hwaTot,gaeTot:gaeTot,diff:diff,bTot:hb.tot,fTot:hf.tot};
+    var html='';
+    if(p.declTot>0){
+      var cls=diff>0?'pay':(diff<0?'refund':''),txt=diff>0?'추가 납부':(diff<0?'환급':'정산 없음');
+      html+='<div class="rtop"><div class="rlabel">확정 정산 결과 ('+txt+')</div><div class="rbig '+cls+'">'+won(Math.abs(diff))+'</div><div class="rnote">확정 '+won(hwaTot)+' − 전년도 신고 '+won(p.declTot)+'</div></div>';
     }else{
-      san=num($('#amount').value)*ratioVal()/100;
-      go=san;
+      html+='<div class="rtop"><div class="rlabel">확정보험료 합계</div><div class="rbig">'+won(hwaTot)+'</div></div>';
     }
-    return {san:san,go:go};
+    html+='<div class="gtitle"><span class="tag f">본사</span> 확정보험료</div>'+hb.html;
+    html+='<div class="gtitle"><span class="tag">건설일괄</span> 확정보험료</div>'+hf.html;
+    html+='<div class="splitbox" style="margin-top:14px"><div class="sline"><span>본사 소계</span><b>'+won(hb.tot)+'</b></div><div class="sline"><span>건설일괄 소계</span><b>'+won(hf.tot)+'</b></div><div class="sline" style="border-top:1px solid #cdddee;margin-top:6px;padding-top:10px"><span>확정보험료 총계</span><b>'+won(hwaTot)+'</b></div></div>';
+    html+='<div class="gtitle" style="margin-top:24px">🧾 개산보험료</div><div class="rnote" style="text-align:center;margin:0 0 4px">합계 '+won(gaeTot)+'</div>'+splitBox(gaeTot);
+    $('#resBox').innerHTML=html;
+    $('#insightBox').innerHTML=insight(p,hwaTot,diff);
   }
-
-  // ---- 보험료 계산 ----
-  function premiums(base){
-    var rSan=num($('#rSan').value), rUn=num($('#rUnemp').value), rSt=num($('#rStab').value);
-    var san=floor10(base.san*rSan/1000);
-    var unemp=floor10(base.go*rUn/1000);
-    var stab=floor10(base.go*rSt/1000);
-    return {san:san,unemp:unemp,stab:stab,goTot:unemp+stab,total:san+unemp+stab};
-  }
-
-  function moneyRow(label,base,rate,amt){
-    return '<tr><td>'+label+'</td><td>'+comma(base)+'</td><td>'+rate+'</td><td>'+comma(amt)+'</td></tr>';
-  }
-
-  // ---- 확정 결과 ----
-  function renderHwa(){
-    var b=getBases(), p=premiums(b);
-    var rSan=$('#rSan').value, rUn=$('#rUnemp').value, rSt=$('#rStab').value;
-    var paidSan=num($('#paidSan').value), paidGo=num($('#paidGo').value);
-    var hasPaid=(paidSan+paidGo)>0;
-    var diffSan=p.san-paidSan, diffGo=p.goTot-paidGo, diff=diffSan+diffGo;
-
-    var h='<div class="rsec-title">📋 확정보험료</div>';
-    if(hasPaid){
-      var cls=diff>0?'pay':(diff<0?'refund':'');
-      var txt=diff>0?'추가 납부':(diff<0?'환급':'정산 없음');
-      h+='<div class="rtop"><div class="rlabel">정산 결과 ('+txt+')</div>'+
-         '<div class="rbig '+cls+'">'+won(Math.abs(diff))+'</div>'+
-         '<div class="rnote">확정보험료 '+won(p.total)+' − 기신고 개산 '+won(paidSan+paidGo)+'</div></div>';
-    }else{
-      h+='<div class="rtop"><div class="rlabel">확정보험료 합계</div>'+
-         '<div class="rbig">'+won(p.total)+'</div></div>';
+  function insight(p,hwaTot,diff){
+    var lines=[];
+    if(p.declTot>0){
+      if(diff>0) lines.push('전년도 신고 대비 <b>'+won(diff)+'</b> 추가 부담이 예상돼요.');
+      else if(diff<0) lines.push('전년도 신고 대비 <b>'+won(-diff)+'</b> 환급이 예상돼요.');
     }
-    h+='<table><thead><tr><th>구분</th><th>보수총액</th><th>요율(‰)</th><th>보험료</th></tr></thead><tbody>';
-    h+=moneyRow('산재보험',b.san,rSan,p.san);
-    h+=moneyRow('고용 · 실업급여',b.go,rUn,p.unemp);
-    h+=moneyRow('고용 · 고용안정/직능',b.go,rSt,p.stab);
-    h+='<tr class="subtot"><td>고용보험 소계</td><td></td><td></td><td>'+comma(p.goTot)+'</td></tr>';
-    h+='<tr class="total"><td>확정보험료 합계</td><td></td><td></td><td>'+comma(p.total)+'</td></tr>';
-    if(hasPaid){
-      h+='<tr><td>(−) 기신고 개산 · 산재</td><td></td><td></td><td>'+comma(paidSan)+'</td></tr>';
-      h+='<tr><td>(−) 기신고 개산 · 고용</td><td></td><td></td><td>'+comma(paidGo)+'</td></tr>';
-      h+='<tr class="total"><td>정산 차액</td><td></td><td></td><td>'+(diff>=0?'+':'')+comma(diff)+'</td></tr>';
+    if(p.ojOut>0 && p.base.ilX>0){
+      lines.push('외주 산입액이 건설일괄 보수총액의 <b>'+pctv(p.outSan/p.base.ilX)+'</b>를 차지해요. 외주 구분(공사·장비·비공사) 판단에 따라 보험료가 크게 달라집니다.');
     }
-    h+='</tbody></table>';
-    $('#resHwa').innerHTML=h;
+    if(p.ojOut>0 && (g('ap_go')+g('ap_san')+g('ap_both'))===0){
+      lines.push('하수급인 인정승인 내역이 없어 외주공사 전액이 보수총액에 산입됐어요. 승인 공사가 있다면 7/5에서 입력하면 보험료가 줄어요.');
+    }
+    if(!lines.length) return '';
+    return '<div class="insight"><div class="ih">💡 결과 살펴보기</div>'+lines.map(function(l){return '· '+l;}).join('<br>')+'</div>';
   }
+  $('#calcBtn').addEventListener('click',function(){ render(); showStep(8); });
 
-  // ---- 개산 결과 ----
-  function renderGae(){
-    var b=getBases(), p=premiums(b);
-    var rSan=$('#rSan').value, rUn=$('#rUnemp').value, rSt=$('#rStab').value;
-    var h='<div class="rsec-title" style="margin-top:26px">🧾 개산보험료 (당해연도 추정)</div>';
-    h+='<div class="rtop"><div class="rlabel">개산보험료 합계</div>'+
-       '<div class="rbig">'+won(p.total)+'</div></div>';
-    h+='<table><thead><tr><th>구분</th><th>보수총액</th><th>요율(‰)</th><th>보험료</th></tr></thead><tbody>';
-    h+=moneyRow('산재보험',b.san,rSan,p.san);
-    h+=moneyRow('고용 · 실업급여',b.go,rUn,p.unemp);
-    h+=moneyRow('고용 · 고용안정/직능',b.go,rSt,p.stab);
-    h+='<tr class="total"><td>개산보험료 합계</td><td></td><td></td><td>'+comma(p.total)+'</td></tr>';
-    h+='</tbody></table>';
-
-    // 납부방법 — 일시납 경감은 종목별 floor10(보험료×3%), 분할은 종목별 4등분(나머지 1기)
-    function lumpOf(x){return x-floor10(x*DISCOUNT);}
-    var lump=lumpOf(p.san)+lumpOf(p.unemp)+lumpOf(p.stab);
-    var discAmt=p.total-lump;
-    function q4(x){return floor10(x/4);}
-    var q=q4(p.san)+q4(p.unemp)+q4(p.stab); // 2~4기 각 회차 합계
-    var q1=p.total-q*3;                     // 1기(나머지 흡수)
-    h+='<div class="splitbox">';
-    h+='<div class="sline"><span>① 일시납부 (3/31까지)</span><b>'+won(lump)+'</b></div>';
-    h+='<div class="sline disc"><span>　└ 3% 경감 적용</span><span class="disc">−'+won(discAmt)+'</span></div>';
-    h+='<div class="sline" style="border-top:1px solid #cdddee;margin-top:6px;padding-top:10px">'+
-       '<span>② 분할납부 (4회, 경감 없음)</span><b>'+won(p.total)+'</b></div>';
-    h+='<div class="sline"><span>　1기 (3/31)</span><span>'+won(q1)+'</span></div>';
-    h+='<div class="sline"><span>　2기(5/15)·3기(8/15)·4기(11/15)</span><span>각 '+won(q)+'</span></div>';
-    h+='</div>';
-    h+='<div class="hint" style="margin-top:10px">※ 개산 추정보수총액이 확정보수총액의 70~130% 범위면 확정 보수총액과 동일하게 신고합니다.</div>';
-    $('#resGae').innerHTML=h;
-  }
-
-  $('#calcBtn').addEventListener('click',function(){
-    var b=getBases();
-    if(b.san<=0){alert('보수총액(또는 총공사금액)을 입력해주세요.');return;}
-    $('#resHwa').innerHTML=''; $('#resGae').innerHTML='';
-    if(mode==='both'||mode==='hwa') renderHwa();
-    if(mode==='both'||mode==='gae') renderGae();
-    $('#result').style.display='block';
-    postHeight();
-    if(window.self===window.top){ $('#result').scrollIntoView({behavior:'smooth',block:'start'}); }
-    else { try{ parent.postMessage({type:'calc-scroll'}, '*'); }catch(e){} }
+  $('#copyBtn').addEventListener('click',function(){
+    if(!LAST){ return; }
+    var p=LAST, name=gt('c_name')||gt('c_work')||'-';
+    var t='[건설업 고용산재보험료 계산 결과]\n';
+    t+='사업장: '+name+'\n';
+    t+='확정보험료 총계: '+won(p.hwaTot)+'\n  · 본사 '+won(p.bTot)+' / 건설일괄 '+won(p.fTot)+'\n';
+    if(p.p.declTot>0){ t+='전년도 신고: '+won(p.p.declTot)+'\n'; t+='정산: '+(p.diff>=0?'추가납부 ':'환급 ')+won(Math.abs(p.diff))+'\n'; }
+    t+='개산보험료 합계: '+won(p.gaeTot)+'\n(※ 참고용 추정치 — 외주 분류·매출비율에 따라 달라질 수 있음)';
+    var done=function(){ var b=$('#copyBtn'); var o=b.textContent; b.textContent='✅ 복사됐어요'; setTimeout(function(){b.textContent=o;},1800); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done,function(){window.prompt('아래 내용을 복사하세요',t);}); }
+    else { window.prompt('아래 내용을 복사하세요',t); }
   });
 
-
-  // 상담 CTA
-  $('#leadCta').addEventListener('click',function(e){
-    if(!CONTACT_URL){ e.preventDefault(); return; }
-    this.href=CONTACT_URL;
-  });
-
-  // ---- iframe 자동 높이: 부모 페이지로 높이 전송 ----
   function postHeight(){
     if(window.self===window.top) return;
-    var h=Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-    try{ parent.postMessage({type:'calc-height', height:h}, '*'); }catch(e){}
+    var h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    try{ parent.postMessage({type:'calc-height',height:h},'*'); }catch(e){}
   }
-  window.addEventListener('load', postHeight);
-  window.addEventListener('resize', postHeight);
+  window.addEventListener('load',postHeight);
+  window.addEventListener('resize',postHeight);
   if(window.ResizeObserver){ new ResizeObserver(postHeight).observe(document.body); }
-  setTimeout(postHeight, 300);
+  setTimeout(postHeight,300);
+
+  // 초기화: 저장값 복원 후 표시 갱신
+  loadState(); updateRatio(); updateSangTot();
 })();
 </script>
 </body>
