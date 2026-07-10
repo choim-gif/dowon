@@ -195,10 +195,13 @@
 <script>
 const SHEET_ID='1ft-zwEz6-z8EcADZ0Tt_SxRgY5FyP8xCFAixwrX_xQ4';
 const GID='1580686585';
-// 데이터 소스: ① 웹에 게시(CSV, CORS 허용) 우선 → 실패 시 ② gviz(공유) 자동 전환
-const PUB_CSV=`https://docs.google.com/spreadsheets/d/e/2PACX-1vQLp4utKiDBf-D0gQG9DPe-5suDUKe6MmmyTXsKa_BNxocG_ysj8zm5_thSbDLXjKQNxhsAjKCPQgcV/pub?gid=${GID}&single=true&output=csv`;
-const GVIZ_CSV=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${GID}`;
-const SOURCES=[PUB_CSV, GVIZ_CSV];
+// 데이터 소스: 웹에 게시 CSV(gid → 무gid) → gviz(공유) 순으로 시도, 각 요청은 8초 타임아웃
+const PUB_BASE='https://docs.google.com/spreadsheets/d/e/2PACX-1vQLp4utKiDBf-D0gQG9DPe-5suDUKe6MmmyTXsKa_BNxocG_ysj8zm5_thSbDLXjKQNxhsAjKCPQgcV/pub';
+const SOURCES=[
+  `${PUB_BASE}?gid=${GID}&single=true&output=csv`,
+  `${PUB_BASE}?output=csv`,
+  `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${GID}`
+];
 const IV_CAP=50000;
 const ne=x=>x!=null&&String(x).trim()!=='';
 const num=s=>{const t=String(s==null?'':s).replace(/[^0-9.-]/g,'');return t===''||t==='-'?0:parseFloat(t);};
@@ -427,13 +430,17 @@ function drawCpl(months){
 }
 
 async function fetchCsv(url){
-  const res=await fetch(url+(url.includes('?')?'&':'?')+'_='+Date.now());
-  if(!res.ok) throw new Error('HTTP '+res.status);
-  const text=await res.text();
-  if(!text || text.trim().length<20) throw new Error('EMPTY');
-  const months=parseRows(parseCSV(text));
-  if(months.length<1) throw new Error('NO_DATA');
-  return months;
+  const ctrl=new AbortController();
+  const to=setTimeout(()=>ctrl.abort(),8000);
+  try{
+    const res=await fetch(url+(url.includes('?')?'&':'?')+'_='+Date.now(),{signal:ctrl.signal});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const text=await res.text();
+    if(!text || text.trim().length<20) throw new Error('EMPTY');
+    const months=parseRows(parseCSV(text));
+    if(months.length<1) throw new Error('NO_DATA');
+    return months;
+  } finally { clearTimeout(to); }
 }
 async function load(){
   document.getElementById('content').style.display='none';
