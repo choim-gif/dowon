@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>다원HR 연간 트리거 캘린더</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --ink:#191F28; --ink2:#4E5968; --ink3:#8B95A1; --ink4:#B0B8C1;
+    --blue:#3182F6; --blue-soft:#E8F3FF; --blue-deep:#1B64DA;
+    --red:#F04452; --red-soft:#FDECEE;
+    --amber:#FF9F0A; --amber-deep:#B76B00; --amber-soft:#FFF3D6;
+    --fill:#F9FAFB; --fill2:#F2F4F6; --fill3:#EBECF0;
+  }
+  body{font-family:'Pretendard',-apple-system,system-ui,sans-serif;background:#fff;color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55;font-size:17px}
+  .wrap{max-width:1100px;margin:0 auto;padding:44px 24px 72px}
+
+  h1{font-size:42px;font-weight:800;letter-spacing:-.02em}
+
+  /* ===== 오늘 체크 ===== */
+  .todaypanel{background:var(--fill);border-radius:24px;padding:26px 28px;margin:24px 0 30px}
+  .tp-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .tp-head h2{font-size:28px;font-weight:800;letter-spacing:-.01em}
+  .tp-head .tdate{font-size:17px;color:var(--blue);font-weight:700}
+  .tp-head .treset{margin-left:auto;border:none;background:var(--fill2);color:var(--ink2);font-size:15px;font-weight:700;border-radius:999px;padding:9px 18px;cursor:pointer;font-family:inherit}
+  .tp-head .treset:hover{background:var(--fill3)}
+  .tp-prog{font-size:16px;color:var(--ink3);margin-bottom:18px}
+  .tp-prog b{color:var(--blue);font-weight:800}
+
+  .tgroups{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+  .tgroup{background:#fff;border-radius:18px;padding:18px 16px 12px}
+  .tgroup .gh{display:flex;align-items:center;gap:9px;margin-bottom:12px;padding:0 4px}
+  .tgroup .gh .gdot{width:10px;height:10px;border-radius:50%}
+  .tgroup .gh .gt{font-size:18.5px;font-weight:800}
+  .tgroup .gh .gd{font-size:14px;color:var(--ink3)}
+  .tgroup .none{font-size:15.5px;color:var(--ink4);padding:2px 4px 10px}
+
+  .titem{display:flex;gap:12px;align-items:flex-start;background:var(--fill);border-radius:14px;padding:14px 15px;margin-bottom:8px}
+  .titem input{margin-top:4px;width:20px;height:20px;accent-color:var(--blue);cursor:pointer;flex:0 0 auto}
+  .titem .tbody{cursor:pointer}
+  .titem .tbody:hover .tt{color:var(--blue)}
+  .titem .tt{font-size:17.5px;font-weight:700;line-height:1.45}
+  .titem .act{font-size:15.5px;color:var(--ink2);margin-top:6px;line-height:1.5}
+  .titem .act b{color:var(--blue);font-weight:700}
+  .titem .dday{display:inline-block;font-size:13.5px;font-weight:800;border-radius:6px;padding:2px 9px;margin-left:7px;vertical-align:1px}
+  .dday.hot{background:var(--red-soft);color:var(--red)}
+  .dday.warm{background:var(--amber-soft);color:var(--amber-deep)}
+  .dday.cool{background:var(--blue-soft);color:var(--blue-deep)}
+  .titem.done{opacity:.4}
+  .titem.done .tt{text-decoration:line-through}
+
+  /* ===== 월 탭 ===== */
+  .mtabs{display:flex;align-items:stretch;gap:2px;border-bottom:2px solid var(--fill2);margin:0 0 20px;overflow-x:auto;scrollbar-width:none}
+  .mtabs::-webkit-scrollbar{display:none}
+  .mtab{border:none;background:none;padding:10px 14px 13px;font-size:17px;font-weight:700;color:var(--ink3);cursor:pointer;font-family:inherit;position:relative;white-space:nowrap;flex:0 0 auto}
+  .mtab:hover{color:var(--ink2)}
+  .mtab .mn{font-size:12.5px;font-weight:800;color:var(--ink4);margin-left:4px;vertical-align:6px}
+  .mtab.on{color:var(--ink)}
+  .mtab.on::after{content:"";position:absolute;left:12px;right:12px;bottom:-2px;height:3px;background:var(--ink);border-radius:3px}
+  .mtab.thisM{color:var(--blue)}
+  .mtab.thisM.on{color:var(--blue)}
+  .mtab.thisM.on::after{background:var(--blue)}
+  .ydiv{align-self:center;font-size:12.5px;font-weight:800;color:var(--ink4);padding:0 12px 2px;border-left:1.5px solid var(--fill3);margin:6px 4px 6px 8px;flex:0 0 auto}
+
+  /* ===== 아젠다 타임라인 ===== */
+  .timeline{background:var(--fill);border-radius:24px;padding:8px 26px}
+  .msec{display:grid;grid-template-columns:112px 1fr;gap:22px;padding:22px 0}
+  .msec + .msec{border-top:1px solid #EBECF0}
+  .mlab{align-self:start;position:sticky;top:14px}
+  .mlab .mname{font-size:24px;font-weight:800;letter-spacing:-.01em}
+  .mlab .myear{font-size:14.5px;color:var(--ink3);font-weight:700;margin-top:1px}
+  .mlab .mcount{display:inline-block;font-size:14px;font-weight:800;color:var(--ink2);background:var(--fill2);border-radius:999px;padding:3px 12px;margin-top:8px}
+  .msec.now .mlab .mname{color:var(--blue)}
+  .msec.now .mlab .nowtag{display:inline-block;font-size:14px;font-weight:800;color:#fff;background:var(--blue);border-radius:999px;padding:4px 13px;margin-top:8px}
+  .tl-note{font-size:15.5px;color:var(--ink3);padding:18px 2px}
+  .morebtn{display:block;width:100%;border:none;background:var(--fill2);color:var(--ink2);font-size:17px;font-weight:700;border-radius:14px;padding:15px;margin:6px 0 16px;cursor:pointer;font-family:inherit}
+  .morebtn:hover{background:var(--fill3)}
+  .morebtn b{color:var(--blue)}
+
+  /* 트리거 카드 */
+  .tc{background:#fff;border-radius:16px;padding:15px 17px;margin-bottom:9px;cursor:pointer;transition:transform .1s}
+  .tc:active{transform:scale(.995)}
+  .tc .row1{display:flex;align-items:flex-start;gap:9px}
+  .tc .badge{flex:0 0 auto;font-size:13.5px;font-weight:800;border-radius:7px;padding:3px 11px;margin-top:1px}
+  .tc .tt{font-size:19px;font-weight:700;line-height:1.45;flex:1}
+  .tc .car{flex:0 0 auto;color:var(--ink4);font-size:13px;margin-top:5px;transition:transform .15s}
+  .tc.open .car{transform:rotate(90deg)}
+  .tc .svcs{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+  .tc .svcs span{font-size:14px;font-weight:700;color:var(--blue-deep);background:var(--blue-soft);border-radius:7px;padding:3px 11px}
+  .tc .dur{font-size:14.5px;color:var(--ink3);font-weight:700;margin-top:9px}
+  .tc .body{display:none;margin-top:13px;background:var(--fill);border-radius:12px;padding:14px 16px}
+  .tc.open .body{display:block}
+  .tc .kv{display:grid;grid-template-columns:92px 1fr;gap:10px;font-size:16px;padding:5px 0}
+  .tc .kv .k{font-weight:800;color:var(--ink3);font-size:14px;padding-top:2px}
+  .tc .kv .v{color:var(--ink2);line-height:1.55}
+  .tc .kv .v b{color:var(--ink)}
+  .tc .kv .v.angle{color:var(--blue-deep);font-weight:600}
+
+  .always{margin-top:32px}
+  .always > h3{font-size:23px;font-weight:800;letter-spacing:-.01em;margin-bottom:5px}
+  .always > .ad{font-size:17px;color:var(--ink2);margin-bottom:14px}
+  .always .acards{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:10px}
+  .always .tc{background:var(--fill)}
+  .always .tc .body{background:#fff}
+
+  .foot{margin-top:30px;font-size:15.5px;color:var(--ink3);line-height:1.65}
+  @media(max-width:820px){.msec{grid-template-columns:1fr;gap:8px}.mlab{position:static}.search{width:100%;margin-left:0}}
+  @media print{
+    @page{size:A4;margin:10mm}
+    body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .tc .body{display:block}.tc .car{display:none}.filters,.search,.treset{display:none}
+  }
+
+  /* ===== 실행 우선순위 (엔진별 체크 리스트) ===== */
+  .calh2{font-size:33px;font-weight:800;letter-spacing:-.02em;margin-top:48px}
+  .priosec{margin:22px 0 8px}
+  .priosec > h2{font-size:33px;font-weight:800;letter-spacing:-.02em}
+  .priosec > .pd{font-size:17px;color:var(--ink3);margin:6px 0 4px}
+  .prioprog{font-size:17px;color:var(--ink3);margin:0 0 18px}
+  .prioprog b{color:var(--blue);font-weight:800}
+  .prio-pill{display:inline-block;font-size:14px;font-weight:800;padding:6px 14px;border-radius:999px;letter-spacing:-.01em}
+  .prio-pill.p1{background:var(--blue);color:#fff}
+  .prio-pill.p2{background:#E4E4E9;color:#1D1D1F}
+  .prio-eng{display:inline-flex;font-size:18.5px;font-weight:800;padding:8px 20px;border-radius:999px;letter-spacing:-.02em}
+  .prio-eng.case{background:#1D1D1F;color:#fff}
+  .prio-eng.gain{background:var(--blue);color:#fff}
+  .engblock{background:var(--fill2);border-radius:24px;padding:22px 22px 24px;margin-bottom:16px}
+  .engblock .eh{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-bottom:16px}
+  .engblock .eh .ed{font-size:16px;color:var(--ink2);font-weight:600}
+  .engcols{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .engcol{background:#fff;border-radius:16px;padding:18px 18px 16px}
+  .engcol .colh{display:flex;align-items:center;gap:9px;margin-bottom:13px}
+  .engcol .colh .cnt{font-size:14px;color:var(--ink4);font-weight:800}
+  .colnote{font-size:14.5px;color:var(--ink3);line-height:1.55;margin-top:12px;font-weight:500}
+  .prio-goods{display:flex;flex-direction:column;gap:9px}
+  .prio-goods .g{background:#F7F8FA;border-radius:12px;border:1.5px solid transparent;transition:background .12s,border-color .12s}
+  .prio-goods .g:hover{border-color:#D5DBE2}
+  .prio-goods .g.started{background:#EAF5FF;border-color:#BFE0FF}
+  .grow{display:flex;align-items:flex-start;gap:11px;padding:12px 14px}
+  .grow .gchk{margin-top:2px;width:19px;height:19px;accent-color:var(--blue);cursor:pointer;flex:0 0 auto}
+  .grow .gtext{min-width:0;flex:1;cursor:pointer}
+  .grow .gtext b{display:block;font-size:16.5px;font-weight:700;color:var(--ink);letter-spacing:-.01em;line-height:1.3}
+  .g.started .gtext b{color:var(--blue-deep)}
+  .grow .gtext small{display:block;font-size:13px;color:var(--ink3);margin-top:3px;font-weight:500}
+  .grow .gtrig{display:flex;align-items:baseline;gap:6px;margin-top:8px;font-size:13.5px;color:var(--ink2);font-weight:600;line-height:1.45}
+  .grow .gtrig i{flex:0 0 auto;font-style:normal;font-size:11.5px;font-weight:800;letter-spacing:.02em;color:var(--amber-deep);background:var(--amber-soft);border-radius:5px;padding:2px 7px;position:relative;top:-1px}
+  .gmeta{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex:0 0 auto}
+  .gdate{display:none;font-size:13px;font-weight:800;color:var(--blue-deep);background:var(--blue-soft);border-radius:7px;padding:3px 9px;white-space:nowrap;cursor:pointer}
+  .gdate:hover{background:#D6EAFF}
+  .gdinput{display:none;font-family:inherit;font-size:13px;font-weight:700;color:var(--blue-deep);border:1px solid #BFE0FF;border-radius:7px;padding:2px 6px}
+  .g.started .gdate{display:inline-block}
+  .gprog{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--ink2);background:#fff;border:1px solid #E5E8EB;border-radius:999px;padding:5px 11px;cursor:pointer;font-family:inherit;white-space:nowrap}
+  .gprog:hover{border-color:#B0B8C1}
+  .gprog .pbar{display:inline-flex;gap:3px}
+  .gprog .pseg{width:11px;height:6px;border-radius:3px;background:#E1E5EA}
+  .gprog .pseg.on{background:var(--blue)}
+  .gprog .pfrac{font-variant-numeric:tabular-nums}
+  .gprog .pcar{font-style:normal;font-size:9px;transition:transform .15s;display:inline-block;color:var(--ink4)}
+  .g.exp .gprog .pcar{transform:rotate(90deg)}
+  .gprog.done{color:#12805C;background:#E6F4EE;border-color:#8FD3B6}
+  .gprog.done .pseg.on{background:#12805C}
+  .gsub{display:none;padding:2px 14px 12px 44px;flex-direction:column;gap:2px}
+  .g.exp .gsub{display:flex}
+  .subitem{display:flex;align-items:center;gap:9px;padding:6px 8px;border-radius:8px;cursor:pointer;font-size:14.5px;color:var(--ink2);font-weight:500}
+  .subitem:hover{background:#fff}
+  .subitem input{width:16px;height:16px;accent-color:var(--blue);cursor:pointer;flex:0 0 auto}
+  .subitem.done span{text-decoration:line-through;color:var(--ink4)}
+  @media(max-width:820px){.engcols{grid-template-columns:1fr}}
+  /* ===== 월별 피크 요약 그리드 ===== */
+  .calgridwrap{margin-top:26px}
+  .calgridwrap .gt{font-size:20px;font-weight:800;letter-spacing:-.01em;margin-bottom:12px}
+  .calgrid{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:20px;overflow:hidden;font-size:15px;box-shadow:0 4px 20px rgba(0,0,0,.05)}
+  .calgrid th,.calgrid td{text-align:center;padding:11px 4px;border-bottom:1px solid #EBECF0}
+  .calgrid thead th{background:#fff;color:var(--ink3);font-weight:800;font-size:14px}
+  .calgrid tbody th{background:#fff;text-align:left;font-weight:800;color:var(--ink);font-size:15px;padding:11px 18px;white-space:nowrap;letter-spacing:-.02em}
+  .calgrid tbody tr:last-child th,.calgrid tbody tr:last-child td{border-bottom:none}
+  .calgrid td.peak{background:var(--blue);color:#fff;font-weight:800;font-size:11.5px;border-radius:8px}
+  .calgrid td.mid{background:var(--blue-soft)}
+  .calglegend{display:flex;gap:20px;margin:14px 4px 0;font-size:14px;color:var(--ink3);flex-wrap:wrap;font-weight:600}
+  .calglegend span{display:inline-flex;align-items:center;gap:8px}
+  .calglegend i{width:16px;height:16px;border-radius:5px;display:inline-block}
+  @media(max-width:820px){.calgrid{font-size:11px}.calgrid tbody th{font-size:11.5px;padding:8px 10px}}
+  .mfilter{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 20px}
+  .mfilter .mflab{font-size:13.5px;font-weight:800;color:var(--ink3);margin-right:4px}
+  .mchip{border:1px solid #E5E8EB;background:#fff;color:var(--ink2);font-size:13.5px;font-weight:700;border-radius:999px;padding:6px 12px;cursor:pointer;font-family:inherit}
+  .mchip:hover{border-color:#B0B8C1}
+  .mchip.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .prio-goods .g.hot{background:#FFF7EC;border-color:#FBE6C6;box-shadow:none}
+  .gseason{display:none;font-size:11.5px;font-weight:800;border-radius:6px;padding:2px 8px;white-space:nowrap}
+  .gseason.hot{background:#FFE7C7;color:#B76B00}
+  .gseason.warm{background:#EEF2F7;color:#5B6472}
+  .tptoggle{border:none;background:var(--fill2);color:var(--ink2);font-size:15px;font-weight:700;border-radius:999px;padding:9px 18px;cursor:pointer;font-family:inherit}
+  .tptoggle:hover{background:var(--fill3)}
+  .todaypanel.collapsed .tp-prog,.todaypanel.collapsed .tgroups,.todaypanel.collapsed .treset{display:none}
+  .todaypanel.collapsed{padding-bottom:22px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>2026 도원 마케팅 우선순위</h1>
+
+  <div class="priosec">
+    <h2>실행 우선순위</h2>
+    <div class="prioprog" id="prioprog"></div>
+
+    <div class="mfilter"><span class="mflab">월 기준 정렬</span><button class="mchip" data-m="0" onclick="selectMonth(0)">전체</button><button class="mchip" data-m="1" onclick="selectMonth(1)">1월</button><button class="mchip" data-m="2" onclick="selectMonth(2)">2월</button><button class="mchip" data-m="3" onclick="selectMonth(3)">3월</button><button class="mchip" data-m="4" onclick="selectMonth(4)">4월</button><button class="mchip" data-m="5" onclick="selectMonth(5)">5월</button><button class="mchip" data-m="6" onclick="selectMonth(6)">6월</button><button class="mchip" data-m="7" onclick="selectMonth(7)">7월</button><button class="mchip" data-m="8" onclick="selectMonth(8)">8월</button><button class="mchip" data-m="9" onclick="selectMonth(9)">9월</button><button class="mchip" data-m="10" onclick="selectMonth(10)">10월</button><button class="mchip" data-m="11" onclick="selectMonth(11)">11월</button><button class="mchip" data-m="12" onclick="selectMonth(12)">12월</button></div>
+
+    <div class="engblock">
+      <div class="eh"><span class="prio-eng case">사건형</span><span class="ed">통지·신고·사고가 도착 → 인바운드(검색 유입), 즉시 대응</span></div>
+      <div class="engcols">
+        <div class="engcol">
+          <div class="colh"><span class="prio-pill p1">1순위 · 초긴급</span><span class="cnt">6개</span></div>
+          <div class="prio-goods">
+            <div class="g" data-pid="c1"><div class="grow"><input type="checkbox" class="gchk" onchange="toggleProg('c1')" aria-label="착수 체크"><div class="gtext" onclick="toggleExp('c1')"><b>지도점검 대비·대응</b><small>노동부 근로감독 + 건보공단 지도점검</small><span class="gtrig"><i>트리거</i>점검 통지서 수령 · 감독 예고</span></div><div class="gmeta"><span class="gseason"></span><span class="gdate" id="d_c1" onclick="openDate('c1')" title="날짜 변경 (클릭)"></span><input type="date" class="gdinput" id="di_c1" onchange="setDate('c1')" onblur="hideDate('c1')"><button type="button" class="gprog" onclick="toggleExp('c1')"><span class="pbar"><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i></span><span class="pfrac">0/6</span><i class="pcar">▸</i></button></div></div><div class="gsub" id="s_c1"><label class="subitem"><input type="checkbox" onchange="toggleSub('c1',0)"><span>콘텐츠 기획</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c1',1)"><span>블로그·콘텐츠 발행</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c1',2)"><span>랜딩 페이지 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c1',3)"><span>광고 세팅</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c1',4)"><span>쇼츠영상 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c1',5)"><span>성과 측정</span></label></div></div>
+            <div class="g" data-pid="c2"><div class="grow"><input type="checkbox" class="gchk" onchange="toggleProg('c2')" aria-label="착수 체크"><div class="gtext" onclick="toggleExp('c2')"><b>산재 발생 대응</b><span class="gtrig"><i>트리거</i>현장 사고 · 산재 발생</span></div><div class="gmeta"><span class="gseason"></span><span class="gdate" id="d_c2" onclick="openDate('c2')" title="날짜 변경 (클릭)"></span><input type="date" class="gdinput" id="di_c2" onchange="setDate('c2')" onblur="hideDate('c2')"><button type="button" class="gprog" onclick="toggleExp('c2')"><span class="pbar"><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i></span><span class="pfrac">0/6</span><i class="pcar">▸</i></button></div></div><div class="gsub" id="s_c2"><label class="subitem"><input type="checkbox" onchange="toggleSub('c2',0)"><span>콘텐츠 기획</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c2',1)"><span>블로그·콘텐츠 발행</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c2',2)"><span>랜딩 페이지 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c2',3)"><span>광고 세팅</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c2',4)"><span>쇼츠영상 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c2',5)"><span>성과 측정</span></label></div></div>
+            <div class="g" data-pid="c3"><div class="grow"><input type="checkbox" class="gchk" onchange="toggleProg('c3')" aria-label="착수 체크"><div class="gtext" onclick="toggleExp('c3')"><b>중대재해처벌법 대응</b><span class="gtrig"><i>트리거</i>사망 등 중대재해 발생 · 수사 개시</span></div><div class="gmeta"><span class="gseason"></span><span class="gdate" id="d_c3" onclick="openDate('c3')" title="날짜 변경 (클릭)"></span><input type="date" class="gdinput" id="di_c3" onchange="setDate('c3')" onblur="hideDate('c3')"><button type="button" class="gprog" onclick="toggleExp('c3')"><span class="pbar"><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i></span><span class="pfrac">0/6</span><i class="pcar">▸</i></button></div></div><div class="gsub" id="s_c3"><label class="subitem"><input type="checkbox" onchange="toggleSub('c3',0)"><span>콘텐츠 기획</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c3',1)"><span>블로그·콘텐츠 발행</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c3',2)"><span>랜딩 페이지 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c3',3)"><span>광고 세팅</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c3',4)"><span>쇼츠영상 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c3',5)"><span>성과 측정</span></label></div></div>
+            <div class="g" data-pid="c4"><div class="grow"><input type="checkbox" class="gchk" onchange="toggleProg('c4')" aria-label="착수 체크"><div class="gtext" onclick="toggleExp('c4')"><b>임금체불 · 진정/출석 대응</b><span class="gtrig"><i>트리거</i>진정 접수 · 노동청 출석요구서</span></div><div class="gmeta"><span class="gseason"></span><span class="gdate" id="d_c4" onclick="openDate('c4')" title="날짜 변경 (클릭)"></span><input type="date" class="gdinput" id="di_c4" onchange="setDate('c4')" onblur="hideDate('c4')"><button type="button" class="gprog" onclick="toggleExp('c4')"><span class="pbar"><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i></span><span class="pfrac">0/6</span><i class="pcar">▸</i></button></div></div><div class="gsub" id="s_c4"><label class="subitem"><input type="checkbox" onchange="toggleSub('c4',0)"><span>콘텐츠 기획</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c4',1)"><span>블로그·콘텐츠 발행</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c4',2)"><span>랜딩 페이지 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c4',3)"><span>광고 세팅</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c4',4)"><span>쇼츠영상 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c4',5)"><span>성과 측정</span></label></div></div>
+            <div class="g" data-pid="c13"><div class="grow"><input type="checkbox" class="gchk" onchange="toggleProg('c13')" aria-label="착수 체크"><div class="gtext" onclick="toggleExp('c13')"><b>부당해고 구제신청 대응</b><span class="gtrig"><i>트리거</i>해고 통보 · 노동위 구제신청</span></div><div class="gmeta"><span class="gseason"></span><span class="gdate" id="d_c13" onclick="openDate('c13')" title="날짜 변경 (클릭)"></span><input type="date" class="gdinput" id="di_c13" onchange="setDate('c13')" onblur="hideDate('c13')"><button type="button" class="gprog" onclick="toggleExp('c13')"><span class="pbar"><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i></span><span class="pfrac">0/6</span><i class="pcar">▸</i></button></div></div><div class="gsub" id="s_c13"><label class="subitem"><input type="checkbox" onchange="toggleSub('c13',0)"><span>콘텐츠 기획</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c13',1)"><span>블로그·콘텐츠 발행</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c13',2)"><span>랜딩 페이지 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c13',3)"><span>광고 세팅</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c13',4)"><span>쇼츠영상 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c13',5)"><span>성과 측정</span></label></div></div>
+            <div class="g" data-pid="c14"><div class="grow"><input type="checkbox" class="gchk" onchange="toggleProg('c14')" aria-label="착수 체크"><div class="gtext" onclick="toggleExp('c14')"><b>퇴직금 미지급 대응</b><span class="gtrig"><i>트리거</i>퇴직금·퇴직연금 미지급 진정</span></div><div class="gmeta"><span class="gseason"></span><span class="gdate" id="d_c14" onclick="openDate('c14')" title="날짜 변경 (클릭)"></span><input type="date" class="gdinput" id="di_c14" onchange="setDate('c14')" onblur="hideDate('c14')"><button type="button" class="gprog" onclick="toggleExp('c14')"><span class="pbar"><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i></span><span class="pfrac">0/6</span><i class="pcar">▸</i></button></div></div><div class="gsub" id="s_c14"><label class="subitem"><input type="checkbox" onchange="toggleSub('c14',0)"><span>콘텐츠 기획</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c14',1)"><span>블로그·콘텐츠 발행</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c14',2)"><span>랜딩 페이지 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c14',3)"><span>광고 세팅</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c14',4)"><span>쇼츠영상 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c14',5)"><span>성과 측정</span></label></div></div>
+          </div>
+          <div class="colnote">이미 터진 사건 — 오늘 검색 → 오늘 문의. 전환 즉시성 최고, 단기 실적 최속.</div>
+        </div>
+        <div class="engcol">
+          <div class="colh"><span class="prio-pill p2">2순위 · 준긴급</span><span class="cnt">5개</span></div>
+          <div class="prio-goods">
+            <div class="g" data-pid="c7"><div class="grow"><input type="checkbox" class="gchk" onchange="toggleProg('c7')" aria-label="착수 체크"><div class="gtext" onclick="toggleExp('c7')"><b>고용·산재보험료 확정정산</b><small>건설업 전용</small><span class="gtrig"><i>트리거</i>확정정산 시즌 · 추징/환급 통지</span></div><div class="gmeta"><span class="gseason"></span><span class="gdate" id="d_c7" onclick="openDate('c7')" title="날짜 변경 (클릭)"></span><input type="date" class="gdinput" id="di_c7" onchange="setDate('c7')" onblur="hideDate('c7')"><button type="button" class="gprog" onclick="toggleExp('c7')"><span class="pbar"><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i></span><span class="pfrac">0/6</span><i class="pcar">▸</i></button></div></div><div class="gsub" id="s_c7"><label class="subitem"><input type="checkbox" onchange="toggleSub('c7',0)"><span>콘텐츠 기획</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c7',1)"><span>블로그·콘텐츠 발행</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c7',2)"><span>랜딩 페이지 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c7',3)"><span>광고 세팅</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c7',4)"><span>쇼츠영상 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c7',5)"><span>성과 측정</span></label></div></div>
+            <div class="g" data-pid="c8"><div class="grow"><input type="checkbox" class="gchk" onchange="toggleProg('c8')" aria-label="착수 체크"><div class="gtext" onclick="toggleExp('c8')"><b>건설근로자 퇴직공제부금 점검</b><small>건설업 전용</small><span class="gtrig"><i>트리거</i>공제부금 신고 오류 · 미납 통지</span></div><div class="gmeta"><span class="gseason"></span><span class="gdate" id="d_c8" onclick="openDate('c8')" title="날짜 변경 (클릭)"></span><input type="date" class="gdinput" id="di_c8" onchange="setDate('c8')" onblur="hideDate('c8')"><button type="button" class="gprog" onclick="toggleExp('c8')"><span class="pbar"><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i></span><span class="pfrac">0/6</span><i class="pcar">▸</i></button></div></div><div class="gsub" id="s_c8"><label class="subitem"><input type="checkbox" onchange="toggleSub('c8',0)"><span>콘텐츠 기획</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c8',1)"><span>블로그·콘텐츠 발행</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c8',2)"><span>랜딩 페이지 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c8',3)"><span>광고 세팅</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c8',4)"><span>쇼츠영상 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c8',5)"><span>성과 측정</span></label></div></div>
+            <div class="g" data-pid="c9"><div class="grow"><input type="checkbox" class="gchk" onchange="toggleProg('c9')" aria-label="착수 체크"><div class="gtext" onclick="toggleExp('c9')"><b>외국인 고용 적법성 점검</b><small>봄·가을 합동단속</small><span class="gtrig"><i>트리거</i>단속·적발 우려 · 신규 고용</span></div><div class="gmeta"><span class="gseason"></span><span class="gdate" id="d_c9" onclick="openDate('c9')" title="날짜 변경 (클릭)"></span><input type="date" class="gdinput" id="di_c9" onchange="setDate('c9')" onblur="hideDate('c9')"><button type="button" class="gprog" onclick="toggleExp('c9')"><span class="pbar"><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i></span><span class="pfrac">0/6</span><i class="pcar">▸</i></button></div></div><div class="gsub" id="s_c9"><label class="subitem"><input type="checkbox" onchange="toggleSub('c9',0)"><span>콘텐츠 기획</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c9',1)"><span>블로그·콘텐츠 발행</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c9',2)"><span>랜딩 페이지 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c9',3)"><span>광고 세팅</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c9',4)"><span>쇼츠영상 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c9',5)"><span>성과 측정</span></label></div></div>
+            <div class="g" data-pid="c10"><div class="grow"><input type="checkbox" class="gchk" onchange="toggleProg('c10')" aria-label="착수 체크"><div class="gtext" onclick="toggleExp('c10')"><b>직장 내 괴롭힘 대응</b><span class="gtrig"><i>트리거</i>신고 접수 → 사업주 조사의무 발생</span></div><div class="gmeta"><span class="gseason"></span><span class="gdate" id="d_c10" onclick="openDate('c10')" title="날짜 변경 (클릭)"></span><input type="date" class="gdinput" id="di_c10" onchange="setDate('c10')" onblur="hideDate('c10')"><button type="button" class="gprog" onclick="toggleExp('c10')"><span class="pbar"><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i></span><span class="pfrac">0/6</span><i class="pcar">▸</i></button></div></div><div class="gsub" id="s_c10"><label class="subitem"><input type="checkbox" onchange="toggleSub('c10',0)"><span>콘텐츠 기획</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c10',1)"><span>블로그·콘텐츠 발행</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c10',2)"><span>랜딩 페이지 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c10',3)"><span>광고 세팅</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c10',4)"><span>쇼츠영상 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c10',5)"><span>성과 측정</span></label></div></div>
+            <div class="g" data-pid="c11"><div class="grow"><input type="checkbox" class="gchk" onchange="toggleProg('c11')" aria-label="착수 체크"><div class="gtext" onclick="toggleExp('c11')"><b>직장 내 성희롱 대응</b><span class="gtrig"><i>트리거</i>신고 접수 · 사건 발생</span></div><div class="gmeta"><span class="gseason"></span><span class="gdate" id="d_c11" onclick="openDate('c11')" title="날짜 변경 (클릭)"></span><input type="date" class="gdinput" id="di_c11" onchange="setDate('c11')" onblur="hideDate('c11')"><button type="button" class="gprog" onclick="toggleExp('c11')"><span class="pbar"><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i></span><span class="pfrac">0/6</span><i class="pcar">▸</i></button></div></div><div class="gsub" id="s_c11"><label class="subitem"><input type="checkbox" onchange="toggleSub('c11',0)"><span>콘텐츠 기획</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c11',1)"><span>블로그·콘텐츠 발행</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c11',2)"><span>랜딩 페이지 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c11',3)"><span>광고 세팅</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c11',4)"><span>쇼츠영상 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c11',5)"><span>성과 측정</span></label></div></div>
+          </div>
+          <div class="colnote">통지·신고·단속 트리거. 확정정산·퇴직공제부금은 건설 시즌(연초·봄), 외국인은 봄·가을 단속. 신고형은 상시.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="engblock">
+      <div class="eh"><span class="prio-eng gain">이득형</span><span class="ed">통지 없음 · 몰라서 못 받는 돈 → 아웃바운드(영업이 찾아가 설득)</span></div>
+      <div class="engcols">
+        <div class="engcol">
+          <div class="colh"><span class="prio-pill p1">1순위 · 리드</span><span class="cnt">2개</span></div>
+          <div class="prio-goods">
+            <div class="g" data-pid="c5"><div class="grow"><input type="checkbox" class="gchk" onchange="toggleProg('c5')" aria-label="착수 체크"><div class="gtext" onclick="toggleExp('c5')"><b>4대보험 환급 진단</b><small>고용·산재보험료 과오납 환급</small><span class="gtrig"><i>트리거</i>상시(후킹으로 생성) · 소멸시효 3년</span></div><div class="gmeta"><span class="gseason"></span><span class="gdate" id="d_c5" onclick="openDate('c5')" title="날짜 변경 (클릭)"></span><input type="date" class="gdinput" id="di_c5" onchange="setDate('c5')" onblur="hideDate('c5')"><button type="button" class="gprog" onclick="toggleExp('c5')"><span class="pbar"><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i></span><span class="pfrac">0/6</span><i class="pcar">▸</i></button></div></div><div class="gsub" id="s_c5"><label class="subitem"><input type="checkbox" onchange="toggleSub('c5',0)"><span>콘텐츠 기획</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c5',1)"><span>블로그·콘텐츠 발행</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c5',2)"><span>랜딩 페이지 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c5',3)"><span>광고 세팅</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c5',4)"><span>쇼츠영상 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c5',5)"><span>성과 측정</span></label></div></div>
+            <div class="g" data-pid="c6"><div class="grow"><input type="checkbox" class="gchk" onchange="toggleProg('c6')" aria-label="착수 체크"><div class="gtext" onclick="toggleExp('c6')"><b>고용지원금 컨설팅</b><small>정책 시행·개정 타이밍 활용</small><span class="gtrig"><i>트리거</i>지원금 신설·개정 시점</span></div><div class="gmeta"><span class="gseason"></span><span class="gdate" id="d_c6" onclick="openDate('c6')" title="날짜 변경 (클릭)"></span><input type="date" class="gdinput" id="di_c6" onchange="setDate('c6')" onblur="hideDate('c6')"><button type="button" class="gprog" onclick="toggleExp('c6')"><span class="pbar"><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i></span><span class="pfrac">0/6</span><i class="pcar">▸</i></button></div></div><div class="gsub" id="s_c6"><label class="subitem"><input type="checkbox" onchange="toggleSub('c6',0)"><span>콘텐츠 기획</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c6',1)"><span>블로그·콘텐츠 발행</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c6',2)"><span>랜딩 페이지 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c6',3)"><span>광고 세팅</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c6',4)"><span>쇼츠영상 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c6',5)"><span>성과 측정</span></label></div></div>
+          </div>
+          <div class="colnote">허들 최저·유입량 최강. 무료 진단으로 리드부터 확보 후 아웃바운드로 후속 전환.</div>
+        </div>
+        <div class="engcol">
+          <div class="colh"><span class="prio-pill p2">2순위 · 설계</span><span class="cnt">1개</span></div>
+          <div class="prio-goods">
+            <div class="g" data-pid="c12"><div class="grow"><input type="checkbox" class="gchk" onchange="toggleProg('c12')" aria-label="착수 체크"><div class="gtext" onclick="toggleExp('c12')"><b>사내근로복지기금(사근복) 설계</b><small>고단가 · 별도 파이프라인</small><span class="gtrig"><i>트리거</i>트리거 없음 — 절세·복지 후킹 / 고수익 사업장</span></div><div class="gmeta"><span class="gseason"></span><span class="gdate" id="d_c12" onclick="openDate('c12')" title="날짜 변경 (클릭)"></span><input type="date" class="gdinput" id="di_c12" onchange="setDate('c12')" onblur="hideDate('c12')"><button type="button" class="gprog" onclick="toggleExp('c12')"><span class="pbar"><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i><i class="pseg"></i></span><span class="pfrac">0/6</span><i class="pcar">▸</i></button></div></div><div class="gsub" id="s_c12"><label class="subitem"><input type="checkbox" onchange="toggleSub('c12',0)"><span>콘텐츠 기획</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c12',1)"><span>블로그·콘텐츠 발행</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c12',2)"><span>랜딩 페이지 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c12',3)"><span>광고 세팅</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c12',4)"><span>쇼츠영상 제작</span></label><label class="subitem"><input type="checkbox" onchange="toggleSub('c12',5)"><span>성과 측정</span></label></div></div>
+          </div>
+          <div class="colnote">고단가 설계 상품. 영업 사이클이 길어 단기 지표로 보지 말고 별도 파이프라인으로 축적.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="calh2">연간 트리거 캘린더</h2>
+
+  <!-- 오늘 체크 -->
+  <div class="todaypanel">
+    <div class="tp-head">
+      <h2>이번달 체크</h2>
+      <span class="tdate" id="tdate"></span>
+      <button class="treset" onclick="resetChecks()">이번 달 체크 초기화</button>
+      <button class="tptoggle" onclick="toggleTodayPanel()">펼치기</button>
+    </div>
+    <div class="tp-prog" id="tprog"></div>
+    <div class="tgroups">
+      <div class="tgroup">
+        <div class="gh"><span class="gdot" style="background:var(--red)"></span><span class="gt">지금 진행 중</span><span class="gd">대응 콘텐츠가 떠 있어야 함</span></div>
+        <div id="gActive"></div>
+      </div>
+      <div class="tgroup">
+        <div class="gh"><span class="gdot" style="background:var(--amber)"></span><span class="gt">지금 준비</span><span class="gd">다음 트리거 대비</span></div>
+        <div id="gPrep"></div>
+      </div>
+      <div class="tgroup">
+        <div class="gh"><span class="gdot" style="background:var(--ink4)"></span><span class="gt">다가옴</span><span class="gd">2개월 내 예열</span></div>
+        <div id="gSoon"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mtabs" id="mtabs"></div>
+  <div class="timeline" id="months"></div>
+
+  <div class="calgridwrap">
+    <div class="gt">월별 피크 요약 (한눈에 보기)</div>
+    <table class="calgrid">
+      <thead><tr><th style="text-align:left;padding-left:18px">주제</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th></tr></thead>
+      <tbody>
+        <tr><th>보험료 확정정산</th><td></td><td class="peak">피크</td><td class="peak">피크</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><th>4대보험 환급</th><td></td><td></td><td class="peak">피크</td><td class="mid"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><th>지도점검(근로감독·건보)</th><td class="mid"></td><td></td><td class="peak">피크</td><td class="peak">피크</td><td class="mid"></td><td></td><td></td><td></td><td class="peak">피크</td><td class="peak">피크</td><td class="mid"></td><td></td></tr>
+        <tr><th>산재 · 중대재해</th><td></td><td></td><td class="peak">피크</td><td></td><td></td><td></td><td class="peak">피크</td><td class="peak">피크</td><td></td><td></td><td></td><td class="peak">피크</td></tr>
+        <tr><th>체불 · 진정/출석</th><td class="peak">피크</td><td class="peak">피크</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="peak">피크</td><td></td><td></td><td class="mid"></td></tr>
+        <tr><th>외국인 고용 점검</th><td></td><td></td><td class="peak">피크</td><td class="peak">피크</td><td class="mid"></td><td></td><td></td><td></td><td class="peak">피크</td><td class="peak">피크</td><td></td><td></td></tr>
+        <tr><th>고용지원금</th><td class="peak">피크</td><td class="mid"></td><td class="mid"></td><td class="mid"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><th>퇴직공제부금</th><td class="peak">피크</td><td class="mid"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="peak">피크</td></tr>
+        <tr><th>사내근로복지기금</th><td></td><td></td><td class="mid"></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="peak">피크</td><td class="peak">피크</td><td class="peak">피크</td></tr>
+        <tr><th>직장 내 괴롭힘·성희롱</th><td class="mid"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="mid"></td></tr>
+      </tbody>
+    </table>
+    <div class="calglegend">
+      <span><i style="background:var(--blue)"></i> 피크 (성수기)</span>
+      <span><i style="background:var(--blue-soft)"></i> 준성수기</span>
+      <span><i style="background:#fff;border:1px solid #EBECF0"></i> 상시</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const CATS = {
+  "정기점검": {bg:"#FDECEE", fg:"#D9414E"},
+  "신고마감": {bg:"#FFF3D6", fg:"#B76B00"},
+  "집중단속": {bg:"#F3EDFF", fg:"#6B3FCB"},
+  "지원금":   {bg:"#E6F4EE", fg:"#12805C"},
+  "시즌이슈": {bg:"#E8F3FF", fg:"#1B64DA"},
+  "상시":     {bg:"#F2F4F6", fg:"#4E5968"}
+};
+// m: 트리거 월(0=상시), prep: 준비 월, due: 마감·기준일(D-day 계산), dur: 기간 표시
+const DATA = [
+{id:"t01", m:[1], prep:[11,12], due:{mm:1,dd:1},  cat:"시즌이슈", t:"최저임금 인상 적용 (1/1)", inc:"새 최저임금 즉시 반영 의무", pain:"임금대장·근로계약서 전면 갱신, 위반 시 형사처벌", tg:"전 업종", sv:["노무자문","급여아웃소싱"], angle:"\"최저임금 인상, 우리 회사 위반 아닌지 1분 체크\"", prepTxt:"전년 11~12월"},
+{id:"t02", m:[1], prep:[12], cat:"집중단속", t:"설 전 임금체불 집중지도 (1월 초~설, 약 3주)", inc:"전담 신고창구 개설, 악의 체불 구속수사 방침 발표", pain:"직원 신고가 가장 몰리는 시기 — 노동청 출석요구 급증", tg:"건설·제조·소규모", sv:["체불 예방 진단","사건 대응"], angle:"\"설 전 체불 신고 급증 — 출석요구서 받았을 때 대응법\"", prepTxt:"12월"},
+{id:"t03", m:[1], prep:[12], due:{mm:1,dd:31}, cat:"신고마감", t:"장애인 고용부담금 신고 + 고용계획 보고 (1/31)", inc:"e신고 안내문 (부담금 100인+ / 계획보고 50인+)", pain:"부담금 폭탄, 미신고 가산금", tg:"50인+ 기업·병원", sv:["노무자문","신고대행"], angle:"\"장애인 부담금, 합법적으로 줄이는 3가지\"", prepTxt:"12월"},
+{id:"t04", m:[1], prep:[1], due:{mm:1,dd:26}, cat:"지원금", t:"고용장려금 연간 공고 + 청년일자리도약장려금 접수 개시 (1월 말)", inc:"고용24 공고 — 몰라서 못 받는 돈 발생", pain:"신청 요건·절차 복잡, 놓치면 1년 대기", tg:"전 업종", sv:["지원금 신청","환급금 진단"], angle:"\"올해 우리 회사가 받을 수 있는 지원금 총정리\" — 연초 트래픽 최대", prepTxt:"1월 즉시"},
+{id:"t05", m:[1], prep:[1], cat:"정기점검", t:"고용부 사업장 감독계획 발표 ('26년 9만 개소 역대 최대)", inc:"감독 타겟 업종·테마 공개", pain:"우리 업종 포함 여부 불안", tg:"발표 타겟 업종", sv:["전수점검 대비"], angle:"\"올해 근로감독 타겟은 여기 — 우리 회사 해당?\"", prepTxt:"발표 직후"},
+{id:"t06", m:[2,3,4,5,6], prep:[1], dur:"2~6월 정기 집중 · 하반기 수시", cat:"정기점검", t:"정기 근로감독 순회", inc:"출석요구·자료제출 요구 공문", pain:"시정지시·과태료·사법처리 — 준비기간 1~2주뿐", tg:"감독 대상 업종", sv:["전수점검 대비","지도점검 대응"], angle:"\"감독 통지서 받은 후 골든타임 1주 체크리스트\"", prepTxt:"1월"},
+{id:"t07", m:[3], prep:[2], due:{mm:3,dd:10}, cat:"신고마감", t:"건강보험 보수총액 신고 (3/10)", inc:"공단 신고 안내문", pain:"착오 신고 → 4월 정산 폭탄으로 직결", tg:"전 업종", sv:["4대보험 신고대행","급여아웃소싱"], angle:"\"보수총액 신고에서 가장 많이 틀리는 5가지\"", prepTxt:"2월"},
+{id:"t08", m:[3], prep:[2], due:{mm:3,dd:15}, cat:"신고마감", t:"고용·산재보험 보수총액 신고 (3/15)", inc:"공단 신고 안내문", pain:"건보 건과 묶어 한 콘텐츠로 대응", tg:"전 업종", sv:["4대보험 신고대행"], angle:"위 콘텐츠와 통합 발행", prepTxt:"2월"},
+{id:"t09", m:[3], prep:[2], due:{mm:3,dd:31}, cat:"신고마감", t:"건설업 등 확정보험료 자진신고 (3/31)", inc:"확정정산 안내", pain:"정산 추징, 하도급 인건비 산정 분쟁", tg:"건설업", sv:["건설업 특화 신고·정산"], angle:"\"건설업 확정정산, 돈 새는 지점 점검\"", prepTxt:"2월"},
+{id:"t10", m:[4], prep:[3], cat:"시즌이슈", t:"4대보험 정산분 반영 — '4월 보험료 폭탄'", inc:"정산 반영 고지서", pain:"\"월급이 왜 줄었어요?\" 직원 문의 폭주 + 회사 부담 급증", tg:"전 업종", sv:["급여아웃소싱","노무자문"], angle:"\"4월 보험료 폭탄, 미리 계산해보세요\" — 3월에 발행해야 효과", prepTxt:"3월"},
+{id:"t11", m:[4], prep:[3], due:{mm:4,dd:30}, cat:"신고마감", t:"고용형태공시 (300인 이상)", inc:"공시 요구", pain:"공시 누락 부담", tg:"대기업·중견", sv:["노무자문"], angle:"\"고용형태공시, 공시 전에 점검할 3가지\"", prepTxt:"3월"},
+{id:"t12", m:[5], prep:[4], due:{mm:5,dd:31}, cat:"신고마감", t:"국민연금 소득총액 신고 (5월 말)", inc:"공단 안내문", pain:"착오 정산", tg:"전 업종", sv:["신고대행"], angle:"3월 신고 콘텐츠 리라이트로 대응", prepTxt:"4월"},
+{id:"t13", m:[6,7,8], prep:[5,6,7,8], dur:"6~8월 하절기 집중 (연중 수시)", cat:"정기점검", t:"건보공단 사업장 지도점검", inc:"서류제출 요청 안내문 → 미비 시 출장점검", pain:"최대 3년 소급 추징 — '세금폭탄' 체감 순간", tg:"요양병원·중소병원·일반", sv:["전수점검 대비","지도점검 대응"], angle:"\"공단 안내문 받았다면, 서류 내기 전에 이것부터\"", prepTxt:"상시 준비"},
+{id:"t14", m:[8], prep:[7,8], due:{mm:8,dd:5}, cat:"시즌이슈", t:"내년도 최저임금 고시 (8/5)", inc:"고시 발표 뉴스", pain:"내년 인건비 시뮬레이션 필요", tg:"전 업종", sv:["임금체계 컨설팅","노무자문"], angle:"\"내년 인건비 얼마나 오르나\" — 고시 당일 24시간 내 발행", prepTxt:"고시 직후 24h (초안은 7월에)"},
+{id:"t15", m:[8,9,10], prep:[7,8], dur:"8월 말~10월 초 (6주)", cat:"집중단속", t:"추석 전 임금체불 집중 청산 지도", inc:"전담창구·특별지도, 구속수사 방침", pain:"신고 급증, 간이대지급금 청구 증가", tg:"건설·제조·소규모", sv:["체불 대응","사건 대응"], angle:"설 콘텐츠 리라이트 + 시의성 광고", prepTxt:"8월 중순"},
+{id:"t16", m:[10,11,12], prep:[9], dur:"10~12월", cat:"시즌이슈", t:"법정의무교육 미이행 점검 시즌 + 사칭 공문 급증", inc:"\"과태료 부과 예정\" 공문 (사칭 다수 섞임)", pain:"진짜/가짜 구분 불안 — 신뢰 콘텐츠 기회", tg:"전 업종", sv:["법정의무교육","노무자문"], angle:"\"그 공문, 진짜인지 10초 확인법\" — 바이럴성 높음", prepTxt:"9월"},
+{id:"t17", m:[11,12], prep:[11], dur:"11~12월", cat:"시즌이슈", t:"내년 대비 인사·임금 정비 시즌", inc:"내년 법 개정·요율 발표", pain:"취업규칙·임금체계 개편 수요", tg:"전 업종", sv:["인사제도 정비","노무자문"], angle:"\"내년 바뀌는 노동법 총정리\" — 연말 트래픽 최대", prepTxt:"11월"},
+{id:"t18", m:[12], prep:[11], cat:"시즌이슈", t:"연차사용촉진 절차 마감", inc:"—", pain:"촉진 절차 누락 → 미사용 연차수당 전액 부담", tg:"전 업종", sv:["노무자문"], angle:"\"연차촉진 제대로 안 하면 수당 폭탄\"", prepTxt:"11월"},
+{id:"t19", m:[2,3,8,9], prep:[1,7], dur:"2~3월 · 8~9월 채용 시즌", cat:"지원금", t:"상·하반기 채용 시즌 — 채용 전 지원금 설계", inc:"채용 계획·공고 (사내 트리거)", pain:"채용 후엔 신청 못 하는 지원금 다수 — 뽑기 전에 설계해야 받음", tg:"채용 예정 중소기업", sv:["청년일자리도약장려금","고용지원금 컨설팅"], angle:"\"뽑고 나면 못 받습니다 — 채용 전 지원금 체크리스트\"", prepTxt:"1월 · 7월"},
+{id:"t20", m:[4,5,6], prep:[3], dur:"4~6월 (3월 신고 직후)", cat:"지원금", t:"고용·산재 확정정산 — 과오납 환급 발생", inc:"공단 정산 결과 통지", pain:"신고 착오로 더 낸 보험료 — 모르면 그냥 지나감", tg:"전 업종 · 건설업", sv:["4대보험 환급 진단"], angle:"\"3월 신고 잘못했다면, 돌려받을 수 있습니다\"", prepTxt:"3월"},
+{id:"t21", m:[11,12], prep:[10], dur:"11~12월 결산 시즌", cat:"시즌이슈", t:"법인 결산·절세 설계 시즌", inc:"결산 전 손비 처리 마감 (12월 결산법인)", pain:"출연금 손비 인정 등 연내 실행해야 하는 절세 수단", tg:"고수익 병의원·중소법인", sv:["사내근로복지기금"], angle:"\"연말 전에 끝내야 하는 절세 — 복지기금 출연 ROI 한 장\"", prepTxt:"10월 (세무사 뉴스레터 연계)"},
+{id:"a01", m:[0], prep:[], cat:"상시", t:"요양기관 자율점검 통보·현지조사 (심평원·복지부)", inc:"자율점검 통보서 — 성실 이행 시 현지조사·행정처분 면제", pain:"대응 골든타임 존재, 잘못 쓰면 처분", tg:"병의원·요양병원", sv:["점검 대응 컨설팅"], angle:"\"자율점검 통보서, 혼자 쓰면 안 되는 이유\"", prepTxt:"상시"},
+{id:"a02", m:[0], prep:[], cat:"상시", t:"국세청↔공단 소득자료 불일치 추징", inc:"소급 추징 고지 (일용직 신고 불일치 등)", pain:"수년치 보험료 일시 추징", tg:"건설·요양·외식", sv:["4대보험 정비","신고대행"], angle:"\"일용직 신고, 국세청과 공단이 대조합니다\"", prepTxt:"상시"},
+{id:"a03", m:[0], prep:[], cat:"상시", t:"직원 진정·신고 (체불·부당해고·괴롭힘)", inc:"노동청 출석요구서, 노동위 구제신청 접수 통지", pain:"즉시 대응 필요 — 검색량 높은 에피소드 수요", tg:"전 업종", sv:["사건 대응","부당해고·직괴 대응"], angle:"\"출석요구서 받은 사장님이 가장 먼저 할 일\"", prepTxt:"상시"},
+{id:"a04", m:[0], prep:[], cat:"상시", t:"산재 발생·중대재해", inc:"조사·수사 통지", pain:"형사 리스크", tg:"제조·건설·병원", sv:["산재 대응"], angle:"절차·사례 콘텐츠", prepTxt:"상시"},
+{id:"a05", m:[0], prep:[], cat:"상시", t:"지원금 신설·개편 공고 (수시)", inc:"정책 뉴스·공고", pain:"선점하면 경쟁 없는 유입 — 이 캘린더의 존재 이유", tg:"전 업종", sv:["지원금 신청"], angle:"신설 즉시 '1호 콘텐츠' 발행", prepTxt:"공고 후 48h"},
+{id:"a06", m:[0], prep:[], cat:"상시", t:"4대보험 과오납 환급 (소멸시효 3년)", inc:"트리거 없음 — 회사가 모르는 채 시효가 흐름", pain:"3년 지나면 소멸 — '몰라서 못 받는 돈'의 대표 사례", tg:"전 업종", sv:["4대보험 환급 진단"], angle:"\"3년 지나면 사라집니다 — 과오납 1분 조회\" (에버그린 리드 마그넷)", prepTxt:"상시"},
+{id:"a07", m:[0], prep:[], cat:"상시", t:"건설업 확정정산 조사 (근로복지공단, 수시)", inc:"정산 조사 통지 — 하도급 인건비 자료 요구", pain:"소급 추징 리스크 + 자료 준비 부담", tg:"건설업", sv:["건설업 지도점검 컨설팅"], angle:"\"정산 조사 통지 받은 건설사가 먼저 할 일\"", prepTxt:"상시"},
+{id:"a08", m:[0], prep:[], cat:"상시", t:"고용위기지역·산업위기지역 지정·연장 고시", inc:"관보 고시·언론 보도", pain:"지정 지역에서 채용하면 지역고용촉진지원금 — 아는 기업만 받는 돈", tg:"지정 지역 기업·이전 기업", sv:["지역고용촉진지원금"], angle:"\"우리 지역이 지정됐다면 — 채용 1명당 이만큼\" (고시 직후 발행)", prepTxt:"고시 후 48h"},
+{id:"a09", m:[0], prep:[], cat:"상시", t:"수시·특별 근로감독 (신고·제보 기반)", inc:"출석요구·자료제출 요구 공문 (예고 없음)", pain:"정기감독과 달리 연중 언제든 — 준비기간이 더 짧음", tg:"전 업종", sv:["전수점검 대비","지도점검 대응"], angle:"\"예고 없이 온 감독 공문 — 첫 1주 대응 순서\"", prepTxt:"상시"},
+{id:"a10", m:[0], prep:[], cat:"상시", t:"건보공단 지도점검 통보 (시즌 외 수시)", inc:"서류제출 요청 안내문", pain:"하절기 시즌 외에도 연중 수시 통보 — 받는 순간이 검색 순간", tg:"요양병원·중소병원·일반", sv:["전수점검 대비","지도점검 대응"], angle:"\"공단 안내문 받았다면, 서류 내기 전에 이것부터\" (에버그린)", prepTxt:"상시"},
+{id:"t22", m:[3,4,9,10], prep:[2,8], dur:"3~5월 · 9~10월 정부 합동단속", cat:"집중단속", t:"외국인 근로자 고용 적법성 — 봄·가을 합동단속", inc:"출입국·고용부 합동단속 예고 · 적발 통지", pain:"불법고용 시 벌금·강제출국·향후 고용제한(최대 3년). 건설 밀도 최고", tg:"건설·제조·농업·요양", sv:["외국인 고용 적법성 점검","사건 대응"], angle:"\"외국인 근로자 고용, 이거 모르면 사업주가 처벌받습니다\"", prepTxt:"2월 · 8월"},
+{id:"t23", m:[1,12], prep:[12], dur:"매월 신고 (준공 몰리는 12~2월 집중)", cat:"신고마감", t:"건설근로자 퇴직공제부금 신고 점검", inc:"공제부금 신고 오류 · 미납 통지", pain:"과소·과대 신고 리스크. 100% 건설 전용 키워드라 경쟁 낮음", tg:"건설업", sv:["건설근로자 퇴직공제부금 점검"], angle:"\"건설근로자 퇴직공제부금, 잘못 신고하면 이렇게 새어나갑니다\"", prepTxt:"12월"},
+{id:"t24", m:[3,7,8,12], prep:[2,6,11], dur:"해빙기 3월 · 혹서기 7~8월 · 연말 돌관공사 12월", cat:"시즌이슈", t:"산재·중대재해 고위험 시즌 (해빙기·혹서기·연말 돌관)", inc:"현장 사고 급증 시기 — 사고 시 조사·수사 통지", pain:"초기 72시간 대응이 형사처벌·대표 구속 여부를 가름. 고단가", tg:"건설·제조", sv:["산재 초기대응","중대재해처벌법 대응"], angle:"\"해빙기·혹서기 산재 급증 — 사고 첫 72시간 대표 체크리스트\"", prepTxt:"2월 · 6월 · 11월"},
+{id:"a11", m:[0], prep:[], cat:"상시", t:"직장 내 성희롱 신고 접수 (사업주 조사·조치 의무)", inc:"사내 신고 접수 → 사업주 조사·조치 의무 발생", pain:"미조치 시 과태료 + 평판·2차 가해 리스크. 회식 잦은 연말연시 증가", tg:"전 업종", sv:["성희롱 사건 대응 자문","사건 대응"], angle:"\"직장 내 성희롱 신고, 조치 안 하면 사업주 과태료까지\"", prepTxt:"상시"}
+];
+
+const now = new Date();
+const nowM = now.getMonth() + 1;
+const nextM = nowM % 12 + 1;
+const soonM = nextM % 12 + 1;
+const monthKey = `tcal_${now.getFullYear()}-${String(nowM).padStart(2,"0")}`;
+document.getElementById("tdate").textContent = `${now.getFullYear()}년 ${nowM}월`;
+
+let checks = {};
+try{ checks = JSON.parse(localStorage.getItem(monthKey)) || {}; }catch(e){}
+function saveChecks(){ localStorage.setItem(monthKey, JSON.stringify(checks)); }
+function resetChecks(){ if(confirm("이번 달 체크를 모두 해제할까요?")){ checks = {}; saveChecks(); render(); } }
+function toggleCheck(id){ checks[id] = !checks[id]; saveChecks(); render(); }
+
+function nextDue(due){
+  if(!due) return null;
+  let d = new Date(now.getFullYear(), due.mm - 1, due.dd);
+  if(d < new Date(now.getFullYear(), now.getMonth(), now.getDate())) d = new Date(now.getFullYear() + 1, due.mm - 1, due.dd);
+  return Math.round((d - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 86400000);
+}
+function ddayBadge(d){
+  if(d === null || d > 92) return "";
+  const cls = d <= 14 ? "hot" : d <= 45 ? "warm" : "cool";
+  return `<span class="dday ${cls}">${d === 0 ? "D-DAY" : "D-" + d}</span>`;
+}
+
+function classify(d){
+  if(d.m[0] === 0) return null;
+  if(d.m.includes(nowM)) return "active";
+  if(d.prep.includes(nowM) || d.m.includes(nextM)) return "prep";
+  if(d.m.includes(soonM)) return "soon";
+  return null;
+}
+const ACTIONS = {
+  active: d => `<b>지금 할 일:</b> 대응 콘텐츠 배포·광고 켜기, 문의 응대 준비 — ${d.sv.join(" · ")}`,
+  prep:   d => `<b>이번 달 준비:</b> 콘텐츠 초안·랜딩·광고 세팅 (트리거 ${d.m[0]}월)`,
+  soon:   d => `<b>예열:</b> 소재 조사, 기존 콘텐츠 리라이트 준비 (트리거 ${d.m[0]}월)`
+};
+
+let activeCat = "전체", query = "", showAll = false, monthSel = 0;
+function toggleMore(){ showAll = !showAll; render(); }
+function setMonth(v){ monthSel = v; render(); }
+function badge(cat){ const c = CATS[cat]; return `<span class="badge" style="background:${c.bg};color:${c.fg}">${cat}</span>`; }
+
+function todayItem(d, group){
+  const done = !!checks[d.id];
+  const dd = ddayBadge(nextDue(d.due));
+  return `<div class="titem${done ? " done" : ""}">
+    <input type="checkbox" ${done ? "checked" : ""} onchange="toggleCheck('${d.id}')">
+    <div class="tbody" onclick="goTo('${d.id}')" title="상세 카드로 이동">
+      <div class="tt">${d.t}${dd}</div>
+      <div class="act">${ACTIONS[group](d)}</div>
+    </div>
+  </div>`;
+}
+
+function cardHTML(d, open){
+  return `<div class="tc${open ? " open" : ""}" data-id="${d.id}" onclick="this.classList.toggle('open')">
+    <div class="row1">${badge(d.cat)}<div class="tt">${d.t}${ddayBadge(nextDue(d.due))}</div><div class="car">▶</div></div>
+    ${d.dur ? `<div class="dur">기간: ${d.dur}</div>` : ""}
+    <div class="svcs">${d.sv.map(s=>`<span>${s}</span>`).join("")}</div>
+    <div class="body">
+      <div class="kv"><span class="k">타겟</span><span class="v">${d.tg}</span></div>
+      <div class="kv"><span class="k">오는 것</span><span class="v">${d.inc}</span></div>
+      <div class="kv"><span class="k">페인포인트</span><span class="v">${d.pain}</span></div>
+      <div class="kv"><span class="k">콘텐츠</span><span class="v angle">${d.angle}</span></div>
+      <div class="kv"><span class="k">준비 시점</span><span class="v"><b>${d.prepTxt}</b></span></div>
+    </div>
+  </div>`;
+}
+
+function visible(d){
+  if(activeCat !== "전체" && d.cat !== activeCat) return false;
+  if(query){
+    const hay = (d.t + d.inc + d.pain + d.tg + d.sv.join("") + d.angle).toLowerCase();
+    if(!hay.includes(query)) return false;
+  }
+  return true;
+}
+
+function render(){
+  const groups = {active: [], prep: [], soon: []};
+  DATA.forEach(d => { const g = classify(d); if(g) groups[g].push(d); });
+  document.getElementById("gActive").innerHTML = groups.active.map(d=>todayItem(d,"active")).join("") || `<div class="none">진행 중인 트리거 없음</div>`;
+  document.getElementById("gPrep").innerHTML = groups.prep.map(d=>todayItem(d,"prep")).join("") || `<div class="none">이번 달 준비 항목 없음</div>`;
+  document.getElementById("gSoon").innerHTML = groups.soon.map(d=>todayItem(d,"soon")).join("") || `<div class="none">2개월 내 예정 없음 — 상시 콘텐츠 보강</div>`;
+  const total = groups.active.length + groups.prep.length + groups.soon.length;
+  const done = [...groups.active, ...groups.prep, ...groups.soon].filter(d=>checks[d.id]).length;
+  document.getElementById("tprog").innerHTML = total ? `이번 달 체크 <b>${done} / ${total}</b> 완료` : "";
+
+  const offsetOf = d => Math.min(...d.m.map(mm => (mm - nowM + 12) % 12));
+
+  // 월 탭: 항목이 있는 달만 (카테고리·검색 필터 반영)
+  const tabMonths = [];
+  for(let i = 0; i < 12; i++){
+    const cnt = DATA.filter(d => d.m[0] !== 0 && offsetOf(d) === i && visible(d)).length;
+    if(cnt) tabMonths.push({i, cnt});
+  }
+  if(monthSel !== "all" && monthSel !== "always" && !tabMonths.some(t => t.i === monthSel)) monthSel = tabMonths.length ? tabMonths[0].i : "all";
+  const alwaysItems = DATA.filter(d => d.m[0] === 0 && visible(d));
+  let tabsHtml = `<button class="mtab${monthSel==="all"?" on":""}" onclick="setMonth('all')">전체</button>`;
+  let lastYy = now.getFullYear();
+  tabMonths.forEach(t => {
+    const dt = new Date(now.getFullYear(), now.getMonth() + t.i, 1);
+    const mm = dt.getMonth() + 1, yy = dt.getFullYear();
+    if(yy !== lastYy){ tabsHtml += `<span class="ydiv">${yy}</span>`; lastYy = yy; }
+    tabsHtml += `<button class="mtab${monthSel===t.i?" on":""}${t.i===0?" thisM":""}" onclick="setMonth(${t.i})">${mm}월<span class="mn">${t.cnt}</span></button>`;
+  });
+  tabsHtml += `<button class="mtab${monthSel==="always"?" on":""}" onclick="setMonth('always')">상시<span class="mn">${alwaysItems.length}</span></button>`;
+  document.getElementById("mtabs").innerHTML = tabsHtml;
+
+  const wrap = document.getElementById("months");
+  wrap.innerHTML = "";
+  let shown = 0, hiddenItems = 0;
+  if(monthSel === "always"){
+    const el = document.createElement("div");
+    el.className = "msec";
+    el.innerHTML = `<div class="mlab"><div class="mname">상시</div><div class="myear">연중 수시</div></div>`
+      + `<div><div class="tl-note" style="padding:2px 2px 12px">날짜 없이 터지는 에피소드성 수요 — 콘텐츠를 미리 깔아두고 검색을 기다리는 영역이에요. 문의 전환율이 가장 높아요.</div>`
+      + alwaysItems.map(d => cardHTML(d, false)).join("") + `</div>`;
+    wrap.appendChild(el);
+    shown = 1;
+  }
+  for(let i = 0; i < 12 && monthSel !== "always"; i++){
+    if(monthSel !== "all" && i !== monthSel) continue;
+    const dt = new Date(now.getFullYear(), now.getMonth() + i, 1);
+    const mm = dt.getMonth() + 1, yy = dt.getFullYear();
+    const items = DATA.filter(d => d.m[0] !== 0 && offsetOf(d) === i && visible(d));
+    if(!items.length) continue;
+    if(monthSel === "all" && i >= 6 && !showAll){ hiddenItems += items.length; continue; }
+    items.sort((a,b) => ((a.due && a.due.mm === mm ? a.due.dd : 32) - (b.due && b.due.mm === mm ? b.due.dd : 32)));
+    const el = document.createElement("div");
+    el.className = "msec" + (i === 0 ? " now" : "");
+    el.innerHTML = `<div class="mlab"><div class="mname">${mm}월</div><div class="myear">${yy}년</div>`
+      + (i === 0 ? `<div><span class="nowtag">이번 달</span></div>` : `<div><span class="mcount">${items.length}건</span></div>`)
+      + `</div><div>${items.map(d => cardHTML(d, monthSel !== "all" && items.length === 1)).join("")}</div>`;
+    wrap.appendChild(el);
+    shown++;
+  }
+  if(!shown && !hiddenItems) wrap.innerHTML = `<div class="tl-note">해당하는 일정이 없습니다.</div>`;
+  if(hiddenItems){
+    const btn = document.createElement("button");
+    btn.className = "morebtn";
+    btn.innerHTML = `이후 6개월 더 보기 <b>${hiddenItems}건</b>`;
+    btn.onclick = toggleMore;
+    wrap.appendChild(btn);
+  } else if(monthSel === "all" && showAll && shown){
+    const btn = document.createElement("button");
+    btn.className = "morebtn";
+    btn.textContent = "접기 — 6개월만 보기";
+    btn.onclick = toggleMore;
+    wrap.appendChild(btn);
+  }
+
+}
+function goTo(id){
+  const d = DATA.find(x => x.id === id); if(!d) return;
+  monthSel = d.m[0] === 0 ? "always" : Math.min(...d.m.map(mm => (mm - nowM + 12) % 12));
+  render();
+  const el = document.querySelector(`.tc[data-id="${id}"]`);
+  if(el){ el.classList.add("open"); el.scrollIntoView({behavior: "smooth", block: "center"}); }
+}
+render();
+
+// ===== 실행 우선순위 진행 추적 =====
+const PKEY = "mktprio_progress";
+const SKEY = "mktprio_subs";
+const SUBS_N = 6;
+let prog = {}, subs = {};
+try{ prog = JSON.parse(localStorage.getItem(PKEY)) || {}; }catch(e){}
+try{ subs = JSON.parse(localStorage.getItem(SKEY)) || {}; }catch(e){}
+function saveProg(){ localStorage.setItem(PKEY, JSON.stringify(prog)); }
+function saveSubs(){ localStorage.setItem(SKEY, JSON.stringify(subs)); }
+function toggleExp(id){ const g=document.querySelector('.g[data-pid="'+id+'"]'); if(g) g.classList.toggle('exp'); }
+function toggleProg(id){
+  const cb = document.querySelector('.g[data-pid="'+id+'"] .gchk');
+  if(cb && cb.checked){ if(!prog[id]) prog[id] = new Date().toISOString().slice(0,10); }
+  else { delete prog[id]; }
+  saveProg(); renderProg();
+}
+function toggleSub(id, i){
+  if(!subs[id]) subs[id] = {};
+  if(subs[id][i]) delete subs[id][i]; else subs[id][i] = 1;
+  if(Object.keys(subs[id]).length===0) delete subs[id];
+  saveSubs(); renderSub(id);
+}
+function renderSub(id){
+  const g = document.querySelector('.g[data-pid="'+id+'"]');
+  if(!g) return;
+  const st = subs[id] || {};
+  let done = 0;
+  g.querySelectorAll('.subitem').forEach(function(li, i){
+    const on = !!st[i];
+    const cb = li.querySelector('input');
+    if(cb) cb.checked = on;
+    li.classList.toggle('done', on);
+    if(on) done++;
+  });
+  g.querySelectorAll('.pseg').forEach(function(seg,i){ seg.classList.toggle('on', !!st[i]); });
+  const frac = g.querySelector('.pfrac');
+  if(frac) frac.textContent = done + '/' + SUBS_N;
+  const badge = g.querySelector('.gprog');
+  if(badge) badge.classList.toggle('done', done===SUBS_N && SUBS_N>0);
+}
+function openDate(id){
+  const inp = document.getElementById('di_'+id), bad = document.getElementById('d_'+id);
+  if(!inp || !bad) return;
+  inp.value = prog[id] || new Date().toISOString().slice(0,10);
+  bad.style.display = 'none'; inp.style.display = 'inline-block'; inp.focus();
+  if(inp.showPicker){ try{ inp.showPicker(); }catch(e){} }
+}
+function setDate(id){
+  const inp = document.getElementById('di_'+id);
+  if(inp && inp.value){ prog[id] = inp.value; saveProg(); }
+  if(inp) inp.style.display = 'none';
+  const bad = document.getElementById('d_'+id); if(bad) bad.style.display = '';
+  renderProg();
+}
+function hideDate(id){
+  const inp = document.getElementById('di_'+id); if(inp) inp.style.display = 'none';
+  const bad = document.getElementById('d_'+id); if(bad) bad.style.display = '';
+}
+function renderProg(){
+  let n = 0, total = 0;
+  document.querySelectorAll('.prio-goods .g[data-pid]').forEach(function(g){
+    total++;
+    const id = g.getAttribute('data-pid');
+    const cb = g.querySelector('.gchk');
+    const dd = g.querySelector('.gdate');
+    if(prog[id]){ n++; if(cb) cb.checked = true; g.classList.add('started'); if(dd) dd.textContent = '\u25B6 ' + prog[id] + ' 시작'; }
+    else { if(cb) cb.checked = false; g.classList.remove('started'); if(dd) dd.textContent = ''; }
+    renderSub(id);
+  });
+  const el = document.getElementById('prioprog');
+  if(el) el.innerHTML = '착수한 항목 <b>' + n + ' / ' + total + '</b>';
+}
+renderProg();
+
+// ===== 월 기준 성수기 정렬 =====
+const PEAK = {c1:[3,4,9,10],c2:[3,7,8,12],c3:[3,7,8,12],c4:[1,2,9],c5:[3],c6:[1],c7:[2,3],c8:[1,12],c9:[3,4,9,10],c10:[],c11:[],c12:[10,11,12],c13:[],c14:[1,2,9]};
+const MID  = {c1:[1,5,11],c2:[],c3:[],c4:[12],c5:[4],c6:[2,3,4],c7:[],c8:[2],c9:[5],c10:[1,12],c11:[1,12],c12:[3],c13:[],c14:[12]};
+const MKEY = "mktprio_month";
+let curMonth = (new Date()).getMonth()+1;
+try{ const s=localStorage.getItem(MKEY); if(s!==null) curMonth=parseInt(s,10); }catch(e){}
+document.querySelectorAll('.prio-goods').forEach(function(box){
+  Array.prototype.slice.call(box.querySelectorAll('.g[data-pid]')).forEach(function(g,i){ g.dataset.ord=i; });
+});
+function seasonOf(id,m){ if(!m) return 0; if((PEAK[id]||[]).indexOf(m)>=0) return 2; if((MID[id]||[]).indexOf(m)>=0) return 1; return 0; }
+function selectMonth(m){ curMonth=m; try{localStorage.setItem(MKEY,String(m));}catch(e){} applyMonth(); }
+function applyMonth(){
+  document.querySelectorAll('.mchip').forEach(function(c){ c.classList.toggle('on', parseInt(c.getAttribute('data-m'),10)===curMonth); });
+  document.querySelectorAll('.prio-goods').forEach(function(box){
+    const items = Array.prototype.slice.call(box.querySelectorAll('.g[data-pid]'));
+    items.forEach(function(g){
+      const s = seasonOf(g.getAttribute('data-pid'), curMonth);
+      g.classList.toggle('hot', s===2);
+      const sb = g.querySelector('.gseason');
+      if(sb){
+        if(s===2){ sb.textContent=curMonth+'월 성수기'; sb.className='gseason hot'; sb.style.display='inline-block'; }
+        else if(s===1){ sb.textContent=curMonth+'월 준성수기'; sb.className='gseason warm'; sb.style.display='inline-block'; }
+        else { sb.textContent=''; sb.className='gseason'; sb.style.display='none'; }
+      }
+    });
+    items.sort(function(a,b){
+      const sa=seasonOf(a.getAttribute('data-pid'),curMonth), sb2=seasonOf(b.getAttribute('data-pid'),curMonth);
+      if(sa!==sb2) return sb2-sa;
+      return parseInt(a.dataset.ord,10)-parseInt(b.dataset.ord,10);
+    });
+    items.forEach(function(g){ box.appendChild(g); });
+  });
+}
+applyMonth();
+
+// ===== 이번달 체크 패널 접기/펼치기 =====
+const TPKEY = "mktprio_panel";
+function applyTodayPanel(){
+  const p = document.querySelector('.todaypanel'); if(!p) return;
+  let hidden = true;
+  try{ const s = localStorage.getItem(TPKEY); if(s!==null) hidden = (s==='1'); }catch(e){}
+  p.classList.toggle('collapsed', hidden);
+  const b = document.querySelector('.tptoggle'); if(b) b.textContent = hidden ? '펼치기' : '숨기기';
+}
+function toggleTodayPanel(){
+  const p = document.querySelector('.todaypanel'); if(!p) return;
+  const hidden = !p.classList.contains('collapsed');
+  try{ localStorage.setItem(TPKEY, hidden ? '1' : '0'); }catch(e){}
+  applyTodayPanel();
+}
+applyTodayPanel();
+</script>
+</body>
+</html>
