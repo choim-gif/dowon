@@ -1,0 +1,601 @@
+<!-- 아임웹 HTML 삽입 블록 전용 버전 (개선본) — 이 코드 전체를 'HTML 삽입/코드' 위젯에 붙여넣으세요 -->
+<style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+#dwroot{
+    --blue:#3182F6;--blue-d:#1B64DA;--blue-l:#E8F3FF;
+    --ink:#191F28;--gray:#4E5968;--gray-l:#8B95A1;
+    --line:#E5E8EB;--bg:#F2F4F6;--soft:#F9FAFB;
+    --red:#F04452;--red-l:#FDECEC;--green:#15B981;--green-l:#E7F8F0;--amber:#E8911A;--amber-l:#FFF3E0;
+}
+#dwroot *{margin:0;padding:0;box-sizing:border-box}
+#dwroot{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;font-size:17px;background:var(--bg);color:var(--ink);line-height:1.6;word-break:keep-all;-webkit-font-smoothing:antialiased}
+#dwroot[data-mode="worker"] .tip-emp{display:none}
+#dwroot[data-mode="emp"] .tip-worker{display:none}
+#dwroot[data-mode="worker"]{--blue:#0D9488;--blue-d:#0B7268;--blue-l:#E0F4F1}
+#dwroot[data-mode="emp"]{--blue:#1F3D73;--blue-d:#15294D;--blue-l:#E9EDF7}
+#dwroot a{color:inherit;text-decoration:none}
+#dwroot .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+#dwroot .eyebrow{display:inline-block;font-size:15px;font-weight:800;letter-spacing:.2px;padding:8px 15px;border-radius:8px;background:var(--blue-l);color:var(--blue)}
+#dwroot .hero{background:#fff;padding:40px 0 34px;text-align:center}
+#dwroot .role-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0}
+#dwroot .role-card{background:var(--soft);border:2px solid transparent;border-radius:18px;padding:22px 28px;cursor:pointer;font-family:inherit;transition:.18s;display:flex;align-items:center;justify-content:center;gap:18px}
+#dwroot .role-txt{text-align:left}
+#dwroot .role-card:hover{background:#fff;border-color:var(--line);transform:translateY(-2px)}
+#dwroot .role-card.active{background:var(--blue-l);border-color:var(--blue)}
+#dwroot .role-illust{width:60px;height:60px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.05);transition:.18s}
+#dwroot .role-card.active .role-illust{box-shadow:0 6px 16px rgba(49,130,246,.22)}
+#dwroot .role-emoji{font-size:34px;line-height:1}
+#dwroot .role-name{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-.4px;margin-bottom:4px}
+#dwroot .role-card.active .role-name{color:var(--blue-d)}
+#dwroot .role-desc{font-size:13.5px;font-weight:500;color:var(--gray);line-height:1.5}
+#dwroot .role-card.active .role-desc{color:var(--blue-d)}
+#dwroot .lib-head{margin:60px 0 0}
+#dwroot .lib-head h2{font-size:34px;font-weight:800;color:var(--ink);letter-spacing:-1px;line-height:1.32;margin-top:12px}
+#dwroot .lib-head h2 em{font-style:normal;color:var(--blue)}
+#dwroot .controls{margin:26px 0 6px}
+#dwroot .chips{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
+#dwroot .chips #typeChips{display:inline-flex;flex-wrap:wrap;gap:8px}
+#dwroot .chip{border:none;background:#fff;color:var(--gray);font-family:inherit;font-size:15px;font-weight:700;padding:10px 16px;border-radius:12px;cursor:pointer;transition:.14s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+#dwroot .chip:hover{color:var(--ink)}
+#dwroot .chip.on{background:var(--blue);color:#fff}
+#dwroot .chip i{font-style:normal;font-weight:800;opacity:.45;margin-left:3px}
+#dwroot .chip.on i{opacity:.85}
+#dwroot .count{margin:26px 0 14px;font-size:15px;color:var(--gray);font-weight:600}
+#dwroot .count b{color:var(--blue)}
+#dwroot .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px;align-items:start}
+#dwroot .case{background:#fff;border-radius:20px;box-shadow:0 1px 3px rgba(0,0,0,.04),0 6px 18px rgba(0,0,0,.04);transition:box-shadow .22s,transform .22s;overflow:hidden;display:flex;flex-direction:column}
+#dwroot .case:hover{box-shadow:0 4px 12px rgba(0,0,0,.06),0 16px 36px rgba(0,0,0,.08)}
+#dwroot .case.open{box-shadow:0 8px 28px rgba(49,130,246,.16)}
+#dwroot .case.hidden{display:none}
+#dwroot .case-img{display:flex;align-items:center;justify-content:center;height:172px;padding:20px;background:linear-gradient(180deg,#EEF4FF 0%,#F9FAFB 100%);border-bottom:1px solid var(--line)}
+#dwroot .case-img img{max-height:132px;max-width:78%;width:auto;object-fit:contain}
+#dwroot[data-mode="worker"] .case[data-rel="worker"], #dwroot[data-mode="emp"] .case[data-rel="emp"]{order:-1;box-shadow:0 0 0 2px var(--blue),0 8px 24px rgba(49,130,246,.14)}
+#dwroot .rel-pill{display:none !important}
+#dwroot[data-mode="worker"] .case[data-rel="worker"] .rel-pill.worker{display:inline-block !important}
+#dwroot[data-mode="emp"] .case[data-rel="emp"] .rel-pill.emp{display:inline-block !important}
+#dwroot .bd.rel-pill{background:var(--blue);color:#fff}
+#dwroot .case-head{display:flex;flex-direction:column;flex:1 1 auto;width:100%;text-align:left;background:none;border:none;font-family:inherit;color:inherit;cursor:pointer;padding:24px 24px 20px}
+#dwroot .badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+#dwroot .bd{font-size:13px;font-weight:800;padding:6px 11px;border-radius:8px;letter-spacing:.2px}
+#dwroot .bd.in{background:var(--blue-l);color:var(--blue)}
+#dwroot .bd.sj{background:var(--green-l);color:var(--green)}
+#dwroot .bd.is{background:var(--amber-l);color:var(--amber)}
+#dwroot .bd.court{background:var(--bg);color:var(--gray)}
+#dwroot .quote{font-size:20px;font-weight:800;color:var(--ink);line-height:1.4;letter-spacing:-.5px;margin-bottom:10px}
+#dwroot .summary{font-size:16px;color:var(--gray);line-height:1.7;font-weight:500;min-height:54px}
+#dwroot .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+#dwroot .tag{font-size:13.5px;font-weight:600;color:var(--gray);background:var(--bg);padding:6px 11px;border-radius:8px}
+#dwroot .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:16px;border-top:1px solid var(--line)}
+#dwroot .award{font-size:17.5px;font-weight:800;color:var(--blue)}
+#dwroot .expand-hint{font-size:14px;font-weight:700;color:var(--blue);display:inline-flex;align-items:center;gap:4px}
+#dwroot .expand-hint i{font-style:normal;transition:transform .3s}
+#dwroot .case.open .expand-hint i{transform:rotate(180deg)}
+#dwroot .case-detail{max-height:0;overflow:hidden;transition:max-height .45s ease}
+#dwroot .case.open .case-detail{max-height:3000px}
+#dwroot .case-detail-inner{padding:4px 24px 24px}
+#dwroot .dt{margin-top:18px}
+#dwroot .dt h4{font-size:15px;font-weight:800;color:var(--blue);letter-spacing:.3px;margin-bottom:7px}
+#dwroot .dt p{font-size:17.5px;color:var(--ink);line-height:1.78;font-weight:500}
+#dwroot .dt.outcome{background:var(--blue-l);border-radius:14px;padding:14px 16px;margin-top:18px}
+#dwroot .dt.outcome h4{color:var(--blue-d)}
+#dwroot .dt.outcome p{color:#163E73}
+#dwroot .tip{margin-top:16px;border-radius:14px;padding:15px 17px;line-height:1.65}
+#dwroot .tip b{display:block;font-size:16.5px;font-weight:800;margin-bottom:5px}
+#dwroot .tip p{font-size:16.5px;font-weight:500}
+#dwroot .tip-worker{background:var(--green-l)}
+#dwroot .tip-worker b{color:var(--green)}
+#dwroot .tip-worker p{color:#10704D}
+#dwroot .tip-emp{background:var(--blue-l)}
+#dwroot .tip-emp b{color:var(--blue)}
+#dwroot .tip-emp p{color:#1B4E8E}
+#dwroot .src-line{margin-top:18px;font-size:13.5px;color:var(--gray-l);font-weight:600}
+#dwroot .src-line a{color:var(--blue);font-weight:800}
+#dwroot .empty{text-align:center;color:var(--gray-l);padding:56px 0;font-size:16px;display:none}
+#dwroot .cta{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-d) 100%);border-radius:24px;padding:48px 32px;text-align:center;margin:52px 0 32px;color:#fff}
+#dwroot .cta h3{font-size:29px;font-weight:800;letter-spacing:-.6px}
+#dwroot .cta p{color:rgba(255,255,255,.86);font-size:17.5px;font-weight:500;margin:12px 0 26px;line-height:1.65;max-width:560px;margin-left:auto;margin-right:auto}
+#dwroot .cta a{display:inline-block;background:#fff;color:var(--blue);font-weight:800;font-size:17px;padding:16px 40px;border-radius:14px;box-shadow:0 8px 22px rgba(0,0,0,.14);transition:transform .2s}
+#dwroot .cta a:hover{transform:translateY(-2px)}
+@media(max-width:680px){
+  #dwroot .hero{padding:36px 0 28px}
+  #dwroot .role-cards{gap:10px}
+  #dwroot .role-card{padding:18px 12px 16px;border-radius:16px;flex-direction:column;gap:0}
+  #dwroot .role-txt{text-align:center}
+  #dwroot .role-illust{width:54px;height:54px;margin-bottom:9px}
+  #dwroot .role-name{font-size:17.5px}
+  #dwroot .role-desc{font-size:14px}
+  #dwroot .lib-head h2{font-size:27px}
+  #dwroot .grid{grid-template-columns:1fr}
+  #dwroot .quote{font-size:18px}
+}
+/* 아임웹 테마 폰트·제목 크기 덮어쓰기 방지 */
+#dwroot, #dwroot *{font-family:'Pretendard','Pretendard Variable',-apple-system,BlinkMacSystemFont,sans-serif !important}
+#dwroot .quote{font-size:20px !important;line-height:1.4 !important}
+#dwroot .lib-head h2{font-size:30px !important}
+#dwroot .cta h3{font-size:26px !important}
+#dwroot .role-name{font-size:18px !important}
+/* 목록 접기 + 그라데이션 + 더보기 */
+#dwroot .gridwrap{position:relative;margin:-10px -10px 0;padding:10px 10px 0}
+#dwroot .gridwrap.collapsed{max-height:1400px;overflow:hidden}
+#dwroot .gridfade{display:none}
+#dwroot .gridwrap.collapsed .gridfade{display:block;position:absolute;left:0;right:0;bottom:0;height:170px;background:linear-gradient(180deg,rgba(242,244,246,0),var(--bg) 88%);pointer-events:none}
+#dwroot .morewrap{text-align:center;margin:20px 0 0}
+#dwroot .morebtn{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--blue);font-family:inherit;font-weight:800;font-size:16px;padding:14px 30px;border:1px solid var(--line);border-radius:14px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.05);transition:.15s}
+#dwroot .morebtn:hover{transform:translateY(-1px);border-color:var(--blue)}
+#dwroot .morebtn i{font-style:normal}
+</style>
+
+<div id="dwroot" data-mode="worker">
+<header class="hero">
+  <div class="wrap">
+    <div class="role-cards">
+      <button class="role-card active" data-role="worker" type="button" onclick="setMode('worker')">
+        <div class="role-illust" aria-hidden="true"><span class="role-emoji">🌿</span></div>
+        <div class="role-txt"><div class="role-name">나는 근로자예요</div><div class="role-desc">근로자 관련 사례를<br>먼저 모아 보기</div></div>
+      </button>
+      <button class="role-card" data-role="emp" type="button" onclick="setMode('emp')">
+        <div class="role-illust" aria-hidden="true"><span class="role-emoji">🏢</span></div>
+        <div class="role-txt"><div class="role-name">회사·인사담당이에요</div><div class="role-desc">회사 리스크 사례를<br>먼저 모아 보기</div></div>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="lib-head">
+    <span class="eyebrow">CASE LIBRARY</span>
+    <h2>직장내괴롭힘 성희롱 <em>대응 인정사례</em></h2>
+  </section>
+
+  <div class="controls">
+    <div class="chips"><span id="typeChips"></span></div>
+  </div>
+
+  <div class="count" id="count"></div>
+
+  <div class="gridwrap collapsed" id="gridwrap">
+  <div class="grid" id="grid">
+
+    <!-- 1. 캐디 -->
+    <article class="case" data-type="폭언·모욕" data-ind="운수·서비스" data-rel="worker">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEix-Qz4ds9-EBZhJH3rMshE1x-vJUl7WV5ou2oBY9PxmkaJtFfddPUcGvKTtE-5IibXbab87XRtZHVs-po_Xf17FIc3IaB62BlMFPD4bwUdd68XCxsWAoTRTE0kqZWEo3hsoEvU0Bm2irAm/s800/job_caddie_golf.png" alt="골프장 캐디 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill worker">👤 근로자에게 추천</span><span class="bd in">괴롭힘 인정</span><span class="bd court">대법원 2024.5</span></div>
+        <h3 class="quote">"뚱뚱해서 못 뛰어? 뛰어"</h3>
+        <p class="summary">특수고용직 캐디도 직장 내 괴롭힘으로 보호받는다 — 대법원이 골프장 사업주의 책임을 처음으로 인정한 사건.</p>
+        <div class="meta"><span class="tag">폭언·모욕</span><span class="tag">운수·서비스</span><span class="tag">특수고용</span></div>
+        <div class="foot"><span class="award">유족에 약 1.7억</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>경기 파주의 한 대학이 운영하는 골프장에서 일하던 27세 캐디 A씨는, 상사(캡틴)로부터 동료들이 함께 듣는 공동 무전으로 외모를 비하하는 발언을 반복적으로 들었습니다. 출근표를 올리는 온라인 카페에서도 퇴출당하는 등 따돌림을 겪었고, 2019년 7월 입사한 A씨는 2020년 9월 스스로 목숨을 끊었습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>캐디는 골프장에 직접 고용된 근로자가 아닌 '특수고용직'입니다. 근로기준법상 '근로자'가 아닌 사람도 직장 내 괴롭힘으로부터 보호받을 수 있는지, 그리고 직접 가해자가 아닌 골프장 사업주에게 책임을 물을 수 있는지가 쟁점이었습니다.</p></div>
+        <div class="dt"><h4>법원의 판단</h4><p>법원은 산업안전보건법상 노무를 제공받는 사업주에게 특수고용직 종사자를 괴롭힘으로부터 보호할 의무가 있다고 보았습니다. 사업주가 이 보호(주의) 의무를 소홀히 한 점을 인정해, 가해자뿐 아니라 골프장 운영사에도 손해배상 책임이 있다고 판단했습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>대법원은 2024년 5월 사업주의 배상 책임(약 50%)을 확정하고 유족에게 1억 7,000여만 원을 지급하도록 했습니다. 특수고용직 괴롭힘에 사업주 책임을 인정한 첫 대법원 판결입니다.</p></div>
+        <div class="tip tip-worker"><b>⛳ 나라면, 이렇게</b><p>정규직이 아니어도 프리랜서·특수고용·플랫폼 종사자도 보호받을 수 있습니다. 무전·메신저처럼 여러 사람이 보는 공간의 발언은 강력한 증거가 됩니다. 날짜·내용·녹음을 남겨두세요.</p></div>
+        <div class="tip tip-emp"><b>⛳ 회사라면, 이것을</b><p>직접 고용하지 않은 인력(도급·특수고용)이라도 우리 사업장에서 일한다면 보호 의무가 생깁니다. "우리 직원이 아니다"는 방패가 되지 않습니다.</p></div>
+        <p class="src-line">출처: <a href="https://www.lawtimes.co.kr/news/198583" target="_blank" rel="noopener">법률신문 ↗</a> · 대법원 2024.5.17 선고</p>
+      </div></div>
+    </article>
+
+    <!-- 2. 태움 -->
+    <article class="case" data-type="따돌림·배제" data-ind="의료·간호" data-rel="worker">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgLXVBomao7feRw_53NbeXa0w7q287-lv3bmY3PW2jOpyvmtaqrqRXWhcAC-C_UcRYepsKgFLs6vWBctN6qNj1PJsRWtUvaJ6C7JLXOoiotjLjINDYZCrOWdKohOefz4wba3Wx90GV0KQw/s800/nurse1_1_smile.png" alt="간호사 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill worker">👤 근로자에게 추천</span><span class="bd sj">산재 인정</span><span class="bd court">근로복지공단 2019</span></div>
+        <h3 class="quote">영혼이 재가 될 때까지, '태움'</h3>
+        <p class="summary">신규 간호사의 죽음을 직장 내 괴롭힘으로 인한 산업재해로 인정한 첫 사례.</p>
+        <div class="meta"><span class="tag">따돌림·배제</span><span class="tag">의료·간호</span><span class="tag">정규직</span></div>
+        <div class="foot"><span class="award">산재 인정</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>대형 병원 중환자실에 배치된 신규 간호사가 충분한 교육·지원 없이 과중한 업무를 떠안고, 선배 간호사들의 이른바 '태움'(혹독한 군기 잡기)에 시달리다 2018년 스스로 목숨을 끊었습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>개인의 우울증·극단적 선택을 '업무'와 연결된 재해로 볼 수 있는지가 핵심이었습니다. 정신질환과 사망이 업무상 스트레스에서 비롯됐다는 인과관계 인정 여부가 쟁점이었습니다.</p></div>
+        <div class="dt"><h4>기관의 판단</h4><p>근로복지공단은 신규 간호사로서 업무 부담이 컸고, 적절한 교육체계나 지원 없이 과중한 업무를 수행하면서 피로가 누적되고 우울감이 커진 끝에 사망에 이른 것으로 보아, 업무와 사망 사이의 인과관계를 인정했습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>2019년 3월 업무상 재해(산재)로 최종 인정됐습니다. 괴롭힘으로 인한 정신질환·사망을 산재로 인정한 상징적 사건으로, 병원 조직문화 개선의 출발점이 됐습니다.</p></div>
+        <div class="tip tip-worker"><b>🏥 나라면, 이렇게</b><p>괴롭힘으로 인한 우울증·공황·불면도 산재가 될 수 있습니다. 정신과 진료 기록, 근무표, 업무량 자료는 인과관계를 입증하는 핵심 증거입니다.</p></div>
+        <div class="tip tip-emp"><b>🏥 회사라면, 이것을</b><p>'원래 그런 문화'라는 관행적 괴롭힘이 가장 위험합니다. 신규자 교육·업무 배분 체계가 없으면 개인의 일탈이 아니라 회사의 구조적 책임으로 평가됩니다.</p></div>
+        <p class="src-line">출처: <a href="https://www.doctorsnews.co.kr/news/articleView.html?idxno=128041" target="_blank" rel="noopener">의협신문 ↗</a> · 근로복지공단 2019.3 업무상질병 판정</p>
+      </div></div>
+    </article>
+
+    <!-- 3. 운전기사 -->
+    <article class="case" data-type="폭언·모욕" data-ind="운수·서비스" data-rel="worker">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1jiDjcBOtGWaln3ZwYcTs-3EVhGnGNjpO9-OFEw3bdbF51f92kcW_UbMUn7OGsoWimD5Y7vwdTKWeeG2x1V-morChDIWvghCYctLdf8HuaUYrdBk3NWKhAXTDaICJPAZ87VdjWrBctHM/s800/job_driver.png" alt="운전기사 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill worker">👤 근로자에게 추천</span><span class="bd in">괴롭힘 인정</span><span class="bd court">청주지법 2023.3</span></div>
+        <h3 class="quote">25년 전속 운전기사를 향한 멸시</h3>
+        <p class="summary">대표이사가 25년간 전담 기사에게 퍼부은 폭언·폭행 — 위자료 6,000만 원.</p>
+        <div class="meta"><span class="tag">폭언·모욕</span><span class="tag">운수·서비스</span><span class="tag">정규직</span></div>
+        <div class="foot"><span class="award">6,000만 원</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>한 회사 대표이사가 약 25년간 자신의 전담 운전기사로 일한 직원에게 욕설이 섞인 폭언을 일상적으로 하고 폭행까지 가했습니다. 피해자가 사망한 뒤, 유족이 휴대전화에 남아 있던 녹음 파일을 통해 폭언 사실을 알게 되어 손해배상 소송을 제기했습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>장기간 지속된 상급자의 폭언·폭행이 단순한 '업무상 질책'을 넘어 인격권을 침해하는 불법행위에 해당하는지, 위자료를 얼마로 볼지가 쟁점이었습니다.</p></div>
+        <div class="dt"><h4>법원의 판단</h4><p>법원은 25년에 걸친 반복적 폭언·폭행을 직장 내 괴롭힘이자 불법행위로 인정했습니다. 지위의 우위를 이용해 장기간 지속된 점, 피해의 정도가 중대한 점을 들어 높은 수준의 위자료를 인정했습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>청주지법은 2023년 3월 대표이사에게 6,000만 원의 위자료 지급을 명했습니다. 직장 내 괴롭힘 위자료로는 상당히 높은 금액입니다.</p></div>
+        <div class="tip tip-worker"><b>🚗 나라면, 이렇게</b><p>녹음은 가장 강력한 증거입니다. 내가 대화 당사자라면 상대 동의 없이 녹음해도 증거로 쓸 수 있습니다. 폭언이 반복된다면 날짜별로 기록·녹음을 모아두세요.</p></div>
+        <div class="tip tip-emp"><b>🚗 회사라면, 이것을</b><p>오너·대표의 언행이 가장 큰 리스크입니다. 지위가 높을수록, 기간이 길수록 위자료가 커집니다. 경영진 대상 예방 교육이 특히 중요합니다.</p></div>
+        <p class="src-line">출처: <a href="https://www.kbei.org/new/05info/s_4.php?action=view&bid=column_kim&idx=472" target="_blank" rel="noopener">정봉수 칼럼 ↗</a> · 청주지법 2022가단55982 (2023.3.17)</p>
+      </div></div>
+    </article>
+
+    <!-- 4. 심야 폭언 -->
+    <article class="case" data-type="폭언·모욕" data-ind="사무·공공" data-rel="worker">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjKdMfmNBUPxpYgxg5yYIEQNf98kwL67Y7xpr8mfx7dHjgLf4GS5iGydfhtJ4dFMTSPmddXouCbSO_YE9LBVhsR28Cc92VLBMOWBebb3qeYEHAkt4NAoUDWBIk8FF-sEY8URu2oXRuudodi/s800/smartphone_gorogoro_man.png" alt="심야 스마트폰 시달림 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill worker">👤 근로자에게 추천</span><span class="bd in">괴롭힘 인정</span><span class="bd court">서울남부지법 2023</span></div>
+        <h3 class="quote">밤 11시 보이스톡, 쏟아진 욕설</h3>
+        <p class="summary">심야 카톡 업무지시와 폭언·욕설을 인격권 침해 불법행위로 인정.</p>
+        <div class="meta"><span class="tag">폭언·모욕</span><span class="tag">사무·공공</span><span class="tag">정규직</span></div>
+        <div class="foot"><span class="award">700만 원</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>상사 B씨는 밤 11시가 넘은 시간에 "다음 날 업무 발표를 하라"는 카카오톡을 보낸 뒤 보이스톡으로 폭언과 욕설을 퍼부었습니다. 연말 종무식 자리에서는 피해자를 꾸짖었고, 업무 서류를 책상에 던지거나 아무 설명 없이 부당하게 업무를 지시했습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>상사의 강한 질책과 업무지시가 '정당한 업무상 지시'의 범위인지, 아니면 적정 범위를 넘은 괴롭힘인지의 경계가 쟁점이었습니다.</p></div>
+        <div class="dt"><h4>법원의 판단</h4><p>법원은 심야 폭언·욕설, 서류를 던지는 행위, 설명 없는 부당한 업무지시 등을 묶어 '직장 내 괴롭힘으로 인격권을 침해하는 불법행위'로 판단했습니다. 다만 일부 주장은 증거 부족 또는 적정 범위 내로 보아 받아들이지 않았습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>서울남부지법은 상사 B씨에게 700만 원의 위자료 지급을 명했습니다.</p></div>
+        <div class="tip tip-worker"><b>🌙📞 나라면, 이렇게</b><p>업무시간 외 심야·휴일의 반복된 연락과 폭언은 괴롭힘의 근거가 됩니다. 카톡·통화는 캡처·녹음으로 보존하세요. 다만 모든 질책이 인정되는 것은 아니므로 '적정 범위를 넘은' 정황을 구체적으로 모으는 것이 중요합니다.</p></div>
+        <div class="tip tip-emp"><b>🌙📞 회사라면, 이것을</b><p>질책 자체가 위법은 아닙니다. 문제는 '방식'입니다 — 늦은 시간대, 표현, 공개적 망신, 서류 던지기 같은 행동이 선을 넘게 만듭니다.</p></div>
+        <p class="src-line">출처: <a href="https://www.lawtimes.co.kr/news/195819" target="_blank" rel="noopener">법률신문 ↗</a> · 서울남부지법 2022가단241657</p>
+      </div></div>
+    </article>
+
+    <!-- 5. 성희롱 가해자 사직처리 -->
+    <article class="case" data-type="성희롱 결합" data-ind="사무·공공" data-rel="emp">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg_V4Utu0speOD8pqDxhU-me3HIcWjzyHSpRbuKHxep8IcOh4JMMy6nofG1FDAo8FU6FaWhJVV5HHqR04Of_u_v3YG_F7PYNqXOp9coIx25R-5Hb0vg8JzfvSNX2IEj6R2lC1Sd1JpdQ95D/s800/kaisya_nigate_joushi_man_woman.png" alt="직장 내 성희롱 상황 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill emp">🏢 인사담당에게 추천</span><span class="bd in">회사 책임</span><span class="bd court">대법원 2024.11</span></div>
+        <h3 class="quote">가해자를 조용히 내보낸 회사</h3>
+        <p class="summary">성폭력 가해자를 징계 없이 사직 처리한 회사에 손해배상 책임을 인정한 대법원 판결.</p>
+        <div class="meta"><span class="tag">성희롱 결합</span><span class="tag">사무·공공</span><span class="tag">정규직</span></div>
+        <div class="foot"><span class="award">회사 손배책임</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>직장 내 성폭력 사건이 발생하자 회사는 가해자를 정식 징계 절차 없이 권고사직으로 조용히 내보냈습니다. 그 과정에서 피해자에게 징계 절차의 장단점을 객관적으로 설명하거나 의견을 충분히 듣지 않았습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>가해자를 내보냈다면 회사는 의무를 다한 것인지, 아니면 '제대로 된 조치'와 '피해자 의견 청취'까지 해야 하는지가 쟁점이었습니다.</p></div>
+        <div class="dt"><h4>법원의 판단</h4><p>대법원은 회사가 비밀보장을 위한 최소한의 노력이나 객관적 설명 없이 가해자를 서둘러 사직 처리한 것은 '필요한 조치를 다했다'고 보기 어렵다고 판단했습니다. 또한 피해자는 가해자 진술 내용을 전달받아 형사고소 등 대응을 준비할 권리가 있었는데 회사가 이를 존중하지 않았다며 손해배상 책임을 인정했습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>대법원은 2024년 11월 회사(사용자)의 손해배상 책임을 인정했습니다. 가해자 처리뿐 아니라 '피해자 보호·의견청취' 의무를 명확히 한 중요한 선례입니다.</p></div>
+        <div class="tip tip-worker"><b>⚖️ 나라면, 이렇게</b><p>회사가 가해자를 '조용히 내보내는' 것으로 끝내려 한다면, 그 자체가 또 다른 권리 침해일 수 있습니다. 조사 과정과 결과를 서면으로 요구하고 기록을 남기세요.</p></div>
+        <div class="tip tip-emp"><b>⚖️ 회사라면, 이것을</b><p>가해자를 빨리 내보내는 것이 능사가 아닙니다. 정식 절차 없이 권고사직으로 마무리하면 오히려 회사가 배상 책임을 집니다. 조사·의견청취·서면 통지 절차를 지키세요.</p></div>
+        <p class="src-line">출처: <a href="https://www.lexology.com/library/detail.aspx?g=c0041051-8c7d-4d9c-82d3-f8c588450ccb" target="_blank" rel="noopener">Lexology ↗</a> · 대법원 2024.11.14 선고 2023다276823</p>
+      </div></div>
+    </article>
+
+    <!-- 6. 육아휴직 복귀 -->
+    <article class="case" data-type="따돌림·배제" data-ind="사무·공공" data-rel="emp">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvMpzS6D1QcZYeTubbxdHoSc9ycxh26ivU7QEaA4iFf081cWSk5Y7Vpw2JH46nqt-uPoOpY493lER6ypM001obkBDM3082YFXiun4hWLHWyeTDeIO3VAjw591agLBuAbf1B5K-ACMSC005/s800/ikuji_kodure_syukkin_businesswoman.png" alt="아기와 함께 출근하는 워킹맘 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill emp">🏢 인사담당에게 추천</span><span class="bd in">괴롭힘 인정</span><span class="bd court">고용노동부 판단사례</span></div>
+        <h3 class="quote">복직했더니 책상이 사라졌다</h3>
+        <p class="summary">육아휴직 후 돌아온 직원에게 보조업무와 따돌림 — 괴롭힘이자 남녀고용평등법 위반.</p>
+        <div class="meta"><span class="tag">따돌림·배제</span><span class="tag">사무·공공</span><span class="tag">정규직</span></div>
+        <div class="foot"><span class="award">괴롭힘+법 위반</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>육아휴직을 마치고 복직한 직원에게 회사 임원은 기존 업무 대신 보조업무를 맡기고, 다른 직원들에게 이 직원을 따돌리도록 지시했습니다. "직원으로 생각하지 않는다"는 발언까지 했고, 피해자는 우울증을 앓다 결국 퇴사했습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>육아휴직 복귀자에 대한 업무 변경·배제가 '인사권 행사'인지 괴롭힘인지, 그리고 남녀고용평등법 위반에 해당하는지가 쟁점이었습니다.</p></div>
+        <div class="dt"><h4>기관의 판단</h4><p>남녀고용평등법은 육아휴직 후 복귀자를 휴직 전과 같은 업무 또는 같은 수준의 임금을 받는 직무로 복귀시키도록 정하고 있습니다(제19조 제4항). 보조업무 부여·따돌림 지시는 업무상 필요성이 없는 행위로, 직장 내 괴롭힘이자 법 위반으로 판단됐습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>직장 내 괴롭힘이 인정됐고, 남녀고용평등법 위반에 대한 처벌도 함께 이뤄졌습니다.</p></div>
+        <div class="tip tip-worker"><b>🍼 나라면, 이렇게</b><p>육아휴직·출산휴가 후 복귀했는데 자리·업무가 바뀌었다면 신호일 수 있습니다. 복귀 전후의 업무·직책·자리 변화를 기록해두면 '불리한 처우' 입증에 도움이 됩니다.</p></div>
+        <div class="tip tip-emp"><b>🍼 회사라면, 이것을</b><p>복귀자에게 "같은 업무 또는 같은 수준의 임금 직무"를 보장하는 것은 법적 의무입니다. 자리를 빼거나 보조업무로 돌리는 것은 괴롭힘 + 남녀고용평등법 위반의 이중 리스크입니다.</p></div>
+        <p class="src-line">출처: 고용노동부 직장 내 괴롭힘 판단사례 · 남녀고용평등법 제19조 제4항</p>
+      </div></div>
+    </article>
+
+    <!-- 7. 사적 심부름 -->
+    <article class="case" data-type="통제·강요" data-ind="사무·공공" data-rel="emp">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi7I96by4ZIGJIffwF_HFc1-R5HHlKCh6VOWh4NYUi7hhiFAeRrjNMHMG4cMy_QE0mdA68QeCKjz9oC6mTTl6aLSwQaHt6d8f6yu8KXFFqFMVbbAvvCLKe6zROrnM2RmBdEJgxfnPQGOTZ4/s800/otsukai_boy.png" alt="심부름 가는 사람 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill emp">🏢 인사담당에게 추천</span><span class="bd is">쟁점·주의</span><span class="bd court">고용노동부 매뉴얼</span></div>
+        <h3 class="quote">커피·은행·택배… 매일의 심부름</h3>
+        <p class="summary">한 번은 호의지만, 반복되는 사적 심부름은 고용노동부가 명시한 괴롭힘 예시.</p>
+        <div class="meta"><span class="tag">통제·강요</span><span class="tag">사적 심부름</span><span class="tag">사무·공공</span></div>
+        <div class="foot"><span class="award">반복 시 인정</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>상사가 부하 직원에게 개인적인 커피 심부름, 은행 업무, 택배 수령 같은 사적인 용무를 지속적·반복적으로 시키는 상황입니다. 직장에서 흔히 "이 정도는 괜찮겠지" 하고 넘어가는 일이지만, 반복되면 문제가 됩니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>사적 심부름은 어디까지가 '직장 내 호의·관행'이고, 어디서부터 괴롭힘이 되는지가 핵심입니다.</p></div>
+        <div class="dt"><h4>기관의 판단</h4><p>고용노동부 '직장 내 괴롭힘 판단 및 예방·대응 매뉴얼'은 합리적 이유 없이 사적인 용무·심부름을 지속적·반복적으로 지시하는 행위를 직장 내 괴롭힘의 대표적 예시로 들고 있습니다. 한두 번의 부탁은 호의일 수 있지만, 반복·지속되면 업무상 적정 범위를 넘는 것으로 봅니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>단발성은 괴롭힘으로 보기 어렵지만, 반복·지속될 경우 직장 내 괴롭힘으로 인정될 수 있습니다.</p></div>
+        <div class="tip tip-worker"><b>☕ 나라면, 이렇게</b><p>"이 정도는 괜찮나?" 싶을 때 기준은 '반복성과 업무 관련성'입니다. 사적 심부름이 일상이 됐다면 횟수와 내용을 기록해두세요.</p></div>
+        <div class="tip tip-emp"><b>☕ 회사라면, 이것을</b><p>악의가 없어도 '관행'이 반복되면 괴롭힘이 됩니다. 사적 심부름은 업무가 아니라는 점을 관리자 교육에 포함하세요.</p></div>
+        <p class="src-line">출처: <a href="https://www.moel.go.kr/policy/policydata/view.do?bbs_seq=20230500514" target="_blank" rel="noopener">고용노동부 매뉴얼 ↗</a> · 직장 내 괴롭힘 판단 및 예방·대응 매뉴얼</p>
+      </div></div>
+    </article>
+
+    <!-- 8. 창원 기관 공동책임 -->
+    <article class="case" data-type="따돌림·배제" data-ind="사무·공공" data-rel="emp">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgm87q8q8k-_qwRKsiNy9CqA9KLRtIZ6_akVy26g3Gmz3Ds-7DQy0WEtadIwQSCulTzCVe4HzWRXwmNIHo9IlMjuorCi9PORQ3xLK6NXa84y0WyRUshlbJrTzCSWsgJYD7NvHPg2AZb_So/s800/pawahara_man.png" alt="직장 내 따돌림 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill emp">🏢 인사담당에게 추천</span><span class="bd in">회사 책임</span><span class="bd court">창원지법 2025</span></div>
+        <h3 class="quote">가해자도, 기관도 함께 배상하라</h3>
+        <p class="summary">직장 내 괴롭힘에 대해 가해자뿐 아니라 소속 기관(사용자)도 함께 배상하라고 한 판결.</p>
+        <div class="meta"><span class="tag">따돌림·배제</span><span class="tag">사무·공공</span><span class="tag">정규직</span></div>
+        <div class="foot"><span class="award">공동 약 1,300만 원</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>한 기관 소속 직원이 동료·상급자로부터 부당한 언행과 업무 배제 등 직장 내 괴롭힘을 당했습니다. 피해자는 가해자 개인뿐 아니라 이들이 소속된 기관을 상대로도 손해배상을 청구했습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>괴롭힘의 책임을 가해자 개인에게만 물을 수 있는지, 아니면 소속 기관(사용자)도 함께 책임지는지가 쟁점이었습니다.</p></div>
+        <div class="dt"><h4>법원의 판단</h4><p>법원은 가해자들의 언행이 직장 내 괴롭힘에 해당하며, 그 행위에 '직무 관련성'이 인정되므로 소속 기관도 사용자 책임에 따라 피해자의 정신적 손해를 배상해야 한다고 판단했습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>창원지법은 가해자와 기관이 공동으로 위자료(합계 약 1,300만 원)를 지급하도록 했고, 항소가 기각되어 판결이 확정됐습니다.</p></div>
+        <div class="tip tip-worker"><b>🤝 나라면, 이렇게</b><p>가해자 개인뿐 아니라 회사를 상대로도 책임을 물을 수 있습니다. 회사가 신고를 받고도 방치했다면 사용자 책임이 더 무거워집니다.</p></div>
+        <div class="tip tip-emp"><b>🤝 회사라면, 이것을</b><p>직무와 관련된 괴롭힘이라면 회사도 함께 배상 책임을 집니다. "개인 간의 문제"로 선을 그어도 회사 책임은 사라지지 않습니다. 신고 접수 즉시 조사·조치가 핵심입니다.</p></div>
+        <p class="src-line">출처: <a href="https://www.seoul.co.kr/news/society/law/2025/11/26/20251126500090" target="_blank" rel="noopener">서울신문 ↗</a> · 창원지법 2025 (확정)</p>
+      </div></div>
+    </article>
+
+    <!-- 9. 서울의료원 서지윤 -->
+    <article class="case" data-type="따돌림·배제" data-ind="의료·간호" data-rel="worker">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjpk74swElMntVncUnLQwHHQbW08gvCFfoWdVPgHbwULjv5-5cW-NwsY97Ilc0Gpp9QbRZoebY5W2L1q0CuZ8wM9yZB5o0W9BZGdGiSTiO9ygHK-nbrfyAvMWX6DS8VPR5pqumDKboKwAU/s800/hitori_bocchi.png" alt="혼자 고립된 사람 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill worker">👤 근로자에게 추천</span><span class="bd sj">산재 인정</span><span class="bd court">근로복지공단 2020.11</span></div>
+        <h3 class="quote">전출 뒤, 책상도 일도 사라졌다</h3>
+        <p class="summary">부서이동·업무배제 등 조직적 괴롭힘 끝의 죽음을 산업재해로 인정 — 태움에 이은 두 번째 산재 인정.</p>
+        <div class="meta"><span class="tag">따돌림·배제</span><span class="tag">의료·간호</span><span class="tag">정규직</span></div>
+        <div class="foot"><span class="award">산재 인정</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>서울의료원 간호사 서지윤 씨(29)는 2018년 12월 부서이동 과정에서 다른 동료와 달리 수간호사 면담을 세 차례 이상 받았고, 간호행정부로 전출된 뒤에는 사무기기조차 제대로 지급받지 못한 채 자신의 담당과 무관한 파견 업무를 맡았습니다. 2019년 1월 스스로 목숨을 끊었고, 이후 진상대책위원회는 "관리자와 조직 차원의 괴롭힘"으로 결론지었습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>특정 개인을 겨냥한 부서이동·업무배제 같은 '조직적 따돌림'으로 인한 정신질환·사망을 업무와 연결된 재해로 볼 수 있는지가 쟁점이었습니다.</p></div>
+        <div class="dt"><h4>기관의 판단</h4><p>근로복지공단은 직장 상황·업무와 관련된 정신적 고통이 인정되고, 업무상 과로와 스트레스가 누적돼 정상적인 인식 능력이 저하된 상태에서 극단적 선택에 이른 것으로 보아 업무와 사망 사이의 인과관계를 인정했습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>2020년 11월 업무상 질병(산재)으로 인정됐습니다. 직장 내 괴롭힘으로 산재가 인정된 것은 故 박선욱 간호사에 이어 두 번째로, '태움'뿐 아니라 부서이동·업무배제형 괴롭힘도 산재가 될 수 있음을 보여준 사건입니다.</p></div>
+        <div class="tip tip-worker"><b>🪑 나라면, 이렇게</b><p>폭언이 없어도 자리·업무·소속을 갑자기 바꾸고 고립시키는 것도 괴롭힘입니다. 부서이동 전후의 업무·직책·자리 변화, 면담 기록, 정신과 진료 기록을 시간순으로 모아두세요.</p></div>
+        <div class="tip tip-emp"><b>🪑 회사라면, 이것을</b><p>'인사이동'의 형식을 빌린 배제가 가장 위험합니다. 합리적 이유 없는 전출·업무 박탈은 괴롭힘이자 산재 책임으로 이어집니다. 이동 사유와 절차를 문서로 남기세요.</p></div>
+        <p class="src-line">출처: <a href="https://www.asiae.co.kr/article/2020111000563146186" target="_blank" rel="noopener">아시아경제 ↗</a> · 근로복지공단 2020.11 업무상질병 인정</p>
+      </div></div>
+    </article>
+
+    <!-- 10. 버스회사 소문 성희롱 -->
+    <article class="case" data-type="성희롱 결합" data-ind="운수·서비스" data-rel="worker">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj4V2rxY0oCN-FLJ84VUxKAbds1hDIzeuiXW2wE93kBX8gSingafZLIuEVY56RC7KjvzMirzxSM8UFVRnyjhFj1V9ZE3HpLhDKzL22-j-mUP8EZtW4XQSWktUzMLonkMeEPerKXmGlHimA/s800/gossip_girls.png" alt="수군대는 소문 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill worker">👤 근로자에게 추천</span><span class="bd in">성희롱 인정</span><span class="bd court">대법원 2021.9</span></div>
+        <h3 class="quote">면전이 아니어도, 소문도 성희롱이다</h3>
+        <p class="summary">동료들이 옮긴 성적 발언·소문도 직장 내 성희롱 — 회사에 사용자책임을 인정한 대법원 판결.</p>
+        <div class="meta"><span class="tag">성희롱 결합</span><span class="tag">운수·서비스</span><span class="tag">정규직</span></div>
+        <div class="foot"><span class="award">회사 사용자책임</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>버스 약 57대를 운행하고 기사 약 140명 중 여성은 7명뿐이던 한 시내버스 회사에서, 남성 동료 기사들이 술자리뿐 아니라 회사 배차실 등에서 여성 기사를 성적 대상으로 한 발언을 옮겼습니다. 그 결과 피해자에 대한 성적 소문이 사내에 퍼졌습니다. 피해자가 직접 들은 말이 아니라 제3자를 통한 전파였다는 점이 특징이었습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>피해자 면전에서 한 말이 아니라 소문을 옮기거나 성적 정보를 퍼뜨린 행위도 '직장 내 성희롱'에 해당하는지, 그리고 회사가 사용자책임을 지는지가 쟁점이었습니다.</p></div>
+        <div class="dt"><h4>법원의 판단</h4><p>대법원은 다른 사람이나 매체를 통해 전파하는 간접적인 방법으로 성적 굴욕감을 느낄 환경을 조성하는 것도 성희롱에 포함된다고 보았습니다. 또 가해 행위가 회사 업무와 시간적·장소적으로 근접해 이뤄졌으므로 사용자책임이 성립한다고 판단했습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>법원은 손해 합계 약 1,822만 원(치료비 등 + 위자료 1,800만 원)을 인정하고, 가해자들이 이미 지급한 1,500만 원을 공제한 약 322만 원에 대해 회사의 사용자책임을 인정했습니다.</p></div>
+        <div class="tip tip-worker"><b>🗣️ 나라면, 이렇게</b><p>"내 앞에서 한 말이 아니니까"라고 넘기지 마세요. 소문 유포·성적 정보 전파도 성희롱입니다. 누가, 언제, 어디서 옮겼는지 들은 경위를 메모로 남겨두면 도움이 됩니다.</p></div>
+        <div class="tip tip-emp"><b>🗣️ 회사라면, 이것을</b><p>회식·배차실처럼 '업무의 연장' 공간에서 벌어진 발언도 회사 책임 대상입니다. 가해자 개인 처벌과 별개로 회사가 사용자책임을 별도로 부담할 수 있습니다.</p></div>
+        <p class="src-line">출처: <a href="https://scourt.go.kr/portal/news/NewsViewAction.work?gubun=4&seqnum=7968" target="_blank" rel="noopener">대법원 판례속보 ↗</a> · 대법원 2021.9.16 선고 2021다219529</p>
+      </div></div>
+    </article>
+
+    <!-- 11. 르노삼성 성희롱 신고 불이익 -->
+    <article class="case" data-type="성희롱 결합" data-ind="제조·건설" data-rel="emp">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgDKia0m3fqZH2robmpzYYNjwfeBidb9MNj7vjQmc_MbyQx_Fkku7T_KWup5TSvilfydKc0A9oaeM-2puqxlfoJBD2dn-FCbd19lHPztvw9-u6IqJOyQHVO5o1mUvnr80PvuH_sYbUMVKQ/s800/pose_ochikomu_businesswoman.png" alt="낙심한 여성 직장인 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill emp">🏢 인사담당에게 추천</span><span class="bd in">회사 책임</span><span class="bd court">대법원 2017.12</span></div>
+        <h3 class="quote">신고했더니, 내가 밀려났다</h3>
+        <p class="summary">성희롱 피해자와 조력 동료에게 보복성 인사·2차 가해를 한 회사 — 위자료 4,000만 원.</p>
+        <div class="meta"><span class="tag">성희롱 결합</span><span class="tag">제조·건설</span><span class="tag">정규직</span></div>
+        <div class="foot"><span class="award">4,000만 원</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>자동차 제조사 직원 A씨는 2013년 같은 부서 팀장으로부터 약 1년간 신체접촉·성적 언동 등 성희롱을 당했다며 인사팀에 신고했습니다. 그러나 회사는 가해자에게는 보직해임·정직 14일의 비교적 가벼운 징계를 한 반면, A씨는 전문 직무에서 배제해 견책했고, A씨를 도운 동료에게도 정직 등 불이익을 줬습니다. "A씨가 먼저 유혹했다"는 허위 소문까지 사내에 돌았습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>성희롱 자체보다, 신고한 피해자와 조력 동료에게 회사가 한 보복성 인사·2차 가해가 남녀고용평등법 제14조(불리한 조치 금지) 위반이자 불법행위인지가 쟁점이었습니다.</p></div>
+        <div class="dt"><h4>법원의 판단</h4><p>대법원은 성희롱 분쟁이 생긴 뒤 피해자에게 한 불리한 조치가 성희롱과 무관하거나 정당한 사유가 있다는 점을 '사업주가 증명해야 한다'고 판시하고, 회사의 일련의 조치를 불법행위로 보아 파기환송했습니다. 환송 후 법원은 회사 책임을 대폭 인정했습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>환송심에서 회사가 피해자에게 4,000만 원을 배상하도록 했습니다(기존 1,000만 원에서 4배 증액). 별도 형사사건에서 법인·임직원도 벌금형이 확정됐습니다.</p></div>
+        <div class="tip tip-worker"><b>📢 나라면, 이렇게</b><p>신고 이후의 인사 불이익·소문이야말로 또 다른 위법입니다. 신고 전후의 직무·평가·자리 변화를 기록해두면 '불리한 조치'를 입증하는 핵심 증거가 됩니다.</p></div>
+        <div class="tip tip-emp"><b>📢 회사라면, 이것을</b><p>가해자 징계만으로 끝이 아닙니다. 피해자·조력자에 대한 불이익과 소문 유출을 막지 못하면 회사가 별도의 손해배상 책임을 집니다. 불리한 조치가 아니라는 입증 책임은 '회사'에 있습니다.</p></div>
+        <p class="src-line">출처: <a href="https://www.lawtimes.co.kr/news/142357" target="_blank" rel="noopener">법률신문 ↗</a> · 대법원 2017.12.22 선고 2016다202947</p>
+      </div></div>
+    </article>
+
+    <!-- 12. 건설현장 안전팀장 배제 -->
+    <article class="case" data-type="따돌림·배제" data-ind="제조·건설" data-rel="worker">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijt7qWY7Ohcv9aO0n_sLn-NDHzlfnP3pA__X7_e4euoKyVmlSNXBSlJOj8ug88vET9_cvOMzK1AVYYyudp2KiNF6Lw0P6ayaMdYjFGbAqtuLdRKaq-O4B77fOI6wITAj2yrq2OYmuGfY0/s800/job_kouji.png" alt="건설현장 작업자 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill worker">👤 근로자에게 추천</span><span class="bd in">괴롭힘 인정</span><span class="bd court">수원지법 2022.12</span></div>
+        <h3 class="quote">자리는 화장실 옆으로, 근무표엔 이름이 지워졌다</h3>
+        <p class="summary">현장소장이 안전팀장을 업무에서 배제하고 자리 격리·근무표 삭제로 고립시킨 사건.</p>
+        <div class="meta"><span class="tag">따돌림·배제</span><span class="tag">제조·건설</span><span class="tag">정규직</span></div>
+        <div class="foot"><span class="award">위자료 300만 원</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>한 건설 현장의 현장소장이 같은 현장 안전팀장을 업무에서 배제하고 욕설로 모욕했습니다. 안전팀장 지명을 일방적으로 철회한 뒤 휴가를 지시했고, 본인 동의 없이 팀원들과 멀리 떨어진 화장실 통로 옆자리로 옮겼으며, 직원 근무·휴무 계획표에서도 이 직원의 이름만 삭제했습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>보직 철회·자리 이동·근무표 삭제·모욕적 언사 같은 일련의 조치가 정당한 업무·인사권 행사의 범위를 넘어 직장 내 괴롭힘에 해당하는지가 쟁점이었습니다.</p></div>
+        <div class="dt"><h4>법원의 판단</h4><p>법원은 이 행위들을 단순한 업무 지시가 아니라 특정 직원을 조직에서 고립·배제하려는 의도가 드러난 직장 내 괴롭힘으로 인정했습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>수원지법은 현장소장에게 위자료 300만 원 지급을 명했습니다(청구액은 2,000만 원). 위계가 강한 건설현장에서도 '인사권으로 포장된 배제'가 괴롭힘으로 인정된 사례입니다.</p></div>
+        <div class="tip tip-worker"><b>👷 나라면, 이렇게</b><p>자리 이동·보직 철회·근무표 변경은 사소해 보여도 '배제'의 증거가 됩니다. 변경 전후의 자리 배치도, 근무표, 지시 문자를 캡처해 모아두세요.</p></div>
+        <div class="tip tip-emp"><b>👷 회사라면, 이것을</b><p>보직 철회·자리 이동·근무표 편성 같은 '인사권 행사'라도 특정인을 고립시키려는 의도가 보이면 괴롭힘입니다. 관리자 개인이 손해배상 책임을 집니다.</p></div>
+        <p class="src-line">출처: <a href="https://www.kbei.org/new/05info/s_4.php?action=view&bid=column_kim&idx=472" target="_blank" rel="noopener">정봉수 칼럼 ↗</a> · 수원지법 2022.12.9 선고 2021나93038</p>
+      </div></div>
+    </article>
+
+    <!-- 13. 거제 조선소 감시 -->
+    <article class="case" data-type="통제·강요" data-ind="제조·건설" data-rel="emp">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrKdaY1TLPYOwVTN1JS9qHO4p92w3C_mgYGnm4CMI3gZqJPO6xndW6ogC5V_wMQhYYdcmEOe1Ykn-k9Kz6hjnOe1aRxRKxmcHox_KdLiH_XU5IgzFfoamrZb1C_Z2RHHNdICu8yCvUFrej/s800/bouhan_camera.png" alt="감시카메라 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill emp">🏢 인사담당에게 추천</span><span class="bd in">괴롭힘 확인</span><span class="bd court">고용노동부 2021</span></div>
+        <h3 class="quote">감시받는 밀폐공간, 피해자의 절반이 여성이었다</h3>
+        <p class="summary">조선소 협력사의 감시·부당 부서이동·공개 모욕 — 고용노동부 조사로 확인된 조직적 괴롭힘.</p>
+        <div class="meta"><span class="tag">통제·강요</span><span class="tag">감시·통제</span><span class="tag">제조·건설</span></div>
+        <div class="foot"><span class="award">시정권고</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>경남 거제의 한 대형 조선소 협력사(밀폐공간 작업 감시 업무)에서 직장 내 괴롭힘이 제기됐습니다. 통영고용노동지청 설문조사 결과 응답자 82명 중 24명(29.2%)이 괴롭힘을 호소했는데, 그중 23명이 밀폐감시 업무를 하는 여성 노동자였습니다. 유형은 동료·반장의 감시, 정당한 이유 없는 부서 이동, 공개 장소에서의 모욕 순이었고, 노동자의 약 47%가 괴롭힘의 주된 이유로 '조직 문화'를 꼽았습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>몇몇 개인의 문제가 아니라, 감시·부서이동·공개 모욕이 일상적 노무관리·현장통제 수단으로 쓰여 직장 내 괴롭힘에 해당하는지가 쟁점이었습니다(법원 판결이 아닌 고용노동부 행정조사).</p></div>
+        <div class="dt"><h4>기관의 판단</h4><p>통영고용노동지청은 설문조사 결과 직장 내 괴롭힘이 있는 것으로 보고 해당 업체에 시정을 권고했습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>시정권고 후 업체는 고충처리위원 선임, 괴롭힘 관련 징계조항 신설, 가해 직책자 강등·직위해제 등의 조치를 취했습니다. 행정 사안이라 별도의 금전 배상액은 산정되지 않았습니다.</p></div>
+        <div class="tip tip-worker"><b>📹 나라면, 이렇게</b><p>감시·부서이동·공개 망신이 특정 직군이나 성별에 집중된다면 '개인 문제'가 아닙니다. 동료들과 함께 설문·집단 신고로 구조를 드러내면 고용노동부 조사로 이어질 수 있습니다.</p></div>
+        <div class="tip tip-emp"><b>📹 회사라면, 이것을</b><p>괴롭힘이 '조직 문화·노무관리 수단'으로 굳어지면 고용노동부 조사·시정권고 대상이 됩니다. 특정 직군·성별에 피해가 쏠리면 노조·사회적 압박으로까지 번집니다.</p></div>
+        <p class="src-line">출처: <a href="https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0002709268" target="_blank" rel="noopener">오마이뉴스 ↗</a> · 통영고용노동지청 시정권고(2021.1 보도)</p>
+      </div></div>
+    </article>
+
+    <!-- 14. 신고자 보복 전보 -->
+    <article class="case" data-type="부당인사·좌천" data-ind="사무·공공" data-rel="emp">
+      <div class="case-img"><img src="https://cdn.imweb.me/thumbnail/20260703/5e3520cee9b2d.png" alt="이사 트럭 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill emp">🏢 인사담당에게 추천</span><span class="bd in">유죄 확정</span><span class="bd court">대법원 2022도4925</span></div>
+        <h3 class="quote">신고했더니 통근 불가능한 곳으로</h3>
+        <p class="summary">괴롭힘 신고자를 통근 불가능한 원거리로 전보한 사용자에게 유죄가 확정된 사건.</p>
+        <div class="meta"><span class="tag">부당인사·좌천</span><span class="tag">사무·공공</span><span class="tag">신고 후 불이익</span></div>
+        <div class="foot"><span class="award">사용자 유죄 확정</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>한 구내식당 위탁운영업체에서 직원이 상사의 폭언·사직 강요 등을 직장 내 괴롭힘으로 신고했습니다. 회사는 자체 조사 후 "괴롭힘 없음"으로 결론짓고, 피해자 의견을 듣지 않은 채 집에서 통근이 사실상 불가능한 먼 근무지로 전보 발령했습니다. 대표는 "옮긴 곳이 시설이 더 쾌적하고, 조사상 괴롭힘이 없었으니 더 이상 보호 대상이 아니다"라고 항변했습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>근로기준법 제76조의3 제6항이 금지하는 '신고를 이유로 한 불리한 처우'에 해당하는지 — 객관적으로 더 나아 보이는 자리도 불리한 처우가 될 수 있는지, 회사가 괴롭힘을 인정하지 않으면 신고자 보호의무가 사라지는지가 쟁점이었습니다.</p></div>
+        <div class="dt"><h4>법원의 판단</h4><p>1·2심과 대법원 모두 유죄로 판단했습니다. '불리한 처우' 여부는 객관적 근무환경만이 아니라 근로자의 의사와 통근 거리 같은 개인 사정을 중요하게 고려해야 하며, 형식적 조사로 '괴롭힘 없음'이라 결론냈더라도 신고자 보호의무는 사라지지 않는다고 명시했습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>상고가 기각되어 사용자의 유죄가 확정됐습니다. 근로기준법 제76조의3 제6항 위반은 3년 이하 징역 또는 3,000만 원 이하 벌금에 해당합니다.</p></div>
+        <div class="tip tip-worker"><b>🚚 나라면, 이렇게</b><p>"더 좋은 자리로 보내준 것"이라는 회사 주장에 위축될 필요 없습니다. 신고 이후의 전보·발령은 통근 거리·가족 사정 등 내 입장에서 불리하면 보복으로 다툴 수 있습니다.</p></div>
+        <div class="tip tip-emp"><b>🚚 회사라면, 이것을</b><p>신고 후 인사조치는 객관적으로 좋아 보여도 피해자 동의·협의 없이 일방 발령하면 보복성 '불리한 처우'로 형사처벌될 수 있습니다. 자체 조사에서 괴롭힘을 인정하지 않아도 보호의무는 유지됩니다.</p></div>
+        <p class="src-line">출처: <a href="https://www.lawtalk.co.kr/case-lenses/10199" target="_blank" rel="noopener">로톡 판례돋보기 ↗</a> · 대법원 2022도4925 (상고기각 확정)</p>
+      </div></div>
+    </article>
+
+    <!-- 15. 외국계 IT 업무배제 -->
+    <article class="case" data-type="부당인사·좌천" data-ind="IT" data-rel="emp">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg03SVekAfn-CTYU_jZieoTrjaoiRsN1Om8Sw23AbwpviHa2dxb7zbBQpHxfwLZLmVB5wP2Y1OObA2BrleKI3mJccUJZPtJRgo4QokRbn4iNQsQRV_kpdcIx0ZS7gS2ThvDCo2TnalQUP8/s800/madogiwazoku.png" alt="창가에 앉은 소외된 회사원 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill emp">🏢 인사담당에게 추천</span><span class="bd in">괴롭힘 인정</span><span class="bd court">고용노동청 2023</span></div>
+        <h3 class="quote">능력은 충분한데, 일에서 밀려났다</h3>
+        <p class="summary">강등 자체는 인사재량이지만, 합리적 이유 없는 '업무 배제'는 괴롭힘으로 인정된 사례.</p>
+        <div class="meta"><span class="tag">부당인사·좌천</span><span class="tag">IT</span><span class="tag">업무 배제</span></div>
+        <div class="foot"><span class="award">업무배제 인정</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>한 외국계 기업 연구소의 IT부서장이 2022년 리더십 부족 등을 이유로 강등된 뒤, 임시팀장 → 프로젝트 리더 → 보직 없는 평직원으로 단계적으로 발령되며 사이버보안 업무에서 배제됐습니다. 본사 감사를 성공적으로 수행했음에도 경력이 없는 동료에게 업무가 넘어갔고, 새 부서장은 다수 직원 앞에서 "건방지게 앉지 말라"는 식의 공개 질책을 반복했습니다. 신고인은 경기지방고용노동청에 신고했습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>성과급·연봉 차등이 보복인지, 합리적 이유 없는 업무 축소·배제가 괴롭힘인지, 공개적 폭언이 업무 적정범위를 넘은 괴롭힘인지가 쟁점이었습니다(법원 판결이 아닌 노동청 신고 사건).</p></div>
+        <div class="dt"><h4>기관의 판단</h4><p>노동청 지시로 외부 노무법인이 조사한 결과, 인사평가에 따른 성과급 차등은 회사 고유의 인사재량이라 괴롭힘이 아니지만, 전문성이 충분한데도 경력 없는 직원에게 업무를 넘기고 보직 없는 평직원으로 발령한 것은 합리적 이유 없는 '업무 배제'로서 직장 내 괴롭힘에 해당한다고 보았습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>업무 배제가 직장 내 괴롭힘으로 일부 인정됐습니다. 회사는 신고인에게 사이버보안 업무를 다시 맡기고, 공개 질책을 한 부서장에게 서면경고로 재발 방지 조치를 했습니다.</p></div>
+        <div class="tip tip-worker"><b>💻 나라면, 이렇게</b><p>강등됐다고 끝이 아닙니다. 내가 잘 수행하던 업무를 합리적 이유 없이 경력 없는 사람에게 넘기고 일을 비우게 한다면 '업무 배제'로 다툴 수 있습니다. 인수인계·업무 변화 내역을 남겨두세요.</p></div>
+        <div class="tip tip-emp"><b>💻 회사라면, 이것을</b><p>인사평가·강등은 재량이지만, 능력 있는 직원을 합리적 이유 없이 일에서 배제하면 괴롭힘이 됩니다. 강등된 직원에 대한 신임 상사의 군기잡기식 공개 질책도 괴롭힘으로 평가됩니다.</p></div>
+        <p class="src-line">출처: <a href="https://k-labor.co.kr/main/klabor_04_view.html?pgubun=21&lang=ko&chapter_idx=1063&items_idx=7117" target="_blank" rel="noopener">강남노무법인 사건사례 ↗</a> · 경기지방고용노동청 신고(2023)</p>
+      </div></div>
+    </article>
+
+    <!-- 16. 네이버 -->
+    <article class="case" data-type="폭언·모욕" data-ind="IT" data-rel="emp">
+      <div class="case-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiH9KiVg5Z4zZgzdguGYd5XD7tJ2KL5zcP2GOhJTTBgxuAP_-ca6GVUWIsqAvtn5108-2YMTcJDU-E5r89RWguttUwh42zXTpdLZSQd99waeaI3rcyh-ytpbgm7AcIOLBQy7jL67iAsy2I/s800/kaisya_okorareru.png" alt="상사가 호통치는 일러스트" loading="lazy"></div>
+      <button class="case-head" type="button" onclick="toggleCase(this)">
+        <div class="badges"><span class="bd rel-pill emp">🏢 인사담당에게 추천</span><span class="bd in">괴롭힘 인정</span><span class="bd court">고용노동부 2021.7</span></div>
+        <h3 class="quote">사내 신고를 묵살한 경영진</h3>
+        <p class="summary">임원급 상사의 폭언·배제·과도한 업무압박을 고용노동부 특별근로감독으로 확인한 사건.</p>
+        <div class="meta"><span class="tag">폭언·모욕</span><span class="tag">IT</span><span class="tag">대기업</span></div>
+        <div class="foot"><span class="award">특별근로감독 인정</span><span class="expand-hint">자세히 보기 <i>▾</i></span></div>
+      </button>
+      <div class="case-detail"><div class="case-detail-inner">
+        <div class="dt"><h4>무슨 일이 있었나</h4><p>2021년 5월, 네이버에서 지도 서비스를 담당하던 40대 직원이 스스로 목숨을 끊었습니다. 직속 상사(임원급)로부터 지속적인 폭언·모욕적 언행을 겪고, 의사결정 과정에서 의도적으로 배제되며 과도한 업무 압박에 시달려 온 것으로 알려졌습니다. 노조 요청으로 고용노동부 성남지청이 특별근로감독에 착수했습니다.</p></div>
+        <div class="dt"><h4>법적 쟁점</h4><p>임원급 상사의 폭언·배제·업무 압박이 직장 내 괴롭힘에 해당하는지, 그리고 거듭된 사내 신고를 묵살한 경영진의 책임이 인정되는지가 쟁점이었습니다.</p></div>
+        <div class="dt"><h4>기관의 판단</h4><p>고용노동부는 특별근로감독 결과 직장 내 괴롭힘이 명백하다고 결론짓고, 경영진의 무책임한 대응과 잘못된 처분, 광범위한 장시간 초과근무를 문제로 지적했습니다.</p></div>
+        <div class="dt outcome"><h4>결과</h4><p>직장 내 괴롭힘이 인정됐고, 장시간 근로 등과 관련해 약 80억 원 규모의 체불임금 지급 명령 등 후속 조치가 내려졌습니다. 가해 임원·책임리더의 책임도 함께 확인됐습니다.</p></div>
+        <div class="tip tip-worker"><b>💢 나라면, 이렇게</b><p>대기업·IT라고 예외가 아닙니다. 사내 신고가 묵살되면 노조·고용노동부 특별근로감독으로 이어질 수 있습니다. 신고 접수 기록과 회사의 대응(혹은 무대응)을 보존하세요.</p></div>
+        <div class="tip tip-emp"><b>💢 회사라면, 이것을</b><p>가장 큰 리스크는 '신고를 알고도 방치한 경영진'입니다. 괴롭힘 사실보다 묵살·은폐가 더 무겁게 평가되고, 특별근로감독은 괴롭힘을 넘어 근로시간·임금 전반으로 확대됩니다.</p></div>
+        <p class="src-line">출처: <a href="https://www.khan.co.kr/national/labor/article/202106081648001" target="_blank" rel="noopener">경향신문 ↗</a> · 고용노동부 성남지청 특별근로감독(2021.7 결과 발표)</p>
+      </div></div>
+    </article>
+
+  </div>
+    <div class="gridfade"></div>
+  </div>
+  <div class="morewrap" id="moreWrap"><button class="morebtn" id="moreBtn" type="button" onclick="expandList()">사례 더 보기 <i>▾</i></button></div>
+  <div class="empty" id="empty">조건에 맞는 사례가 없습니다. 필터를 줄여보세요.</div>
+
+  <section class="cta" id="cta">
+    <h3 id="ctaH">혼자 판단하기 어렵다면</h3>
+    <p id="ctaP">상황만 들려주세요. 어떻게 대응할지 함께 정리드립니다.</p>
+    <a href="#" class="chtalkopen">무료 상담 신청하기 →</a>
+  </section>
+</div>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"특수고용직 골프장 캐디도 직장 내 괴롭힘으로 보호받나요?","acceptedAnswer":{"@type":"Answer","text":"네. 대법원은 2024년 5월 무전 외모 비하 등 괴롭힘을 당하다 사망한 캐디 사건에서, 산업안전보건법상 노무를 제공받는 사업주에게 특수고용직 종사자 보호 의무가 있다고 보아 골프장 운영사의 손해배상 책임(유족에 약 1.7억)을 처음 인정했습니다."}},
+    {"@type":"Question","name":"간호사 태움 같은 직장 내 괴롭힘도 산업재해로 인정되나요?","acceptedAnswer":{"@type":"Answer","text":"네. 2019년 근로복지공단은 신규 간호사가 교육·지원 없는 과중 업무와 태움에 시달리다 사망한 사건에서 업무와 사망 사이 인과관계를 인정해 산재로 판정했습니다. 괴롭힘으로 인한 우울증 등 정신질환도 산재가 될 수 있습니다."}},
+    {"@type":"Question","name":"상사의 폭언·욕설로 받을 수 있는 위자료는 얼마인가요?","acceptedAnswer":{"@type":"Answer","text":"사안에 따라 다릅니다. 심야 카톡 폭언 사건에서는 700만 원, 대표이사가 25년간 전담 기사에게 폭언·폭행한 사건에서는 6,000만 원의 위자료가 인정됐습니다. 지위의 우위, 기간, 피해 정도에 따라 금액이 커집니다."}},
+    {"@type":"Question","name":"육아휴직 후 복귀했더니 업무·자리가 바뀌었습니다. 괴롭힘인가요?","acceptedAnswer":{"@type":"Answer","text":"남녀고용평등법은 육아휴직 복귀자를 휴직 전과 같은 업무 또는 같은 수준 임금의 직무로 복귀시키도록 정합니다(제19조 제4항). 보조업무 부여·따돌림 지시는 직장 내 괴롭힘이자 법 위반으로 판단된 사례가 있습니다."}},
+    {"@type":"Question","name":"괴롭힘 가해자만 책임지나요, 회사도 배상하나요?","acceptedAnswer":{"@type":"Answer","text":"직무 관련성이 인정되는 괴롭힘이라면 가해자 개인뿐 아니라 소속 회사(사용자)도 함께 손해배상 책임을 집니다. 성폭력 가해자를 징계 없이 사직 처리한 회사에 책임을 인정한 대법원 2024년 판결도 있습니다."}},
+    {"@type":"Question","name":"사적 심부름(커피·은행·택배)도 직장 내 괴롭힘인가요?","acceptedAnswer":{"@type":"Answer","text":"한두 번은 호의로 볼 수 있지만, 합리적 이유 없이 사적 용무·심부름을 지속적·반복적으로 지시하면 고용노동부 매뉴얼상 직장 내 괴롭힘의 대표적 예시에 해당합니다."}}
+  ]
+}
+</script>
+
+<script>
+(function(){
+  var TYPES=['폭언·모욕','따돌림·배제','부당인사·좌천','통제·강요','성희롱 결합'];
+  var activeType=null;
+  var grid=document.getElementById('grid');
+  var cards=Array.prototype.slice.call(grid.querySelectorAll('.case'));
+  var countEl=document.getElementById('count');
+  var emptyEl=document.getElementById('empty');
+  var GRID_LIMIT=1400, listExpanded=false;
+
+  function refreshCollapse(){
+    var gw=document.getElementById('gridwrap'), mw=document.getElementById('moreWrap');
+    if(!gw) return;
+    gw.classList.remove('collapsed');
+    if(listExpanded){ if(mw) mw.style.display='none'; return; }
+    if(gw.scrollHeight>GRID_LIMIT+80){ gw.classList.add('collapsed'); if(mw) mw.style.display=''; }
+    else if(mw){ mw.style.display='none'; }
+  }
+  window.expandList=function(){ listExpanded=true; refreshCollapse(); };
+  window.addEventListener('resize',refreshCollapse);
+
+  // 실제 카드에 존재하는 유형만 개수와 함께 칩으로 노출
+  var typeCount={};
+  cards.forEach(function(c){var t=c.getAttribute('data-type');typeCount[t]=(typeCount[t]||0)+1;});
+  TYPES=TYPES.filter(function(t){return typeCount[t];});
+
+  var html='<button class="chip on" data-v="" aria-pressed="true">전체 <i>'+cards.length+'</i></button>';
+  html+=TYPES.map(function(t){return '<button class="chip" data-v="'+t+'" aria-pressed="false">'+t+' <i>'+typeCount[t]+'</i></button>';}).join('');
+  document.getElementById('typeChips').innerHTML=html;
+
+  Array.prototype.forEach.call(document.querySelectorAll('#typeChips .chip'),function(btn){
+    btn.addEventListener('click',function(){
+      var v=btn.getAttribute('data-v');
+      Array.prototype.forEach.call(document.querySelectorAll('#typeChips .chip'),function(c){c.classList.remove('on');c.setAttribute('aria-pressed','false');});
+      btn.classList.add('on');
+      btn.setAttribute('aria-pressed','true');
+      activeType=v||null;
+      applyFilter();
+    });
+  });
+
+  window.applyFilter=function(){
+    var n=0;
+    cards.forEach(function(c){
+      var show=!activeType||c.getAttribute('data-type')===activeType;
+      c.classList.toggle('hidden',!show);
+      if(show)n++;
+    });
+    countEl.innerHTML='총 <b>'+n+'</b>개 사례';
+    emptyEl.style.display=n?'none':'block';
+    refreshCollapse();
+  };
+
+  window.toggleCase=function(btn){
+    if(!listExpanded) window.expandList();
+    var open=btn.parentNode.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open?'true':'false');
+  };
+
+  window.setMode=function(m){
+    document.getElementById('dwroot').setAttribute('data-mode',m);
+    Array.prototype.forEach.call(document.querySelectorAll('.role-card'),function(c){
+      var on=c.getAttribute('data-role')===m;
+      c.classList.toggle('active',on);
+      c.setAttribute('aria-pressed',on?'true':'false');
+    });
+  };
+
+  // 초기 접근성 상태 세팅
+  cards.forEach(function(c){var h=c.querySelector('.case-head');if(h)h.setAttribute('aria-expanded','false');});
+  Array.prototype.forEach.call(document.querySelectorAll('.role-card'),function(c){
+    c.setAttribute('aria-pressed', c.classList.contains('active')?'true':'false');
+  });
+
+  applyFilter();
+  setTimeout(refreshCollapse,0);
+})();
+</script>
