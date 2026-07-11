@@ -316,6 +316,15 @@
 </div>
 
 <script>
+/* ============================================================
+   [클라우드 동기화 설정]  ← 여기 두 줄만 채우면 됩니다
+   1) SYNC_URL : 구글 Apps Script 웹앱 배포 URL (설정 안내 문서 참고)
+   2) SYNC_TOKEN: 아래 값을 Apps Script 코드의 TOKEN과 똑같이 두세요
+   SYNC_URL을 비워두면 예전처럼 이 브라우저에만 저장됩니다(오프라인 모드).
+============================================================ */
+const SYNC_URL   = "https://script.google.com/macros/s/AKfycbx4cPhoQrt7lxsT5yNVbbAHcVcBiKdOjV-cUuQUK2CvyIMI7s7Enuc1MLPr__ibsKuF/exec";
+const SYNC_TOKEN = "dowon-okr-7k3m9q2";
+
 const CATS = {
   "정기점검": {bg:"#FDECEE", fg:"#D9414E"},
   "신고마감": {bg:"#FFF3D6", fg:"#B76B00"},
@@ -651,6 +660,96 @@ function toggleTodayPanel(){
   applyTodayPanel();
 }
 applyTodayPanel();
+
+/* ============================================================
+   클라우드 동기화 엔진 (구글 시트 저장소)
+   - 열릴 때: 시트에서 기록을 불러와 화면에 반영 (pull)
+   - 체크할 때마다: 전체 상태를 시트에 저장 (push, 0.4초 디바운스)
+   - SYNC_URL이 비어있으면 아무 일도 하지 않음(기존 localStorage 방식 유지)
+============================================================ */
+(function(){
+  if(!SYNC_URL) return;   // 오프라인 모드
+  const STORE_KEY = "__cloud_all__";
+
+  // 현재 로컬 상태 전체를 하나의 객체로 수집
+  function collect(){
+    const checksByMonth = {};
+    for(let i=0;i<localStorage.length;i++){
+      const k = localStorage.key(i);
+      if(k && k.indexOf("tcal_")===0){
+        try{ checksByMonth[k] = JSON.parse(localStorage.getItem(k)) || {}; }catch(e){}
+      }
+    }
+    return {
+      checksByMonth: checksByMonth,
+      progress: (function(){try{return JSON.parse(localStorage.getItem(PKEY))||{};}catch(e){return {};}})(),
+      subs:     (function(){try{return JSON.parse(localStorage.getItem(SKEY))||{};}catch(e){return {};}})(),
+      month:    localStorage.getItem(MKEY),
+      panel:    localStorage.getItem(TPKEY),
+      _t: Date.now()
+    };
+  }
+
+  // 시트에서 받은 객체를 로컬 + 화면에 반영
+  function apply(data){
+    if(!data || typeof data !== "object") return;
+    if(data.checksByMonth){
+      for(const k in data.checksByMonth){
+        try{ localStorage.setItem(k, JSON.stringify(data.checksByMonth[k])); }catch(e){}
+      }
+      checks = data.checksByMonth[monthKey] || checks || {};
+    }
+    if(data.progress){ prog = data.progress; try{localStorage.setItem(PKEY, JSON.stringify(prog));}catch(e){} }
+    if(data.subs){ subs = data.subs; try{localStorage.setItem(SKEY, JSON.stringify(subs));}catch(e){} }
+    if(data.month != null){ try{localStorage.setItem(MKEY, String(data.month)); curMonth = parseInt(data.month,10);}catch(e){} }
+    if(data.panel != null){ try{localStorage.setItem(TPKEY, String(data.panel));}catch(e){} }
+    // 화면 다시 그리기
+    try{ render(); }catch(e){}
+    try{ renderProg(); }catch(e){}
+    try{ applyMonth(); }catch(e){}
+    try{ applyTodayPanel(); }catch(e){}
+  }
+
+  // 시트로 저장 (디바운스)
+  let pushTimer = null, syncing = false;
+  function push(){
+    clearTimeout(pushTimer);
+    pushTimer = setTimeout(function(){
+      const payload = { token: SYNC_TOKEN, action: "save", data: collect() };
+      fetch(SYNC_URL, {
+        method: "POST",
+        // 문자열 본문 → text/plain 으로 전송되어 CORS 사전요청(preflight) 없이 통과
+        body: JSON.stringify(payload),
+        redirect: "follow"
+      }).catch(function(e){ console.warn("동기화 저장 실패:", e); });
+    }, 400);
+  }
+
+  // 시트에서 불러오기
+  function pull(){
+    const url = SYNC_URL + (SYNC_URL.indexOf("?")>=0?"&":"?") + "token=" + encodeURIComponent(SYNC_TOKEN) + "&_=" + Date.now();
+    return fetch(url, { method:"GET", redirect:"follow" })
+      .then(function(r){ return r.text(); })
+      .then(function(t){
+        let d = null; try{ d = JSON.parse(t); }catch(e){}
+        if(d && d.data) apply(d.data);
+        else if(d && d.checksByMonth) apply(d);
+      })
+      .catch(function(e){ console.warn("동기화 불러오기 실패:", e); });
+  }
+
+  // 저장 함수들을 감싸서 로컬 저장 + 클라우드 저장 동시 수행
+  const _sc = saveChecks, _sp = saveProg, _ss = saveSubs;
+  saveChecks = function(){ _sc.apply(this, arguments); push(); };
+  saveProg   = function(){ _sp.apply(this, arguments); push(); };
+  saveSubs   = function(){ _ss.apply(this, arguments); push(); };
+  const _sm = selectMonth, _tp = toggleTodayPanel;
+  selectMonth      = function(){ _sm.apply(this, arguments); push(); };
+  toggleTodayPanel = function(){ _tp.apply(this, arguments); push(); };
+
+  // 페이지 열릴 때 자동으로 최신 기록 불러오기
+  pull();
+})();
 </script>
 </body>
 </html>

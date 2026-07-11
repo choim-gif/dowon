@@ -446,4 +446,31 @@ async function load(){
   document.getElementById('content').style.display='none';
   document.getElementById('err').style.display='none';
   document.getElementById('loading').style.display='block';
-  let months=null, lastErr='
+  let months=null, lastErr='';
+  for(const url of SOURCES){
+    try{
+      const m=await fetchCsv(url);
+      if(m && m.length){ months=m; break; }
+    }catch(e){ lastErr=(e && e.message)?e.message:String(e); }
+  }
+  if(months && months.length){
+    try{
+      render(months);
+    }catch(e){
+      document.getElementById('loading').style.display='none';
+      const el=document.getElementById('err');
+      el.style.display='block';
+      el.innerHTML='데이터를 화면에 표시하는 중 오류가 발생했습니다.<br><span style="color:#8B95A1;font-weight:500">'+((e&&e.message)?e.message:e)+'</span>';
+    }
+  }else{
+    document.getElementById('loading').style.display='none';
+    const el=document.getElementById('err');
+    el.style.display='block';
+    el.innerHTML='구글 시트에서 데이터를 불러오지 못했습니다.<br>시트가 「파일 → 공유 → 웹에 게시」로 게시되어 있고, 공유 범위가 공개(링크가 있는 모든 사용자)인지 확인해 주세요.'
+      +(lastErr?'<br><span style="color:#8B95A1;font-weight:500">오류: '+lastErr+'</span>':'');
+  }
+}
+load();
+</script>
+</body>
+</html>
