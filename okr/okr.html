@@ -26,10 +26,8 @@
   .rfresh{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--blue);font-size:14px;font-weight:700;
     padding:9px 16px;border-radius:22px;border:1px solid var(--line);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.04)}
   .rfresh:hover{background:var(--blue-weak)}
-
   .sec-t{font-size:20px;font-weight:800;letter-spacing:-.4px;margin:36px 2px 4px}
   .sec-d{font-size:14.5px;color:var(--faint);font-weight:500;margin-bottom:4px}
-
   /* HERO */
   .hero{background:var(--card);border-radius:24px;padding:26px 28px;margin-top:16px;display:flex;justify-content:space-between;align-items:flex-end;gap:26px;box-shadow:0 2px 12px rgba(0,0,0,.05)}
   .hero-lab{font-size:14px;font-weight:700;color:var(--blue)}
@@ -41,7 +39,6 @@
   .hero-side .k{font-size:12.5px;font-weight:700}
   .hero-side .v{font-size:26px;font-weight:800;margin-top:4px}
   .hero-side .p{font-size:12px;font-weight:700;margin-top:2px}
-
   /* FUNNEL 진단 */
   .funnel{display:flex;align-items:stretch;gap:8px;margin-top:16px;flex-wrap:wrap}
   .fstep{flex:1;min-width:150px;background:var(--card);border-radius:20px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.04);border:2px solid transparent}
@@ -56,11 +53,9 @@
   .farrow.weak .ar{color:var(--red)}
   .bottleneck{background:var(--red-weak);border:1px solid #FBC5CB;border-radius:8px;padding:3px 9px;font-size:11.5px;font-weight:800;color:var(--red);margin-top:5px}
   .up{color:var(--green)} .down{color:var(--red)} .flat{color:var(--faint)}
-
   .diag{border-radius:18px;padding:18px 20px;font-size:16px;margin-top:14px;line-height:1.7;font-weight:500}
   .diag.warn{background:#FFF4E5;color:#9A5B00} .diag.warn b{color:#7A4600;font-weight:800}
   .diag.good{background:var(--green-weak);color:#0A6B4A} .diag.good b{color:#075038;font-weight:800}
-
   /* july strip */
   .july{background:var(--card);border-radius:20px;padding:20px 22px;margin-top:14px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
   .july h3{font-size:15px;font-weight:800}
@@ -69,7 +64,6 @@
   .strip .k{font-size:12.5px;color:var(--faint);font-weight:600}
   .strip .v{font-size:21px;font-weight:800;margin-top:4px}
   .strip .p{font-size:12px;font-weight:700;margin-top:3px}
-
   /* charts */
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
   .panel{background:var(--card);border-radius:20px;padding:22px 22px 20px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
@@ -80,7 +74,6 @@
   .legend span{display:flex;align-items:center;gap:7px;color:var(--sub)}
   .dot{width:12px;height:12px;border-radius:4px;display:inline-block}
   .dot.line{height:4px;width:18px;border-radius:2px}
-
   /* KR groups */
   .gc{background:var(--card);border-radius:20px;padding:8px 8px 14px;margin-top:12px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
   .gc-t{display:flex;justify-content:space-between;align-items:center;padding:16px 16px 8px}
@@ -109,7 +102,6 @@
   .pri.high{background:var(--red-weak);color:var(--red)}.pri.mid{background:var(--amber-weak);color:var(--amber)}.pri.low{background:var(--blue-weak);color:var(--blue)}
   .pa .t{font-size:13.5px;font-weight:700}
   .pa .d{font-size:12.5px;color:var(--sub);margin-top:3px;line-height:1.5}
-
   .monthseg{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:12px;padding:4px;gap:2px;margin:6px 0 6px;flex-wrap:wrap}
   .monthseg button{background:none;border:none;font-family:inherit;font-size:14.5px;font-weight:700;color:var(--faint);padding:8px 18px;border-radius:9px;cursor:pointer}
   .monthseg button.on{background:var(--blue);color:#fff}
@@ -135,12 +127,9 @@
     </div>
     <button class="rfresh" onclick="load()">↻ 새로고침</button>
   </div>
-
   <div id="loading"><div class="spin"></div>구글 시트에서 최신 데이터를 불러오는 중…</div>
   <div id="err"></div>
-
   <div id="content" style="display:none">
-
     <!-- 퍼널 병목 진단 (숨김) -->
     <div style="display:none">
       <div class="sec-t">🔎 퍼널 병목 진단</div>
@@ -148,7 +137,6 @@
       <div class="funnel" id="funnel"></div>
       <div id="diag"></div>
     </div>
-
     <!-- 진행중 달 -->
     <div class="sec-t">📅 진행 중인 달</div>
     <div class="july">
@@ -156,7 +144,6 @@
       <div class="s" id="julySub"></div>
       <div class="strip" id="julyStrip"></div>
     </div>
-
     <!-- 추이 -->
     <div class="sec-t">📈 추이</div>
     <div class="grid2">
@@ -180,7 +167,6 @@
         <div class="cbox"><canvas id="cCpl"></canvas></div>
       </div>
     </div>
-
     <!-- KR -->
     <div class="sec-t">🎯 Key Results · 목표 대비</div>
     <div class="monthseg" id="krMonths"></div>
@@ -188,10 +174,8 @@
     <div class="krh"><div>핵심결과</div><div class="r">기준(평균)</div><div class="r">목표</div><div>달성률 · 현재</div><div style="text-align:right">상태</div></div>
     <div id="groups"></div>
   </div>
-
   <footer id="foot"></footer>
 </div>
-
 <script>
 const SHEET_ID='1ft-zwEz6-z8EcADZ0Tt_SxRgY5FyP8xCFAixwrX_xQ4';
 const GID='1580686585';
@@ -208,7 +192,6 @@ const num=s=>{const t=String(s==null?'':s).replace(/[^0-9.-]/g,'');return t===''
 const won=v=>'₩'+Math.round(v).toLocaleString();
 const fmt=(v,f)=>v==null?'–':f==='p'?(v*100).toFixed(v<0.01?3:2)+'%':f==='w'?won(v):Math.round(v).toLocaleString();
 const GREEN='#00B876',AMBER='#FF9500',RED='#F04452',BLUE='#3182F6',PUR='#7B5CFA',TEAL='#14B8A6';
-
 // 따옴표 안 콤마 처리 CSV 파서
 function parseCSV(text){
   const rows=[]; let row=[],cell='',q=false;
@@ -226,7 +209,6 @@ function parseCSV(text){
   if(cell.length||row.length){row.push(cell);rows.push(row);}
   return rows;
 }
-
 // CSV 컬럼: 0날짜 1N클릭 2N비용 3G클릭 4G비용 5PV 6채널톡 7전체문의 8광고비 9DB당 10블로그포스팅 11블로그방문자 12인스타포스팅 13인스타뷰
 function parseRows(rows){
   const months=[]; let cur=null;
@@ -245,13 +227,11 @@ function parseRows(rows){
   }
   return months.filter(m=>m.days.some(x=>x.core)&&m.tot);
 }
-
 const ivClean=m=>m.days.reduce((s,x)=>s+(x.iV<IV_CAP?x.iV:0),0);
 const posting=m=>m.tot.bP+m.tot.iP;
 const views=m=>m.tot.bV+ivClean(m);
 const clicks=m=>m.tot.nC+m.tot.gC;
 const chgObj=(a,b)=>{if(b==null||b===0)return{cls:'flat',txt:'신규',p:null};const p=(a-b)/b*100;return{cls:Math.abs(p)<0.5?'flat':p>=0?'up':'down',txt:`${p>0?'▲':p<0?'▼':'–'} ${Math.abs(p).toFixed(0)}%`,p};};
-
 function render(months){
   document.getElementById('loading').style.display='none';
   document.getElementById('err').style.display='none';
@@ -260,12 +240,10 @@ function render(months){
   const comp=months.slice(0,months.length-1);
   const lastC=comp[comp.length-1]||cur, prevC=comp[comp.length-2]||null;
   const N=cur.days.filter(x=>x.core).length;
-
   const sp=(m,f)=>m.days.filter(x=>x.core&&x.d<=N).reduce((s,x)=>s+f(x),0);
   const inqSP=sp(cur,x=>x.inq), inqSPprev=prevC?sp(months[months.length-2],x=>x.inq):null;
   const pace=Math.round(inqSP/Math.max(N,1)*30);
   const gInqSP=chgObj(inqSP,inqSPprev);
-
   // 퍼널 병목 진단(숨김이지만 계산 유지)
   const P=posting(lastC), V=views(lastC), Q=lastC.tot.inq;
   const gP=chgObj(P,prevC?posting(prevC):null), gV=chgObj(V,prevC?views(prevC):null), gQ=chgObj(Q,prevC?prevC.tot.inq:null);
@@ -286,7 +264,6 @@ function render(months){
     ? `<div class="diag warn"><b>병목: 게시글 → 조회수 단계.</b> ${prevC.label}→${lastC.label}에 게시글을 늘렸지만 조회수 상승은 완만해요(포스팅당 조회 ${mom1.toFixed(0)}%). 제목·키워드·발행 채널을 점검하세요.</div>`
     : weak===2 ? `<div class="diag warn"><b>병목: 조회수 → 문의 단계.</b> 조회는 들어오는데 문의로 덜 이어져요. 랜딩·CTA를 점검하세요.</div>`
     : `<div class="diag good"><b>퍼널이 함께 성장 중이에요.</b></div>`;
-
   // 진행 중인 달 strip
   document.getElementById('julyTitle').textContent=`${cur.label} (1~${N}일 집계 · 진행중)`;
   document.getElementById('julySub').textContent='공정 비교는 「전월 같은 기간」, 월환산은 일평균×30 추정치입니다.';
@@ -299,15 +276,12 @@ function render(months){
     ['CPL', cpl?won(cpl):'–', '문의 1건당 광고비']
   ];
   document.getElementById('julyStrip').innerHTML=jstrip.map(x=>`<div><div class="k">${x[0]}</div><div class="v">${x[1]}</div><div class="p" style="color:var(--blue)">${x[2]}</div></div>`).join('');
-
   drawHypo(months);
   drawCpl(months);
   buildKR(months, comp);
-
   document.getElementById('foot').innerHTML=
     `출처: 구글 시트 「📊대시보드」 공개 CSV 자동 연동 · 마지막 갱신 ${new Date().toLocaleString('ko-KR')}<br>포스팅=블로그+인스타 · 조회수=블로그 방문자+인스타 뷰(4월 이상치 제외) · 목표=완료월 평균×1.1(효율은 ×0.9)`;
 }
-
 // ---- KR (월 선택형) ----
 function buildKR(months, comp){
   const ivc=ivClean;
@@ -320,9 +294,7 @@ function buildKR(months, comp){
     ['② 유입·조회','광고 클릭(네+구)','','n','up',m=>m.tot.nC+m.tot.gC],
     ['③ 전환','PV→문의 전환율','','p','up',m=>m.tot.pv?m.tot.inq/m.tot.pv:0],
     ['③ 전환','클릭→문의 전환율','','p','up',m=>(m.tot.nC+m.tot.gC)?m.tot.inq/(m.tot.nC+m.tot.gC):0],
-    ['④ 결과(리드)','전체 문의','건','n','up',m=>m.tot.inq],
-    ['⑤ 효율·투자','총 광고비','원','w','none',m=>m.tot.ad],
-    ['⑤ 효율·투자','리드당 광고비(CPL)','원','w','down',m=>m.tot.inq?m.tot.ad/m.tot.inq:0]
+    ['④ 결과(리드)','전체 문의','건','n','up',m=>m.tot.inq]
   ];
   const src=comp.length?comp:months;
   const base=kr=>{const vs=src.map(kr[5]);return vs.reduce((a,b)=>a+b,0)/vs.length;};
@@ -330,10 +302,8 @@ function buildKR(months, comp){
   const rateFor=(kr,m)=>{if(kr[4]==='none')return null;const t=target(kr),c=kr[5](m);return kr[4]==='down'?(c?t/c:null):c/t;};
   const stt=r=>r==null?['추적','b-na']:r>=1?['달성','b-done']:r>=0.7?['순항','b-ok']:['주의','b-warn'];
   const groups=[...new Set(KR.map(k=>k[0]))];
-
   const seg=document.getElementById('krMonths');
   seg.innerHTML=months.map((m,i)=>`<button data-i="${i}">${m.label}${i===months.length-1?' *':''}</button>`).join('');
-
   function renderFor(selIdx){
     const selM=months[selIdx], prevM=months[selIdx-1]||null, partial=(selIdx===months.length-1);
     seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',+b.dataset.i===selIdx));
@@ -368,12 +338,12 @@ function buildKR(months, comp){
       ? `※ <b>${selM.label}은 진행 중(부분월)</b>이라 누적값이 작아 달성률이 낮게 나올 수 있어요. 완료월(${comp.map(m=>m.label).join('·')})끼리 비교를 권장해요.` : '';
   }
   seg.querySelectorAll('button').forEach(b=>b.onclick=()=>renderFor(+b.dataset.i));
-  const nowLabel=(new Date().getMonth()+1)+'월';           // 현재 기준월 (예: 7월)
-  let defIdx=months.findIndex(m=>m.label===nowLabel);      // 데이터에 현재월이 있으면 그걸 기본값으로
-  if(defIdx<0) defIdx=comp.length?months.indexOf(comp[comp.length-1]):months.length-1; // 없으면 기존 로직(마지막 완료월)
+  // 기본값: 현재 기준월(예: 7월)이 데이터에 있으면 그 달을, 없으면 마지막 완료월을 선택
+  const nowLabel=(new Date().getMonth()+1)+'월';
+  let defIdx=months.findIndex(m=>m.label===nowLabel);
+  if(defIdx<0) defIdx=comp.length?months.indexOf(comp[comp.length-1]):months.length-1;
   renderFor(defIdx);
 }
-
 function buildActions(KR,H,lastC,prevC){
   const A={},push=(g,pri,t,d)=>{(A[g]=A[g]||[]).push([pri,t,d]);};
   const get=n=>KR.find(k=>k[1]===n);
@@ -389,12 +359,8 @@ function buildActions(KR,H,lastC,prevC){
   const k=get('클릭→문의 전환율'), kr=H.rate(k);
   if(kr!=null&&kr<0.9) push('③ 전환','mid','저효율 광고 키워드 정리',
     `클릭→문의가 ${pc(H.curV(k))}로 목표(${pc(H.target(k))}) 미달. 구매의도 낮은 광범위 키워드를 배제하고 전환 키워드 중심으로 재편하세요.`);
-  const q=get('리드당 광고비(CPL)'), qr=H.rate(q);
-  if(qr!=null&&qr<0.9) push('⑤ 효율·투자','high','CPL 정상화',
-    `CPL이 ${won(H.curV(q))}로 목표(${won(H.target(q))}) 초과. 예산이 문의로 이어지지 않는 저효율 캠페인부터 정리하세요.`);
   return A;
 }
-
 // ---- 차트 ----
 Chart.defaults.font.family="'Pretendard','Malgun Gothic',sans-serif"; Chart.defaults.color='#8B95A1';
 let chH,chC;
@@ -430,7 +396,6 @@ function drawCpl(months){
     scales:{x:{...grid,grid:{display:false},ticks:{font:{weight:'700'},color:'#4E5968'}},
       y:{...grid,beginAtZero:true,ticks:{callback:v=>'₩'+(v/10000)+'만'}}}}});
 }
-
 async function fetchCsv(url){
   const ctrl=new AbortController();
   const to=setTimeout(()=>ctrl.abort(),8000);
