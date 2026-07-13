@@ -368,7 +368,9 @@ function buildKR(months, comp){
       ? `※ <b>${selM.label}은 진행 중(부분월)</b>이라 누적값이 작아 달성률이 낮게 나올 수 있어요. 완료월(${comp.map(m=>m.label).join('·')})끼리 비교를 권장해요.` : '';
   }
   seg.querySelectorAll('button').forEach(b=>b.onclick=()=>renderFor(+b.dataset.i));
-  const defIdx=comp.length?months.indexOf(comp[comp.length-1]):months.length-1;
+  const nowLabel=(new Date().getMonth()+1)+'월';           // 현재 기준월 (예: 7월)
+  let defIdx=months.findIndex(m=>m.label===nowLabel);      // 데이터에 현재월이 있으면 그걸 기본값으로
+  if(defIdx<0) defIdx=comp.length?months.indexOf(comp[comp.length-1]):months.length-1; // 없으면 기존 로직(마지막 완료월)
   renderFor(defIdx);
 }
 
