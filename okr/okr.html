@@ -294,7 +294,8 @@ function buildKR(months, comp){
     ['② 유입·조회','광고 클릭(네+구)','','n','up',m=>m.tot.nC+m.tot.gC],
     ['③ 전환','PV→문의 전환율','','p','up',m=>m.tot.pv?m.tot.inq/m.tot.pv:0],
     ['③ 전환','클릭→문의 전환율','','p','up',m=>(m.tot.nC+m.tot.gC)?m.tot.inq/(m.tot.nC+m.tot.gC):0],
-    ['④ 결과(리드)','전체 문의','건','n','up',m=>m.tot.inq]
+    ['④ 결과(리드)','전체 문의','건','n','up',m=>m.tot.inq],
+    ['④ 결과(리드)','DB당 광고비(CPL)','원','w','down',m=>m.tot.inq?m.tot.ad/m.tot.inq:0,'noavg']
   ];
   const src=comp.length?comp:months;
   const base=kr=>{const vs=src.map(kr[5]);return vs.reduce((a,b)=>a+b,0)/vs.length;};
@@ -312,7 +313,7 @@ function buildKR(months, comp){
     let html='';
     groups.forEach(g=>{
       const items=KR.filter(k=>k[0]===g);
-      const rs=items.map(kr=>rateFor(kr,selM)).filter(v=>v!=null);
+      const rs=items.filter(kr=>kr[6]!=='noavg').map(kr=>rateFor(kr,selM)).filter(v=>v!=null);
       const avg=rs.length?rs.reduce((a,b)=>a+b,0)/rs.length:null;
       const ac=avg==null?'var(--sub)':avg>=1?GREEN:avg>=0.7?AMBER:RED;
       const ab=avg==null?'var(--bg)':avg>=1?'var(--green-weak)':avg>=0.7?'var(--amber-weak)':'var(--red-weak)';
