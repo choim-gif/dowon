@@ -22,6 +22,8 @@ type Params = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
   const posts = await getPublishedPosts()
+  // 슬러그는 디코딩된 한글 그대로 넘긴다.
+  // 인코딩해서 넘기면 out/blog/%EC%82%B0... 처럼 폴더명이 깨진다.
   return posts.map((p) => ({ slug: p.slug }))
 }
 
