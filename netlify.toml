@@ -1,0 +1,31 @@
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# 서브도메인(blog.dowonhr.com)으로 운영할 때 루트 접속을 /blog로 보낸다.
+# 서브디렉터리(dowonhr.com/blog) 프록시로 운영할 경우 이 리다이렉트는 그대로 두어도 무해하다.
+[[redirects]]
+  from = "/"
+  to = "/blog/"
+  status = 301
+  force = false
+
+# 정적 export 결과에 없는 경로는 404 페이지로 보낸다.
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

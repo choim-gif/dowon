@@ -1,0 +1,133 @@
+import { ORG, SITE } from '@/config/site'
+import type { PostMeta } from './notion'
+import type { FaqItem } from './blocks'
+
+export function postUrl(slug: string): string {
+  return `${SITE.url}${SITE.basePath}/${encodeURIComponent(slug)}/`
+}
+
+export function listUrl(): string {
+  return `${SITE.url}${SITE.basePath}/`
+}
+
+function organization() {
+  return {
+    '@type': 'Organization',
+    '@id': `${ORG.url}#organization`,
+    name: ORG.name,
+    legalName: ORG.legalName,
+    url: ORG.url,
+    logo: { '@type': 'ImageObject', url: ORG.logo },
+    description: ORG.description,
+    sameAs: [...ORG.sameAs],
+  }
+}
+
+/**
+ * 글 상세용 구조화 데이터.
+ * save-tax를 포함한 경쟁 사이트 대부분이 빠뜨린 부분이라 차별점이 된다.
+ */
+export function articleJsonLd(post: PostMeta, description: string) {
+  const url = postUrl(post.slug)
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    '@id': `${url}#article`,
+    headline: post.title.slice(0, 110),
+    description,
+    inLanguage: SITE.language,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt || post.publishedAt,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    url,
+    ...(post.coverImage ? { image: [post.coverImage] } : {}),
+    ...(post.category ? { articleSection: post.category } : {}),
+    ...(post.tags.length ? { keywords: post.tags.join(', ') } : {}),
+    author: post.author
+      ? {
+          '@type': 'Person',
+          name: post.author,
+          jobTitle: post.authorTitle,
+          worksFor: organization(),
+        }
+      : organization(),
+    publisher: organization(),
+  }
+}
+
+export function breadcrumbJsonLd(post: PostMeta) {
+  const items = [
+    { name: ORG.name, item: `${ORG.url}/` },
+    { name: SITE.name, item: listUrl() },
+    ...(post.category ? [{ name: post.category, item: listUrl() }] : []),
+    { name: post.title, item: postUrl(post.slug) },
+  ]
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((it, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: it.name,
+      item: it.item,
+    })),
+  }
+}
+
+export function faqJsonLd(faqs: FaqItem[]) {
+  if (faqs.length === 0) return null
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  }
+}
+
+export function blogJsonLd(posts: PostMeta[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    '@id': `${listUrl()}#blog`,
+    name: SITE.name,
+    description: SITE.description,
+    url: listUrl(),
+    inLanguage: SITE.language,
+    publisher: organization(),
+    blogPost: posts.slice(0, 20).map((p) => ({
+      '@type': 'BlogPosting',
+      headline: p.title,
+      url: postUrl(p.slug),
+      datePublished: p.publishedAt,
+    })),
+  }
+}
+
+/** CTA 링크에 유입 측정용 파라미터를 붙인다. */
+export function withUtm(href: string, slug: string, campaign: string): string {
+  try {
+    const u = new URL(href)
+    u.searchParams.set('utm_source', 'blog')
+    u.searchParams.set('utm_medium', 'post')
+    u.searchParams.set('utm_campaign', campaign || 'insight')
+    u.searchParams.set('utm_content', slug)
+    return u.toString()
+  } catch {
+    return href
+  }
+}
+
+export function formatDate(iso: string): string {
+  if (!iso) return ''
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return ''
+  return new Intl.DateTimeFormat('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'Asia/Seoul',
+  }).format(d)
+}
