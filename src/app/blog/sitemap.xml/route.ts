@@ -1,4 +1,4 @@
-import { getPublishedPosts } from '@/lib/notion'
+import { listPosts } from '@/lib/content'
 import { listUrl, postUrl } from '@/lib/seo'
 
 export const dynamic = 'force-static'
@@ -13,7 +13,7 @@ function esc(s: string) {
  * 구글·네이버·빙이 블로그 글을 한 번에 수집한다.
  */
 export async function GET() {
-  const posts = await getPublishedPosts()
+  const posts = await listPosts()
 
   const urls = [
     { loc: listUrl(), lastmod: posts[0]?.updatedAt || new Date(0).toISOString(), priority: '0.8' },

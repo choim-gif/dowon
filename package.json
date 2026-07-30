@@ -9,10 +9,12 @@
     "build:sample": "node scripts/run-sample.mjs build",
     "dev:sample": "node scripts/run-sample.mjs dev",
     "start": "npx serve out",
-    "seo:check": "node --env-file=.env scripts/seo-check.mjs"
+    "seo:check": "node --env-file-if-exists=.env scripts/seo-check.mjs"
   },
   "dependencies": {
     "@notionhq/client": "^2.2.15",
+    "gray-matter": "^4.0.3",
+    "marked": "^18.0.7",
     "next": "^15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

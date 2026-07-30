@@ -300,6 +300,11 @@ a {
   margin: 8px 0;
   line-height: 1.8;
 }
+/* 느슨한 목록(항목 사이 빈 줄)에서 문단이 겹쳐 보이지 않도록 여백을 없앤다 */
+.post-ul li > .post-p,
+.post-ol li > .post-p {
+  margin: 0;
+}
 .post-quote {
   margin: 28px 0;
   padding: 4px 0 4px 18px;

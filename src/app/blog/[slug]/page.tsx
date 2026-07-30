@@ -1,14 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getPostBySlug, getPublishedPosts, pickRelated } from '@/lib/notion'
-import {
-  buildAnchorMap,
-  buildToc,
-  clampDescription,
-  extractFaq,
-  firstParagraph,
-} from '@/lib/blocks'
+import { anchorsOf, getPost, listPosts, pickRelated } from '@/lib/content'
 import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, formatDate, postUrl } from '@/lib/seo'
 import { SITE } from '@/config/site'
 import { JsonLd } from '@/components/JsonLd'
@@ -21,7 +14,7 @@ import { RelatedPosts } from '@/components/RelatedPosts'
 type Params = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
-  const posts = await getPublishedPosts()
+  const posts = await listPosts()
   // 슬러그는 디코딩된 한글 그대로 넘긴다.
   // 인코딩해서 넘기면 out/blog/%EC%82%B0... 처럼 폴더명이 깨진다.
   return posts.map((p) => ({ slug: p.slug }))
@@ -29,78 +22,71 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params
-  const post = await getPostBySlug(decodeURIComponent(slug))
+  const post = await getPost(decodeURIComponent(slug))
   if (!post) return {}
 
-  // 요약 속성이 있으면 그것을 쓰고, 없으면 첫 문단에서 뽑는다.
-  // 첫 문단에 결론을 쓰라는 규칙이 여기서 검색결과 설명문으로 직결된다.
-  const description = clampDescription(post.summary || firstParagraph(post.blocks))
-  const url = postUrl(post.slug)
+  const { meta, description } = post
+  const url = postUrl(meta.slug)
 
   return {
-    title: post.title,
+    title: meta.title,
     description,
     alternates: { canonical: url },
     openGraph: {
       type: 'article',
-      title: post.title,
+      title: meta.title,
       description,
       url,
-      publishedTime: post.publishedAt,
-      modifiedTime: post.updatedAt || post.publishedAt,
-      ...(post.coverImage ? { images: [{ url: post.coverImage }] } : {}),
+      publishedTime: meta.publishedAt,
+      modifiedTime: meta.updatedAt || meta.publishedAt,
+      ...(meta.coverImage ? { images: [{ url: meta.coverImage }] } : {}),
     },
-    ...(post.tags.length ? { keywords: post.tags } : {}),
+    ...(meta.tags.length ? { keywords: meta.tags } : {}),
   }
 }
 
 export default async function PostPage({ params }: Params) {
   const { slug } = await params
-  const decoded = decodeURIComponent(slug)
-  const post = await getPostBySlug(decoded)
+  const post = await getPost(decodeURIComponent(slug))
   if (!post) notFound()
 
-  const all = await getPublishedPosts()
-  const related = pickRelated(all, post, 3)
-
-  const anchors = buildAnchorMap(post.blocks)
-  const toc = buildToc(post.blocks, anchors)
-  const faqs = extractFaq(post.blocks)
-  const description = clampDescription(post.summary || firstParagraph(post.blocks))
+  const { meta, content, toc, faqs, description } = post
+  const all = await listPosts()
+  const related = pickRelated(all, meta, 3)
 
   return (
     <>
-      <JsonLd data={articleJsonLd(post, description)} />
-      <JsonLd data={breadcrumbJsonLd(post)} />
+      <JsonLd data={articleJsonLd(meta, description)} />
+      <JsonLd data={breadcrumbJsonLd(meta)} />
       <JsonLd data={faqJsonLd(faqs)} />
 
       <article className="post">
         <nav className="crumbs" aria-label="현재 위치">
           <Link href={`${SITE.basePath}/`}>{SITE.name}</Link>
-          {post.category && (
+          {meta.category && (
             <>
               <span aria-hidden="true"> › </span>
-              <span>{post.category}</span>
+              <span>{meta.category}</span>
             </>
           )}
         </nav>
 
         <header className="post-header">
           {/* 글 제목이 이 페이지의 유일한 h1이다. 본문 제목은 모두 h2 이하로 내려간다. */}
-          <h1 className="post-title">{post.title}</h1>
+          <h1 className="post-title">{meta.title}</h1>
           <p className="post-meta">
-            <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
-            {post.updatedAt && post.updatedAt.slice(0, 10) !== post.publishedAt.slice(0, 10) && (
+            <time dateTime={meta.publishedAt}>{formatDate(meta.publishedAt)}</time>
+            {meta.updatedAt && meta.updatedAt.slice(0, 10) !== meta.publishedAt.slice(0, 10) && (
               <>
                 <span aria-hidden="true"> · </span>
-                <span>최종 수정 {formatDate(post.updatedAt)}</span>
+                <span>최종 수정 {formatDate(meta.updatedAt)}</span>
               </>
             )}
-            {post.author && (
+            {meta.author && (
               <>
                 <span aria-hidden="true"> · </span>
                 <span>
-                  {post.authorTitle} {post.author}
+                  {meta.authorTitle} {meta.author}
                 </span>
               </>
             )}
@@ -110,11 +96,15 @@ export default async function PostPage({ params }: Params) {
         <Toc items={toc} />
 
         <div className="post-content">
-          <PostBody blocks={post.blocks} anchors={anchors} />
+          {content.kind === 'notion' ? (
+            <PostBody blocks={content.blocks} anchors={anchorsOf(content)} />
+          ) : (
+            <div dangerouslySetInnerHTML={{ __html: content.html }} />
+          )}
         </div>
 
-        <CtaBlock type={post.cta} slug={post.slug} category={post.category} />
-        <AuthorBlock post={post} />
+        <CtaBlock type={meta.cta} slug={meta.slug} category={meta.category} />
+        <AuthorBlock post={meta} />
         <RelatedPosts posts={related} />
       </article>
     </>

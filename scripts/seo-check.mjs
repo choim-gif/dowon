@@ -1,22 +1,96 @@
 #!/usr/bin/env node
 /**
  * 발행 전 SEO 점검기.
- * 노션에 있는 글을 읽어 규칙 문서의 체크리스트를 자동으로 검사한다.
+ * 규칙 문서의 체크리스트를 자동으로 검사한다. 노션과 마크다운 양쪽을 지원한다.
  *
- *   npm run seo:check            발행 상태인 글 전체 검사
+ *   npm run seo:check            발행 상태인 글 검사
  *   npm run seo:check -- 검수     상태가 '검수'인 글 검사
- *
- * 환경변수는 .env에서 읽는다(Node 20.6 이상의 --env-file 사용).
+ *   npm run seo:check -- 전체     상태와 무관하게 전부 검사
  */
+
+import fs from 'node:fs'
+import path from 'node:path'
+import matter from 'gray-matter'
 
 const TOKEN = process.env.NOTION_TOKEN
 const DB = process.env.NOTION_DATABASE_ID
-const STATUS = process.argv[2] || '발행'
+const WANT = process.argv[2] || '발행'
+const POSTS_DIR = path.join(process.cwd(), 'content', 'posts')
 
-if (!TOKEN || !DB) {
-  console.error('NOTION_TOKEN 과 NOTION_DATABASE_ID 가 필요합니다. .env 파일을 확인해주세요.')
-  process.exit(1)
+const AD_WORDS = /(무료상담|최대\s*\d|절감|알아봅시다|완벽\s*정리|총정리|모든\s*것|국세청\s*10년)/
+const GREETING = /^(안녕하세요|반갑습니다|오늘은|이번\s*시간)/
+
+/* ───────────────────────── 공통 검사 로직 ───────────────────────── */
+
+function inspect({ title, summary, author, law, firstText, sectionCount, bodyLen, hasTable, faqCount }) {
+  const r = []
+  const add = (level, label, detail = '') => r.push({ level, label, detail })
+
+  if (!title) add('fail', '제목이 비어 있습니다')
+  else if (title.length > 32) add('warn', `제목이 ${title.length}자입니다`, '32자 이내를 권장합니다')
+
+  if (title.includes('|'))
+    add('fail', '제목에 파이프(|) 나열이 있습니다', '색인 탈락 글의 75%가 이 패턴이었습니다')
+  if (AD_WORDS.test(title))
+    add('warn', '제목에 광고성 표현이 있습니다', title.match(AD_WORDS)?.[0])
+
+  if (!firstText) {
+    add('fail', '본문 첫 문단을 찾지 못했습니다')
+  } else {
+    if (GREETING.test(firstText))
+      add('fail', '첫 문단이 인사말로 시작합니다', '검색결과 설명문이 인사말로 채워집니다')
+    const firstSentence = firstText.split(/(?<=[.!?])\s/)[0] || firstText
+    if (firstSentence.length < 40 || firstSentence.length > 160)
+      add('warn', `첫 문장이 ${firstSentence.length}자입니다`, '80~120자를 권장합니다')
+    if (!/\d/.test(firstText))
+      add('warn', '첫 문단에 숫자가 없습니다', '수치가 있으면 검색결과에서 눈에 띕니다')
+  }
+
+  if (!summary) add('warn', '요약이 비어 있습니다', '비우면 첫 문단이 자동으로 쓰입니다')
+  if (sectionCount < 3) add('fail', `섹션 제목이 ${sectionCount}개입니다`, '3개 이상 필요합니다(h2로 변환됩니다)')
+  if (!author) add('warn', '작성자가 비어 있습니다', 'E-E-A-T에 직접 영향을 줍니다')
+  if (!law) add('warn', '근거 법령이 비어 있습니다')
+  if (bodyLen < 1500) add('warn', `본문이 ${bodyLen.toLocaleString()}자입니다`, '1,500자 이상을 권장합니다')
+  if (!hasTable) add('warn', '표가 없습니다', '수치 비교는 표로 만들면 AI 검색 인용률이 올라갑니다')
+  if (faqCount === 0)
+    add('warn', 'FAQ가 없습니다', '"자주 묻는 질문" 아래 항목을 넣으면 FAQ 스키마가 생성됩니다')
+
+  return r
 }
+
+/* ───────────────────────── 마크다운 백엔드 ───────────────────────── */
+
+function fromMarkdown() {
+  if (!fs.existsSync(POSTS_DIR)) return []
+  return fs
+    .readdirSync(POSTS_DIR)
+    .filter((f) => f.endsWith('.md'))
+    .map((f) => {
+      const { data, content } = matter(fs.readFileSync(path.join(POSTS_DIR, f), 'utf-8'))
+      const body = content.trim()
+      const firstText = (body.split(/\n\s*\n/).find((b) => !b.startsWith('#') && b.length > 20) || '')
+        .replace(/[*_`>]/g, '')
+        .trim()
+      const faqIdx = body.search(/^#{1,3}\s*.*(자주\s*묻는\s*질문|FAQ)/im)
+      const faqCount =
+        faqIdx < 0 ? 0 : (body.slice(faqIdx).match(/^#{2,4}\s+\S.*$/gm) || []).length - 1
+      return {
+        source: f,
+        status: (data.상태 || '').trim(),
+        title: (data.제목 || '').trim(),
+        summary: (data.요약 || '').trim(),
+        author: (data.작성자 || '').trim(),
+        law: (data.근거법령 || '').trim(),
+        firstText,
+        sectionCount: (body.match(/^#\s+\S/gm) || []).length,
+        bodyLen: body.replace(/\s+/g, '').length,
+        hasTable: /^\|.*\|/m.test(body),
+        faqCount: Math.max(faqCount, 0),
+      }
+    })
+}
+
+/* ───────────────────────── 노션 백엔드 ───────────────────────── */
 
 const API = 'https://api.notion.com/v1'
 const HEADERS = {
@@ -25,19 +99,12 @@ const HEADERS = {
   'Content-Type': 'application/json',
 }
 
-const AD_WORDS = /(무료상담|최대\s*\d|절감|알아봅시다|완벽\s*정리|총정리|모든\s*것|국세청\s*10년)/
-const GREETING = /^(안녕하세요|반갑습니다|오늘은|이번\s*시간)/
-
-async function api(path, init) {
-  const res = await fetch(`${API}${path}`, { headers: HEADERS, ...init })
+async function api(p, init) {
+  const res = await fetch(`${API}${p}`, { headers: HEADERS, ...init })
   if (!res.ok) throw new Error(`${res.status} ${await res.text()}`)
   return res.json()
 }
-
-function plain(rich) {
-  return (rich || []).map((r) => r.plain_text).join('').trim()
-}
-
+const plain = (rich) => (rich || []).map((x) => x.plain_text).join('').trim()
 function prop(props, key) {
   const p = props[key]
   if (!p) return ''
@@ -47,7 +114,10 @@ function prop(props, key) {
   if (p.type === 'url') return p.url ?? ''
   return ''
 }
-
+function blockText(b) {
+  const body = b[b.type]
+  return body?.rich_text ? plain(body.rich_text) : ''
+}
 async function allBlocks(id, depth = 0) {
   if (depth > 2) return []
   const out = []
@@ -64,126 +134,81 @@ async function allBlocks(id, depth = 0) {
   return out
 }
 
-function blockText(b) {
-  const body = b[b.type]
-  if (!body || !body.rich_text) return ''
-  return plain(body.rich_text)
-}
-
-const ICON = { pass: '  ok  ', warn: ' 주의 ', fail: ' 실패 ' }
-
-function check(list, level, label, detail = '') {
-  list.push({ level, label, detail })
-}
-
-async function main() {
-  console.log(`\n노션에서 상태가 '${STATUS}'인 글을 불러옵니다...\n`)
-
+async function fromNotion() {
   const pages = []
   let cursor
   do {
     const res = await api(`/databases/${DB}/query`, {
       method: 'POST',
-      body: JSON.stringify({
-        start_cursor: cursor,
-        page_size: 100,
-        filter: { property: '상태', select: { equals: STATUS } },
-      }),
+      body: JSON.stringify({ start_cursor: cursor, page_size: 100 }),
     })
     pages.push(...res.results)
     cursor = res.has_more ? res.next_cursor : undefined
   } while (cursor)
 
-  if (pages.length === 0) {
+  const out = []
+  for (const page of pages) {
+    const props = page.properties
+    const blocks = await allBlocks(page.id)
+    const firstPara = blocks.find((b) => b.type === 'paragraph' && blockText(b).length >= 10)
+    out.push({
+      source: '노션',
+      status: prop(props, '상태'),
+      title: prop(props, '제목'),
+      summary: prop(props, '요약'),
+      author: prop(props, '작성자'),
+      law: prop(props, '근거법령'),
+      firstText: firstPara ? blockText(firstPara) : '',
+      sectionCount: blocks.filter((b) => b.type === 'heading_1').length,
+      bodyLen: blocks.reduce((n, b) => n + blockText(b).length, 0),
+      hasTable: blocks.some((b) => b.type === 'table'),
+      faqCount: blocks.filter((b) => b.type === 'toggle').length,
+    })
+  }
+  return out
+}
+
+/* ───────────────────────── 실행 ───────────────────────── */
+
+const LABEL = { pass: '  ok  ', warn: ' 주의 ', fail: ' 실패 ' }
+
+async function main() {
+  const useNotion = !!(TOKEN && DB)
+  console.log(`\n저장소: ${useNotion ? '노션' : '마크다운 파일(content/posts)'}`)
+  console.log(`대상: 상태가 '${WANT}'인 글\n`)
+
+  const posts = useNotion ? await fromNotion() : fromMarkdown()
+  const targets = WANT === '전체' ? posts : posts.filter((p) => p.status === WANT)
+
+  if (targets.length === 0) {
     console.log('해당 상태의 글이 없습니다.')
+    if (posts.length > 0) {
+      const counts = posts.reduce((m, p) => ({ ...m, [p.status || '(없음)']: (m[p.status || '(없음)'] || 0) + 1 }), {})
+      console.log('현재 상태 분포:', counts)
+    }
     return
   }
 
-  let totalFail = 0
-  let totalWarn = 0
+  let fails = 0
+  let warns = 0
 
-  for (const page of pages) {
-    const props = page.properties
-    const title = prop(props, '제목')
-    const blocks = await allBlocks(page.id)
-    const results = []
+  for (const post of targets) {
+    const results = inspect(post)
+    const f = results.filter((r) => r.level === 'fail')
+    const w = results.filter((r) => r.level === 'warn')
+    fails += f.length
+    warns += w.length
 
-    // 1. 제목 길이 (뒤에 사이트명이 붙는 것을 감안)
-    if (!title) check(results, 'fail', '제목이 비어 있습니다')
-    else if (title.length > 32)
-      check(results, 'warn', `제목이 ${title.length}자입니다`, '32자 이내를 권장합니다')
-    else check(results, 'pass', `제목 길이 ${title.length}자`)
-
-    // 2. 파이프 나열
-    if (title.includes('|'))
-      check(results, 'fail', '제목에 파이프(|) 나열이 있습니다', '색인 탈락 글의 75%가 이 패턴이었습니다')
-
-    // 3. 광고 문구
-    if (AD_WORDS.test(title))
-      check(results, 'warn', '제목에 광고성 표현이 있습니다', title.match(AD_WORDS)?.[0])
-
-    // 4~5. 첫 문단
-    const firstPara = blocks.find((b) => b.type === 'paragraph' && blockText(b).length >= 10)
-    const firstText = firstPara ? blockText(firstPara) : ''
-    if (!firstText) {
-      check(results, 'fail', '본문 첫 문단을 찾지 못했습니다')
-    } else {
-      if (GREETING.test(firstText))
-        check(results, 'fail', '첫 문단이 인사말로 시작합니다', '검색결과 설명문이 인사말로 채워집니다')
-      else check(results, 'pass', '첫 문단이 본론으로 시작합니다')
-
-      const firstSentence = firstText.split(/(?<=[.!?])\s/)[0] || firstText
-      if (firstSentence.length < 40 || firstSentence.length > 160)
-        check(results, 'warn', `첫 문장이 ${firstSentence.length}자입니다`, '80~120자를 권장합니다')
-
-      if (!/\d/.test(firstText))
-        check(results, 'warn', '첫 문단에 숫자가 없습니다', '수치가 있으면 검색결과에서 눈에 띕니다')
-    }
-
-    // 6. 요약
-    if (!prop(props, '요약'))
-      check(results, 'warn', '요약이 비어 있습니다', '비우면 첫 문단이 자동으로 쓰입니다')
-
-    // 7. h2 (노션 제목1)
-    const h1c = blocks.filter((b) => b.type === 'heading_1').length
-    if (h1c < 3) check(results, 'fail', `노션 '제목1'이 ${h1c}개입니다`, '3개 이상 필요합니다(h2로 변환됩니다)')
-    else check(results, 'pass', `섹션 제목 ${h1c}개`)
-
-    // 8. 작성자
-    if (!prop(props, '작성자')) check(results, 'warn', '작성자가 비어 있습니다', 'E-E-A-T에 직접 영향을 줍니다')
-
-    // 9. 근거법령
-    if (!prop(props, '근거법령')) check(results, 'warn', '근거 법령이 비어 있습니다')
-
-    // 10. 분량
-    const len = blocks.reduce((n, b) => n + blockText(b).length, 0)
-    if (len < 1500) check(results, 'warn', `본문이 ${len.toLocaleString()}자입니다`, '1,500자 이상을 권장합니다')
-    else check(results, 'pass', `본문 ${len.toLocaleString()}자`)
-
-    // 11. 표·FAQ 여부
-    if (!blocks.some((b) => b.type === 'table'))
-      check(results, 'warn', '표가 없습니다', '수치 비교는 표로 만들면 AI 검색 인용률이 올라갑니다')
-    const faqCount = blocks.filter((b) => b.type === 'toggle').length
-    if (faqCount === 0)
-      check(results, 'warn', 'FAQ 토글이 없습니다', '"자주 묻는 질문" 아래 토글을 넣으면 FAQ 스키마가 생성됩니다')
-
-    const fails = results.filter((r) => r.level === 'fail')
-    const warns = results.filter((r) => r.level === 'warn')
-    totalFail += fails.length
-    totalWarn += warns.length
-
-    const mark = fails.length ? '✗' : warns.length ? '△' : '✓'
-    console.log(`${mark} ${title || '(제목 없음)'}`)
-    for (const r of results) {
-      if (r.level === 'pass') continue
-      console.log(`   [${ICON[r.level]}] ${r.label}${r.detail ? ` — ${r.detail}` : ''}`)
-    }
+    const mark = f.length ? '✗' : w.length ? '△' : '✓'
+    console.log(`${mark} ${post.title || '(제목 없음)'}   [${post.source}]`)
+    for (const r of results) console.log(`   [${LABEL[r.level]}] ${r.label}${r.detail ? ` — ${r.detail}` : ''}`)
+    if (results.length === 0) console.log('   모든 항목을 통과했습니다.')
     console.log('')
   }
 
   console.log('─'.repeat(60))
-  console.log(`글 ${pages.length}편 검사 완료 · 실패 ${totalFail}건 · 주의 ${totalWarn}건`)
-  if (totalFail > 0) process.exitCode = 1
+  console.log(`글 ${targets.length}편 검사 완료 · 실패 ${fails}건 · 주의 ${warns}건`)
+  if (fails > 0) process.exitCode = 1
 }
 
 main().catch((e) => {

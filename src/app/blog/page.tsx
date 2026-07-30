@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getPublishedPosts } from '@/lib/notion'
+import { listPosts } from '@/lib/content'
 import { SITE } from '@/config/site'
 import { blogJsonLd, formatDate, listUrl } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 }
 
 export default async function BlogIndex() {
-  const posts = await getPublishedPosts()
+  const posts = await listPosts()
 
   const categories = Array.from(new Set(posts.map((p) => p.category).filter(Boolean)))
 

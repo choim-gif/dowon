@@ -1,4 +1,4 @@
-import { getPublishedPosts } from '@/lib/notion'
+import { listPosts } from '@/lib/content'
 import { clampDescription } from '@/lib/blocks'
 import { listUrl, postUrl } from '@/lib/seo'
 import { ORG, SITE } from '@/config/site'
@@ -15,7 +15,7 @@ function esc(s: string) {
 
 /** /blog/rss.xml — 뉴스레터 자동화와 외부 구독에 쓴다. */
 export async function GET() {
-  const posts = await getPublishedPosts()
+  const posts = await listPosts()
   const latest = posts.slice(0, 30)
 
   const items = latest
