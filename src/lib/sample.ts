@@ -98,7 +98,8 @@ const SAMPLE_META: PostMeta[] = [
     lawName: '고용보험 및 산업재해보상보험의 보험료징수 등에 관한 법률 제15조',
     lawUrl: 'https://www.law.go.kr/',
     coverImage: '',
-    cta: '무료진단',
+    cta: '채팅상담',
+    status: '발행',
   },
   {
     id: 'sample-post-2',
@@ -116,6 +117,7 @@ const SAMPLE_META: PostMeta[] = [
     lawUrl: 'https://www.law.go.kr/',
     coverImage: '',
     cta: '체크리스트',
+    status: '발행',
   },
 ]
 

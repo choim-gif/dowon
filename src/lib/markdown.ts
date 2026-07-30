@@ -15,6 +15,9 @@ import { toAnchorId, toSlug } from './slug'
 
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts')
 
+/** 개발 서버에서만 검수·초안 글을 함께 보여준다. 운영 빌드에는 절대 포함되지 않는다. */
+const SHOW_DRAFTS = process.env.NODE_ENV === 'development'
+
 export function hasMarkdownPosts(): boolean {
   try {
     return fs.existsSync(POSTS_DIR) && fs.readdirSync(POSTS_DIR).some((f) => f.endsWith('.md'))
@@ -201,7 +204,8 @@ function toMeta(fm: FrontMatter, fallbackSlug: string, fileMtime: Date): PostMet
     lawName: (fm.근거법령 || '').trim(),
     lawUrl: (fm.근거법령링크 || '').trim(),
     coverImage: (fm.대표이미지 || '').trim(),
-    cta: (fm.CTA유형 || '').trim() || '무료진단',
+    cta: (fm.CTA유형 || '').trim() || '채팅상담',
+    status: (fm.상태 || '').trim() || '초안',
   }
 }
 
@@ -227,7 +231,10 @@ export function readMarkdownPosts(): MarkdownPost[] {
 
     const status = (fm.상태 || '').trim()
     const visible = fm.노출 !== false
-    if (status !== '발행' || !visible) continue
+    // 운영 빌드에는 '발행'만 나간다.
+    // 개발 서버에서는 검수·초안도 보여야 발행 전에 화면을 확인할 수 있다.
+    if (!visible) continue
+    if (status !== '발행' && !SHOW_DRAFTS) continue
 
     const base = file.replace(/\.md$/, '')
     const meta = toMeta(fm, base, fs.statSync(full).mtime)

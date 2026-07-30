@@ -107,6 +107,13 @@ export default async function PostPage({ params }: Params) {
           )}
         </nav>
 
+        {meta.status !== '발행' && (
+          <p className="draft-notice">
+            이 글은 <strong>{meta.status}</strong> 상태입니다. 개발 서버에서만 보이고 실제 사이트에는
+            나가지 않습니다. 검토가 끝나면 파일의 <code>상태</code>를 <code>발행</code>으로 바꾸세요.
+          </p>
+        )}
+
         <header className="post-header">
           {/* 글 제목이 이 페이지의 유일한 h1이다. 본문 제목은 모두 h2 이하로 내려간다. */}
           <h1 className="post-title">{meta.title}</h1>

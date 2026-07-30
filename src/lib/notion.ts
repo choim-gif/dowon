@@ -32,6 +32,8 @@ export type Post = {
   lawUrl: string
   coverImage: string
   cta: string
+  /** 발행 / 검수 / 초안. 개발 서버에서만 검수·초안이 보인다. */
+  status: string
   blocks: NBlock[]
 }
 
@@ -162,7 +164,8 @@ export async function getPublishedPosts(): Promise<PostMeta[]> {
       lawName: readText(props, '근거법령'),
       lawUrl: readText(props, '근거법령링크'),
       coverImage: readFile(props, '대표이미지') || readCover(page),
-      cta: readText(props, 'CTA유형') || '무료진단',
+      cta: readText(props, 'CTA유형') || '채팅상담',
+      status: readText(props, '상태') || '발행',
     } satisfies PostMeta
   })
 

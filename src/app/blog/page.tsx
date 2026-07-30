@@ -53,6 +53,7 @@ export default async function BlogIndex() {
               <article>
                 <Link href={`${SITE.basePath}/${encodeURIComponent(p.slug)}/`}>
                   <p className="post-list-meta">
+                    {p.status !== '발행' && <span className="draft-badge">{p.status}</span>}
                     {p.category && <span className="post-list-cat">{p.category}</span>}
                     <time dateTime={p.publishedAt}>{formatDate(p.publishedAt)}</time>
                   </p>
