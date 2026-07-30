@@ -4,6 +4,7 @@ import { listPosts } from '@/lib/content'
 import { SITE } from '@/config/site'
 import { blogJsonLd, formatDate, listUrl } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
+import { ChannelTalk } from '@/components/ChannelTalk'
 
 export const metadata: Metadata = {
   title: SITE.name,
@@ -25,6 +26,7 @@ export default async function BlogIndex() {
   return (
     <>
       <JsonLd data={blogJsonLd(posts)} />
+      <ChannelTalk />
 
       <section className="list-hero">
         <h1>{SITE.name}</h1>

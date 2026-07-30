@@ -106,14 +106,19 @@ export function blogJsonLd(posts: PostMeta[]) {
   }
 }
 
-/** CTA 링크에 유입 측정용 파라미터를 붙인다. */
-export function withUtm(href: string, slug: string, campaign: string): string {
+/**
+ * CTA 링크에 어느 글에서 눌렀는지 표시를 붙인다.
+ *
+ * 일부러 utm_* 을 쓰지 않는다. 채널톡은 UTM을 라스트터치로 덮어쓰기 때문에,
+ * 내부 링크에 utm을 달면 구글 검색 같은 원래 유입 출처가 지워진다.
+ * 같은 사이트 안의 이동이라 GA4는 페이지 경로만으로도 흐름을 추적할 수 있다.
+ */
+export function withSource(href: string, slug: string, category: string): string {
   try {
     const u = new URL(href)
-    u.searchParams.set('utm_source', 'blog')
-    u.searchParams.set('utm_medium', 'post')
-    u.searchParams.set('utm_campaign', campaign || 'insight')
-    u.searchParams.set('utm_content', slug)
+    u.searchParams.set('from', 'blog')
+    u.searchParams.set('post', slug)
+    if (category) u.searchParams.set('topic', category)
     return u.toString()
   } catch {
     return href

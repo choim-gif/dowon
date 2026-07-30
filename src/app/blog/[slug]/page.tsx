@@ -10,6 +10,7 @@ import { Toc } from '@/components/Toc'
 import { AuthorBlock } from '@/components/AuthorBlock'
 import { CtaBlock } from '@/components/CtaBlock'
 import { RelatedPosts } from '@/components/RelatedPosts'
+import { ChannelTalk } from '@/components/ChannelTalk'
 
 type Params = { params: Promise<{ slug: string }> }
 
@@ -86,6 +87,15 @@ export default async function PostPage({ params }: Params) {
       <JsonLd data={breadcrumbJsonLd(meta)} />
       <JsonLd data={faqJsonLd(faqs)} />
 
+      <ChannelTalk
+        context={{
+          postTitle: meta.title,
+          postCategory: meta.category,
+          postSlug: meta.slug,
+          postUrl: postUrl(meta.slug),
+        }}
+      />
+
       <article className="post">
         <nav className="crumbs" aria-label="현재 위치">
           <Link href={`${SITE.basePath}/`}>{SITE.name}</Link>
@@ -129,7 +139,12 @@ export default async function PostPage({ params }: Params) {
           )}
         </div>
 
-        <CtaBlock type={meta.cta} slug={meta.slug} category={meta.category} />
+        <CtaBlock
+          type={meta.cta}
+          slug={meta.slug}
+          category={meta.category}
+          title={meta.title}
+        />
         <AuthorBlock post={meta} />
         <RelatedPosts posts={related} />
       </article>
