@@ -33,6 +33,14 @@ export function backend(): Backend {
   return 'none'
 }
 
+/**
+ * 발행된 글이 하나도 없을 때 쓰는 자리표시 슬러그.
+ * Next.js는 output:export 에서 동적 경로에 최소 한 개의 파라미터를 요구하기 때문에,
+ * 글이 없으면 빌드가 실패한다. 이 페이지는 noindex 처리되고 사이트맵에도 들어가지 않으며,
+ * 글을 한 편이라도 발행하면 사라진다.
+ */
+export const PLACEHOLDER_SLUG = '준비중'
+
 export type PostContent = { kind: 'notion'; blocks: NBlock[] } | { kind: 'html'; html: string }
 
 export type FullPost = {

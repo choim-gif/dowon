@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { anchorsOf, getPost, listPosts, pickRelated } from '@/lib/content'
+import { anchorsOf, getPost, listPosts, pickRelated, PLACEHOLDER_SLUG } from '@/lib/content'
 import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, formatDate, postUrl } from '@/lib/seo'
 import { SITE } from '@/config/site'
 import { JsonLd } from '@/components/JsonLd'
@@ -13,8 +13,16 @@ import { RelatedPosts } from '@/components/RelatedPosts'
 
 type Params = { params: Promise<{ slug: string }> }
 
+export const dynamicParams = false
+
 export async function generateStaticParams() {
   const posts = await listPosts()
+  if (posts.length === 0) {
+    console.warn(
+      '[content] 발행된 글이 없습니다. content/posts/*.md 에서 상태를 "발행"으로 바꾸면 됩니다.'
+    )
+    return [{ slug: PLACEHOLDER_SLUG }]
+  }
   // 슬러그는 디코딩된 한글 그대로 넘긴다.
   // 인코딩해서 넘기면 out/blog/%EC%82%B0... 처럼 폴더명이 깨진다.
   return posts.map((p) => ({ slug: p.slug }))
@@ -22,7 +30,11 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params
-  const post = await getPost(decodeURIComponent(slug))
+  const decoded = decodeURIComponent(slug)
+  if (decoded === PLACEHOLDER_SLUG) {
+    return { title: '준비 중', robots: { index: false, follow: false } }
+  }
+  const post = await getPost(decoded)
   if (!post) return {}
 
   const { meta, description } = post
@@ -47,7 +59,21 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function PostPage({ params }: Params) {
   const { slug } = await params
-  const post = await getPost(decodeURIComponent(slug))
+  const decoded = decodeURIComponent(slug)
+
+  if (decoded === PLACEHOLDER_SLUG) {
+    return (
+      <section className="list-hero">
+        <h1>글을 준비하고 있습니다</h1>
+        <p>
+          아직 발행된 글이 없습니다. <code>content/posts/</code> 폴더의 글에서 상태를
+          &lsquo;발행&rsquo;으로 바꾸면 이 자리에 글이 나타납니다.
+        </p>
+      </section>
+    )
+  }
+
+  const post = await getPost(decoded)
   if (!post) notFound()
 
   const { meta, content, toc, faqs, description } = post
