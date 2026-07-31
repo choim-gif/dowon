@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>유입 퍼널 · 노무법인 도원</title>
+<style>
+  :root{
+    --bg:#EFF2F6; --surf:#FFFFFF; --ink:#0E151B; --ink2:#4C5A66; --ink3:#78848F;
+    --line:#DCE3EA; --rule:#C9D3DC; --shade:#F5F7F9;
+    --c1:#2E8B6E; --c2:#2C74B3; --c3:#BE8A2A; --c4:#BE5344; --c5:#7A67A6; --c6:#8A95A0; --c7:#9C5580;
+    --sh:0 1px 1px rgba(14,21,27,.03), 0 14px 34px -26px rgba(14,21,27,.45);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#090E12; --surf:#131A21; --ink:#E6EDF3; --ink2:#9DAAB6; --ink3:#77848F;
+      --line:#232E37; --rule:#33414C; --shade:#0F161B;
+      --c1:#4FB392; --c2:#5C9FD8; --c3:#D6A945; --c4:#DB7566; --c5:#9D8AC9; --c6:#8E99A4; --c7:#C98CB0;
+      --sh:0 1px 1px rgba(0,0,0,.5), 0 14px 34px -26px rgba(0,0,0,1);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#090E12; --surf:#131A21; --ink:#E6EDF3; --ink2:#9DAAB6; --ink3:#77848F;
+    --line:#232E37; --rule:#33414C; --shade:#0F161B;
+    --c1:#4FB392; --c2:#5C9FD8; --c3:#D6A945; --c4:#DB7566; --c5:#9D8AC9; --c6:#8E99A4; --c7:#C98CB0;
+    --sh:0 1px 1px rgba(0,0,0,.5), 0 14px 34px -26px rgba(0,0,0,1);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;word-break:keep-all;line-height:1.6}
+  /* 이 페이지는 OKR 대시보드 안에 들어갑니다. 제목·총계·판단은 그쪽에 이미 있으므로
+     여기서는 채널별 흐름만 남깁니다. 바깥 여백도 최소로 둡니다. */
+  .page{max-width:1140px;margin:0 auto;padding:20px 22px 32px;display:flex;flex-direction:column;gap:20px}
+  .n{font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  #main{display:flex;flex-direction:column;gap:16px}
+
+  .meta{display:flex;flex-wrap:wrap;gap:7px 11px;font-size:13px;color:var(--ink3);align-items:center}
+  .meta > span{padding:5px 12px;border:1px solid var(--line);border-radius:99px;background:var(--surf)}
+  .nav{display:inline-flex;align-items:center;gap:2px;padding:0 !important;border:0 !important;background:none !important}
+  .nav button{font:inherit;font-size:15px;line-height:1;padding:6px 13px;cursor:pointer;
+    background:var(--surf);color:var(--ink);border:1px solid var(--line);border-radius:99px}
+  .nav button:hover:not(:disabled){border-color:var(--rule)}
+  .nav button:disabled{opacity:.35;cursor:default}
+  .nav button:focus-visible{outline:2px solid var(--c2);outline-offset:2px}
+  .nav .ym{padding:6px 13px;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+  .nav select.ym{font-family:inherit;cursor:pointer;color:var(--ink);background:var(--surf);
+    border:1px solid var(--line);border-radius:99px;padding:6px 30px 6px 14px;appearance:none;
+    background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),
+                     linear-gradient(135deg,currentColor 50%,transparent 50%);
+    background-position:calc(100% - 15px) 55%, calc(100% - 10px) 55%;
+    background-size:5px 5px, 5px 5px; background-repeat:no-repeat}
+  .nav select.ym:hover{border-color:var(--rule)}
+  .nav select.ym:focus-visible{outline:2px solid var(--c2);outline-offset:2px}
+
+  .board{background:var(--surf);border:1px solid var(--line);border-radius:4px;box-shadow:var(--sh)}
+  .scroll{overflow-x:auto;padding:8px 4px}
+  svg.funnel{display:block;width:100%;min-width:960px;height:auto}
+  svg.funnel text{font-family:inherit}
+  svg.funnel path{opacity:.26}
+  @media (prefers-color-scheme:dark){ svg.funnel path{opacity:.36} }
+  :root[data-theme="dark"] svg.funnel path{opacity:.36}
+  :root[data-theme="light"] svg.funnel path{opacity:.26}
+  .ch{transition:opacity .18s ease}
+  svg.funnel.dim .ch:not(.on){opacity:.13}
+  @media (prefers-reduced-motion:reduce){ .ch{transition:none} }
+
+  details{background:var(--surf);border:1px solid var(--line);border-radius:4px;box-shadow:var(--sh)}
+  summary{padding:17px 22px;font-size:14.5px;font-weight:700;cursor:pointer;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;color:var(--ink2)}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:'＋';color:var(--ink3);font-weight:400;font-size:16px}
+  details[open] summary::after{content:'－'}
+  summary:focus-visible{outline:2px solid var(--c2);outline-offset:-2px}
+  .tw{overflow-x:auto;padding:0 22px 22px}
+  table{border-collapse:collapse;width:100%;min-width:940px;font-size:14px}
+  th,td{padding:11px 13px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  thead th{font-size:11.5px;letter-spacing:.09em;color:var(--ink3);font-weight:700;border-bottom-color:var(--rule)}
+  tbody tr:last-child td{border-bottom:0}
+  #tbl tbody tr:last-child td{font-weight:700;background:var(--shade)}
+  td.nm{font-weight:600;display:flex;align-items:center;gap:9px}
+  td.nm i{width:4px;height:16px;border-radius:1px;flex:none}
+  .foot{margin:0;font-size:13px;color:var(--ink3);max-width:78ch;line-height:1.7}
+
+  .state{padding:60px 24px;text-align:center;color:var(--ink3);font-size:16px;line-height:1.8}
+  .state.err{color:var(--c4)}
+  .state button{font:inherit;font-size:14.5px;margin-top:16px;padding:9px 20px;cursor:pointer;
+    background:var(--surf);color:var(--ink);border:1px solid var(--rule);border-radius:99px}
+  .state code{font-size:13px;background:var(--shade);color:var(--ink2);padding:2px 7px;border-radius:3px;word-break:break-all}
+  [hidden]{display:none !important}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta" id="meta"></div>
+
+  <div id="state" class="state">시트에서 읽어오는 중입니다…</div>
+
+  <div id="main" hidden>
+    <div class="board"><div class="scroll" id="chart"></div></div>
+
+    <details>
+      <summary>채널별 상세 수치</summary>
+      <div class="tw"><table id="tbl"></table></div>
+    </details>
+
+    <details>
+      <summary>GA4 원본 · 분류 근거</summary>
+      <div class="tw"><table id="rawtbl"></table></div>
+    </details>
+
+    <p class="foot" id="foot"></p>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ══════════ 앱스스크립트 웹앱 주소 ══════════
+     '도원 대시보드 API' 프로젝트 → 배포 → 배포 관리 에서 복사한 값입니다.
+     웹앱을 새 URL 로 다시 배포했을 때만 이 줄을 바꾸면 됩니다.        */
+  var API = 'https://script.google.com/macros/s/AKfycbxZaebMbJyy6dwAkq3riFBLrZZ2LVXnha4usi4d4jTTjxc5CllpUY-1Za15egr9uBNVSw/exec';
+  /* ═══════════════════════════════════════ */
+
+  var qs = new URLSearchParams(location.search);
+  if (qs.get('api')) API = qs.get('api');            // 테스트용 덮어쓰기
+
+  // ?theme=light 로 테마를 고정합니다. 라이트 전용 페이지 안에 iframe 으로 넣을 때
+  // OS 설정이 다크면 흰 화면에 검은 창이 박히므로 부모가 지정할 수 있게 둡니다.
+  var th = qs.get('theme');
+  if (th === 'light' || th === 'dark') document.documentElement.setAttribute('data-theme', th);
+
+  var $=function(i){return document.getElementById(i)};
+  var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')};
+  var fmt=function(n){return Number(n||0).toLocaleString('ko-KR')};
+  var pct=function(r,d){ return (Number(r)*100).toFixed(d==null?1:d)+'%'; };
+
+  // 지난달 대비 증감. 지난달이 0 이면 비율이 무한대라 '신규'로 둡니다.
+  function delta(cur,prev){
+    if(prev==null) return null;
+    cur=Number(cur)||0; prev=Number(prev)||0;
+    if(!prev) return { prev:0, txt:(cur>0?'신규':'—'), tone:'flat' };
+    var r=(cur-prev)/prev*100;
+    return { prev:prev, r:r,
+      txt:(r>=0?'▲':'▼')+' '+Math.abs(r).toFixed(0)+'%',
+      tone: Math.abs(r)<1 ? 'flat' : (r>0?'up':'down') };
+  }
+  var TONE={ up:'var(--c1)', down:'var(--c4)', flat:'var(--ink3)' };
+
+  /* ── JSONP — 앱스스크립트 웹앱은 CORS 대신 callback 을 지원합니다 ── */
+  var seq=0;
+  function jsonp(url, cb){
+    var name='__flow'+(++seq), s=document.createElement('script'), done=false;
+    var timer=setTimeout(function(){ finish(new Error('응답이 없습니다 (20초 초과)')); }, 20000);
+    function finish(err,data){
+      if(done) return; done=true;
+      clearTimeout(timer);
+      try{ delete window[name]; }catch(e){ window[name]=undefined; }
+      if(s.parentNode) s.parentNode.removeChild(s);
+      cb(err,data);
+    }
+    window[name]=function(d){ finish(null,d); };
+    s.onerror=function(){ finish(new Error('연결에 실패했습니다')); };
+    s.src=url+(url.indexOf('?')>-1?'&':'?')+'callback='+name;
+    document.head.appendChild(s);
+  }
+
+  /* ── 기준월 ── */
+  function thisYm(){
+    var d=new Date();
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  }
+  function shiftYm(ym,delta){
+    var p=ym.split('-'), d=new Date(+p[0], +p[1]-1+delta, 1);
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  }
+  var curYm = qs.get('ym') || thisYm();
+
+  function showState(html, isErr){
+    var s=$('state');
+    s.innerHTML=html;
+    s.className='state'+(isErr?' err':'');
+    s.hidden=false;
+    $('main').hidden=true;
+    var b=$('retry'); if(b) b.onclick=load;
+  }
+
+  function load(){
+    // 정적 스냅샷 모드 — 통신이 막힌 곳(아티팩트 등)에 같은 코드를 그대로 올릴 때 씁니다
+    if(window.FLOW_STATIC){ render(window.FLOW_STATIC); return; }
+
+    if(!API || API.indexOf('PASTE_')===0){
+      showState('웹앱 주소가 아직 설정되지 않았습니다.<br><br>'
+        +'이 파일의 <code>var API = ...</code> 줄에 앱스스크립트 웹앱 URL 을 넣거나, '
+        +'주소 끝에 <code>?api=웹앱URL</code> 을 붙여 여세요.', true);
+      return;
+    }
+    showState('시트에서 읽어오는 중입니다…');
+    $('meta').innerHTML='';
+    jsonp(API+'?block=flow&ym='+encodeURIComponent(curYm), function(err,d){
+      if(err){
+        showState('불러오지 못했습니다 — '+esc(err.message)
+          +'<br><br>웹앱이 배포돼 있고 접근 권한이 “모든 사용자”인지 확인해 주세요.'
+          +'<br><button type="button" id="retry">다시 시도</button>', true);
+        return;
+      }
+      if(!d || d.ok===false){
+        showState('서버가 오류를 돌려줬습니다 — '+esc((d&&d.error)||'알 수 없는 오류')
+          +'<br><br><button type="button" id="retry">다시 시도</button>', true);
+        return;
+      }
+      render(d);
+    });
+  }
+
+  /* ══════════════════ 렌더 ══════════════════ */
+  function render(D){
+    var CH=(D.channels||[]).slice();
+    var sum=function(k){ return CH.reduce(function(a,c){return a+(Number(c[k])||0)},0) };
+
+    // 웹 채널만 방문 수가 있습니다. 앱·메신저는 방문 없이 문의 단계에서 시작합니다.
+    var WEB=CH.filter(function(c){ return c.sessions!=null; });
+    var TS=WEB.reduce(function(a,c){return a+(Number(c.sessions)||0)},0);
+    var TI=sum('inq'), TL=sum('leads');
+    var WI=WEB.reduce(function(a,c){return a+(Number(c.inq)||0)},0);   // 웹에서 온 문의만
+
+    // 지난달 — 없으면 비교를 통째로 생략합니다
+    var P=null;
+    if(D.prev && D.prev.channels && D.prev.channels.length){
+      var by={}; D.prev.channels.forEach(function(c){ by[c.key]=c; });
+      var pw=D.prev.channels.filter(function(c){ return c.sessions!=null; });
+      P={ ym:D.prev.ym, by:by,
+          TS:pw.reduce(function(a,c){return a+(Number(c.sessions)||0)},0),
+          TI:D.prev.channels.reduce(function(a,c){return a+(Number(c.inq)||0)},0),
+          TL:D.prev.channels.reduce(function(a,c){return a+(Number(c.leads)||0)},0) };
+    }
+
+    buildMeta(D);
+
+    if(TS===0){
+      showState('<b>'+esc(D.ym)+'</b> 의 GA4 채널 데이터가 아직 없습니다.<br><br>'
+        +'앱스스크립트에서 <code>collectGA4Channels(\''+esc(D.ym)+'\')</code> 를 한 번 실행하면 채워집니다.'
+        +'<br><button type="button" id="retry">다시 시도</button>', true);
+      return;
+    }
+
+    $('state').hidden=true;
+    $('main').hidden=false;
+
+    drawFunnel(CH,TS,TI,TL,WI,sum,P);
+    drawTable(CH,TS,TI,TL,sum,P);
+    drawRaw(D.ga4Raw||[]);
+
+    $('foot').textContent = '띠의 굵기가 각 단계에서 그 채널이 차지하는 비중입니다. '
+      +'굵어지면 들어온 것보다 리드를 더 만든 것이고, 얇아지면 덜 만든 것입니다. '
+      +'채널에 마우스를 올리면 그 채널만 따로 볼 수 있습니다. '
+      +'세션은 GA4 소스/매체, 문의·리드는 채널톡 상담 로그 기준입니다. '
+      +'네이버 자연에는 GA4가 Referral로 분류하는 모바일 검색과 블로그·카페를 합산했습니다. '
+      +'앱·메신저는 GA4 세션에 잡히지 않아 방문 수가 없습니다. 문의·리드에는 포함되지만 '
+      +'방문 합계와 방문→문의 전환율에서는 빠집니다.';
+  }
+
+  function buildMeta(D){
+    // 정적 스냅샷에서는 다른 달을 못 불러오므로 이동 수단을 아예 내보내지 않습니다
+    var nav;
+    if(window.FLOW_STATIC){
+      nav = '<span>'+esc(D.ym)+' 스냅샷</span>';
+    } else {
+      // 서버가 준 목록이 있으면 그 안에서만 움직입니다. 없는 달을 고르게 두면
+      // 빈 화면만 보게 됩니다. 목록이 없는 옛 배포에서는 한 칸씩 이동으로 물러섭니다.
+      var ms=(D.months||[]).slice();
+      if(ms.indexOf(D.ym)<0) ms.push(D.ym);
+      ms.sort();
+      var i=ms.indexOf(D.ym);
+      var mid = ms.length>1
+        ? '<select id="ympick" class="ym" aria-label="기준월 선택">'
+          + ms.map(function(m){
+              return '<option value="'+esc(m)+'"'+(m===D.ym?' selected':'')+'>'
+                   + esc(m.replace('-','년 '))+'월</option>';
+            }).join('') + '</select>'
+        : '<span class="ym">'+esc(D.ym)+'</span>';
+      var noPrev = ms.length>1 ? i<=0 : false;
+      var noNext = ms.length>1 ? i>=ms.length-1 : (curYm>=thisYm());
+      nav = '<span class="nav">'
+        + '<button type="button" id="prev" aria-label="이전 달"'+(noPrev?' disabled':'')+'>‹</button>'
+        + mid
+        + '<button type="button" id="next" aria-label="다음 달"'+(noNext?' disabled':'')+'>›</button>'
+        + '</span>';
+    }
+    $('meta').innerHTML = nav
+      + (D.partial
+          ? '<span style="border-color:var(--c3);color:var(--c3)">진행 중 '
+            +D.daysElapsed+'/'+D.daysInMonth+'일 · 지난달 전체와 직접 비교 금물</span>'
+          : '')
+      + '<span>GA4 수집 '+esc(D.ga4CollectedAt||'없음')+'</span>'
+      + '<span>채널톡 최종 '+esc(D.ctLastDate||'없음')+'</span>'
+      + '<span>조회 '+esc(D.asOf||'')+'</span>';
+    if(window.FLOW_STATIC) return;
+
+    var pick=$('ympick');
+    if(pick) pick.onchange=function(){ curYm=this.value; load(); };
+    var pv=$('prev'), nx=$('next');
+    if(pv && !pv.disabled) pv.onclick=function(){ curYm=step(D,-1); load(); };
+    if(nx && !nx.disabled) nx.onclick=function(){ curYm=step(D, 1); load(); };
+  }
+
+  // 목록이 있으면 목록 안에서, 없으면 달력 기준으로 한 칸 움직입니다
+  function step(D,dir){
+    var ms=(D.months||[]).slice();
+    if(!ms.length) return shiftYm(curYm,dir);
+    if(ms.indexOf(D.ym)<0) ms.push(D.ym);
+    ms.sort();
+    var i=ms.indexOf(D.ym)+dir;
+    return ms[Math.max(0,Math.min(ms.length-1,i))];
+  }
+
+  /* ── 퍼널 ── */
+  function drawFunnel(CH,TS,TI,TL,WI,sum,P){
+    var W=1160, H=664, TOP=136, BOT=592, GAP=3, BW=28;
+    var COL=[190,600,1000];
+    var AVAIL=(BOT-TOP)-GAP*(CH.length-1);
+
+    function stack(field,total){
+      var out=[], y=TOP;
+      CH.forEach(function(c){
+        var h=total>0 ? (Number(c[field])||0)/total*AVAIL : 0;
+        out.push({a:y,b:y+h,h:h}); y+=h+GAP;
+      });
+      return out;
+    }
+    var S=[stack('sessions',TS), stack('inq',TI), stack('leads',TL)];
+
+    // 값이 0인 채널을 함께 넣으면 보정이 정상 라벨을 자기 띠 밖으로 끌고 갑니다
+    function place(items,gap){
+      items.sort(function(a,b){ return a.y-b.y; });
+      for(var k=1;k<items.length;k++)
+        if(items[k].y-items[k-1].y<gap) items[k].y=items[k-1].y+gap;
+      if(items.length){
+        var over=items[items.length-1].y-(BOT-4);
+        if(over>0){
+          items[items.length-1].y-=over;
+          for(var j=items.length-2;j>=0;j--)
+            if(items[j+1].y-items[j].y<gap) items[j].y=items[j+1].y-gap;
+        }
+      }
+      var res={}; items.forEach(function(p){ res[p.i]=p.y; }); return res;
+    }
+    function centersOf(stage,field,gap){
+      var it=[];
+      CH.forEach(function(c,i){
+        if((Number(c[field])||0)>0) it.push({ i:i, y:(S[stage][i].a+S[stage][i].b)/2 });
+      });
+      return place(it,gap);
+    }
+    var L1=centersOf(0,'sessions',42), L3=centersOf(2,'leads',36);
+
+    function ribbon(x1,a1,b1,x2,a2,b2){
+      var m=(x1+x2)/2;
+      return 'M'+x1+','+a1+' C'+m+','+a1+' '+m+','+a2+' '+x2+','+a2
+           + ' L'+x2+','+b2+' C'+m+','+b2+' '+m+','+b1+' '+x1+','+b1+' Z';
+    }
+
+    var head='';
+    var heads=[
+      {x:COL[0], no:'①', nm:'방문', s:'방문', v:TS, p:P&&P.TS, u:'세션'},
+      {x:COL[1], no:'②', nm:'문의', s:'문의', v:TI, p:P&&P.TI, u:'채널톡 신규 상담'},
+      {x:COL[2], no:'③', nm:'유효 리드', s:'리드', v:TL, p:P&&P.TL,
+       u:'근로자 '+sum('worker')+' · 기업 '+sum('biz')}
+    ];
+    heads.forEach(function(h){
+      head+='<text x="'+h.x+'" y="36" font-size="13" font-weight="700" letter-spacing="1.8" fill="var(--ink3)">'
+        +h.no+'  '+h.nm+'</text>'
+        +'<text x="'+h.x+'" y="80" font-size="34" font-weight="800" letter-spacing="-1.1" fill="var(--ink)" '
+        +'style="font-variant-numeric:tabular-nums">'+fmt(h.v)+'</text>'
+        +'<text x="'+h.x+'" y="100" font-size="12" fill="var(--ink3)">'+esc(h.u)+'</text>';
+      var dl=P?delta(h.v,h.p):null;
+      if(dl)
+        head+='<text x="'+h.x+'" y="120" font-size="12.5" font-weight="700" fill="'+TONE[dl.tone]+'" '
+          +'style="font-variant-numeric:tabular-nums">지난달 '+fmt(dl.prev)+'  '+dl.txt+'</text>';
+    });
+    // 방문→문의 전환율은 웹 채널 문의만 셉니다. 방문이 없는 앱·메신저를 분자에 넣으면
+    // 분모 없는 건수가 섞여 실제보다 높게 나옵니다.
+    var steps=[
+      { from:TS, to:WI, lab:(WI<TI ? '방문 → 문의 · 웹 '+WI+'건 기준' : '방문 → 문의') },
+      { from:TI, to:TL, lab:'문의 → 리드' }
+    ];
+    [[0,1],[1,2]].forEach(function(p,k){
+      var x=(COL[p[0]]+BW+COL[p[1]])/2, st=steps[k];
+      var r=st.from>0?st.to/st.from*100:0;
+      head+='<text x="'+x+'" y="74" text-anchor="middle" font-size="22" font-weight="800" '
+        +'letter-spacing="-.6" fill="var(--ink2)" style="font-variant-numeric:tabular-nums">'
+        +(r<1?r.toFixed(2):Math.round(r))+'%</text>'
+        +'<text x="'+x+'" y="94" text-anchor="middle" font-size="12" fill="var(--ink3)">'
+        +esc(st.lab)+'</text>';
+    });
+    head+='<line x1="0" y1="128" x2="'+W+'" y2="128" stroke="var(--line)" stroke-width="1"/>';
+
+    // 도형과 글자를 따로 쌓습니다. 뒤 채널의 리본이 앞 채널의 숫자를 덮지 않게.
+    var body='', labs='';
+    CH.forEach(function(c,i){
+      var col='var(--'+(c.key||'c6')+')';
+      body+='<g class="ch" data-i="'+i+'">';
+      [[0,1],[1,2]].forEach(function(p){
+        // 방문이 없는 채널은 첫 구간 리본을 그리지 않습니다.
+        // 그리면 방문 단계 어딘가에서 흘러나온 것처럼 보입니다.
+        if(p[0]===0 && c.sessions==null) return;
+        var A=S[p[0]][i], B=S[p[1]][i];
+        if(A.h<=0 && B.h<=0) return;
+        body+='<path d="'+ribbon(COL[p[0]]+BW,A.a,A.b, COL[p[1]],B.a,B.b)+'" fill="'+col+'"/>';
+      });
+      S.forEach(function(st,j){
+        if(st[i].h<=0) return;
+        body+='<rect x="'+COL[j]+'" y="'+st[i].a+'" width="'+BW+'" height="'+st[i].h+'" fill="'+col+'" rx="1"/>';
+      });
+      body+='</g>';
+
+      labs+='<g class="ch" data-i="'+i+'">';
+      var y1=L1[i];
+      if(y1!=null)
+        labs+='<text x="'+(COL[0]-14)+'" y="'+(y1-2)+'" text-anchor="end" font-size="15" font-weight="700" fill="var(--ink)">'
+          +esc(c.name)+'</text>'
+          +'<text x="'+(COL[0]-14)+'" y="'+(y1+17)+'" text-anchor="end" font-size="12.5" fill="var(--ink3)" '
+          +'style="font-variant-numeric:tabular-nums">'+fmt(c.sessions)+' · '+pct(c.sessions/TS)+'</text>';
+      if(S[1][i].h>=17)
+        labs+='<text x="'+(COL[1]+BW+10)+'" y="'+((S[1][i].a+S[1][i].b)/2+5)+'" font-size="14" font-weight="700" '
+          +'fill="'+col+'" style="font-variant-numeric:tabular-nums">'+c.inq+'건 · '+Math.round(c.inq/TI*100)+'%</text>';
+      var y3=L3[i];
+      if(y3!=null)
+        labs+='<text x="'+(COL[2]+BW+12)+'" y="'+(y3-2)+'" font-size="14" font-weight="700" fill="var(--ink)">'
+          +esc(c.short||c.name)+'</text>'
+          +'<text x="'+(COL[2]+BW+12)+'" y="'+(y3+17)+'" font-size="12.5" font-weight="700" fill="'+col+'" '
+          +'style="font-variant-numeric:tabular-nums">'+c.leads+'건 · '+Math.round(c.leads/TL*100)+'%</text>';
+      labs+='</g>';
+    });
+
+    var dead=CH.filter(function(c){ return c.leads===0 && c.sessions>0; });
+    if(dead.length)
+      labs+='<text x="'+COL[0]+'" y="626" font-size="13" fill="var(--ink3)">리드 0으로 끝난 채널 — '
+        +dead.map(function(c){ return esc(c.short||c.name)+' '+fmt(c.sessions); }).join(' · ')
+        +' · 합계 '+fmt(dead.reduce(function(a,c){return a+c.sessions},0))+'건이 문의 없이 이탈</text>';
+
+    var offw=CH.filter(function(c){ return c.sessions==null && c.inq>0; });
+    if(offw.length)
+      labs+='<text x="'+COL[0]+'" y="650" font-size="13" fill="var(--ink3)">방문 단계가 없는 채널 — '
+        +offw.map(function(c){ return esc(c.short||c.name)+' 문의 '+c.inq+'건'; }).join(' · ')
+        +' · 웹 방문 없이 문의 단계에서 바로 시작합니다</text>';
+
+    $('chart').innerHTML='<svg class="funnel" viewBox="0 0 '+W+' '+H+'" role="img" '
+      +'aria-label="채널별 방문·문의·유효 리드 흐름도">'+head+body+labs+'</svg>';
+
+    var el=$('chart').querySelector('svg');
+    Array.prototype.forEach.call(el.querySelectorAll('.ch'), function(g){
+      var i=g.getAttribute('data-i');
+      g.addEventListener('mouseenter',function(){
+        el.classList.add('dim');
+        Array.prototype.forEach.call(el.querySelectorAll('.ch[data-i="'+i+'"]'),
+          function(x){ x.classList.add('on'); });
+      });
+      g.addEventListener('mouseleave',function(){
+        el.classList.remove('dim');
+        Array.prototype.forEach.call(el.querySelectorAll('.ch.on'),
+          function(x){ x.classList.remove('on'); });
+      });
+    });
+  }
+
+  function drawTable(CH,TS,TI,TL,sum,P){
+    var pc2=function(c,p){                       // 지난달 값과 증감을 한 칸에
+      var d=P?delta(c,p):null;
+      if(!d) return '<td class="n">—</td>';
+      return '<td class="n" style="color:'+TONE[d.tone]+'">'+fmt(d.prev)+' '+d.txt+'</td>';
+    };
+    var t='<thead><tr><th>채널</th><th>방문</th><th>지난달 방문</th><th>문의</th><th>리드</th>'
+      +'<th>지난달 리드</th><th>방문→문의</th><th>문의→리드</th><th>1,000방문당</th>'
+      +'<th>근로자/기업</th></tr></thead><tbody>';
+    CH.forEach(function(c){
+      var p=(P&&P.by[c.key])||null;
+      t+='<tr><td class="nm"><i style="background:var(--'+(c.key||'c6')+')"></i>'+esc(c.name)+'</td>'
+        +'<td class="n">'+(c.sessions==null?'—':fmt(c.sessions))+'</td>'
+        +(c.sessions==null||!p||p.sessions==null ? '<td class="n">—</td>' : pc2(c.sessions,p.sessions))
+        +'<td class="n">'+c.inq+'</td><td class="n">'+c.leads+'</td>'
+        +(p ? pc2(c.leads,p.leads) : '<td class="n">—</td>')
+        +'<td class="n">'+(c.sessions?(c.inq/c.sessions*100).toFixed(2)+'%':'—')+'</td>'
+        +'<td class="n">'+(c.inq?Math.round(c.leads/c.inq*100)+'%':'—')+'</td>'
+        +'<td class="n">'+(c.sessions?(c.leads/c.sessions*1000).toFixed(1):'—')+'</td>'
+        +'<td class="n">'+c.worker+' / '+c.biz+'</td></tr>';
+    });
+    // 방문 합계는 웹 채널만입니다. 방문→문의 칸은 분모가 웹뿐이라 '—' 로 둡니다.
+    t+='<tr><td class="nm">전체</td><td class="n">'+fmt(TS)+'</td>'
+      +(P?pc2(TS,P.TS):'<td class="n">—</td>')
+      +'<td class="n">'+TI+'</td><td class="n">'+TL+'</td>'
+      +(P?pc2(TL,P.TL):'<td class="n">—</td>')
+      +'<td class="n">—</td>'
+      +'<td class="n">'+(TI?Math.round(TL/TI*100):0)+'%</td>'
+      +'<td class="n">—</td>'
+      +'<td class="n">'+sum('worker')+' / '+sum('biz')+'</td></tr></tbody>';
+    $('tbl').innerHTML=t;
+  }
+
+  function drawRaw(raw){
+    if(!raw.length){ $('rawtbl').innerHTML='<tbody><tr><td>원본이 없습니다.</td></tr></tbody>'; return; }
+    var t='<thead><tr><th>소스 / 매체</th><th>GA4 기본채널그룹</th><th>분류</th><th>세션</th></tr></thead><tbody>';
+    raw.forEach(function(r){
+      t+='<tr><td>'+esc(r.sourceMedium)+'</td><td>'+esc(r.group)+'</td>'
+        +'<td>'+esc(r.bucket)+'</td><td class="n">'+fmt(r.sessions)+'</td></tr>';
+    });
+    $('rawtbl').innerHTML=t+'</tbody>';
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>
