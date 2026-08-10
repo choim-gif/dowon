@@ -90,6 +90,7 @@
   .state button{font:inherit;font-size:14.5px;margin-top:16px;padding:9px 20px;cursor:pointer;
     background:var(--surf);color:var(--ink);border:1px solid var(--rule);border-radius:99px}
   .state code{font-size:13px;background:var(--shade);color:var(--ink2);padding:2px 7px;border-radius:3px;word-break:break-all}
+  .state a{color:var(--c2)}
   [hidden]{display:none !important}
 </style>
 </head>
@@ -151,22 +152,55 @@
   }
   var TONE={ up:'var(--c1)', down:'var(--c4)', flat:'var(--ink3)' };
 
-  /* ── JSONP — 앱스스크립트 웹앱은 CORS 대신 callback 을 지원합니다 ── */
+  /* ── JSONP — 앱스스크립트 웹앱은 CORS 대신 callback 을 지원합니다 ──
+     이 웹앱은 응답이 8초에서 57초까지 들쭉날쭉합니다. 예전에는 20초에서 잘라 버려
+     멀쩡한 응답도 실패로 처리했습니다. 넉넉히 기다리고, 실패하면 자동으로 다시 겁니다.
+     오래 걸리는 동안 화면이 멈춘 것처럼 보이지 않게 중간에 상황을 알려 줍니다. */
+  var WAIT_MS = 60000;   // 한 번의 시도를 기다리는 최대 시간
+  var TRIES   = 3;       // 처음 1회 + 자동 재시도 2회
+  var SLOW_MS = 12000;   // 이 시간을 넘기면 '느린 중'이라고 알려 줍니다
+
+  function mkErr(kind,msg){ var e=new Error(msg); e.kind=kind; return e; }
+
   var seq=0;
-  function jsonp(url, cb){
+  function jsonp(url, onSlow, cb){
     var name='__flow'+(++seq), s=document.createElement('script'), done=false;
-    var timer=setTimeout(function(){ finish(new Error('응답이 없습니다 (20초 초과)')); }, 20000);
+    var slow =setTimeout(function(){ if(!done && onSlow) onSlow(); }, SLOW_MS);
+    var timer=setTimeout(function(){
+      finish(mkErr('timeout','응답이 없습니다 ('+Math.round(WAIT_MS/1000)+'초 초과)'));
+    }, WAIT_MS);
     function finish(err,data){
       if(done) return; done=true;
-      clearTimeout(timer);
+      clearTimeout(timer); clearTimeout(slow);
       try{ delete window[name]; }catch(e){ window[name]=undefined; }
       if(s.parentNode) s.parentNode.removeChild(s);
       cb(err,data);
     }
     window[name]=function(d){ finish(null,d); };
-    s.onerror=function(){ finish(new Error('연결에 실패했습니다')); };
-    s.src=url+(url.indexOf('?')>-1?'&':'?')+'callback='+name;
+    s.onerror=function(){ finish(mkErr('network','연결에 실패했습니다')); };
+    // 실패한 시도가 캐시로 굳지 않게 매번 다른 주소로 겁니다
+    s.src=url+(url.indexOf('?')>-1?'&':'?')+'callback='+name+'&_='+Date.now();
     document.head.appendChild(s);
+  }
+
+  function jsonpRetry(url, cb){
+    var n=0;
+    (function attempt(){
+      n++;
+      if(n>1) showState('다시 시도하고 있습니다… ('+n+'/'+TRIES+')');
+      jsonp(url,
+        function(){
+          showState('앱스스크립트 응답이 느립니다. 최대 '+Math.round(WAIT_MS/1000)+'초까지 기다립니다…'
+            + (n>1 ? ' ('+n+'/'+TRIES+')' : ''));
+        },
+        function(err,d){
+          // 타임아웃은 두 번째 시도까지만 합니다. 60초씩 세 번 기다리게 하면
+          // 사용자 입장에서는 그냥 멈춘 화면입니다.
+          var max = (err && err.kind==='timeout') ? 2 : TRIES;
+          if(err && n<max){ setTimeout(attempt, 1500); return; }
+          cb(err,d);
+        });
+    })();
   }
 
   /* ── 기준월 ── */
@@ -201,10 +235,19 @@
     }
     showState('시트에서 읽어오는 중입니다…');
     $('meta').innerHTML='';
-    jsonp(API+'?block=flow&ym='+encodeURIComponent(curYm), function(err,d){
+    var reqUrl = API+'?block=flow&ym='+encodeURIComponent(curYm);
+    jsonpRetry(reqUrl, function(err,d){
       if(err){
-        showState('불러오지 못했습니다 — '+esc(err.message)
-          +'<br><br>웹앱이 배포돼 있고 접근 권한이 “모든 사용자”인지 확인해 주세요.'
+        // 왜 실패했는지에 따라 손볼 곳이 다릅니다. 뭉뚱그리면 엉뚱한 데를 보게 됩니다.
+        var why = err.kind==='timeout'
+          ? '앱스스크립트가 제한 시간 안에 응답하지 않았습니다. 이 웹앱은 평소에도 응답이 '
+            + '느립니다(8~57초). 잠시 뒤 다시 시도해 보시고, 계속 이러면 앱스스크립트에서 '
+            + '결과를 캐시해 응답 시간을 줄여야 합니다.'
+          : '요청이 브라우저에서 끊겼습니다. 광고 차단·보안 확장프로그램이나 사내망이 '
+            + '<code>script.google.com</code> 을 막고 있는지 확인해 주세요. '
+            + '웹앱 배포 권한이 “모든 사용자”인지도 함께 확인하면 좋습니다.';
+        showState('불러오지 못했습니다 — '+esc(err.message)+'<br><br>'+why
+          +'<br><br><a href="'+esc(reqUrl)+'" target="_blank" rel="noopener">웹앱 주소를 새 탭에서 직접 열어 보기</a>'
           +'<br><button type="button" id="retry">다시 시도</button>', true);
         return;
       }
