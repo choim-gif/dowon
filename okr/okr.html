@@ -209,8 +209,27 @@ function parseCSV(text){
   if(cell.length||row.length){row.push(cell);rows.push(row);}
   return rows;
 }
-// CSV 컬럼: 0날짜 1N클릭 2N비용 3G클릭 4G비용 5PV 6채널톡 7전체문의 8광고비 9DB당 10블로그포스팅 11블로그방문자 12인스타포스팅 13인스타뷰
+// 열 위치는 헤더 이름으로 찾는다. 시트에 열이 끼어들어도(예: 당근 비용) 밀리지 않게.
+// 「전체문의·광고비·DB당」은 헤더가 비어 있고 합계 바로 윗줄에 라벨로 적혀 있어 그 줄에서 찾는다.
+const DEFAULT_COL={date:0,nC:1,nCost:2,gC:3,gCost:4,pv:5,dCost:-1,inq:6,inqTot:7,ad:8,bP:10,bV:11,iP:12,iV:13};
+const COL_NAMES={nC:'네이버클릭',nCost:'네이버비용',gC:'구글클릭',gCost:'구글비용',pv:'홈페이지PV',dCost:'당근비용',
+  inq:'채널톡문의',inqTot:'전체문의',ad:'광고비',bP:'블로그포스팅',bV:'블로그방문자',iP:'인스타포스팅',iV:'인스타뷰'};
+const norm=s=>String(s==null?'':s).replace(/\s+/g,'');
+function findCols(rows){
+  const col=Object.assign({},DEFAULT_COL);
+  const head=rows.find(r=>norm(r[0])==='날짜')||[];
+  const label=rows.find(r=>r.some(x=>norm(x)==='전체문의')&&r.some(x=>norm(x)==='광고비'))||[];
+  for(const k in COL_NAMES){
+    const want=norm(COL_NAMES[k]);
+    let i=head.findIndex(x=>norm(x)===want);
+    if(i<0) i=label.findIndex(x=>norm(x)===want);
+    if(i>=0) col[k]=i;
+  }
+  return col;
+}
 function parseRows(rows){
+  const col=findCols(rows);
+  const g=(c,k)=>col[k]>=0?c[col[k]]:'';
   const months=[]; let cur=null;
   for(const c of rows){
     const first=(c[0]||'').trim();
@@ -219,10 +238,13 @@ function parseRows(rows){
     if(!cur) continue;
     const dm=first.match(/^(\d{1,2})\/(\d{1,2})$/);
     if(dm){
-      const core=ne(c[5])||ne(c[1])||ne(c[3])||ne(c[6]);
-      cur.days.push({d:+dm[2],core,pv:num(c[5]),nC:num(c[1]),gC:num(c[3]),nCost:num(c[2]),gCost:num(c[4]),inq:num(c[6]),iV:num(c[13])});
+      const core=ne(g(c,'pv'))||ne(g(c,'nC'))||ne(g(c,'gC'))||ne(g(c,'inq'));
+      cur.days.push({d:+dm[2],core,pv:num(g(c,'pv')),nC:num(g(c,'nC')),gC:num(g(c,'gC')),
+        nCost:num(g(c,'nCost')),gCost:num(g(c,'gCost')),dCost:num(g(c,'dCost')),inq:num(g(c,'inq')),iV:num(g(c,'iV'))});
     } else if(first==='합계'){
-      cur.tot={pv:num(c[5]),nC:num(c[1]),gC:num(c[3]),inq:num(c[7]),ad:num(c[8])||(num(c[2])+num(c[4])),bV:num(c[11]),bP:num(c[10]),iP:num(c[12]),iV:num(c[13])};
+      cur.tot={pv:num(g(c,'pv')),nC:num(g(c,'nC')),gC:num(g(c,'gC')),inq:num(g(c,'inqTot'))||num(g(c,'inq')),
+        ad:num(g(c,'ad'))||(num(g(c,'nCost'))+num(g(c,'gCost'))+num(g(c,'dCost'))),
+        bV:num(g(c,'bV')),bP:num(g(c,'bP')),iP:num(g(c,'iP')),iV:num(g(c,'iV'))};
     }
   }
   return months.filter(m=>m.days.some(x=>x.core)&&m.tot);
@@ -267,7 +289,7 @@ function render(months){
   // 진행 중인 달 strip
   document.getElementById('julyTitle').textContent=`${cur.label} (1~${N}일 집계 · 진행중)`;
   document.getElementById('julySub').textContent='공정 비교는 「전월 같은 기간」, 월환산은 일평균×30 추정치입니다.';
-  const adSP=sp(cur,x=>x.nCost+x.gCost), adSPprev=prevC?sp(months[months.length-2],x=>x.nCost+x.gCost):null;
+  const adSP=sp(cur,x=>x.nCost+x.gCost+x.dCost), adSPprev=prevC?sp(months[months.length-2],x=>x.nCost+x.gCost+x.dCost):null;
   const pvSP=sp(cur,x=>x.pv), cpl=inqSP?adSP/inqSP:null;
   const jstrip=[
     ['문의', inqSP+'건', `월환산 ~${pace}건 · 전월동기 ${gInqSP.txt}`],
